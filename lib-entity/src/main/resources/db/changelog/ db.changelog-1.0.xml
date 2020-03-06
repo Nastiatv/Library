@@ -1,14 +1,30 @@
-<?xml version="1.0" encoding="UTF-8"?> 
-<databaseChangeLog 
-  xmlns="http://www.liquibase.org/xml/ns/dbchangelog" 
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
-                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd"> 
-  <changeSet author="runa" id="changelog-1.0">
-    <createTable tableName="book">
-      <column name="id" type="TEXT">
-        <constraints nullable="false" primaryKey="true" unique="true"/>
-      </column>
-    </createTable>
-  </changeSet>
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+	xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+	<changeSet author="runa" id="changelog-1.0">
+		<createTable tableName="book">
+			<column name="id" type="long">
+				<constraints nullable="false" primaryKey="true"
+					unique="true" />
+			</column>
+			<column name="isbn" type="boolean">
+				<constraints nullable="false" primaryKey="true"
+					unique="true" />
+			</column>
+			<column name="quantity" type="number">
+				<constraints nullable="false" />
+			</column>
+			<column name="rating" type="double">
+			</column>
+			<column name="department" type="Enum">
+				<constraints nullable="false" />
+			</column>
+				<column name="is_occupied" type="Enum">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+	</changeSet>
 </databaseChangeLog> 
