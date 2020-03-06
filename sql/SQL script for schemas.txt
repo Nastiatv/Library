@@ -8,7 +8,6 @@ Table `online_library`.`book` was created
   - isbn of type VARCHAR
   - is_occupied of type TINYINT
   - rating of type DOUBLE
-  - feedback of type VARCHAR
   - quantity of type INT
   - department of type ENUM
   __
@@ -116,37 +115,7 @@ Table `online_library`.`order` was created
   - default character set: utf8mb4
   - default collate: utf8mb4_0900_ai_ci
   __
-Table `online_library`.`reservation` was created
-  columns:
-  - id of type BIGINT
-  - book_id of type BIGINT
-  - user_id of type BIGINT
-  - reservation_date of type DATETIME
-  - date_reminder of type DATETIME
-  - notification_id of type BIGINT
-  __
-  indices:
-  - PRIMARY with columns: id
-  - user_id with columns: user_id
-  - book_id with columns: book_id
-  - fk_reservation_notification1_idx with columns: notification_id
-  __
-  foreign keys:
-  - fk_reservation_notification1 with columns: notification_id, referred table: notification with columns: id
-    - action on update: none
-    - action on delete: none
-  - reservation_ibfk_1 with columns: user_id, referred table: user with columns: id
-    - action on update: none
-    - action on delete: none
-  - reservation_ibfk_2 with columns: book_id, referred table: book with columns: id
-    - action on update: none
-    - action on delete: none
-  __
-  attributes:
-  - engine: InnoDB
-  - default character set: utf8mb4
-  - default collate: utf8mb4_0900_ai_ci
-  __
+
 Table `online_library`.`role` was created
   columns:
   - id of type BIGINT
