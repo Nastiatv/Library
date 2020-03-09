@@ -9,7 +9,7 @@ import lombok.EqualsAndHashCode;
 @Entity
 @Data
 @EqualsAndHashCode (callSuper = true)
-@Table(name = "nitification")
+@Table(name = "notification")
 public class Notification extends AEntity {
 	private String announcement;
 }
