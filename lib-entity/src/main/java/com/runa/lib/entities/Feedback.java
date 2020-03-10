@@ -12,18 +12,17 @@ import lombok.EqualsAndHashCode;
 
 @Entity
 @Data
-@Table(name="feedback")
-@EqualsAndHashCode (callSuper = true)
+@Table(name = "feedback")
+@EqualsAndHashCode(callSuper = true)
 public class Feedback extends AEntity {
-	
+
 	private Long bookId;
 	private Long userId;
-	
+
 	@Enumerated(EnumType.STRING)
 	private Rating rating;
-	
+
 	private String userName;
 	private String comment;
-	
 
 }

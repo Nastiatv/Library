@@ -10,7 +10,7 @@ import lombok.Setter;
 
 @MappedSuperclass
 public abstract class AEntity {
-	
+
 	@Id
 	@Getter
 	@Setter

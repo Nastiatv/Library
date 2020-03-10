@@ -7,5 +7,4 @@ public class BookDao extends AGenericDao<Book> {
 	public BookDao(Class<Book> clazz) {
 		super(Book.class);
 	}
-
 }

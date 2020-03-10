@@ -7,5 +7,4 @@ public class OrderDao extends AGenericDao<Order> {
 	public OrderDao(Class<Order> clazz) {
 		super(Order.class);
 	}
-
 }

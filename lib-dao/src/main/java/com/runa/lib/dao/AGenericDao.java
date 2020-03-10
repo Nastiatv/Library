@@ -42,9 +42,9 @@ public abstract class AGenericDao<T extends AEntity> implements IAGenericDao<T> 
 	}
 
 	@Override
-	public void update(T entity)  {
-			entityManager.merge(entity);
-			entityManager.flush();
+	public void update(T entity) {
+		entityManager.merge(entity);
+		entityManager.flush();
 	}
 
 	@Override

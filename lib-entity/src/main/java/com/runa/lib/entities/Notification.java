@@ -8,7 +8,7 @@ import lombok.EqualsAndHashCode;
 
 @Entity
 @Data
-@EqualsAndHashCode (callSuper = true)
+@EqualsAndHashCode(callSuper = true)
 @Table(name = "notification")
 public class Notification extends AEntity {
 	private String announcement;

@@ -7,5 +7,4 @@ public class RoleDao extends AGenericDao<Role> {
 	public RoleDao(Class<Role> clazz) {
 		super(Role.class);
 	}
-
 }

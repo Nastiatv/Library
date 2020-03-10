@@ -12,7 +12,7 @@ import lombok.EqualsAndHashCode;
 
 @Entity
 @Data
-@EqualsAndHashCode (callSuper = true)
+@EqualsAndHashCode(callSuper = true)
 @Table(name = "book")
 public class Book extends AEntity {
 
@@ -20,7 +20,7 @@ public class Book extends AEntity {
 	private boolean isOccupied;
 	private int quantity;
 	private double rating;
-	
+
 	@Enumerated(EnumType.STRING)
 	private Department department;
 }

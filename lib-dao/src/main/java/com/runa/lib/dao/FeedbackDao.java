@@ -6,6 +6,5 @@ public class FeedbackDao extends AGenericDao<Feedback> {
 
 	public FeedbackDao(Class<Feedback> clazz) {
 		super(Feedback.class);
-		}
-
+	}
 }

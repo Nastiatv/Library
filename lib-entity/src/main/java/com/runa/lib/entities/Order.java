@@ -10,7 +10,7 @@ import lombok.EqualsAndHashCode;
 
 @Entity
 @Data
-@EqualsAndHashCode (callSuper = true)
+@EqualsAndHashCode(callSuper = true)
 @Table(name = "order")
 public class Order extends AEntity {
 
@@ -22,6 +22,4 @@ public class Order extends AEntity {
 	private boolean isFinished;
 	private boolean prolongation;
 
-	
 }
-
