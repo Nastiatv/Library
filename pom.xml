@@ -35,7 +35,5 @@
 		<module>lib-service</module>
 		<module>lib-controller</module>
 	</modules>
-	
 
-	
 </project>

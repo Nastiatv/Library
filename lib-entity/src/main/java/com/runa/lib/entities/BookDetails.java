@@ -8,13 +8,12 @@ import lombok.EqualsAndHashCode;
 
 @Entity
 @Data
-@EqualsAndHashCode (callSuper = true)
-@Table(name="book_details")
-public class BookDetails extends AEntity{
-	
+@EqualsAndHashCode(callSuper = true)
+@Table(name = "book_details")
+public class BookDetails extends AEntity {
+
 	private String name;
 	private String author;
 	private String discription;
-	
 
 }

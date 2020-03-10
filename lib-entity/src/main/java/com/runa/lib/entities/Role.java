@@ -8,11 +8,10 @@ import lombok.EqualsAndHashCode;
 
 @Entity
 @Data
-@EqualsAndHashCode (callSuper = true)
-@Table(name="role")
+@EqualsAndHashCode(callSuper = true)
+@Table(name = "role")
 public class Role extends AEntity {
-	
+
 	private String name;
-	
 
 }

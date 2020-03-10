@@ -8,13 +8,12 @@ import lombok.EqualsAndHashCode;
 
 @Entity
 @Data
-@EqualsAndHashCode (callSuper = true)
-@Table(name="user")
+@EqualsAndHashCode(callSuper = true)
+@Table(name = "user")
 public class User extends AEntity {
-	
+
 	private String email;
 	private String password;
 	private String name;
-	
 
 }
