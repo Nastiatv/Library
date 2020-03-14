@@ -7,14 +7,18 @@
 		<artifactId>Library</artifactId>
 		<version>${project.version}</version>
 	</parent>
-	
+
 	<artifactId>lib-service</artifactId>
-	
+
 	<dependencies>
 		<dependency>
 			<groupId>com.runa</groupId>
 			<artifactId>lib-dao</artifactId>
 			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
 		</dependency>
 	</dependencies>
 
