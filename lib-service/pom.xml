@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>com.runa</groupId>
 		<artifactId>Library</artifactId>
-		<version>${project.version}</version>
+		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>lib-service</artifactId>
