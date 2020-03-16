@@ -7,11 +7,15 @@ import javax.persistence.Table;
 
 import com.runa.lib.enums.Department;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @Table(name = "book")
 public class Book extends AEntity {

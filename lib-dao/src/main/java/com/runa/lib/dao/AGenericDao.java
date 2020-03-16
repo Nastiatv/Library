@@ -2,7 +2,6 @@ package com.runa.lib.dao;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -37,8 +36,8 @@ public abstract class AGenericDao<T extends AEntity> implements IAGenericDao<T> 
 	}
 
 	@Override
-	public Optional<T> get(Long id) {
-		return Optional.ofNullable(entityManager.find(getGenericClass(), id));
+	public T get(Long id) {
+		return entityManager.find(getGenericClass(), id);
 	}
 
 	@Override
