@@ -4,7 +4,7 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
-		<changeSet author="runa" id="01">
+	<changeSet author="runa" id="01">
 		<createTable tableName="book">
 			<column name="id" type="bigint" autoIncrement="true">
 				<constraints nullable="false" unique="true"
@@ -25,6 +25,9 @@
 			<column name="is_occupied" type="tinyint(2)">
 				<constraints nullable="false" />
 			</column>
+			<column name="book_details_id" type="bigint">
+				<constraints nullable="false" />
+			</column>
 		</createTable>
 	</changeSet>
 	<changeSet author="runa" id="02">
@@ -32,6 +35,9 @@
 			<column name="id" type="bigint" autoIncrement="true">
 				<constraints nullable="false" unique="true"
 					primaryKey="true" />
+			</column>
+			<column name="book_id" type="bigint">
+				<constraints nullable="false" />
 			</column>
 			<column name="name" type="varchar(50)">
 				<constraints nullable="false" />
@@ -135,15 +141,54 @@
 			</column>
 		</createTable>
 	</changeSet>
-
-	<changeSet id="runa" author="08">
-		<addForeignKeyConstraint
-			constraintName="fk_id" referencedTableName="book_details"
-			referencedColumnNames="id" baseColumnNames="id" baseTableName="book" />
+	<changeSet author="runa" id="08">
+		<createTable tableName="user_role">
+			<column name="user_id" type="bigint">
+				<constraints nullable="false" unique="true"
+					primaryKey="true" />
+			</column>
+			<column name="role_id" type="bigint">
+				<constraints nullable="false" unique="true"
+					primaryKey="true" />
+			</column>
+		</createTable>
 	</changeSet>
-	<changeSet id="runa" author="09">
+	<changeSet author="runa" id="09">
 		<addForeignKeyConstraint
-			constraintName="fk_id" referencedTableName="book"
-			referencedColumnNames="id" baseColumnNames="id" baseTableName="book_details" />
+			constraintName="fk_user2order" referencedTableName="user"
+			referencedColumnNames="id" baseColumnNames="user_id"
+			baseTableName="order" />
+		<addForeignKeyConstraint
+			constraintName="fk_book2order" referencedTableName="book"
+			referencedColumnNames="id" baseColumnNames="book_id"
+			baseTableName="order" />
+		<addForeignKeyConstraint
+			constraintName="fk_user2feedback" referencedTableName="user"
+			referencedColumnNames="id" baseColumnNames="user_id"
+			baseTableName="feedback" />
+		<addForeignKeyConstraint
+			constraintName="fk_notification2order"
+			referencedTableName="notification" referencedColumnNames="id"
+			baseColumnNames="notification_id" baseTableName="order" />
+		<addForeignKeyConstraint
+			constraintName="fk_book2feedback" referencedTableName="book"
+			referencedColumnNames="id" baseColumnNames="book_id"
+			baseTableName="feedback" />
+		<addForeignKeyConstraint
+			constraintName="fk_book2book_details" referencedTableName="book"
+			referencedColumnNames="id" baseColumnNames="book_id"
+			baseTableName="book_details" />
+		<addForeignKeyConstraint
+			constraintName="fk_book_details2book"
+			referencedTableName="book_details" referencedColumnNames="id"
+			baseColumnNames="book_details_id" baseTableName="book" />
+		<addForeignKeyConstraint
+			constraintName="fk_user2user_role" referencedTableName="user"
+			referencedColumnNames="id" baseColumnNames="user_id"
+			baseTableName="user_role" />
+		<addForeignKeyConstraint
+			constraintName="fk_role2user_role" referencedTableName="role"
+			referencedColumnNames="id" baseColumnNames="role_id"
+			baseTableName="user_role" />
 	</changeSet>
 </databaseChangeLog> 
