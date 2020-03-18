@@ -99,7 +99,7 @@
 			<column name="notification_id" type="bigint">
 				<constraints nullable="false" />
 			</column>
-			<column name="order_book_date" type="date">
+			<column name="order_date" type="date">
 				<constraints nullable="false" />
 			</column>
 			<column name="due_date" type="date">
@@ -178,10 +178,6 @@
 			constraintName="fk_book2book_details" referencedTableName="book"
 			referencedColumnNames="id" baseColumnNames="book_id"
 			baseTableName="book_details" />
-		<addForeignKeyConstraint
-			constraintName="fk_book_details2book"
-			referencedTableName="book_details" referencedColumnNames="id"
-			baseColumnNames="book_details_id" baseTableName="book" />
 		<addForeignKeyConstraint
 			constraintName="fk_user2user_role" referencedTableName="user"
 			referencedColumnNames="id" baseColumnNames="user_id"

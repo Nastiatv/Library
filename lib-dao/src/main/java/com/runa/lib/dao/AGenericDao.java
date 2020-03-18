@@ -16,7 +16,7 @@ import com.runa.lib.entities.AEntity;
 
 public abstract class AGenericDao<T extends AEntity> implements IAGenericDao<T> {
 
-	private Class<T> clazz;
+	protected Class<T> clazz;
 
 	public AGenericDao(Class<T> clazz) {
 		this.clazz = clazz;

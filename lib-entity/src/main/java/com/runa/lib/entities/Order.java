@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-@Table(name = "order")
+@Table(name = "order_book")
 public class Order extends AEntity {
 
 	private Long userId;
