@@ -1,4 +1,3 @@
 <factorypath>
     <factorypathentry kind="PLUGIN" id="org.eclipse.jst.ws.annotations.core" enabled="true" runInBatchMode="false"/>
-    <factorypathentry kind="EXTJAR" id="D:\courses IT\Практика\Library\lib\lombok.jar" enabled="false" runInBatchMode="false"/>
 </factorypath>
