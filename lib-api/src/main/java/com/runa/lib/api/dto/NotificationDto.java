@@ -15,14 +15,14 @@ import lombok.NoArgsConstructor;
 public class NotificationDto {
 
 	private Long id;
-	private String announcement;
+	private String NotificationMessage;
 
 	public static List<NotificationDto> convertList(List<Notification> entities) {
 		List<NotificationDto> listDto = new ArrayList<>();
 		for (Notification Notification : entities) {
 			NotificationDto dto = new NotificationDto();
 			dto.setId(Notification.getId());
-			dto.setAnnouncement(Notification.getAnnouncement());
+			dto.setNotificationMessage(Notification.getNotificationMessage());
 			listDto.add(dto);
 		}
 		return listDto;
@@ -33,7 +33,7 @@ public class NotificationDto {
 		dto.setId(entity.getId());
 		if (entity.getId() != null) {
 			dto.setId(entity.getId());
-			dto.setAnnouncement(entity.getAnnouncement());
+			dto.setNotificationMessage(entity.getNotificationMessage());
 		} else {
 			dto.setId(null);
 		}
@@ -43,7 +43,7 @@ public class NotificationDto {
 	public static Notification dtoToEntity(NotificationDto dto) {
 		Notification entity = new Notification();
 		entity.setId(dto.getId());
-		entity.setAnnouncement(dto.getAnnouncement());
+		entity.setNotificationMessage(dto.getNotificationMessage());
 		return entity;
 	}
 }

@@ -1,5 +1,6 @@
 package com.runa.lib.entities;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -20,10 +21,12 @@ import lombok.NoArgsConstructor;
 @Table(name = "book")
 public class Book extends AEntity {
 
+	
 	private String isbn;
+	@Column(name = "is_occupied")
 	private boolean isOccupied;
 	private int quantity;
-	private double rating;
+	private Double rating;
 
 	@Enumerated(EnumType.STRING)
 	private Department department;

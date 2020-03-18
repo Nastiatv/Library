@@ -108,7 +108,7 @@
 			<column name="is_finished" type="tinyint(2)">
 				<constraints nullable="false" />
 			</column>
-			<column name="probigintation" type="tinyint(2)">
+			<column name="prolongation" type="tinyint(2)">
 				<constraints nullable="false" />
 			</column>
 		</createTable>

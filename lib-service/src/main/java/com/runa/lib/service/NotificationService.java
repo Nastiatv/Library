@@ -31,7 +31,7 @@ public class NotificationService implements INotificationService {
 	@Override
 	public NotificationDto addNotification(NotificationDto dto) {
 		Notification notification = new Notification();
-		notification.setAnnouncement(dto.getAnnouncement());
+		notification.setNotificationMessage(dto.getNotificationMessage());
 		return NotificationDto.entityToDto(notificationDao.create(notification));
 	}
 
@@ -49,7 +49,7 @@ public class NotificationService implements INotificationService {
 	@Override
 	public void updateNotification(Long id, NotificationDto dto) {
 		Notification existingNotification = Optional.ofNullable(notificationDao.get(id)).orElse(new Notification());
-		existingNotification.setAnnouncement(dto.getAnnouncement());
+		existingNotification.setNotificationMessage(dto.getNotificationMessage());
 		notificationDao.update(existingNotification);
 		log.info("Notification successfully updated");
 

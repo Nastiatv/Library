@@ -1,5 +1,6 @@
 package com.runa.lib.entities;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
@@ -15,5 +16,6 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode(callSuper = true)
 @Table(name = "notification")
 public class Notification extends AEntity {
-	private String announcement;
+	@Column(name = "notification_message")
+	private String notificationMessage;
 }
