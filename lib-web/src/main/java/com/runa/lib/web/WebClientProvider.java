@@ -1,0 +1,34 @@
+package com.runa.lib.web;
+
+import com.gargoylesoftware.htmlunit.BrowserVersion;
+import com.gargoylesoftware.htmlunit.NicelyResynchronizingAjaxController;
+import com.gargoylesoftware.htmlunit.WebClient;
+
+public class WebClientProvider {
+
+	private WebClientProvider() {
+	}
+
+	public static WebClient getDefaultWebClient() {
+		return setWebClientSettings(BrowserVersion.CHROME);
+	}
+
+	private static WebClient setWebClientSettings(final BrowserVersion chrome) {
+		WebClient webClient = new WebClient(chrome);
+		setWebClientDefaultOptions(webClient);
+		return null;
+	}
+
+	private static void setWebClientDefaultOptions(WebClient webClient) {
+		if (webClient != null) {
+			webClient.setAjaxController(new NicelyResynchronizingAjaxController());
+			webClient.getOptions().setThrowExceptionOnScriptError(false);
+			webClient.getOptions().setThrowExceptionOnFailingStatusCode(false);
+			webClient.getOptions().setRedirectEnabled(true);
+			webClient.getOptions().setJavaScriptEnabled(true);
+			webClient.getOptions().setCssEnabled(true);
+			webClient.getOptions().setPrintContentOnFailingStatusCode(false);
+			webClient.waitForBackgroundJavaScript(10000);
+		}
+	}
+}

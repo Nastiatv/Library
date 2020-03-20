@@ -1,5 +1,7 @@
 package com.runa.lib.entities;
 
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -27,7 +29,6 @@ public class Book extends AEntity {
 	private boolean isOccupied;
 	private int quantity;
 	private Double rating;
-
 	@Enumerated(EnumType.STRING)
-	private Department department;
+	private Set<Department> department;
 }

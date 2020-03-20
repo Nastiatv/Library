@@ -2,6 +2,7 @@ package com.runa.lib.api.dto;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -24,7 +25,7 @@ public class BookDto {
 	private int quantity;
 	private double rating;
 	@Enumerated(EnumType.STRING)
-	private Department department;
+	private Set<Department> department;
 
 	public static List<BookDto> convertList(List<Book> entities) {
 		List<BookDto> listDto = new ArrayList<>();

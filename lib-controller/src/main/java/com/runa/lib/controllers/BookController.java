@@ -21,7 +21,7 @@ import com.runa.lib.api.service.IBookService;
 public class BookController {
 
 	private static final String ID = "{id}";
-	
+
 	@Autowired
 	IBookService bookService;
 
@@ -31,7 +31,7 @@ public class BookController {
 	}
 
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public BookDto addBook(@RequestBody BookDto bookDto) {
+	public BookDto createBook(@RequestBody BookDto bookDto) {
 		return bookService.addBook(bookDto);
 	}
 

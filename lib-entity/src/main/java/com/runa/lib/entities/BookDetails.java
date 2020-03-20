@@ -18,6 +18,7 @@ public class BookDetails extends AEntity {
 
 	private String name;
 	private String author;
-	private String discription;
+	private String picture;
+	private String description;
 
 }

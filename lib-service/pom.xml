@@ -13,7 +13,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>com.runa</groupId>
-			<artifactId>lib-dao</artifactId>
+			<artifactId>lib-web</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 	</dependencies>

@@ -17,7 +17,8 @@ public class BookDetailsDto {
 	private Long id;
 	private String name;
 	private String author;
-	private String discription;
+	private String description;
+	private String picture;
 
 	public static List<BookDetailsDto> convertList(List<BookDetails> entities) {
 		List<BookDetailsDto> listDto = new ArrayList<>();
@@ -26,7 +27,8 @@ public class BookDetailsDto {
 			dto.setId(book.getId());
 			dto.setName(book.getName());
 			dto.setAuthor(book.getAuthor());
-			dto.setDiscription(book.getDiscription());
+			dto.setDescription(book.getDescription());
+			dto.setPicture(book.getPicture());
 			listDto.add(dto);
 		}
 		return listDto;
@@ -39,7 +41,8 @@ public class BookDetailsDto {
 			dto.setId(entity.getId());
 			dto.setName(entity.getName());
 			dto.setAuthor(entity.getAuthor());
-			dto.setDiscription(entity.getDiscription());
+			dto.setDescription(entity.getDescription());
+			dto.setPicture(entity.getPicture());
 		} else {
 			dto.setId(null);
 		}
@@ -51,7 +54,8 @@ public class BookDetailsDto {
 		entity.setId(dto.getId());
 		entity.setName(dto.getName());
 		entity.setAuthor(dto.getAuthor());
-		entity.setDiscription(dto.getDiscription());
+		entity.setDescription(dto.getDescription());
+		entity.setPicture(dto.getPicture());
 		return entity;
 	}
 }

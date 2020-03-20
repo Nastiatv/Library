@@ -7,21 +7,16 @@
 		<artifactId>Library</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-
-	<artifactId>lib-dao</artifactId>
-
+	<artifactId>lib-web</artifactId>
 	<dependencies>
 		<dependency>
 			<groupId>com.runa</groupId>
-			<artifactId>lib-api</artifactId>
+			<artifactId>lib-dao</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>org.codehaus.mojo</groupId>
-			<artifactId>build-helper-maven-plugin</artifactId>
-			<version>3.0.0</version>
+			<groupId>net.sourceforge.htmlunit</groupId>
+			<artifactId>htmlunit</artifactId>
 		</dependency>
-
 	</dependencies>
-
 </project>

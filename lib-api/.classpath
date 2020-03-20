@@ -29,7 +29,6 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="D:/courses IT/Практика/Library/lib/lombok.jar"/>
 	<classpathentry kind="src" path=".apt_generated">
 		<attributes>
 			<attribute name="optional" value="true"/>
@@ -52,5 +51,6 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="D:/courses IT/Практика/Library/lib/lombok.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

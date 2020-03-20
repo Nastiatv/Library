@@ -29,13 +29,14 @@ public class BookService implements IBookService {
 	}
 
 	@Override
-	public BookDto addBook(BookDto bookDto) {
+	public BookDto addBook(BookDto dto) {
 		Book book = new Book();
-		book.setIsbn(bookDto.getIsbn());
-		book.setOccupied(bookDto.isOccupied());
-		book.setQuantity(bookDto.getQuantity());
-		book.setRating(bookDto.getRating());
-		book.setDepartment(bookDto.getDepartment());
+		book.setId(dto.getId());
+		book.setQuantity(dto.getQuantity());
+		book.setIsbn(dto.getIsbn());
+		book.setOccupied(dto.isOccupied());
+		book.setRating(dto.getRating());
+		book.setDepartment(dto.getDepartment());
 		return BookDto.entityToDto(bookDao.create(book));
 	}
 

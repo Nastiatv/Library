@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.runa.lib.api.dao.IBookDao;
 import com.runa.lib.entities.Book;
+import com.runa.lib.entities.Book_;
 
 @Repository
 public class BookDao extends AGenericDao<Book> implements IBookDao {

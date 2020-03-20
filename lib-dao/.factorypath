@@ -1,5 +1,4 @@
 <factorypath>
-    <factorypathentry kind="PLUGIN" id="org.eclipse.jst.ws.annotations.core" enabled="true" runInBatchMode="false"/>
-    <factorypathentry kind="WKSPJAR" id="/Hotel new 2/hotel/lib/hibernate-jpamodelgen-5.4.10.Final.jar" enabled="false" runInBatchMode="false"/>
-    <factorypathentry kind="EXTJAR" id="C:\Users\user\Downloads\javax.persistence-api-2.2.jar" enabled="false" runInBatchMode="false"/>
+    <factorypathentry kind="PLUGIN" id="org.eclipse.jst.ws.annotations.core" enabled="false" runInBatchMode="false"/>
+    <factorypathentry kind="EXTJAR" id="C:\Users\user\.m2\repository\org\hibernate\hibernate-jpamodelgen\5.4.10.Final\hibernate-jpamodelgen-5.4.10.Final.jar" enabled="true" runInBatchMode="false"/>
 </factorypath>

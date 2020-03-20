@@ -12,6 +12,7 @@ import com.runa.lib.api.dao.IBookDetailsDao;
 import com.runa.lib.api.dto.BookDetailsDto;
 import com.runa.lib.api.service.IBookDetailsService;
 import com.runa.lib.entities.BookDetails;
+import com.runa.lib.web.WebScraper;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -23,17 +24,17 @@ public class BookDetailsService implements IBookDetailsService {
 	@Autowired
 	private IBookDetailsDao bookDetailsDao;
 
+	@Autowired
+	private WebScraper webScraper;
+	
 	@Override
 	public List<BookDetailsDto> getAllBookDetails() {
 		return BookDetailsDto.convertList(bookDetailsDao.getAll());
 	}
 
 	@Override
-	public BookDetailsDto addBookDetails(BookDetailsDto bookDetailsDto) {
-		BookDetails bookDetails = new BookDetails();
-		bookDetails.setName(bookDetailsDto.getName());
-		bookDetails.setAuthor(bookDetailsDto.getAuthor());
-		bookDetails.setDiscription(bookDetailsDto.getDiscription());
+	public BookDetailsDto createBookDetails(String isbn) {
+		BookDetails bookDetails = webScraper.getBookDetailsFromWeb(isbn);
 		return BookDetailsDto.entityToDto(bookDetailsDao.create(bookDetails));
 	}
 
@@ -51,9 +52,6 @@ public class BookDetailsService implements IBookDetailsService {
 	@Override
 	public void updateBookDetails(Long id, BookDetailsDto bookDetailsDto) {
 		BookDetails existingBookDetails = Optional.ofNullable(bookDetailsDao.get(id)).orElse(new BookDetails());
-		existingBookDetails.setDiscription(bookDetailsDto.getDiscription());
-		existingBookDetails.setName(bookDetailsDto.getName());
-		existingBookDetails.setAuthor(bookDetailsDto.getAuthor());
 		bookDetailsDao.update(existingBookDetails);
 		log.info("BookDetails successfully updated");
 
