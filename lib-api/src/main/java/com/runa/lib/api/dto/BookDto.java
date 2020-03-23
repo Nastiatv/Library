@@ -36,7 +36,7 @@ public class BookDto {
 			dto.setOccupied(book.isOccupied());
 			dto.setQuantity(book.getQuantity());
 			dto.setRating(book.getRating());
-			dto.setDepartment(book.getDepartment());
+			dto.setDepartment(book.getDepartments());
 			listDto.add(dto);
 		}
 		return listDto;
@@ -51,7 +51,7 @@ public class BookDto {
 			dto.setOccupied(entity.isOccupied());
 			dto.setQuantity(entity.getQuantity());
 			dto.setRating(entity.getRating());
-			dto.setDepartment(entity.getDepartment());
+			dto.setDepartment(entity.getDepartments());
 		} else {
 			dto.setId(null);
 		}
@@ -65,7 +65,7 @@ public class BookDto {
 		entity.setOccupied(dto.isOccupied());
 		entity.setQuantity(dto.getQuantity());
 		entity.setRating(dto.getRating());
-		entity.setDepartment(dto.getDepartment());
+		entity.setDepartments(dto.getDepartment());
 		return entity;
 	}
 }

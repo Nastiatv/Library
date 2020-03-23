@@ -12,7 +12,6 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.runa.lib.enums.Department;
@@ -36,7 +35,7 @@ public class Book extends AEntity {
 	private int quantity;
 	private Double rating;
 	
-	@ElementCollection(targetClass = Department.class)
+	@ElementCollection
 	@CollectionTable(name = "departments")
 	@Column(name = "departments", nullable = false)
 	@Enumerated(EnumType.STRING)
@@ -48,6 +47,4 @@ public class Book extends AEntity {
 	@OneToMany(mappedBy = "book", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Order> orders;
 
-	@OneToOne(mappedBy = "book", cascade = CascadeType.ALL)
-	private BookDetails bookDetails;
 }

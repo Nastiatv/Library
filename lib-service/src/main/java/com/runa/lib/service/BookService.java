@@ -36,7 +36,7 @@ public class BookService implements IBookService {
 		book.setIsbn(dto.getIsbn());
 		book.setOccupied(dto.isOccupied());
 		book.setRating(dto.getRating());
-		book.setDepartment(dto.getDepartment());
+		book.setDepartments(dto.getDepartment());
 		return BookDto.entityToDto(bookDao.create(book));
 	}
 
@@ -58,7 +58,7 @@ public class BookService implements IBookService {
 		existingBook.setIsbn(bookDto.getIsbn());
 		existingBook.setOccupied(bookDto.isOccupied());
 		existingBook.setRating(bookDto.getRating());
-		existingBook.setDepartment(bookDto.getDepartment());
+		existingBook.setDepartments(bookDto.getDepartment());
 		bookDao.update(existingBook);
 		log.info("Book successfully updated");
 

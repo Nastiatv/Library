@@ -29,9 +29,9 @@ public class OrderDto {
 		for (Order Order : entities) {
 			OrderDto dto = new OrderDto();
 			dto.setId(Order.getId());
-			dto.setUserId(Order.getUserId());
-			dto.setBookId(Order.getBookId());
-			dto.setNotificationId(Order.getNotificationId());
+			dto.setUserId(Order.getUser().getId());
+			dto.setBookId(Order.getBook().getId());
+			dto.setNotificationId(Order.getNotification().getId());
 			dto.setOrderDate(Order.getOrderDate());
 			dto.setDueDate(Order.getDueDate());
 			dto.setFinished(Order.isFinished());
@@ -46,9 +46,9 @@ public class OrderDto {
 		dto.setId(entity.getId());
 		if (entity.getId() != null) {
 			dto.setId(entity.getId());
-			dto.setUserId(entity.getUserId());
-			dto.setBookId(entity.getBookId());
-			dto.setNotificationId(entity.getNotificationId());
+			dto.setUserId(entity.getUser().getId());
+			dto.setBookId(entity.getBook().getId());
+			dto.setNotificationId(entity.getNotification().getId());
 			dto.setOrderDate(entity.getOrderDate());
 			dto.setDueDate(entity.getDueDate());
 			dto.setFinished(entity.isFinished());
@@ -62,9 +62,9 @@ public class OrderDto {
 	public static Order dtoToEntity(OrderDto dto) {
 		Order entity = new Order();
 		entity.setId(dto.getId());
-		entity.setUserId(dto.getUserId());
-		entity.setBookId(dto.getBookId());
-		entity.setNotificationId(dto.getNotificationId());
+		entity.getUser().setId(dto.getUserId());
+		entity.getBook().setId(dto.getBookId());
+		entity.getNotification().setId(dto.getNotificationId());
 		entity.setOrderDate(dto.getOrderDate());
 		entity.setDueDate(dto.getDueDate());
 		entity.setFinished(dto.isFinished());

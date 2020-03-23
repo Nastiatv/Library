@@ -31,9 +31,9 @@ public class OrderService implements IOrderService {
 	@Override
 	public OrderDto addOrder(OrderDto orderDto) {
 		Order order = new Order();
-		order.setBookId(orderDto.getBookId());
-		order.setUserId(orderDto.getUserId());
-		order.setNotificationId(orderDto.getNotificationId());
+		order.getBook().setId(orderDto.getBookId());
+		order.getUser().setId(orderDto.getUserId());
+		order.getNotification().setId(orderDto.getNotificationId());
 		order.setDueDate(orderDto.getDueDate());
 		order.setOrderDate(orderDto.getOrderDate());
 		order.setProlongation(orderDto.isProlongation());
@@ -55,9 +55,9 @@ public class OrderService implements IOrderService {
 	@Override
 	public void updateOrder(Long id, OrderDto orderDto) {
 		Order existingOrder = Optional.ofNullable(orderDao.get(id)).orElse(new Order());
-		existingOrder.setNotificationId(orderDto.getNotificationId());
-		existingOrder.setBookId(orderDto.getBookId());
-		existingOrder.setUserId(orderDto.getUserId());
+		existingOrder.getNotification().setId(orderDto.getNotificationId());
+		existingOrder.getBook().setId(orderDto.getBookId());
+		existingOrder.getUser().setId(orderDto.getUserId());
 		existingOrder.setOrderDate(orderDto.getOrderDate());
 		existingOrder.setDueDate(orderDto.getDueDate());
 		existingOrder.setProlongation(orderDto.isProlongation());

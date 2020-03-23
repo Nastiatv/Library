@@ -31,8 +31,8 @@ public class FeedbackService implements IFeedbackService {
 	@Override
 	public FeedbackDto addFeedback(FeedbackDto feedbackDto) {
 		Feedback feedback = new Feedback();
-		feedback.setBookId(feedbackDto.getBookId());
-		feedback.setUserId(feedbackDto.getUserId());
+		feedback.getBook().setId(feedbackDto.getBookId());
+		feedback.getUser().setId(feedbackDto.getUserId());
 		feedback.setRating(feedbackDto.getRating());
 		feedback.setUserName(feedbackDto.getUserName());
 		feedback.setComment(feedbackDto.getComment());
@@ -54,8 +54,8 @@ public class FeedbackService implements IFeedbackService {
 	public void updateFeedback(Long id, FeedbackDto feedbackDto) {
 		Feedback existingFeedback = Optional.ofNullable(feedbackDao.get(id)).orElse(new Feedback());
 		existingFeedback.setRating(feedbackDto.getRating());
-		existingFeedback.setBookId(feedbackDto.getBookId());
-		existingFeedback.setUserId(feedbackDto.getUserId());
+		existingFeedback.getBook().setId(feedbackDto.getBookId());
+		existingFeedback.getUser().setId(feedbackDto.getUserId());
 		existingFeedback.setComment(feedbackDto.getComment());
 		existingFeedback.setUserName(feedbackDto.getUserName());
 		feedbackDao.update(existingFeedback);
