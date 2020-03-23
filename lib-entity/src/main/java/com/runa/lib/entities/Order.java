@@ -2,8 +2,12 @@ package com.runa.lib.entities;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -19,12 +23,6 @@ import lombok.NoArgsConstructor;
 @Table(name = "order_book")
 public class Order extends AEntity {
 
-	@Column(name = "user_id")
-	private Long userId;
-	@Column(name = "book_id")
-	private Long bookId;
-	@Column(name = "notification_id")
-	private Long notificationId;
 	@Column(name = "order_date")
 	private Date orderDate;
 	@Column(name = "due_date")
@@ -33,4 +31,15 @@ public class Order extends AEntity {
 	private boolean isFinished;
 	private boolean prolongation;
 
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name = "book_id", referencedColumnName = "id")
+	private Book book;
+
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name = "user_id", referencedColumnName = "id")
+	private User user;
+
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name = "notification_id", referencedColumnName = "id")
+	private Notification notification;
 }

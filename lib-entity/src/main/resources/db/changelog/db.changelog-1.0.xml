@@ -171,10 +171,10 @@
 			constraintName="fk_book2feedback" referencedTableName="book"
 			referencedColumnNames="id" baseColumnNames="book_id"
 			baseTableName="feedback" />
-		<addForeignKeyConstraint
+	<!-- <addForeignKeyConstraint
 			constraintName="fk_book2book_details" referencedTableName="book"
 			referencedColumnNames="id" baseColumnNames="id"
-			baseTableName="book_details" />
+			baseTableName="book_details" />	-->
 		<addForeignKeyConstraint
 			constraintName="fk_user2user_role" referencedTableName="user"
 			referencedColumnNames="id" baseColumnNames="user_id"

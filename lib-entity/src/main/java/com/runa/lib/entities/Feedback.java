@@ -1,9 +1,13 @@
 package com.runa.lib.entities;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.runa.lib.enums.Rating;
@@ -21,15 +25,17 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode(callSuper = true)
 public class Feedback extends AEntity {
 
-	@Column(name = "book_id")
-	private Long bookId;
-	@Column(name = "user_id")
-	private Long userId;
-
 	@Enumerated(EnumType.STRING)
 	private Rating rating;
 	@Column(name = "user_name")
 	private String userName;
 	private String comment;
 
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name = "user_id", referencedColumnName = "id")
+	private User user;
+	
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name = "book_id", referencedColumnName = "id")
+	private Book book;
 }
