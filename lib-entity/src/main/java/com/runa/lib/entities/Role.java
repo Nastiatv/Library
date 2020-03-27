@@ -2,9 +2,7 @@ package com.runa.lib.entities;
 
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
@@ -23,7 +21,7 @@ public class Role extends AEntity {
 
 	private String name;
 
-	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "rolies", cascade = CascadeType.ALL)
+	@ManyToMany(mappedBy = "rolies")
 	private List<User> users;
 
 }

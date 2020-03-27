@@ -32,7 +32,7 @@ public class BookController {
 
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public BookDto createBook(@RequestBody BookDto bookDto) {
-		return bookService.addBook(bookDto);
+		return bookService.createBook(bookDto);
 	}
 
 	@PutMapping(value = ID, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)

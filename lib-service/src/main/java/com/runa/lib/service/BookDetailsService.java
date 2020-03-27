@@ -35,7 +35,7 @@ public class BookDetailsService implements IBookDetailsService {
 	@Override
 	public BookDetailsDto createBookDetails(String isbn) {
 		BookDetails bookDetails = webScraper.getBookDetailsFromWeb(isbn);
-		return BookDetailsDto.entityToDto(bookDetailsDao.create(bookDetails));
+		return BookDetailsDto.entityToDto(bookDetails);
 	}
 
 	@Override

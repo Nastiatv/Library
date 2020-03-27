@@ -2,13 +2,12 @@ package com.runa.lib.api.dto;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
+import org.springframework.beans.factory.annotation.Autowired;
 
+import com.runa.lib.api.dao.IDepartmentDao;
 import com.runa.lib.entities.Book;
-import com.runa.lib.enums.Department;
+import com.runa.lib.entities.Department;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -24,8 +23,10 @@ public class BookDto {
 	private boolean isOccupied;
 	private int quantity;
 	private double rating;
-	@Enumerated(EnumType.STRING)
-	private Set<Department> department;
+	private String department;
+
+	@Autowired
+	private IDepartmentDao departmentDao;
 
 	public static List<BookDto> convertList(List<Book> entities) {
 		List<BookDto> listDto = new ArrayList<>();
@@ -35,8 +36,7 @@ public class BookDto {
 			dto.setIsbn(book.getIsbn());
 			dto.setOccupied(book.isOccupied());
 			dto.setQuantity(book.getQuantity());
-			dto.setRating(book.getRating());
-			dto.setDepartment(book.getDepartments());
+			dto.setDepartment(convertListDepartmentsToString(book.getDepartments()));
 			listDto.add(dto);
 		}
 		return listDto;
@@ -50,22 +50,38 @@ public class BookDto {
 			dto.setIsbn(entity.getIsbn());
 			dto.setOccupied(entity.isOccupied());
 			dto.setQuantity(entity.getQuantity());
-			dto.setRating(entity.getRating());
-			dto.setDepartment(entity.getDepartments());
+			dto.setDepartment(convertListDepartmentsToString(entity.getDepartments()));
 		} else {
 			dto.setId(null);
 		}
 		return dto;
 	}
 
-	public static Book dtoToEntity(BookDto dto) {
+	public Book dtoToEntity(BookDto dto) {
 		Book entity = new Book();
 		entity.setId(dto.getId());
 		entity.setIsbn(dto.getIsbn());
 		entity.setOccupied(dto.isOccupied());
 		entity.setQuantity(dto.getQuantity());
-		entity.setRating(dto.getRating());
-		entity.setDepartments(dto.getDepartment());
+		entity.setDepartments(convertStringToListDepartments(dto.getDepartment()));
 		return entity;
+	}
+
+	public static String convertListDepartmentsToString(List<Department> departments) {
+		String departmentsInString ="";
+		for (Department department : departments) {
+			departmentsInString = departmentsInString.concat(department + ", ");
+		}
+		return departmentsInString;
+	}
+
+	public List<Department> convertStringToListDepartments(String departmentsInString) {
+		List<Department> departments = new ArrayList<>();
+		String[] list = departmentsInString.split(", ");
+		for (String dep : list) {
+			departments.add(departmentDao.getAll().stream().filter(c -> c.getName().equals(dep)).findFirst()
+					.orElseThrow(() -> new IllegalArgumentException("Invalid enum number : " + dep)));
+		}
+		return departments;
 	}
 }

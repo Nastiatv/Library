@@ -18,14 +18,13 @@
 			</column>
 			<column name="rating" type="double">
 			</column>
-			<column name="department"
-				type="ENUM('QA', 'BA', 'HR', 'SALES', 'IOS', 'ANDROID', 'CLOUD', 'RIA', 'MWA', 'JED', 'DESIGN')">
-				<constraints nullable="false" />
-			</column>
 			<column name="is_occupied" type="tinyint(2)">
 				<constraints nullable="false" />
 			</column>
-			</createTable>
+		<!-- 	<column name="department" type="varchar(255)">
+				<constraints nullable="false" />
+			</column> -->
+		</createTable>
 	</changeSet>
 	<changeSet author="runa" id="02">
 		<createTable tableName="book_details">
@@ -136,21 +135,48 @@
 			<column name="name" type="varchar(255)">
 				<constraints nullable="false" />
 			</column>
+			<column name="rolies" type="varchar(255)">
+				<constraints nullable="false" />
+			</column>
 		</createTable>
 	</changeSet>
 	<changeSet author="runa" id="08">
 		<createTable tableName="user_role">
 			<column name="user_id" type="bigint">
-				<constraints nullable="false" unique="true"
+				<constraints nullable="false"
 					primaryKey="true" />
 			</column>
 			<column name="role_id" type="bigint">
-				<constraints nullable="false" unique="true"
+				<constraints nullable="false" 
 					primaryKey="true" />
 			</column>
 		</createTable>
 	</changeSet>
 	<changeSet author="runa" id="09">
+		<createTable tableName="department">
+			<column name="id" type="bigint" autoIncrement="true">
+				<constraints nullable="false" unique="true"
+					primaryKey="true" />
+			</column>
+			<column name="name"
+				type="varchar(255)">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+	</changeSet>
+	<changeSet author="runa" id="10">
+		<createTable tableName="department_book">
+			<column name="book_id" type="bigint">
+				<constraints nullable="false" unique="true"
+					primaryKey="true" />
+			</column>
+			<column name="department_id" type="bigint">
+				<constraints nullable="false" unique="true"
+					primaryKey="true" />
+			</column>
+		</createTable>
+	</changeSet>
+	<changeSet author="runa" id="11">
 		<addForeignKeyConstraint
 			constraintName="fk_user2order_book" referencedTableName="user"
 			referencedColumnNames="id" baseColumnNames="user_id"
@@ -171,10 +197,6 @@
 			constraintName="fk_book2feedback" referencedTableName="book"
 			referencedColumnNames="id" baseColumnNames="book_id"
 			baseTableName="feedback" />
-	<!-- <addForeignKeyConstraint
-			constraintName="fk_book2book_details" referencedTableName="book"
-			referencedColumnNames="id" baseColumnNames="id"
-			baseTableName="book_details" />	-->
 		<addForeignKeyConstraint
 			constraintName="fk_user2user_role" referencedTableName="user"
 			referencedColumnNames="id" baseColumnNames="user_id"
@@ -183,5 +205,10 @@
 			constraintName="fk_role2user_role" referencedTableName="role"
 			referencedColumnNames="id" baseColumnNames="role_id"
 			baseTableName="user_role" />
+		<addForeignKeyConstraint
+			constraintName="fk_department2department_book"
+			referencedTableName="department" referencedColumnNames="id"
+			baseColumnNames="department_id" baseTableName="department_book" />
 	</changeSet>
+
 </databaseChangeLog> 

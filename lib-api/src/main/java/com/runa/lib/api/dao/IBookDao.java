@@ -4,5 +4,5 @@ import com.runa.lib.entities.Book;
 
 public interface IBookDao extends IAGenericDao<Book> {
 	
-	Book getById(Long id);
+	Book getByIsbn(String isbn);
 }

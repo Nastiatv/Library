@@ -13,10 +13,10 @@ public class WebClientProvider {
 		return setWebClientSettings(BrowserVersion.CHROME);
 	}
 
-	private static WebClient setWebClientSettings(final BrowserVersion chrome) {
-		WebClient webClient = new WebClient(chrome);
+	private static WebClient setWebClientSettings(final BrowserVersion browserVersion) {
+		WebClient webClient = new WebClient(browserVersion);
 		setWebClientDefaultOptions(webClient);
-		return null;
+		return webClient;
 	}
 
 	private static void setWebClientDefaultOptions(WebClient webClient) {
