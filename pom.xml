@@ -54,6 +54,7 @@
 
 
 
+
 		</dependencies>
 	</dependencyManagement>
 
@@ -65,7 +66,6 @@
 		<module>lib-service</module>
 		<module>lib-controller</module>
 		<module>lib-web</module>
-		<module>converter</module>
 	</modules>
 
 	<build>

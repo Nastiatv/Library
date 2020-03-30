@@ -1,6 +1,5 @@
 package com.runa.lib.dao;
 
-import java.util.Collections;
 import java.util.List;
 
 import javax.persistence.NoResultException;
@@ -39,20 +38,6 @@ public class BookDao extends AGenericDao<Book> implements IBookDao {
 			return result.getSingleResult();
 		} catch (NoResultException e) {
 			return null;
-		}
-	}
-
-	@Override
-	public List<Book> getAll() {
-		try {
-			CriteriaBuilder cBuilder = entityManager.getCriteriaBuilder();
-			CriteriaQuery<Book> criteria = cBuilder.createQuery(getGenericClass());
-			Root<Book> linkRoot = criteria.from(getGenericClass());
-			criteria.select(linkRoot);
-			TypedQuery<Book> query = entityManager.createQuery(criteria);
-			return query.getResultList();
-		} catch (NoResultException e) {
-			return Collections.emptyList();
 		}
 	}
 
