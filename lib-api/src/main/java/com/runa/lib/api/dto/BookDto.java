@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.runa.lib.api.dao.IDepartmentDao;
 import com.runa.lib.entities.Book;
+import com.runa.lib.entities.BookDetails;
 import com.runa.lib.entities.Department;
 
 import lombok.AllArgsConstructor;
@@ -24,6 +25,8 @@ public class BookDto {
 	private int quantity;
 	private double rating;
 	private String department;
+	private BookDetails bookDetails;
+	
 
 	@Autowired
 	private IDepartmentDao departmentDao;
@@ -37,10 +40,13 @@ public class BookDto {
 			dto.setOccupied(book.isOccupied());
 			dto.setQuantity(book.getQuantity());
 			dto.setDepartment(convertListDepartmentsToString(book.getDepartments()));
+			dto.setBookDetails(book.getBookDetails());
 			listDto.add(dto);
 		}
 		return listDto;
 	}
+
+	
 
 	public static BookDto entityToDto(Book entity) {
 		BookDto dto = new BookDto();
@@ -51,6 +57,7 @@ public class BookDto {
 			dto.setOccupied(entity.isOccupied());
 			dto.setQuantity(entity.getQuantity());
 			dto.setDepartment(convertListDepartmentsToString(entity.getDepartments()));
+			dto.setBookDetails(entity.getBookDetails());
 		} else {
 			dto.setId(null);
 		}
@@ -64,6 +71,7 @@ public class BookDto {
 		entity.setOccupied(dto.isOccupied());
 		entity.setQuantity(dto.getQuantity());
 		entity.setDepartments(convertStringToListDepartments(dto.getDepartment()));
+		entity.setBookDetails(dto.getBookDetails());
 		return entity;
 	}
 

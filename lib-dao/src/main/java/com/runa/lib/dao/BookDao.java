@@ -7,7 +7,10 @@ import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Join;
+import javax.persistence.criteria.ListJoin;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import org.springframework.stereotype.Repository;
@@ -39,18 +42,48 @@ public class BookDao extends AGenericDao<Book> implements IBookDao {
 		}
 	}
 
-	public List<Book> getAll(Book book) {
+	@Override
+	public List<Book> getAll() {
 		try {
 			CriteriaBuilder cBuilder = entityManager.getCriteriaBuilder();
-			CriteriaQuery<Book> query = cBuilder.createQuery(getGenericClass());
-			Root<Book> root = query.from(getGenericClass());
-			Join<Book, Department> depJoin = root.join(Book_.DEPARTMENTS);
-			query.select(root);
-			query.where(cBuilder.equal(depJoin.get(Department_.BOOKS), book));
-			TypedQuery<Book> result = entityManager.createQuery(query);
-			return result.getResultList();
-			} catch (NoResultException e) {
+			CriteriaQuery<Book> criteria = cBuilder.createQuery(getGenericClass());
+			Root<Book> linkRoot = criteria.from(getGenericClass());
+			criteria.select(linkRoot);
+			TypedQuery<Book> query = entityManager.createQuery(criteria);
+			return query.getResultList();
+		} catch (NoResultException e) {
 			return Collections.emptyList();
 		}
+	}
+
+	public List<Book> getBooksByDepartments(List<Department> departments) {
+		CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+		CriteriaQuery<Book> query = builder.createQuery(getGenericClass());
+		Root<Book> rootBook = query.from(getGenericClass());
+		ListJoin<Book, Department> joinBookDepartments = rootBook.join(Book_.departments);
+		Expression<List<Department>> bookDepartments = rootBook.get(Book_.departments);
+		Expression<Integer> countOfBookDepartments = builder.size(bookDepartments);
+		Expression<Long> countOfBooksInGroup = builder.count(rootBook);
+		Predicate predicateCountOfBookDepartmentsEqualsInputListSize = builder.equal(countOfBookDepartments,
+				departments.size());
+		Predicate predicateBookDepartmentsInInputList = joinBookDepartments.in(departments);
+
+		query.where(
+				builder.and(predicateCountOfBookDepartmentsEqualsInputListSize, predicateBookDepartmentsInInputList))
+				.groupBy(rootBook).having(builder.equal(countOfBooksInGroup, departments.size()));
+
+		return entityManager.createQuery(query).getResultList();
+	}
+
+	public List<Book> getBooksByDepartment(String department) {
+
+		CriteriaBuilder cBuilder = entityManager.getCriteriaBuilder();
+		CriteriaQuery<Book> criteria = cBuilder.createQuery(Book.class);
+		Root<Book> linkRoot = criteria.from(Book.class);
+		Join<Book, Department> departmentJoin = linkRoot.join(Book_.departments);
+		criteria.select(linkRoot);
+		criteria.where(cBuilder.equal(departmentJoin.get(Department_.name), department));
+		TypedQuery<Book> query = entityManager.createQuery(criteria);
+		return query.getResultList();
 	}
 }
