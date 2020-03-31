@@ -8,6 +8,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.runa.lib.api.converters.OrderConverter;
 import com.runa.lib.api.dao.IOrderDao;
 import com.runa.lib.api.dto.OrderDto;
 import com.runa.lib.api.service.IOrderService;
@@ -25,7 +26,7 @@ public class OrderService implements IOrderService {
 
 	@Override
 	public List<OrderDto> getAllOrders() {
-		return OrderDto.convertList(orderDao.getAll());
+		return OrderConverter.convertList(orderDao.getAll());
 	}
 
 	@Override
@@ -38,12 +39,12 @@ public class OrderService implements IOrderService {
 		order.setOrderDate(orderDto.getOrderDate());
 		order.setProlongation(orderDto.isProlongation());
 		order.setFinished(orderDto.isFinished());
-		return OrderDto.entityToDto(orderDao.create(order));
+		return OrderConverter.entityToDto(orderDao.create(order));
 	}
 
 	@Override
 	public OrderDto getOrderById(Long id) {
-		return Optional.ofNullable(OrderDto.entityToDto(orderDao.get(id))).orElse(new OrderDto());
+		return Optional.ofNullable(OrderConverter.entityToDto(orderDao.get(id))).orElse(new OrderDto());
 	}
 
 	@Override

@@ -8,6 +8,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.runa.lib.api.converters.DepartmentConverter;
 import com.runa.lib.api.dao.IDepartmentDao;
 import com.runa.lib.api.dto.DepartmentDto;
 import com.runa.lib.api.service.IDepartmentService;
@@ -25,19 +26,19 @@ public class DepartmentService implements IDepartmentService {
 
 	@Override
 	public List<DepartmentDto> getAllDepartments() {
-		return DepartmentDto.convertList(departmentDao.getAll());
+		return DepartmentConverter.convertList(departmentDao.getAll());
 	}
 
 	@Override
 	public DepartmentDto addDepartment(DepartmentDto departmentDto) {
 		Department department = new Department();
 		department.setName(departmentDto.getName());
-		return DepartmentDto.entityToDto(departmentDao.create(department));
+		return DepartmentConverter.entityToDto(departmentDao.create(department));
 	}
 
 	@Override
 	public DepartmentDto getDepartmentById(Long id) {
-		return Optional.ofNullable(DepartmentDto.entityToDto(departmentDao.get(id))).orElse(new DepartmentDto());
+		return Optional.ofNullable(DepartmentConverter.entityToDto(departmentDao.get(id))).orElse(new DepartmentDto());
 	}
 
 	@Override

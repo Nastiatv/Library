@@ -43,7 +43,7 @@ public class Book extends AEntity {
 	@OneToMany(mappedBy = "book", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Order> orders;
 
-	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
 	@PrimaryKeyJoinColumn
 	private BookDetails bookDetails;
 

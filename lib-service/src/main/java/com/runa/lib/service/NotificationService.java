@@ -8,6 +8,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.runa.lib.api.converters.NotificationConverter;
 import com.runa.lib.api.dao.INotificationDao;
 import com.runa.lib.api.dto.NotificationDto;
 import com.runa.lib.api.service.INotificationService;
@@ -25,19 +26,19 @@ public class NotificationService implements INotificationService {
 
 	@Override
 	public List<NotificationDto> getAllNotifications() {
-		return NotificationDto.convertList(notificationDao.getAll());
+		return NotificationConverter.convertList(notificationDao.getAll());
 	}
 
 	@Override
 	public NotificationDto addNotification(NotificationDto dto) {
 		Notification notification = new Notification();
 		notification.setNotificationMessage(dto.getNotificationMessage());
-		return NotificationDto.entityToDto(notificationDao.create(notification));
+		return NotificationConverter.entityToDto(notificationDao.create(notification));
 	}
 
 	@Override
 	public NotificationDto getNotificationById(Long id) {
-		return Optional.ofNullable(NotificationDto.entityToDto(notificationDao.get(id))).orElse(new NotificationDto());
+		return Optional.ofNullable(NotificationConverter.entityToDto(notificationDao.get(id))).orElse(new NotificationDto());
 	}
 
 	@Override

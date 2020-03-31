@@ -43,7 +43,7 @@ public class WebScraper {
 			bookDetails.setPicture(String.format(IMAGE_URL, isbn));
 			bookDetails.setName(name.getTextContent());
 			bookDetails.setAuthor(author.getTextContent());
-			bookDetailsDao.update(bookDetails);
+			bookDetailsDao.create(bookDetails);
 			return bookDetails;
 		} catch (FailingHttpStatusCodeException | IOException e) {
 			log.info("Bad url response!", e);

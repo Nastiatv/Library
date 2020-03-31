@@ -21,9 +21,8 @@
 			<column name="is_occupied" type="tinyint(2)">
 				<constraints nullable="false" />
 			</column>
-		<!-- 	<column name="department" type="varchar(255)">
-				<constraints nullable="false" />
-			</column> -->
+			<!-- <column name="department" type="varchar(255)"> <constraints nullable="false" 
+				/> </column> -->
 		</createTable>
 	</changeSet>
 	<changeSet author="runa" id="02">
@@ -143,12 +142,10 @@
 	<changeSet author="runa" id="08">
 		<createTable tableName="user_role">
 			<column name="user_id" type="bigint">
-				<constraints nullable="false"
-					primaryKey="true" />
+				<constraints nullable="false" primaryKey="true" />
 			</column>
 			<column name="role_id" type="bigint">
-				<constraints nullable="false" 
-					primaryKey="true" />
+				<constraints nullable="false" primaryKey="true" />
 			</column>
 		</createTable>
 	</changeSet>
@@ -158,8 +155,7 @@
 				<constraints nullable="false" unique="true"
 					primaryKey="true" />
 			</column>
-			<column name="name"
-				type="varchar(255)">
+			<column name="name" type="varchar(255)">
 				<constraints nullable="false" />
 			</column>
 		</createTable>
@@ -167,12 +163,10 @@
 	<changeSet author="runa" id="10">
 		<createTable tableName="department_book">
 			<column name="book_id" type="bigint">
-				<constraints nullable="false" unique="true"
-					primaryKey="true" />
+				<constraints nullable="false" primaryKey="true" />
 			</column>
 			<column name="department_id" type="bigint">
-				<constraints nullable="false" unique="true"
-					primaryKey="true" />
+				<constraints nullable="false" primaryKey="true" />
 			</column>
 		</createTable>
 	</changeSet>

@@ -36,8 +36,8 @@ public class BookController {
 	}
 
 	@PutMapping(value = ID, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public void updateBook(@PathVariable Long id, @RequestBody BookDto bookDto) {
-		bookService.updateBook(id, bookDto);
+	public void updateBook(@PathVariable String isbn, @RequestBody BookDto bookDto) {
+		bookService.updateBook(isbn, bookDto);
 	}
 
 	@GetMapping(value = ID)

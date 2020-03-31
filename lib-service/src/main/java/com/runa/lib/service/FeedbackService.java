@@ -8,6 +8,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.runa.lib.api.converters.FeedbackConverter;
 import com.runa.lib.api.dao.IFeedbackDao;
 import com.runa.lib.api.dto.FeedbackDto;
 import com.runa.lib.api.service.IFeedbackService;
@@ -25,7 +26,7 @@ public class FeedbackService implements IFeedbackService {
 
 	@Override
 	public List<FeedbackDto> getAllFeedbacks() {
-		return FeedbackDto.convertList(feedbackDao.getAll());
+		return FeedbackConverter.convertList(feedbackDao.getAll());
 	}
 
 	@Override
@@ -36,12 +37,12 @@ public class FeedbackService implements IFeedbackService {
 		feedback.setRating(feedbackDto.getRating());
 		feedback.setUserName(feedbackDto.getUserName());
 		feedback.setComment(feedbackDto.getComment());
-		return FeedbackDto.entityToDto(feedbackDao.create(feedback));
+		return FeedbackConverter.entityToDto(feedbackDao.create(feedback));
 	}
 
 	@Override
 	public FeedbackDto getFeedbackById(Long id) {
-		return Optional.ofNullable(FeedbackDto.entityToDto(feedbackDao.get(id))).orElse(new FeedbackDto());
+		return Optional.ofNullable(FeedbackConverter.entityToDto(feedbackDao.get(id))).orElse(new FeedbackDto());
 	}
 
 	@Override

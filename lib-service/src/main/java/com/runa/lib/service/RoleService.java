@@ -8,6 +8,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.runa.lib.api.converters.RoleConverter;
 import com.runa.lib.api.dao.IRoleDao;
 import com.runa.lib.api.dto.RoleDto;
 import com.runa.lib.api.service.IRoleService;
@@ -25,19 +26,19 @@ public class RoleService implements IRoleService {
 
 	@Override
 	public List<RoleDto> getAllRoles() {
-		return RoleDto.convertList(roleDao.getAll());
+		return RoleConverter.convertList(roleDao.getAll());
 	}
 
 	@Override
 	public RoleDto addRole(RoleDto roleDto) {
 		Role role = new Role();
 		role.setName(roleDto.getName());
-		return RoleDto.entityToDto(roleDao.create(role));
+		return RoleConverter.entityToDto(roleDao.create(role));
 	}
 
 	@Override
 	public RoleDto getRoleById(Long id) {
-		return Optional.ofNullable(RoleDto.entityToDto(roleDao.get(id))).orElse(new RoleDto());
+		return Optional.ofNullable(RoleConverter.entityToDto(roleDao.get(id))).orElse(new RoleDto());
 	}
 
 	@Override

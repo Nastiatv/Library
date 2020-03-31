@@ -8,6 +8,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.runa.lib.api.converters.UserConverter;
 import com.runa.lib.api.dao.IUserDao;
 import com.runa.lib.api.dto.UserDto;
 import com.runa.lib.api.service.IUserService;
@@ -25,7 +26,7 @@ public class UserService implements IUserService {
 
 	@Override
 	public List<UserDto> getAllUsers() {
-		return UserDto.convertList(userDao.getAll());
+		return UserConverter.convertList(userDao.getAll());
 	}
 
 	@Override
@@ -34,12 +35,12 @@ public class UserService implements IUserService {
 		user.setEmail(userDto.getEmail());
 		user.setName(userDto.getName());
 		user.setPassword(userDto.getPassword());
-		return UserDto.entityToDto(userDao.create(user));
+		return UserConverter.entityToDto(userDao.create(user));
 	}
 
 	@Override
 	public UserDto getUserById(Long id) {
-		return Optional.ofNullable(UserDto.entityToDto(userDao.get(id))).orElse(new UserDto());
+		return Optional.ofNullable(UserConverter.entityToDto(userDao.get(id))).orElse(new UserDto());
 	}
 
 	@Override

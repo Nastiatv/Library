@@ -2,7 +2,9 @@ package com.runa.lib.entities;
 
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
@@ -19,7 +21,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "department")
 public class Department extends AEntity {
 
-	@ManyToMany(mappedBy = "departments")
+	@ManyToMany(mappedBy = "departments", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Set<Book> books;
 
 	private String name;

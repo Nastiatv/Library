@@ -8,6 +8,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.runa.lib.api.converters.BookDetailsConverter;
 import com.runa.lib.api.dao.IBookDetailsDao;
 import com.runa.lib.api.dto.BookDetailsDto;
 import com.runa.lib.api.service.IBookDetailsService;
@@ -29,18 +30,18 @@ public class BookDetailsService implements IBookDetailsService {
 	
 	@Override
 	public List<BookDetailsDto> getAllBookDetails() {
-		return BookDetailsDto.convertList(bookDetailsDao.getAll());
+		return BookDetailsConverter.convertList(bookDetailsDao.getAll());
 	}
 
 	@Override
 	public BookDetailsDto createBookDetails(String isbn) {
 		BookDetails bookDetails = webScraper.getBookDetailsFromWeb(isbn);
-		return BookDetailsDto.entityToDto(bookDetails);
+		return BookDetailsConverter.entityToDto(bookDetails);
 	}
 
 	@Override
 	public BookDetailsDto getBookDetailsById(Long id) {
-		return Optional.ofNullable(BookDetailsDto.entityToDto(bookDetailsDao.get(id))).orElse(new BookDetailsDto());
+		return Optional.ofNullable(BookDetailsConverter.entityToDto(bookDetailsDao.get(id))).orElse(new BookDetailsDto());
 	}
 
 	@Override

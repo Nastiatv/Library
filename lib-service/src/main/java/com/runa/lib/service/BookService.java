@@ -8,8 +8,9 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.runa.lib.api.converters.BookConverter;
+import com.runa.lib.api.converters.BookDetailsConverter;
 import com.runa.lib.api.dao.IBookDao;
-import com.runa.lib.api.dto.BookDetailsDto;
 import com.runa.lib.api.dto.BookDto;
 import com.runa.lib.api.service.IBookDetailsService;
 import com.runa.lib.api.service.IBookService;
@@ -35,7 +36,7 @@ public class BookService implements IBookService {
 
 	@Override
 	public List<BookDto> getAllBooks() {
-		return BookDto.convertList(bookDao.getAll());
+		return BookConverter.convertList(bookDao.getAll());
 	}
 
 	@Override
@@ -52,27 +53,26 @@ public class BookService implements IBookService {
 					}
 				}
 			}
-			return BookDto.entityToDto(getBookbyIsbn(dto));
+			return BookConverter.entityToDto(getBookbyIsbn(dto));
 		} else {
 			Book book = new Book();
-			book.setId(dto.getId());
 			book.setQuantity(1);
 			book.setIsbn(dto.getIsbn());
 			book.setOccupied(false);
 			book.setRating(null);
 			book.setDepartments(departmentConverter.convertToEntityAttribute(dto.getDepartment()));
-			book.setBookDetails(BookDetailsDto.dtoToEntity(bookDetailsService.createBookDetails(dto.getIsbn())));
-			return BookDto.entityToDto(bookDao.create(book));
+			book.setBookDetails(BookDetailsConverter.dtoToEntity(bookDetailsService.createBookDetails(dto.getIsbn())));
+			return BookConverter.entityToDto(bookDao.create(book));
 		}
 	}
 
 	private Book getBookbyIsbn(BookDto dto) {
-		return bookDao.getByIsbn(dto.getIsbn());
+		return bookDao.getByIsbn(dto.getIsbn().trim());
 	}
 
 	@Override
 	public BookDto getBookById(Long id) {
-		return Optional.ofNullable(BookDto.entityToDto(bookDao.get(id))).orElse(new BookDto());
+		return Optional.ofNullable(BookConverter.entityToDto(bookDao.get(id))).orElse(new BookDto());
 	}
 
 	@Override
@@ -82,13 +82,11 @@ public class BookService implements IBookService {
 	}
 
 	@Override
-	public void updateBook(Long id, BookDto bookDto) {
-		Book existingBook = Optional.ofNullable(bookDao.get(id)).orElse(new Book());
+	public void updateBook(String isbn, BookDto bookDto) {
+		Book existingBook = Optional.ofNullable(bookDao.getByIsbn(isbn)).orElse(new Book());
 		existingBook.setQuantity(bookDto.getQuantity());
-		existingBook.setIsbn(bookDto.getIsbn());
 		existingBook.setOccupied(bookDto.isOccupied());
-		existingBook.setRating(bookDto.getRating());
-//		existingBook.setDepartments(bookDto.getDepartments());
+		existingBook.setDepartments(departmentConverter.convertToEntityAttribute(bookDto.getDepartment()));
 		bookDao.update(existingBook);
 		log.info("Book successfully updated");
 
