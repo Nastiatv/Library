@@ -1,0 +1,27 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://thymeleaf.org" lang="en">
+<head>
+<title>Departments page</title>
+<link href="../css/styles.css" rel="stylesheet" />
+<link rel="stylesheet"
+	href="/lib-web/src/main/resources/css/bootstrap.min.css">
+</head>
+<body>
+	<h1>Our Departments:</h1>
+	<a href="addDepartment">Add Department</a>
+	<br />
+	<table border="1">
+		<tr>
+			<th id="id">Id</th>
+			<th id="name">Name</th>
+		</tr>
+		<tr>
+		<tr th:each="department : ${departmentsList}">
+			<td th:text="${department.id}"></td>
+			<td th:text="${department.name}"></td>
+		</tr>
+	</table>
+	<script src="/lib-web/src/main/resources/js/jquery-3.4.1.min.js"></script>
+	<script src="/lib-web/src/main/resources/js/bootstrap.min.js"></script>
+</body>
+</html>

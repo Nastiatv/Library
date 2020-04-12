@@ -1,0 +1,26 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://thymeleaf.org" lang="en">
+<head>
+<title>Add user</title>
+<link href="../css/styles.css" rel="stylesheet" />
+<link rel="stylesheet"
+	href="/lib-web/src/main/resources/css/bootstrap.min.css">
+</head>
+<body>
+	<h1>Create a User:</h1>
+	<br />
+	<form th:action="@{/adduser}" th:object="${dto}" method="POST">
+		Email: <input type="text" th:field="*{email}" required> <br />
+		Name: <input type="text" th:field="*{name}" required> <br />
+		Department: <input type="text" th:field="*{departmentName}" required> <br /> 
+		Password: <input type="password" th:field="*{password}" required> <br /> 
+		Repeat Password: <input type="password" th:field="*{password}" required> <br /> 
+		<input type="submit" value="Create" /> 
+		<input type="reset" value="Reset">
+	</form>
+	<script src="/lib-web/src/main/resources/js/jquery-3.4.1.min.js"></script>
+	<script src="/lib-web/src/main/resources/js/bootstrap.min.js"></script>
+</body>
+</html>
+
+
