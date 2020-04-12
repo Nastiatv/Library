@@ -1,6 +1,6 @@
 package com.runa.lib.entities;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -24,9 +24,9 @@ import lombok.NoArgsConstructor;
 public class Order extends AEntity {
 
 	@Column(name = "order_date")
-	private Date orderDate;
+	private LocalDateTime orderDate;
 	@Column(name = "due_date")
-	private Date dueDate;
+	private LocalDateTime dueDate;
 	@Column(name = "is_finished")
 	private boolean isFinished;
 	private boolean prolongation;
@@ -39,7 +39,4 @@ public class Order extends AEntity {
 	@JoinColumn(name = "user_id", referencedColumnName = "id")
 	private User user;
 
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinColumn(name = "notification_id", referencedColumnName = "id")
-	private Notification notification;
 }

@@ -1,6 +1,6 @@
 package com.runa.lib.api.dto;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,9 +14,8 @@ public class OrderDto {
 	private Long id;
 	private Long userId;
 	private Long bookId;
-	private Long notificationId;
-	private Date orderDate;
-	private Date dueDate;
+	private LocalDateTime orderDate;
+	private LocalDateTime dueDate;
 	private boolean isFinished;
 	private boolean prolongation;
 

@@ -3,6 +3,7 @@ package com.runa.lib.service;
 import java.util.List;
 import java.util.Optional;
 
+import javax.mail.MessagingException;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,9 +15,9 @@ import com.runa.lib.api.dao.IBookDao;
 import com.runa.lib.api.dto.BookDto;
 import com.runa.lib.api.service.IBookDetailsService;
 import com.runa.lib.api.service.IBookService;
-import com.runa.lib.converter.DepartmentConverter;
 import com.runa.lib.entities.Book;
 import com.runa.lib.entities.Department;
+import com.runa.lib.utils.mailsender.EmailSender;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -29,10 +30,13 @@ public class BookService implements IBookService {
 	private IBookDao bookDao;
 
 	@Autowired
-	private DepartmentConverter departmentConverter;
+	private BookConverter bookConverter;
 
 	@Autowired
 	private IBookDetailsService bookDetailsService;
+
+	@Autowired
+	private EmailSender emailSender;
 
 	@Override
 	public List<BookDto> getAllBooks() {
@@ -41,15 +45,19 @@ public class BookService implements IBookService {
 
 	@Override
 	public BookDto createBook(BookDto dto) {
-
 		if (getBookbyIsbn(dto) != null) {
-			for (Department dep : departmentConverter.convertToEntityAttribute(dto.getDepartment())) {
+			for (Department dep : bookConverter.convertStringToListDepartments(dto.getDepartment())) {
 				for (Book book : bookDao.getAll()) {
 					if (book.getDepartments().contains(dep)) {
 						getBookbyIsbn(dto).setQuantity(getBookbyIsbn(dto).getQuantity() + 1);
 					} else {
 						getBookbyIsbn(dto).setQuantity(getBookbyIsbn(dto).getQuantity() + 1);
 						getBookbyIsbn(dto).getDepartments().add(dep);
+						try {
+							emailSender.sendEmailsFromAdmin(dto);
+						} catch (MessagingException e) {
+							log.info("Mail not sent!");
+						}
 					}
 				}
 			}
@@ -60,8 +68,13 @@ public class BookService implements IBookService {
 			book.setIsbn(dto.getIsbn());
 			book.setOccupied(false);
 			book.setRating(null);
-			book.setDepartments(departmentConverter.convertToEntityAttribute(dto.getDepartment()));
+			book.setDepartments(bookConverter.convertStringToListDepartments(dto.getDepartment()));
 			book.setBookDetails(BookDetailsConverter.dtoToEntity(bookDetailsService.createBookDetails(dto.getIsbn())));
+			try {
+				emailSender.sendEmailsFromAdmin(dto);
+			} catch (MessagingException e) {
+				log.info("Mail not sent!");
+			}
 			return BookConverter.entityToDto(bookDao.create(book));
 		}
 	}
@@ -82,13 +95,13 @@ public class BookService implements IBookService {
 	}
 
 	@Override
-	public void updateBook(String isbn, BookDto bookDto) {
-		Book existingBook = Optional.ofNullable(bookDao.getByIsbn(isbn)).orElse(new Book());
+	public BookDto updateBook(Long id, BookDto bookDto) {
+		Book existingBook = Optional.ofNullable(bookDao.get(id)).orElse(new Book());
 		existingBook.setQuantity(bookDto.getQuantity());
 		existingBook.setOccupied(bookDto.isOccupied());
-		existingBook.setDepartments(departmentConverter.convertToEntityAttribute(bookDto.getDepartment()));
+		existingBook.setDepartments(bookConverter.convertStringToListDepartments(bookDto.getDepartment()));
 		bookDao.update(existingBook);
-		log.info("Book successfully updated");
+		return BookConverter.entityToDto(existingBook);
 
 	}
 }

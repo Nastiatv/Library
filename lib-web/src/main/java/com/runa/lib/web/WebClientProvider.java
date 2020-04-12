@@ -26,7 +26,7 @@ public class WebClientProvider {
 			webClient.getOptions().setThrowExceptionOnFailingStatusCode(false);
 			webClient.getOptions().setRedirectEnabled(true);
 			webClient.getOptions().setJavaScriptEnabled(true);
-			webClient.getOptions().setCssEnabled(true);
+			webClient.getOptions().setCssEnabled(false);
 			webClient.getOptions().setPrintContentOnFailingStatusCode(false);
 			webClient.waitForBackgroundJavaScript(10000);
 		}

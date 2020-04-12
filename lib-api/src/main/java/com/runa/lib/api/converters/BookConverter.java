@@ -4,12 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.runa.lib.api.dao.IDepartmentDao;
 import com.runa.lib.api.dto.BookDto;
 import com.runa.lib.entities.Book;
 import com.runa.lib.entities.Department;
 
+@Component
 public class BookConverter {
 
 	@Autowired

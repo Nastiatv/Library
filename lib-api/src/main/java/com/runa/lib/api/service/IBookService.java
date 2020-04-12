@@ -14,6 +14,6 @@ public interface IBookService {
 
 	BookDto createBook(BookDto dto);
 
-	void updateBook(String isbn, BookDto bookDto);
+	BookDto updateBook(Long id, BookDto bookDto);
 
 }

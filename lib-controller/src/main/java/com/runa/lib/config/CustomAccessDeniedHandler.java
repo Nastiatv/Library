@@ -1,4 +1,4 @@
-package com.runa.lib.configuration;
+package com.runa.lib.config;
 
 import java.io.IOException;
 

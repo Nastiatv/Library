@@ -1,5 +1,6 @@
 package com.runa.lib.service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,15 +31,14 @@ public class OrderService implements IOrderService {
 	}
 
 	@Override
-	public OrderDto addOrder(OrderDto orderDto) {
+	public OrderDto makeOrder(OrderDto orderDto) {
 		Order order = new Order();
 		order.getBook().setId(orderDto.getBookId());
 		order.getUser().setId(orderDto.getUserId());
-		order.getNotification().setId(orderDto.getNotificationId());
-		order.setDueDate(orderDto.getDueDate());
-		order.setOrderDate(orderDto.getOrderDate());
-		order.setProlongation(orderDto.isProlongation());
-		order.setFinished(orderDto.isFinished());
+		order.setOrderDate(LocalDateTime.now());
+		order.setDueDate(order.getOrderDate().plusDays(10));
+		order.setProlongation(false);
+		order.setFinished(false);
 		return OrderConverter.entityToDto(orderDao.create(order));
 	}
 
@@ -56,7 +56,6 @@ public class OrderService implements IOrderService {
 	@Override
 	public void updateOrder(Long id, OrderDto orderDto) {
 		Order existingOrder = Optional.ofNullable(orderDao.get(id)).orElse(new Order());
-		existingOrder.getNotification().setId(orderDto.getNotificationId());
 		existingOrder.getBook().setId(orderDto.getBookId());
 		existingOrder.getUser().setId(orderDto.getUserId());
 		existingOrder.setOrderDate(orderDto.getOrderDate());

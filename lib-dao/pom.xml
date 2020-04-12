@@ -13,7 +13,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>com.runa</groupId>
-			<artifactId>lib-converter</artifactId>
+			<artifactId>lib-utils</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>

@@ -15,7 +15,6 @@ public class OrderConverter {
 			dto.setId(Order.getId());
 			dto.setUserId(Order.getUser().getId());
 			dto.setBookId(Order.getBook().getId());
-			dto.setNotificationId(Order.getNotification().getId());
 			dto.setOrderDate(Order.getOrderDate());
 			dto.setDueDate(Order.getDueDate());
 			dto.setFinished(Order.isFinished());
@@ -32,7 +31,6 @@ public class OrderConverter {
 			dto.setId(entity.getId());
 			dto.setUserId(entity.getUser().getId());
 			dto.setBookId(entity.getBook().getId());
-			dto.setNotificationId(entity.getNotification().getId());
 			dto.setOrderDate(entity.getOrderDate());
 			dto.setDueDate(entity.getDueDate());
 			dto.setFinished(entity.isFinished());
@@ -48,7 +46,6 @@ public class OrderConverter {
 		entity.setId(dto.getId());
 		entity.getUser().setId(dto.getUserId());
 		entity.getBook().setId(dto.getBookId());
-		entity.getNotification().setId(dto.getNotificationId());
 		entity.setOrderDate(dto.getOrderDate());
 		entity.setDueDate(dto.getDueDate());
 		entity.setFinished(dto.isFinished());

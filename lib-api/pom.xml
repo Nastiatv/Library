@@ -16,6 +16,11 @@
 			<artifactId>lib-entity</artifactId>
 			<version>${project.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>javax.mail</groupId>
+			<artifactId>javax.mail-api</artifactId>
+		</dependency>
+
 	</dependencies>
 
 </project>

@@ -1,21 +1,18 @@
 <!doctype html>
 <html lang="en" xmlns:th="http://thymeleaf.org">
 <head>
-    <title>Books page</title>
-    <link href="../css/styles.css" rel="stylesheet" />
+<title>Books page</title>
+<link href="../css/styles.css" rel="stylesheet" />
 </head>
 <body>
 	<h1>Our Books:</h1>
-	<br /> 
+	<br />
 	<div id="wrapper">
 		<div th:each="book : ${bookList}" class="userblock">
-			<h2 th:text="${book.title}"></h2>
-			<h4 th:text="${book.author}"></h4>
-			<h6 th:text="${book.publisher}"></h6>
-			<p th:text="${book.isbn}"></p>
-			<p th:text="${book.description}"></p>
-			<img th:src="@{${book.picture}}" 
-			th:alt = "${book.title}" alt="" class="image"/>
+			<p>th:text="${book.bookDetails}"> 
+				th:text="${book.quantity}">
+				th:text="${book.rating}"> 
+				th:text="${book.isbn}"></p>
 		</div>
 	</div>
 </body>
