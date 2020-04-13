@@ -32,8 +32,8 @@ public class Order extends AEntity {
 	@Column(name = "is_finished")
 	private boolean isFinished;
 
-	@Column(name = "prolongation")
-	private boolean prolongation;
+	@Column(name = "isProlonged")
+	private boolean isProlonged;
 
 	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "book_id", referencedColumnName = "id")

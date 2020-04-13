@@ -15,7 +15,7 @@
 			<th id="orderDate">orderDate</th>
 			<th id="dueDate">dueDate</th>
 			<th id="isFinished">isFinished</th>
-			<th id="prolongation">isExtended</th>
+			<th id="pisProlonged">isProlonged</th>
 			<th id="book">book</th>
 			<th id="user">user</th>
 		</tr>
@@ -24,7 +24,7 @@
 			<td th:text="${order.orderDate}"></td>
 			<td th:text="${order.dueDate}"></td>
 			<td th:text="${order.isFinished}"></td>
-			<td th:text="${order.prolongation}"></td>
+			<td th:text="${order.isProlonged}"></td>
 			<td th:text="${order.book.id}"></td>
 			<td th:text="${order.user.id}"></td>
 		</tr>

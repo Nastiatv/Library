@@ -3,13 +3,11 @@ package by.runa.lib.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
@@ -18,7 +16,7 @@ import by.runa.lib.api.dto.DepartmentDto;
 import by.runa.lib.api.service.IDepartmentService;
 
 @RestController
-@RequestMapping(value = "/departments/")
+@RequestMapping("/departments/")
 public class DepartmentController {
 
 	private static final String ID = "{id}";
@@ -31,27 +29,50 @@ public class DepartmentController {
 		ModelAndView modelAndView = new ModelAndView();
 		List<DepartmentDto> departments = departmentService.getAllDepartments();
 		modelAndView.setViewName("alldepartments");
-		modelAndView.addObject("departmentsList", departments);
+		modelAndView.addObject("departmentList", departments);
 		return modelAndView;
 	}
 
-	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public DepartmentDto addDepartment(@RequestBody DepartmentDto dto) {
-		return departmentService.addDepartment(dto);
+	@GetMapping(value = "adddepartment")
+	public ModelAndView addDepartment() {
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("adddepartment");
+		return modelAndView.addObject("dto", new DepartmentDto());
 	}
 
-	@PutMapping(value = ID, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public void updateDepartment(@PathVariable Long id, @RequestBody DepartmentDto dto) {
-		departmentService.updateDepartment(id, dto);
+	@PostMapping(value = "adddepartment")
+	public ModelAndView addDepartmentSubmit(DepartmentDto departmentDto) {
+		ModelAndView modelAndView = new ModelAndView();
+		DepartmentDto newdepartment = departmentService.createDepartment(departmentDto);
+		modelAndView.setViewName("department");
+		return modelAndView.addObject("newdepartment", newdepartment);
+	}
+
+	@PutMapping(value = ID)
+	public ModelAndView updateDepartment(@PathVariable Long id, DepartmentDto departmentDto) {
+		ModelAndView modelAndView = new ModelAndView();
+		DepartmentDto updatedDepartment = departmentService.updateDepartment(id, departmentDto);
+		modelAndView.setViewName("department");
+		return modelAndView.addObject("department", updatedDepartment);
 	}
 
 	@GetMapping(value = ID)
-	public DepartmentDto getDepartment(@PathVariable Long id) {
-		return departmentService.getDepartmentById(id);
+	public ModelAndView getDepartment(@PathVariable Long id) {
+		ModelAndView modelAndView = new ModelAndView();
+		try {
+			DepartmentDto department = departmentService.getDepartmentById(id);
+			modelAndView.setViewName("department");
+			modelAndView.addObject("department", department);
+		} catch (Exception e) {
+			modelAndView.setViewName("403");
+			//TODO There is no department with id="id"
+		}
+		return modelAndView;
 	}
 
 	@DeleteMapping(value = ID)
-	public void deleteDepartment(@PathVariable Long id) {
+	public ModelAndView deleteDepartment(@PathVariable Long id) {
 		departmentService.deleteDepartmentById(id);
+		return getAllDepartments();
 	}
 }

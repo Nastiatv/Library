@@ -8,12 +8,12 @@ public interface IRoleService {
 
 	List<RoleDto> getAllRoles();
 
-	RoleDto addRole(RoleDto dto);
-
 	RoleDto getRoleById(Long id);
 
 	void deleteRoleById(Long id);
 
-	void updateRole(Long id, RoleDto dto);
+	RoleDto updateRole(Long id, RoleDto dto);
+
+	RoleDto createRole(RoleDto roleDto);
 
 }

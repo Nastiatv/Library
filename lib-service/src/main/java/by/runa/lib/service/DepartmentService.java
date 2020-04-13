@@ -32,7 +32,7 @@ public class DepartmentService implements IDepartmentService {
 	}
 
 	@Override
-	public DepartmentDto addDepartment(DepartmentDto departmentDto) {
+	public DepartmentDto createDepartment(DepartmentDto departmentDto) {
 		Department department = new Department();
 		department.setName(departmentDto.getName());
 		return departmentMapper.toDto(departmentDao.create(department));
@@ -50,11 +50,11 @@ public class DepartmentService implements IDepartmentService {
 	}
 
 	@Override
-	public void updateDepartment(Long id, DepartmentDto departmentDto) {
+	public DepartmentDto updateDepartment(Long id, DepartmentDto departmentDto) {
 		Department existingDepartment = Optional.ofNullable(departmentDao.get(id)).orElse(new Department());
 		existingDepartment.setName(departmentDto.getName());
 		departmentDao.update(existingDepartment);
-		log.info("Department successfully updated");
+		return departmentMapper.toDto(existingDepartment);
 
 	}
 }

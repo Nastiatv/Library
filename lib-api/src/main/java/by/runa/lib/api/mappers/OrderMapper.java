@@ -5,35 +5,26 @@ import java.util.Objects;
 import javax.annotation.PostConstruct;
 
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import by.runa.lib.api.dao.IBookDao;
-import by.runa.lib.api.dao.IUserDao;
 import by.runa.lib.api.dto.OrderDto;
+import by.runa.lib.entities.Book;
 import by.runa.lib.entities.Order;
+import by.runa.lib.entities.User;
 
 @Component
 public class OrderMapper extends AMapper<Order, OrderDto> {
 
-	public OrderMapper(IUserDao userDao, ModelMapper mapper, IBookDao bookDao) {
+	public OrderMapper(ModelMapper mapper) {
 		super(Order.class, OrderDto.class);
-		this.userDao = userDao;
-		this.bookDao = bookDao;
 		this.mapper = mapper;
 	}
-
-	@Autowired
-	private IUserDao userDao;
-
-	@Autowired
-	private IBookDao bookDao;
 
 	@PostConstruct
 	public void setupMapper() {
 		mapper.createTypeMap(Order.class, OrderDto.class).addMappings(m -> {
-			m.skip(OrderDto::setUserId);
-			m.skip(OrderDto::setBookId);
+			m.skip(OrderDto::setUser);
+			m.skip(OrderDto::setBook);
 		}).setPostConverter(toDtoConverter());
 		mapper.createTypeMap(OrderDto.class, Order.class).addMappings(m -> {
 			m.skip(Order::setUser);
@@ -43,22 +34,22 @@ public class OrderMapper extends AMapper<Order, OrderDto> {
 
 	@Override
 	void mapSpecificFields(Order source, OrderDto destination) {
-		destination.setUserId(getUserId(source));
-		destination.setBookId(getBookId(source));
+		destination.setUser(getUser(source));
+		destination.setBook(getBook(source));
 	}
 
-	private Long getBookId(Order source) {
-		return Objects.isNull(source) || Objects.isNull(source.getId()) ? null : source.getBook().getId();
+	private Book getBook(Order source) {
+		return Objects.isNull(source) || Objects.isNull(source.getId()) ? null : source.getBook();
 	}
 
-	private Long getUserId(Order source) {
-		return Objects.isNull(source) || Objects.isNull(source.getId()) ? null : source.getUser().getId();
+	private User getUser(Order source) {
+		return Objects.isNull(source) || Objects.isNull(source.getId()) ? null : source.getUser();
 	}
 
 	@Override
 	void mapSpecificFields(OrderDto source, Order destination) {
-		destination.setUser(userDao.get(source.getUserId()));
-		destination.setBook(bookDao.get(source.getBookId()));
+		destination.setUser(source.getUser());
+		destination.setBook(source.getBook());
 	}
 
 }

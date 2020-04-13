@@ -8,8 +8,6 @@ public interface IUserService {
 
 	List<UserDto> getAllUsers();
 
-	UserDto addUser(UserDto dto);
-
 	UserDto getUserById(Long id) throws Exception;
 
 	void deleteUserById(Long id);
@@ -17,5 +15,7 @@ public interface IUserService {
 	UserDto updateUser(Long id, UserDto dto);
 
 	UserDto getUserByEmail(String email) throws Exception;
+
+	UserDto createUser(UserDto userDto);
 
 }

@@ -40,7 +40,7 @@ public class UserService implements IUserService {
 	}
 
 	@Override
-	public UserDto addUser(UserDto userDto) {
+	public UserDto createUser(UserDto userDto) {
 		User user = new User();
 		user.setEmail(userDto.getEmail());
 		user.setName(userDto.getName());

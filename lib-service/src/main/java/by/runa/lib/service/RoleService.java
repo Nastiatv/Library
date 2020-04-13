@@ -32,7 +32,7 @@ public class RoleService implements IRoleService {
 	}
 
 	@Override
-	public RoleDto addRole(RoleDto roleDto) {
+	public RoleDto createRole(RoleDto roleDto) {
 		Role role = new Role();
 		role.setName(roleDto.getName());
 		return roleMapper.toDto(roleDao.create(role));
@@ -50,11 +50,11 @@ public class RoleService implements IRoleService {
 	}
 
 	@Override
-	public void updateRole(Long id, RoleDto roleDto) {
+	public RoleDto updateRole(Long id, RoleDto roleDto) {
 		Role existingRole = Optional.ofNullable(roleDao.get(id)).orElse(new Role());
 		existingRole.setName(roleDto.getName());
 		roleDao.update(existingRole);
-		log.info("Role successfully updated");
+		return roleMapper.toDto(existingRole);
 
 	}
 }

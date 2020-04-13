@@ -33,13 +33,13 @@ public class OrderService implements IOrderService {
 	}
 
 	@Override
-	public OrderDto makeOrder(OrderDto orderDto) {
+	public OrderDto createOrder(OrderDto orderDto) {
 		Order order = new Order();
-		order.getBook().setId(orderDto.getBookId());
-		order.getUser().setId(orderDto.getUserId());
+		order.setBook(orderDto.getBook());
+		order.setUser(orderDto.getUser());
 		order.setOrderDate(LocalDateTime.now());
 		order.setDueDate(order.getOrderDate().plusDays(10));
-		order.setProlongation(false);
+		order.setProlonged(false);
 		order.setFinished(false);
 		return orderMapper.toDto(orderDao.create(order));
 	}
@@ -56,16 +56,16 @@ public class OrderService implements IOrderService {
 	}
 
 	@Override
-	public void updateOrder(Long id, OrderDto orderDto) {
+	public OrderDto updateOrder(Long id, OrderDto orderDto) {
 		Order existingOrder = Optional.ofNullable(orderDao.get(id)).orElse(new Order());
-		existingOrder.getBook().setId(orderDto.getBookId());
-		existingOrder.getUser().setId(orderDto.getUserId());
+		existingOrder.setBook(orderDto.getBook());
+		existingOrder.setUser(orderDto.getUser());
 		existingOrder.setOrderDate(orderDto.getOrderDate());
 		existingOrder.setDueDate(orderDto.getDueDate());
-		existingOrder.setProlongation(orderDto.isProlongation());
+		existingOrder.setProlonged(orderDto.isProlonged());
 		existingOrder.setFinished(orderDto.isFinished());
 		orderDao.update(existingOrder);
-		log.info("Order successfully updated");
+		return orderMapper.toDto(existingOrder);
 
 	}
 }

@@ -8,12 +8,12 @@ public interface IDepartmentService {
 
 	List<DepartmentDto> getAllDepartments();
 
-	DepartmentDto addDepartment(DepartmentDto dto);
-
 	DepartmentDto getDepartmentById(Long id);
 
 	void deleteDepartmentById(Long id);
 
-	void updateDepartment(Long id, DepartmentDto dto);
+	DepartmentDto updateDepartment(Long id, DepartmentDto dto);
+
+	DepartmentDto createDepartment(DepartmentDto departmentDto);
 
 }

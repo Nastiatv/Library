@@ -12,8 +12,8 @@ public interface IOrderService {
 
 	void deleteOrderById(Long id);
 
-	void updateOrder(Long id, OrderDto dto);
+	OrderDto updateOrder(Long id, OrderDto dto);
 
-	OrderDto makeOrder(OrderDto orderDto);
+	OrderDto createOrder(OrderDto orderDto);
 
 }

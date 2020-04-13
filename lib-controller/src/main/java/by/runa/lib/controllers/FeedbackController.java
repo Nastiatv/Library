@@ -3,13 +3,11 @@ package by.runa.lib.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
@@ -18,7 +16,7 @@ import by.runa.lib.api.dto.FeedbackDto;
 import by.runa.lib.api.service.IFeedbackService;
 
 @RestController
-@RequestMapping(value = "/feedbacks/")
+@RequestMapping("/feedbacks/")
 public class FeedbackController {
 
 	private static final String ID = "{id}";
@@ -31,31 +29,50 @@ public class FeedbackController {
 		ModelAndView modelAndView = new ModelAndView();
 		List<FeedbackDto> feedbacks = feedbackService.getAllFeedbacks();
 		modelAndView.setViewName("allfeedbacks");
-		modelAndView.addObject("feedbacksList", feedbacks);
+		modelAndView.addObject("feedbackList", feedbacks);
 		return modelAndView;
 	}
 
-	public List<FeedbackDto> getAllFeedback() {
-		return feedbackService.getAllFeedbacks();
+	@GetMapping(value = "addfeedback")
+	public ModelAndView addFeedback() {
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("addfeedback");
+		return modelAndView.addObject("dto", new FeedbackDto());
 	}
 
-	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public FeedbackDto addFeedback(@RequestBody FeedbackDto dto) {
-		return feedbackService.addFeedback(dto);
+	@PostMapping(value = "addfeedback")
+	public ModelAndView addFeedbackSubmit(FeedbackDto feedbackDto) {
+		ModelAndView modelAndView = new ModelAndView();
+		FeedbackDto newfeedback = feedbackService.createFeedback(feedbackDto);
+		modelAndView.setViewName("feedback");
+		return modelAndView.addObject("newfeedback", newfeedback);
 	}
 
-	@PutMapping(value = ID, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public void updateFeedback(@PathVariable Long id, @RequestBody FeedbackDto dto) {
-		feedbackService.updateFeedback(id, dto);
+	@PutMapping(value = ID)
+	public ModelAndView updateFeedback(@PathVariable Long id, FeedbackDto feedbackDto) {
+		ModelAndView modelAndView = new ModelAndView();
+		FeedbackDto updatedFeedback = feedbackService.updateFeedback(id, feedbackDto);
+		modelAndView.setViewName("feedback");
+		return modelAndView.addObject("feedback", updatedFeedback);
 	}
 
 	@GetMapping(value = ID)
-	public FeedbackDto getFeedback(@PathVariable Long id) {
-		return feedbackService.getFeedbackById(id);
+	public ModelAndView getFeedback(@PathVariable Long id) {
+		ModelAndView modelAndView = new ModelAndView();
+		try {
+			FeedbackDto feedback = feedbackService.getFeedbackById(id);
+			modelAndView.setViewName("feedback");
+			modelAndView.addObject("feedback", feedback);
+		} catch (Exception e) {
+			modelAndView.setViewName("403");
+			//TODO There is no feedback with id="id"
+		}
+		return modelAndView;
 	}
 
 	@DeleteMapping(value = ID)
-	public void deleteFeedback(@PathVariable Long id) {
+	public ModelAndView deleteFeedback(@PathVariable Long id) {
 		feedbackService.deleteFeedbackById(id);
+		return getAllFeedbacks();
 	}
 }

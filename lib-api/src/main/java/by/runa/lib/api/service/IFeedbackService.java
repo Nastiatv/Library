@@ -8,12 +8,12 @@ public interface IFeedbackService {
 
 	List<FeedbackDto> getAllFeedbacks();
 
-	FeedbackDto addFeedback(FeedbackDto dto);
-
 	FeedbackDto getFeedbackById(Long id);
 
 	void deleteFeedbackById(Long id);
 
-	void updateFeedback(Long id, FeedbackDto dto);
+	FeedbackDto updateFeedback(Long id, FeedbackDto dto);
+
+	FeedbackDto createFeedback(FeedbackDto feedbackDto);
 
 }

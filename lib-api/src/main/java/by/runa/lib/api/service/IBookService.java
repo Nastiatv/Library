@@ -12,8 +12,8 @@ public interface IBookService {
 
 	void deleteBookById(Long id);
 
-	BookDto createBook(BookDto dto);
-
 	BookDto updateBook(Long id, BookDto bookDto);
+
+	BookDto createBook(BookDto dto);
 
 }

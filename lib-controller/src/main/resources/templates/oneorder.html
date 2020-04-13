@@ -1,0 +1,41 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://thymeleaf.org" lang="en">
+<head>
+<title>Order page</title>
+<link href="../css/styles.css" rel="stylesheet" />
+<link rel="stylesheet"
+	href="/lib-web/src/main/resources/css/bootstrap.min.css">
+</head>
+<body>
+	<h1>Our Order:</h1>
+	<a href="addorder">Add Order</a>
+	<br />
+	<table border="1">
+		<tr>
+			<th id="id">Id</th>
+			<th id="orderDate">Order date</th>
+			<th id="dueDate">Due date</th>
+			<th id="book.name">Name</th>
+			<th id="book.author">Author</th>
+			<th id="user.name">User Name</th>
+			<th id="user.email">User Email</th>
+			<th id="isFinished">is Finished</th>
+		</tr>
+		<tr>
+		<tr>
+			<td th:text="${order.id}"></td>
+			<td th:text="${order.orderDate}"></td>
+			<td th:text="${order.dueDate}"></td>
+			<td th:text="${order.book.name}"></td>
+			<td th:text="${order.book.author}"></td>
+			<td th:text="${order.user.name}"></td>
+			<td th:text="${order.user.email}"></td>
+			<td th:text="${order.isFinished}"></td>
+		</tr>
+	</table>
+	<script src="/lib-web/src/main/resources/js/jquery-3.4.1.min.js"></script>
+	<script src="/lib-web/src/main/resources/js/bootstrap.min.js"></script>
+</body>
+<a href="javascript:history.back()" class="btn btn-back single-button">Go
+	back</a>
+</html>

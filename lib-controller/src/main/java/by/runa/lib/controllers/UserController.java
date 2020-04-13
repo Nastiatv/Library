@@ -45,15 +45,15 @@ public class UserController {
 	@PostMapping(value = "adduser")
 	public ModelAndView addUserSubmit(UserDto userDto) {
 		ModelAndView modelAndView = new ModelAndView();
-		UserDto newuser = userService.addUser(userDto);
+		UserDto newuser = userService.createUser(userDto);
 		modelAndView.setViewName("user");
 		return modelAndView.addObject("newuser", newuser);
 	}
 
-//	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-//	public UserDto addDeveloper(@RequestBody UserDto userDto) {
-//		return userService.addUser(userDto);
-//	}
+	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public UserDto addDeveloper(@RequestBody UserDto userDto) {
+		return userService.createUser(userDto);
+	}
 
 	@PostMapping(value = "/login")
 	public ModelAndView login(UserDto userdto) {
