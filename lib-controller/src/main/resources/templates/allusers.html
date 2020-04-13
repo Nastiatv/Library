@@ -1,0 +1,30 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://thymeleaf.org" lang="en">
+<head>
+<title>Users page</title>
+<link href="../css/styles.css" rel="stylesheet" />
+<link rel="stylesheet"
+	href="/lib-web/src/main/resources/css/bootstrap.min.css">
+</head>
+<body>
+	<h1>Our Users:</h1>
+	<a href="addUser">Add User</a>
+	<br />
+	<table border="1">
+		<tr>
+			<th id="name">Name</th>
+			<th id="email">Email</th>
+			<th id="department">Department</th>
+		</tr>
+		<tr>
+		<tr th:each="user : ${userList}">
+			<td th:text="${user.name}"></td>
+			<td th:text="${user.email}"></td>
+			<td th:text="${user.departmentName}"></td>
+		</tr>
+	</table>
+	<script src="/lib-web/src/main/resources/js/jquery-3.4.1.min.js"></script>
+	<script src="/lib-web/src/main/resources/js/bootstrap.min.js"></script>
+</body>
+<a href="javascript:history.back()" class="btn btn-back single-button">Go back</a>
+</html>

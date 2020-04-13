@@ -1,0 +1,33 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://thymeleaf.org" lang="en">
+<head>
+<title>Feedbacks page</title>
+<link href="../css/styles.css" rel="stylesheet" />
+<link rel="stylesheet"
+	href="/lib-web/src/main/resources/css/bootstrap.min.css">
+</head>
+<body>
+	<h1>Our Feedbacks:</h1>
+	<a href="addFeedback">Add Feedback</a>
+	<br />
+	<table border="1">
+		<tr>
+			<th id="userName">User Name</th>
+			<th id="book">Book</th>
+			<th id="rating">Rating</th>
+			<th id="comment">Comment</th>
+			
+		</tr>
+		<tr>
+		<tr th:each="feedbacks : ${feedbacksList}">
+			<td th:text="${feedback.userName}"></td>
+			<td th:text="${feedback.book.name}"></td>
+			<td th:text="${feedback.rating}"></td>
+			<td th:text="${feedback.comment}"></td>
+		</tr>
+	</table>
+	<script src="/lib-web/src/main/resources/js/jquery-3.4.1.min.js"></script>
+	<script src="/lib-web/src/main/resources/js/bootstrap.min.js"></script>
+</body>
+<a href="javascript:history.back()" class="btn btn-back single-button">Go back</a>
+</html>

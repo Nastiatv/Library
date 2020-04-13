@@ -3,19 +3,20 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>com.runa</groupId>
+		<groupId>by.runa</groupId>
 		<artifactId>Library</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-
 	<artifactId>lib-service</artifactId>
-
 	<dependencies>
 		<dependency>
-			<groupId>com.runa</groupId>
-			<artifactId>lib-dao</artifactId>
+			<groupId>by.runa</groupId>
+			<artifactId>lib-web</artifactId>
 			<version>${project.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
 	</dependencies>
-
 </project>

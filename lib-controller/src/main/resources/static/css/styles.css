@@ -1,0 +1,36 @@
+@charset "UTF-8";
+p {
+	color: grey;
+	font-size:10pt;
+	margin-top: 0px;
+	margin-bottom: 0px;
+}
+
+#wrapper, .userblock {
+	border: 1px solid grey;
+}
+
+#wrapper {
+	margin: 0 auto;
+	width: 550px;
+	height: 550px;
+	display:grid;
+	grid-template-columns: 250px 250px;
+	grid-gap:50px;
+}
+
+.userblock {
+	width: 250px;
+	height: 250px;
+	text-align:center;
+}
+
+.image {
+	width:75px;
+	height:75px;
+	margin: 0 auto;
+}
+
+.single-button {
+	width:100px; 
+}

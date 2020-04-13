@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://thymeleaf.org" lang="en">
+<head>
+<title>Book page</title>
+<link href="../css/styles.css" rel="stylesheet" />
+<link rel="stylesheet"
+	href="/lib-web/src/main/resources/css/bootstrap.min.css">
+</head>
+<body>
+	<h1>Our Book:</h1>
+	<a href="addbook">Add Book</a>
+	<br />
+	<table border="1">
+		<tr>
+			<th id="id">Id</th>
+			<th id="isbn">Isbn</th>
+			<th id="quantity">Quantity</th>
+			<th id="rating">Rating</th>
+			<th id="department">Department</th>
+			<th id="bookDetails.name">Title</th>
+			<th id="bookDetails.author">Author</th>
+			<th id="bookDetails.picture">Cover</th>
+			<th id="bookDetails.description">Description</th>
+		</tr>
+		<tr>
+		<tr>
+			<td th:text="${book.id}"></td>
+			<td th:text="${book.isbn}"></td>
+			<td th:text="${book.quantity}"></td>
+			<td th:text="${book.rating}"></td>
+			<td th:text="${book.department}"></td>
+			<td th:text="${book.bookDetails.name}"></td>
+			<td th:text="${book.bookDetails.author}"></td>
+			<td><img th:src="@{${book.bookDetails.picture}}" height="200"/></td>
+			<td th:text="${book.bookDetails.description}"></td>
+		</tr>
+	</table>
+	<script src="/lib-web/src/main/resources/js/jquery-3.4.1.min.js"></script>
+	<script src="/lib-web/src/main/resources/js/bootstrap.min.js"></script>
+</body>
+<a href="javascript:history.back()" class="btn btn-back single-button">Go back</a>
+</html>
