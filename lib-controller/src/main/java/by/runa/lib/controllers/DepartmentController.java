@@ -29,7 +29,7 @@ public class DepartmentController {
 		ModelAndView modelAndView = new ModelAndView();
 		List<DepartmentDto> departments = departmentService.getAllDepartments();
 		modelAndView.setViewName("alldepartments");
-		modelAndView.addObject("departmentList", departments);
+		modelAndView.addObject("departmentsList", departments);
 		return modelAndView;
 	}
 
