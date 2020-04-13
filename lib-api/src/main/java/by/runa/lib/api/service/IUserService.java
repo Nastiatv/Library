@@ -10,10 +10,12 @@ public interface IUserService {
 
 	UserDto addUser(UserDto dto);
 
-	UserDto getUserById(Long id);
+	UserDto getUserById(Long id) throws Exception;
 
 	void deleteUserById(Long id);
 
 	UserDto updateUser(Long id, UserDto dto);
+
+	UserDto getUserByEmail(String email) throws Exception;
 
 }

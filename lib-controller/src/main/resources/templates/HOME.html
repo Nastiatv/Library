@@ -1,28 +1,17 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://thymeleaf.org" lang="en">
 <head>
-<title>Roles page</title>
+<title>Home page</title>
 <link href="../css/styles.css" rel="stylesheet" />
 <link rel="stylesheet"
 	href="/lib-web/src/main/resources/css/bootstrap.min.css">
 </head>
 <body>
-	<h1>Our Roles:</h1>
-	<a href="addRole">Add Role</a>
+	<a href="login">Sign In</a>
+	<a href="adduser">Sign Up</a>
 	<br />
-	<table border="1">
-		<tr>
-			<th id="id">Id</th>
-			<th id="name">Name</th>
-		</tr>
-		<tr>
-		<tr th:each="role : ${rolesList}">
-			<td th:text="${role.id}"></td>
-			<td th:text="${role.name}"></td>
-		</tr>
-	</table>
+
 	<script src="/lib-web/src/main/resources/js/jquery-3.4.1.min.js"></script>
 	<script src="/lib-web/src/main/resources/js/bootstrap.min.js"></script>
 </body>
-<a href="javascript:history.back()" class="btn btn-back single-button">Go back</a>
 </html>

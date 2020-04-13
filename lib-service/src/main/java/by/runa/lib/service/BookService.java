@@ -10,12 +10,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import by.runa.lib.api.dao.IBookDao;
+import by.runa.lib.api.dto.BookDetailsDto;
 import by.runa.lib.api.dto.BookDto;
-import by.runa.lib.api.mappers.BookDetailsMapper;
-import by.runa.lib.api.mappers.BookMapper;
+import by.runa.lib.api.mappers.AMapper;
 import by.runa.lib.api.service.IBookDetailsService;
 import by.runa.lib.api.service.IBookService;
 import by.runa.lib.entities.Book;
+import by.runa.lib.entities.BookDetails;
 import by.runa.lib.utils.mailsender.EmailSender;
 import lombok.extern.slf4j.Slf4j;
 
@@ -28,10 +29,10 @@ public class BookService implements IBookService {
 	private IBookDao bookDao;
 
 	@Autowired
-	private BookMapper bookMapper;
+	private AMapper<Book, BookDto> bookMapper;
 
 	@Autowired
-	private BookDetailsMapper bookDetailsMapper;
+	private AMapper<BookDetails, BookDetailsDto> bookDetailsMapper;
 
 	@Autowired
 	private IBookDetailsService bookDetailsService;

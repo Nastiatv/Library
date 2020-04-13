@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 
 import by.runa.lib.api.dao.IOrderDao;
 import by.runa.lib.api.dto.OrderDto;
-import by.runa.lib.api.mappers.OrderMapper;
+import by.runa.lib.api.mappers.AMapper;
 import by.runa.lib.api.service.IOrderService;
 import by.runa.lib.entities.Order;
 import lombok.extern.slf4j.Slf4j;
@@ -25,7 +25,7 @@ public class OrderService implements IOrderService {
 	private IOrderDao orderDao;
 
 	@Autowired
-	private OrderMapper orderMapper;
+	private AMapper<Order, OrderDto> orderMapper;
 
 	@Override
 	public List<OrderDto> getAllOrders() {

@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 import by.runa.lib.api.dao.IFeedbackDao;
 import by.runa.lib.api.dto.FeedbackDto;
-import by.runa.lib.api.mappers.FeedbackMapper;
+import by.runa.lib.api.mappers.AMapper;
 import by.runa.lib.api.service.IFeedbackService;
 import by.runa.lib.entities.Feedback;
 import lombok.extern.slf4j.Slf4j;
@@ -24,7 +24,7 @@ public class FeedbackService implements IFeedbackService {
 	private IFeedbackDao feedbackDao;
 
 	@Autowired
-	private FeedbackMapper feedbackMapper;
+	private AMapper<Feedback, FeedbackDto> feedbackMapper;
 
 	@Override
 	public List<FeedbackDto> getAllFeedbacks() {

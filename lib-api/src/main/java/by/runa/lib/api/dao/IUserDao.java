@@ -4,4 +4,6 @@ import by.runa.lib.entities.User;
 
 public interface IUserDao extends IAGenericDao<User> {
 
+	User getByEmail(String email);
+
 }

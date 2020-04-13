@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 import by.runa.lib.api.dao.IRoleDao;
 import by.runa.lib.api.dto.RoleDto;
-import by.runa.lib.api.mappers.RoleMapper;
+import by.runa.lib.api.mappers.AMapper;
 import by.runa.lib.api.service.IRoleService;
 import by.runa.lib.entities.Role;
 import lombok.extern.slf4j.Slf4j;
@@ -24,7 +24,7 @@ public class RoleService implements IRoleService {
 	private IRoleDao roleDao;
 
 	@Autowired
-	private RoleMapper roleMapper;
+	private AMapper<Role, RoleDto> roleMapper;
 
 	@Override
 	public List<RoleDto> getAllRoles() {

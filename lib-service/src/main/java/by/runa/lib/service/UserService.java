@@ -9,9 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import by.runa.lib.api.dao.IDepartmentDao;
 import by.runa.lib.api.dao.IUserDao;
 import by.runa.lib.api.dto.UserDto;
-import by.runa.lib.api.mappers.UserMapper;
+import by.runa.lib.api.mappers.AMapper;
 import by.runa.lib.api.service.IUserService;
 import by.runa.lib.entities.User;
 import lombok.extern.slf4j.Slf4j;
@@ -23,12 +24,15 @@ public class UserService implements IUserService {
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
-	
+
 	@Autowired
-	private UserMapper userMapper;
+	private AMapper<User, UserDto> userMapper;
 
 	@Autowired
 	private IUserDao userDao;
+
+	@Autowired
+	private IDepartmentDao departmentDao;
 
 	@Override
 	public List<UserDto> getAllUsers() {
@@ -40,13 +44,19 @@ public class UserService implements IUserService {
 		User user = new User();
 		user.setEmail(userDto.getEmail());
 		user.setName(userDto.getName());
+		user.setDepartment(departmentDao.getByName(userDto.getDepartmentName()));
 		user.setPassword(passwordEncoder.encode(userDto.getPassword()));
 		return userMapper.toDto(userDao.create(user));
 	}
 
 	@Override
-	public UserDto getUserById(Long id) {
-		return Optional.ofNullable(userMapper.toDto(userDao.get(id))).orElse(new UserDto());
+	public UserDto getUserById(Long id) throws Exception {
+		return Optional.ofNullable(userMapper.toDto(userDao.get(id))).orElseThrow(Exception::new);
+	}
+	
+	@Override
+	public UserDto getUserByEmail(String email) throws Exception {
+		return Optional.ofNullable(userMapper.toDto(userDao.getByEmail(email))).orElseThrow(Exception::new);
 	}
 
 	@Override

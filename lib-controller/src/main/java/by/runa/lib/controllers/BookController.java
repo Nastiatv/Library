@@ -64,8 +64,8 @@ public class BookController {
 			modelAndView.setViewName("book");
 			modelAndView.addObject("book", book);
 		} catch (Exception e) {
-
 			modelAndView.setViewName("403");
+			//TODO There is no book with id="id"
 		}
 		return modelAndView;
 	}

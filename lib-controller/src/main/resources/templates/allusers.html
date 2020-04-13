@@ -17,7 +17,7 @@
 			<th id="department">Department</th>
 		</tr>
 		<tr>
-		<tr th:each="user : ${usersList}">
+		<tr th:each="user : ${userList}">
 			<td th:text="${user.name}"></td>
 			<td th:text="${user.email}"></td>
 			<td th:text="${user.departmentName}"></td>
@@ -26,4 +26,5 @@
 	<script src="/lib-web/src/main/resources/js/jquery-3.4.1.min.js"></script>
 	<script src="/lib-web/src/main/resources/js/bootstrap.min.js"></script>
 </body>
+<a href="javascript:history.back()" class="btn btn-back single-button">Go back</a>
 </html>

@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 import by.runa.lib.api.dao.IBookDetailsDao;
 import by.runa.lib.api.dto.BookDetailsDto;
-import by.runa.lib.api.mappers.BookDetailsMapper;
+import by.runa.lib.api.mappers.AMapper;
 import by.runa.lib.api.service.IBookDetailsService;
 import by.runa.lib.entities.BookDetails;
 import by.runa.lib.web.WebScraper;
@@ -25,7 +25,7 @@ public class BookDetailsService implements IBookDetailsService {
 	private IBookDetailsDao bookDetailsDao;
 
 	@Autowired
-	private BookDetailsMapper bookDetailsMapper;
+	private AMapper<BookDetails, BookDetailsDto> bookDetailsMapper;
 
 	@Autowired
 	private WebScraper webScraper;
