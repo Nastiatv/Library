@@ -25,6 +25,7 @@ D:\courses IT\Практика\Library\lib-api\src\main\java\by\runa\lib\api\mappers\Use
 D:\courses IT\Практика\Library\lib-api\src\main\java\by\runa\lib\api\dto\DepartmentDto.java
 D:\courses IT\Практика\Library\lib-api\src\main\java\by\runa\lib\api\dao\IRoleDao.java
 D:\courses IT\Практика\Library\lib-api\src\main\java\by\runa\lib\api\dto\ADto.java
+D:\courses IT\Практика\Library\lib-api\src\main\java\by\runa\lib\api\exceptions\NoSuchBookException.java
 D:\courses IT\Практика\Library\lib-api\src\main\java\by\runa\lib\api\utils\IEmailSender.java
 D:\courses IT\Практика\Library\lib-api\src\main\java\by\runa\lib\api\dao\IAGenericDao.java
 D:\courses IT\Практика\Library\lib-api\src\main\java\by\runa\lib\api\service\IUserService.java

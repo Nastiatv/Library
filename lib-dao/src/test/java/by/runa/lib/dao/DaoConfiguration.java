@@ -6,7 +6,7 @@ import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
 @ComponentScan("by.runa.lib.dao")
-@EntityScan("by.runa.lib.entity")
+@EntityScan("by.runa.lib.entities")
 public class DaoConfiguration {
 
 }
