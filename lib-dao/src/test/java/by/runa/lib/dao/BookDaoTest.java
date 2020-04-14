@@ -1,10 +1,16 @@
 package by.runa.lib.dao;
 
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import by.runa.lib.api.dao.IBookDao;
 
 @DataJpaTest
+@RunWith(SpringRunner.class)
 public class BookDaoTest {
 
 	@Autowired
@@ -21,8 +27,7 @@ public class BookDaoTest {
 
 	@Test
 	public void whenSave_thenGetById{
-		long testBookId
+	
 		
 	}
-	
 }
