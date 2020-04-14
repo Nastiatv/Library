@@ -22,13 +22,13 @@ public class BookDaoTest {
 	private IBookDao bookDao;
 
 	@Test
-	public void injectedBooksAreNotNull() {
+	public void injectedComponentsAreNotNull() {
 		assertThat(bookDao).isNotNull();
 		assertThat(entityManager).isNotNull();
 	}
 
 	@Test
-	public void whenSave_thenGetById() {
-
+	public void whenSave_thenGetByIsbn() {
+	
 	}
-}
+	
