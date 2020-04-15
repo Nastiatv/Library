@@ -26,7 +26,6 @@ public class MainController {
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("login");
 		return modelAndView;
-//		return modelAndView.addObject("dto", new BookDto());
 	}
 
 	@GetMapping("/403")
