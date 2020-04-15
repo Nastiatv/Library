@@ -2,6 +2,8 @@ package by.runa.lib.dao;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.List;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,14 +41,14 @@ public class BookDaoTest {
 		assertThat(bookInRep.getId().equals(id)).isTrue();
 	}
 
-//	@Test
-//	public void getAll() {
-//		createBook(TEST_ISBN);
-//		createBook(TEST_ISBN + 1);
-//		createBook(TEST_ISBN + 2);
-//		List<Book> allBooksInRep = bookDao.getAll();
-//		assertThat(allBooksInRep.size() == 3).isTrue();
-//	}
+	@Test
+	public void getAll() {
+		entityManager.persist(createBook(TEST_ISBN));
+		entityManager.persist(createBook(TEST_ISBN + 1));
+		entityManager.persist(createBook(TEST_ISBN + 2));
+		List<Book> allBooksInRep = bookDao.getAll();
+		assertThat(allBooksInRep.size() == 3).isTrue();
+	}
 
 	@Test
 	public void update() {
