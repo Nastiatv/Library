@@ -43,7 +43,9 @@ public class BookDaoTest {
 
 //	@Test
 //	public void getAll() {
-//		create3Books();
+//		createBook(TEST_ISBN);
+//		createBook(TEST_ISBN + 1);
+//		createBook(TEST_ISBN + 2);
 //		List<Book> allBooksInRep = bookDao.getAll();
 //		assertThat(allBooksInRep.size() == 3).isTrue();
 //	}
@@ -76,11 +78,4 @@ public class BookDaoTest {
 		book.setIsbn(isbn);
 		return book;
 	}
-
-	private void create3Books() {
-		createBook(TEST_ISBN);
-		createBook(TEST_ISBN+1);
-		createBook(TEST_ISBN+2);
-	}
-
 }
