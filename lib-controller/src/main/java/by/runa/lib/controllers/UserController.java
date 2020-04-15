@@ -55,20 +55,19 @@ public class UserController {
 		return userService.createUser(userDto);
 	}
 
-	@PostMapping(value = "/login")
-	public ModelAndView login(UserDto userdto) {
-		ModelAndView modelAndView = new ModelAndView();
-		try {
-			if (userdto.getPassword() != userService.getUserByEmail(userdto.getEmail()).getPassword()) {
-				modelAndView.setViewName("403");
-			}
-			modelAndView.setViewName("erorr");
-			} catch (Exception e) {
-			modelAndView.setViewName("403");
-			//TODO 
-		}
-		return modelAndView;
-	}
+//	@PostMapping(value = "/login")
+//	public ModelAndView login(UserDto userdto) {
+//		ModelAndView modelAndView = new ModelAndView();
+//		try {
+//			if (userdto.getPassword() != userService.getUserByEmail(userdto.getEmail()).getPassword()) {
+//				modelAndView.setViewName("403");
+//			}}
+//			catch (Exception e) {
+//			modelAndView.setViewName("403");
+//			//TODO 
+//		}
+//		return modelAndView;
+//	}
 
 	@PutMapping(value = ID)
 	public ModelAndView updateUser(@PathVariable Long id, UserDto userDto) {
