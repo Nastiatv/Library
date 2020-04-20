@@ -32,8 +32,8 @@ public class User extends AEntity {
 	@Column(name = "password")
 	private String password;
 	
-	@Column(name = "name")
-	private String name;
+	@Column(name = "username")
+	private String username;
 
 	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "department_id", referencedColumnName = "id")

@@ -2,22 +2,22 @@
 <html xmlns:th="http://thymeleaf.org" lang="en">
 <head>
 <title>Add book</title>
-<link href="../css/styles.css" rel="stylesheet" />
-<link rel="stylesheet"
-	href="/lib-web/src/main/resources/css/bootstrap.min.css">
+<link rel="stylesheet" href="../css/styles.css" />
+<link rel="stylesheet" href="../css/bootstrap.min.css">
 </head>
 <body>
 	<h1>Add book to library:</h1>
 	<br />
-	<form th:action="@{/addbook}" th:object="${dto}" method="POST">
+	<form th:action="@{addbook}" th:object="${bookdto}" method="POST">
 		ISBN: <input type="text" th:field="*{isbn}" /> <br /> 
-		Department: <input type="text" th:field="*{departments}" /> <br /> 
-		<input type="submit" value="Add" /> <input type="reset" value="Reset">
+		Department: <select	th:object="${departmentdto}" th:field="*{name}">
+						<option th:each="department : ${departmentsList}" th:value="${department.name}" th:text="${department.name}"></option>
+					</select> <br />
+					 <input type="submit" value="Add" />
+					 <input	type="reset" value="Reset">
 	</form>
-	<script src="/lib-web/src/main/resources/js/jquery-3.4.1.min.js"></script>
-	<script src="/lib-web/src/main/resources/js/bootstrap.min.js"></script>
 </body>
-<a href="javascript:history.back()" class="btn btn-back single-button">Go back</a>
+<a href="javascript:history.back()">Go	back</a>
 </html>
 
 

@@ -1,22 +1,28 @@
 package by.runa.lib.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import javax.mail.MessagingException;
 import javax.transaction.Transactional;
 
+import org.apache.commons.lang3.RegExUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import by.runa.lib.api.dao.IBookDao;
+import by.runa.lib.api.dao.IDepartmentDao;
 import by.runa.lib.api.dto.BookDetailsDto;
 import by.runa.lib.api.dto.BookDto;
+import by.runa.lib.api.dto.DepartmentDto;
 import by.runa.lib.api.mappers.AMapper;
 import by.runa.lib.api.service.IBookDetailsService;
 import by.runa.lib.api.service.IBookService;
 import by.runa.lib.entities.Book;
 import by.runa.lib.entities.BookDetails;
+import by.runa.lib.entities.Department;
 import by.runa.lib.utils.mailsender.EmailSender;
 import lombok.extern.slf4j.Slf4j;
 
@@ -27,6 +33,9 @@ public class BookService implements IBookService {
 
 	@Autowired
 	private IBookDao bookDao;
+
+	@Autowired
+	private IDepartmentDao departmentDao;
 
 	@Autowired
 	private AMapper<Book, BookDto> bookMapper;
@@ -46,13 +55,14 @@ public class BookService implements IBookService {
 	}
 
 	@Override
-	public BookDto createBook(BookDto dto) {
+	public BookDto createBook(BookDto dto, DepartmentDto departmentDto) {
+		Department department = departmentDao.getByName(departmentDto.getName());
 		if (getBookbyIsbn(dto) != null) {
-			if (getBookbyIsbn(dto).getDepartments().contains(dto.getDepartments().get(0))) {
+			if (getBookbyIsbn(dto).getDepartments().contains(department)) {
 				getBookbyIsbn(dto).setQuantity(getBookbyIsbn(dto).getQuantity() + 1);
 			} else {
 				getBookbyIsbn(dto).setQuantity(getBookbyIsbn(dto).getQuantity() + 1);
-				getBookbyIsbn(dto).getDepartments().add((dto.getDepartments()).get(0));
+				getBookbyIsbn(dto).getDepartments().add(department);
 				try {
 					emailSender.sendEmailsFromAdmin(dto);
 				} catch (MessagingException e) {
@@ -63,13 +73,16 @@ public class BookService implements IBookService {
 		} else {
 			Book book = new Book();
 			book.setQuantity(1);
+			dto.setIsbn(RegExUtils.replaceAll(dto.getIsbn(), "-", StringUtils.EMPTY).trim());
 			book.setIsbn(dto.getIsbn());
 			book.setOccupied(false);
 			book.setRating(null);
-			book.setDepartments(dto.getDepartments());
+			List<Department> departmentInList = new ArrayList<>();
+			departmentInList.add(department);
+			book.setDepartments(departmentInList);
 			book.setBookDetails(bookDetailsMapper.toEntity(bookDetailsService.createBookDetails(dto.getIsbn())));
 			try {
-				emailSender.sendEmailsFromAdmin(dto);
+				emailSender.sendEmailsFromAdmin(bookMapper.toDto(book));
 			} catch (MessagingException e) {
 				log.info("Mail not sent!");
 			}

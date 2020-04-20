@@ -32,4 +32,17 @@ public class UserDao extends AGenericDao<User> implements IUserDao {
 			return null;
 		}
 	}
+
+//	@Override
+//	public User getByDepartment(String department) {
+//		try {
+//			CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+//			CriteriaQuery<User> cq = cb.createQuery(getGenericClass());
+//			Root<User> rootEntry = cq.from(User.class);
+//			CriteriaQuery<User> all = cq.select(rootEntry).where(cb.equal(rootEntry.get(User_.department), department));
+//			TypedQuery<User> result = entityManager.createQuery(all);
+//			return result.getSingleResult();
+//		} catch (NoResultException e) {
+//			return null;
+//		}
 }

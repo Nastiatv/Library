@@ -51,7 +51,7 @@ public class EmailSender implements IEmailSender {
 		String text = prepareActivateRequestEmail(dto);
 		for (User user : dto.getDepartments().get(0).getUsers()) {
 			configureMimeMessageHelper(helper, ADMIN_FROM_EMAIL_ADDRESS, user.getEmail(), text,
-					"New Book in your department!");
+					"New Book in our Library!");
 			mailSender.send(message);
 		}
 	}

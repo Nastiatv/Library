@@ -3,12 +3,11 @@
 <head>
 <title>User page</title>
 <link href="../css/styles.css" rel="stylesheet" />
-<link rel="stylesheet"
-	href="/lib-web/src/main/resources/css/bootstrap.min.css">
+<link href="../css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 	<h1>Our user:</h1>
-	<a href="addUser">Add User</a>
+	<a href="adduser">Add User</a>
 	<br />
 	<table border="1">
 		<tr>
@@ -18,7 +17,7 @@
 		</tr>
 		<tr>
 		<tr th:each="user : ${userList}">
-			<td th:text="${user.name}"></td>
+			<td th:text="${user.username}"></td>
 			<td th:text="${user.email}"></td>
 			<td th:text="${user.departmentName}"></td>
 		</tr>

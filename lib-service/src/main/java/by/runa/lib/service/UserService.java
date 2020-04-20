@@ -1,5 +1,6 @@
 package by.runa.lib.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -10,10 +11,14 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import by.runa.lib.api.dao.IDepartmentDao;
+import by.runa.lib.api.dao.IRoleDao;
 import by.runa.lib.api.dao.IUserDao;
+import by.runa.lib.api.dto.DepartmentDto;
 import by.runa.lib.api.dto.UserDto;
 import by.runa.lib.api.mappers.AMapper;
 import by.runa.lib.api.service.IUserService;
+import by.runa.lib.entities.Department;
+import by.runa.lib.entities.Role;
 import by.runa.lib.entities.User;
 import lombok.extern.slf4j.Slf4j;
 
@@ -32,6 +37,9 @@ public class UserService implements IUserService {
 	private IUserDao userDao;
 
 	@Autowired
+	private IRoleDao roleDao;
+
+	@Autowired
 	private IDepartmentDao departmentDao;
 
 	@Override
@@ -40,12 +48,16 @@ public class UserService implements IUserService {
 	}
 
 	@Override
-	public UserDto createUser(UserDto userDto) {
+	public UserDto createUser(UserDto userDto, DepartmentDto departmentDto) {
+		Department department = departmentDao.getByName(departmentDto.getName());
 		User user = new User();
 		user.setEmail(userDto.getEmail());
-		user.setName(userDto.getName());
-		user.setDepartment(departmentDao.getByName(userDto.getDepartmentName()));
+		user.setUsername(userDto.getUsername());
+		user.setDepartment(department);
 		user.setPassword(passwordEncoder.encode(userDto.getPassword()));
+		List<Role> role = new ArrayList<>();
+		role.add(roleDao.get(2L));
+		user.setRoles(role);
 		return userMapper.toDto(userDao.create(user));
 	}
 
@@ -53,7 +65,7 @@ public class UserService implements IUserService {
 	public UserDto getUserById(Long id) throws Exception {
 		return Optional.ofNullable(userMapper.toDto(userDao.get(id))).orElseThrow(Exception::new);
 	}
-	
+
 	@Override
 	public UserDto getUserByEmail(String email) throws Exception {
 		return Optional.ofNullable(userMapper.toDto(userDao.getByEmail(email))).orElseThrow(Exception::new);
@@ -70,7 +82,7 @@ public class UserService implements IUserService {
 		User existingUser = Optional.ofNullable(userDao.get(id)).orElse(new User());
 		existingUser.setPassword(passwordEncoder.encode(userDto.getPassword()));
 		existingUser.setEmail(userDto.getEmail());
-		existingUser.setName(userDto.getName());
+		existingUser.setUsername(userDto.getUsername());
 		userDao.update(existingUser);
 		return userMapper.toDto(existingUser);
 

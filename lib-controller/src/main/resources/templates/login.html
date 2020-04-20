@@ -3,8 +3,7 @@
 <head>
 <title>Library-Please login</title>
 <link href="../css/styles.css" rel="stylesheet" />
-<link rel="stylesheet"
-	href="/lib-web/src/main/resources/css/bootstrap.min.css">
+<link rel="stylesheet" href="../css/bootstrap.min.css">
 </head>
 <body>
 	<div>
@@ -15,8 +14,8 @@
 			<form th:action="@{/login}" method="post">
 
 				<div>
-					<label> User Email : <input type="text" name="email"
-						id="email" required autofocus />
+					<label> User Name : <input type="text" name="username"
+						id="username" required autofocus />
 					</label>
 				</div>
 				<div>
@@ -35,6 +34,5 @@
 	</div>
 </body>
 <br />
-<a href="javascript:history.back()" class="btn btn-back single-button">Go
-	back</a>
+<a href="javascript:history.back()">Go back</a>
 </html>

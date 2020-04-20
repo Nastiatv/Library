@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import by.runa.lib.api.dto.BookDto;
+import by.runa.lib.api.dto.DepartmentDto;
 import by.runa.lib.api.service.IBookService;
+import by.runa.lib.api.service.IDepartmentService;
 
 @RestController
 @RequestMapping("/books/")
@@ -23,6 +25,9 @@ public class BookController {
 
 	@Autowired
 	IBookService bookService;
+	
+	@Autowired
+	IDepartmentService departmentService;
 
 	@GetMapping
 	public ModelAndView getAllBooks() {
@@ -36,16 +41,19 @@ public class BookController {
 	@GetMapping(value = "addbook")
 	public ModelAndView addBook() {
 		ModelAndView modelAndView = new ModelAndView();
+		List<DepartmentDto> departments=departmentService.getAllDepartments();
+		modelAndView.addObject("departmentsList", departments);
 		modelAndView.setViewName("addbook");
-		return modelAndView.addObject("dto", new BookDto());
+		modelAndView.addObject("departmentdto", new DepartmentDto());
+		return modelAndView.addObject("bookdto", new BookDto());
 	}
 
 	@PostMapping(value = "addbook")
-	public ModelAndView addBookSubmit(BookDto bookDto) {
+	public ModelAndView addBookSubmit(BookDto bookDto, DepartmentDto departmentDto) {
 		ModelAndView modelAndView = new ModelAndView();
-		BookDto newbook = bookService.createBook(bookDto);
-		modelAndView.setViewName("book");
-		return modelAndView.addObject("newbook", newbook);
+		BookDto newbook = bookService.createBook(bookDto, departmentDto);
+		modelAndView.setViewName("onebook");
+		return modelAndView.addObject("book", newbook);
 	}
 
 	@PutMapping(value = ID)
@@ -61,7 +69,7 @@ public class BookController {
 		ModelAndView modelAndView = new ModelAndView();
 		try {
 			BookDto book = bookService.getBookById(id);
-			modelAndView.setViewName("book");
+			modelAndView.setViewName("onebook");
 			modelAndView.addObject("book", book);
 		} catch (Exception e) {
 			modelAndView.setViewName("403");

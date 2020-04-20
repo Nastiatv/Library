@@ -3,12 +3,11 @@
 <head>
 <title>Book page</title>
 <link href="../css/styles.css" rel="stylesheet" />
-<link rel="stylesheet"
-	href="/lib-web/src/main/resources/css/bootstrap.min.css">
+<link href="../css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 	<h1>Our Book:</h1>
-	<a href="addbook">Add Book</a>
+	<a href="allbooks">All books</a>
 	<br />
 	<table border="1">
 		<tr>
@@ -28,15 +27,14 @@
 			<td th:text="${book.isbn}"></td>
 			<td th:text="${book.quantity}"></td>
 			<td th:text="${book.rating}"></td>
-			<td th:text="${book.department}"></td>
+			<td th:each="department : ${book.departments}"><span
+				th:text="${department.name}"></span></td>
 			<td th:text="${book.bookDetails.name}"></td>
 			<td th:text="${book.bookDetails.author}"></td>
-			<td><img th:src="@{${book.bookDetails.picture}}" height="200"/></td>
+			<td><img th:src="@{${book.bookDetails.picture}}" height="200" /></td>
 			<td th:text="${book.bookDetails.description}"></td>
 		</tr>
 	</table>
-	<script src="/lib-web/src/main/resources/js/jquery-3.4.1.min.js"></script>
-	<script src="/lib-web/src/main/resources/js/bootstrap.min.js"></script>
 </body>
-<a href="javascript:history.back()" class="btn btn-back single-button">Go back</a>
+<a href="javascript:history.back()" >Go	back</a>
 </html>
