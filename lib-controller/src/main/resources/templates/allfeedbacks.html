@@ -1,10 +1,9 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://thymeleaf.org" lang="en">
 <head>
-<title>Feedbacks page</title>
+<title>Library - Feedbacks page</title> 
 <link href="../css/styles.css" rel="stylesheet" />
-<link rel="stylesheet"
-	href="/lib-web/src/main/resources/css/bootstrap.min.css">
+<link href="../css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 	<h1>Our Feedbacks:</h1>
@@ -16,7 +15,7 @@
 			<th id="book">Book</th>
 			<th id="rating">Rating</th>
 			<th id="comment">Comment</th>
-			
+
 		</tr>
 		<tr>
 		<tr th:each="feedbacks : ${feedbacksList}">
@@ -26,6 +25,7 @@
 			<td th:text="${feedback.comment}"></td>
 		</tr>
 	</table>
-	</body>
-<a href="javascript:history.back()" class="btn btn-back single-button">Go back</a>
+</body>
+<a href="javascript:history.back()" >Go
+	back</a>
 </html>
