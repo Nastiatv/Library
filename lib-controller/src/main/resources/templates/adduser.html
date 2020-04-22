@@ -10,11 +10,12 @@
 <body>
 	<h1>Create a User:</h1>
 	<br />
-	<form th:action="@{adduser}" th:object="${dto}" method="POST">
+	<form th:action="@{adduser}" th:object="${dto}" method="POST" enctype="multipart/form-data">
 
 		<div class="col-sm-4">
 			<div class="form-group">
-				<label>Email</label> <input type="text" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}" th:field="*{email}"
+				<label>Email</label> <input type="text"
+					pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}" th:field="*{email}"
 					class="form-control input-sm" required />
 			</div>
 		</div>
@@ -33,6 +34,13 @@
 					<option th:each="department : ${departmentsList}"
 						th:value="${department.name}" th:text="${department.name}"></option>
 				</select> <br />
+			</div>
+		</div>
+
+		<div class="col-sm-4">
+			<div class="form-group">
+				<label>Photo</label> <input type="file" id="imageUploader"
+					name="file" />
 			</div>
 		</div>
 

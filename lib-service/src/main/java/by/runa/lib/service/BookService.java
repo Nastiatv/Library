@@ -80,7 +80,8 @@ public class BookService implements IBookService {
 			List<Department> departmentInList = new ArrayList<>();
 			departmentInList.add(department);
 			book.setDepartments(departmentInList);
-			book.setBookDetails(bookDetailsMapper.toEntity(bookDetailsService.createBookDetails(dto.getIsbn())));
+			BookDetails bd=bookDetailsMapper.toEntity(bookDetailsService.createBookDetails(dto.getIsbn()));
+			book.setBookDetails(bd);
 			try {
 				emailSender.sendEmailsFromAdmin(bookMapper.toDto(book));
 			} catch (MessagingException e) {

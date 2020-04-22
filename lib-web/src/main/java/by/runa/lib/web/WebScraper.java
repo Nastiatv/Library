@@ -30,7 +30,6 @@ public class WebScraper {
 	private static final String IMAGE_URL = "https://pictures.abebooks.com/isbn/%s-us-300.jpg";
 
 	public BookDetails getBookDetailsFromWeb(String isbn) {
-		isbn = RegExUtils.replaceAll(isbn, "-", StringUtils.EMPTY).trim();
 		BookDetails bookDetails = new BookDetails();
 		try {
 			String url = String.format(SEARCH_URL, isbn);
@@ -46,7 +45,6 @@ public class WebScraper {
 			}else {
 				bookDetails.setDescription(StringUtils.EMPTY);
 			}
-
 			bookDetails.setPicture(String.format(IMAGE_URL, isbn));
 			bookDetails.setName(name.getTextContent());
 			bookDetails.setAuthor(author.getTextContent());

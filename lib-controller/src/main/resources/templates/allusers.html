@@ -10,13 +10,16 @@
 	<a href="adduser">Add User</a>
 	<table border="1">
 		<tr>
-			<th id="username">User name</th>
-			<th id="email">Email</th>
-			<th id="department">Department</th>
+			<th >User name</th>
+			<th >Photo</th>
+			<th >Email</th>
+			<th >Department</th>
 		</tr>
 		<tr>
 		<tr th:each="user : ${userList}">
 			<td th:text="${user.username}"></td>
+			<td><img th:src="@{../img/nastia.png}"
+				height="200" /></td>
 			<td th:text="${user.email}"></td>
 			<td th:text="${user.departmentName}"></td>
 		</tr>

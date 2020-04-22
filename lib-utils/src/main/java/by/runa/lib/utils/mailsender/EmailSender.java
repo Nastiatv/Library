@@ -1,6 +1,8 @@
 package by.runa.lib.utils.mailsender;
 
 import java.io.StringWriter;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
@@ -14,6 +16,8 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 import by.runa.lib.api.dao.IBookDao;
+import by.runa.lib.api.dao.IDepartmentDao;
+import by.runa.lib.api.dao.IUserDao;
 import by.runa.lib.api.dto.BookDto;
 import by.runa.lib.api.dto.OrderDto;
 import by.runa.lib.api.utils.IEmailSender;
@@ -34,6 +38,9 @@ public class EmailSender implements IEmailSender {
 
 	@Autowired
 	private IBookDao bookDao;
+	
+	@Autowired
+	private IUserDao userDao;
 
 	@Async
 	public void sendEmailToAdmin(OrderDto dto) throws MessagingException {
@@ -49,7 +56,8 @@ public class EmailSender implements IEmailSender {
 		MimeMessage message = mailSender.createMimeMessage();
 		MimeMessageHelper helper = new MimeMessageHelper(message);
 		String text = prepareActivateRequestEmail(dto);
-		for (User user : dto.getDepartments().get(0).getUsers()) {
+		
+		for (User user : userDao.getByDepartment(dto.getDepartments().get(0).getName())) {
 			configureMimeMessageHelper(helper, ADMIN_FROM_EMAIL_ADDRESS, user.getEmail(), text,
 					"New Book in our Library!");
 			mailSender.send(message);

@@ -1,5 +1,6 @@
 package by.runa.lib.controllers;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,13 +10,16 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import by.runa.lib.api.dto.DepartmentDto;
 import by.runa.lib.api.dto.UserDto;
 import by.runa.lib.api.service.IDepartmentService;
 import by.runa.lib.api.service.IUserService;
+import by.runa.lib.utils.ImgFileUploader;
 
 @RestController
 @RequestMapping("/users/")
@@ -25,9 +29,12 @@ public class UserController {
 
 	@Autowired
 	IUserService userService;
-	
+
 	@Autowired
 	IDepartmentService departmentService;
+
+	@Autowired
+	ImgFileUploader imgFileUploader;
 
 	@GetMapping
 	public ModelAndView getAllUsers() {
@@ -41,7 +48,7 @@ public class UserController {
 	@GetMapping(value = "adduser")
 	public ModelAndView addUser() {
 		ModelAndView modelAndView = new ModelAndView();
-		List<DepartmentDto> departments=departmentService.getAllDepartments();
+		List<DepartmentDto> departments = departmentService.getAllDepartments();
 		modelAndView.addObject("departmentsList", departments);
 		modelAndView.setViewName("adduser");
 		modelAndView.addObject("departmentdto", new DepartmentDto());
@@ -49,13 +56,20 @@ public class UserController {
 	}
 
 	@PostMapping(value = "adduser")
-	public ModelAndView addUserSubmit(UserDto userDto , DepartmentDto departmentDto) {
+	public ModelAndView addUserSubmit(UserDto userDto, DepartmentDto departmentDto,
+			@RequestParam(value = "file", required = false) MultipartFile file) {
 		ModelAndView modelAndView = new ModelAndView();
 		UserDto newuser = userService.createUser(userDto, departmentDto);
-		modelAndView.setViewName("oneuser");
-		return modelAndView.addObject("user", newuser);
+		try {
+			imgFileUploader.createOrUpdate(userDto, file);
+			modelAndView.addObject("user", newuser);
+			modelAndView.setViewName("oneuser");
+		} catch (IOException e) {
+			modelAndView.setViewName("403");
+		}
+		return modelAndView;
 	}
-	
+
 //	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 //	public UserDto addUser(@RequestBody UserDto userDto) {
 //		return userService.createUser(userDto);

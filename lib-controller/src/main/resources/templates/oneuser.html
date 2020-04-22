@@ -6,20 +6,24 @@
 <link href="../css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-	<h1>Our user:</h1>
-	<a href="adduser">Add User</a>
+	<h1>Hello, user.username </h1>
+	<a href="..">Home</a>
 	<br />
 	<table border="1">
 		<tr>
 			<th>Name</th>
+			<th>Photo</th>
 			<th>Email</th>
 			<th>Department</th>
 		</tr>
 		<tr>
 		<tr>
 			<td th:text="${user.username}"></td>
+			<td><img th:src="@{../../static/img/${user.username}.png }" height="200" /></td>
 			<td th:text="${user.email}"></td>
 			<td th:text="${user.departmentName}"></td>
+			
+			
 		</tr>
 	</table>
 </body>
