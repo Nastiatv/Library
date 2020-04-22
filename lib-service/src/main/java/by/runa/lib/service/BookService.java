@@ -63,11 +63,6 @@ public class BookService implements IBookService {
 			} else {
 				getBookbyIsbn(dto).setQuantity(getBookbyIsbn(dto).getQuantity() + 1);
 				getBookbyIsbn(dto).getDepartments().add(department);
-				try {
-					emailSender.sendEmailsFromAdmin(dto);
-				} catch (MessagingException e) {
-					log.info("Mail not sent!");
-				}
 			}
 			return bookMapper.toDto(getBookbyIsbn(dto));
 		} else {
@@ -80,14 +75,15 @@ public class BookService implements IBookService {
 			List<Department> departmentInList = new ArrayList<>();
 			departmentInList.add(department);
 			book.setDepartments(departmentInList);
-			BookDetails bd=bookDetailsMapper.toEntity(bookDetailsService.createBookDetails(dto.getIsbn()));
+			BookDetails bd = bookDetailsMapper.toEntity(bookDetailsService.createBookDetails(dto.getIsbn()));
 			book.setBookDetails(bd);
+			bookMapper.toDto(bookDao.create(book));
 			try {
-				emailSender.sendEmailsFromAdmin(bookMapper.toDto(book));
+				emailSender.sendEmailsFromAdmin(book);
 			} catch (MessagingException e) {
 				log.info("Mail not sent!");
 			}
-			return bookMapper.toDto(bookDao.create(book));
+			return bookMapper.toDto(book);
 		}
 	}
 

@@ -32,12 +32,13 @@ public class ImgFileUploader {
 				URL fileUrl = ResourceUtils.getURL(FOLDER_PATH);
 				userImage = new File(
 						new StringBuilder(fileUrl.getPath()).append(username).append(IMAGE_EXTENSION).toString());
-
 			}
 			Path path = Paths.get(userImage.getPath());
 			byte[] bytes = file.getBytes();
+//			File fil=new File(filePath);
+//			OutputStream os = new FileOutputStream(userImage);
+//			os.write(bytes);
 			Files.write(path, bytes);
-
 		}
 	}
 }

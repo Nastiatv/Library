@@ -1,9 +1,9 @@
-D:\courses IT\practice\Library\lib-controller\src\main\java\by\runa\lib\config\MvcConfig.java
-D:\courses IT\practice\Library\lib-controller\src\main\java\by\runa\lib\controllers\DepartmentController.java
-D:\courses IT\practice\Library\lib-controller\src\main\java\by\runa\lib\utils\ImgFileUploader.java
-D:\courses IT\practice\Library\lib-controller\src\main\java\by\runa\lib\controllers\UserController.java
-D:\courses IT\practice\Library\lib-controller\src\main\java\by\runa\lib\config\CustomAccessDeniedHandler.java
-D:\courses IT\practice\Library\lib-controller\src\main\java\by\runa\lib\controllers\BookController.java
-D:\courses IT\practice\Library\lib-controller\src\main\java\by\runa\lib\config\SecurityConfiguration.java
-D:\courses IT\practice\Library\lib-controller\src\main\java\by\runa\lib\controllers\FeedbackController.java
-D:\courses IT\practice\Library\lib-controller\src\main\java\by\runa\lib\controllers\OrderController.java
+D:\coursesIT\practice\Library\lib-controller\src\main\java\by\runa\lib\controllers\DepartmentController.java
+D:\coursesIT\practice\Library\lib-controller\src\main\java\by\runa\lib\config\SecurityConfiguration.java
+D:\coursesIT\practice\Library\lib-controller\src\main\java\by\runa\lib\controllers\UserController.java
+D:\coursesIT\practice\Library\lib-controller\src\main\java\by\runa\lib\config\CustomAccessDeniedHandler.java
+D:\coursesIT\practice\Library\lib-controller\src\main\java\by\runa\lib\config\MvcConfig.java
+D:\coursesIT\practice\Library\lib-controller\src\main\java\by\runa\lib\controllers\BookController.java
+D:\coursesIT\practice\Library\lib-controller\src\main\java\by\runa\lib\utils\ImgFileUploader.java
+D:\coursesIT\practice\Library\lib-controller\src\main\java\by\runa\lib\controllers\FeedbackController.java
+D:\coursesIT\practice\Library\lib-controller\src\main\java\by\runa\lib\controllers\OrderController.java

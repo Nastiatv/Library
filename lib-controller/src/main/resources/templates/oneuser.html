@@ -6,7 +6,7 @@
 <link href="../css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-	<h1>Hello, user.username </h1>
+	<h1 th:text="'Hello, ' + ${user.username}"> </h1>
 	<a href="..">Home</a>
 	<br />
 	<table border="1">
@@ -19,7 +19,7 @@
 		<tr>
 		<tr>
 			<td th:text="${user.username}"></td>
-			<td><img th:src="@{../../static/img/${user.username}.png }" height="200" /></td>
+			<td><img th:src="@{'../img/' + ${user.username} + '.png'}" height="200" /></td>
 			<td th:text="${user.email}"></td>
 			<td th:text="${user.departmentName}"></td>
 			

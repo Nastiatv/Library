@@ -1,9 +1,4 @@
-by\runa\lib\utils\ImgFileUploader.class
 by\runa\lib\config\MvcConfig.class
 by\runa\lib\controllers\UserController.class
-by\runa\lib\controllers\BookController.class
-by\runa\lib\controllers\OrderController.class
 by\runa\lib\controllers\FeedbackController.class
 by\runa\lib\config\CustomAccessDeniedHandler.class
-by\runa\lib\config\SecurityConfiguration.class
-by\runa\lib\controllers\DepartmentController.class

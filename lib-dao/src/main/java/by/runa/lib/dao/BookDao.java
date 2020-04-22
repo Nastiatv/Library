@@ -1,12 +1,9 @@
 package by.runa.lib.dao;
 
-import java.util.List;
-
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Root;
 
 import org.springframework.stereotype.Repository;
@@ -14,7 +11,6 @@ import org.springframework.stereotype.Repository;
 import by.runa.lib.api.dao.IBookDao;
 import by.runa.lib.entities.Book;
 import by.runa.lib.entities.Book_;
-import by.runa.lib.entities.Department_;
 
 @Repository
 public class BookDao extends AGenericDao<Book> implements IBookDao {

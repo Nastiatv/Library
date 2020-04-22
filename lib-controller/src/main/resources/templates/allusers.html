@@ -18,7 +18,7 @@
 		<tr>
 		<tr th:each="user : ${userList}">
 			<td th:text="${user.username}"></td>
-			<td><img th:src="@{../img/nastia.png}"
+			<td><img th:src="@{'../img/' + ${user.username} + '.png'}"
 				height="200" /></td>
 			<td th:text="${user.email}"></td>
 			<td th:text="${user.departmentName}"></td>
