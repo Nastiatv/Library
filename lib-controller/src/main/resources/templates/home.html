@@ -18,6 +18,9 @@
 			<a href="users/adduser">Sign Up</a>
 		</div>
 	</div>
+
+	<hr>
+
 	<div class="col-sm-4">
 		<div class="form-group">
 			<a href="books/">All books</a>
@@ -26,7 +29,6 @@
 	<div class="col-sm-4">
 		<div class="form-group">
 			<a href="users/">All users</a>
-
 		</div>
 	</div>
 	<div class="col-sm-4">
@@ -45,8 +47,13 @@
 		</div>
 	</div>
 
+	<hr>
 
-
+	<div>
+		<form th:action="@{/logout}" method="post">
+			<input type="submit" value="Sign Out" />
+		</form>
+	</div>
 
 
 </body>

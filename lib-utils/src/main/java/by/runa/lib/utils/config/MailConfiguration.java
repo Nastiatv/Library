@@ -43,14 +43,20 @@ public class MailConfiguration {
 
 	@Value("${class.resource.loader.class}")
 	private String velocityClassResourceLoaderClassProperty;
+	
+	@Value("${admin.email}")
+	private String adminEmail;
+	
+	@Value("${admin.password}")
+	private String adminPassword;
 
 	@Bean
 	public JavaMailSender mailSender() {
 		JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
-		mailSender.setHost("litvinenoknastia@gmail.com");
+		mailSender.setHost("smtp.gmail.com");
 		mailSender.setPort(587);
-		mailSender.setUsername("Admin");
-		mailSender.setPassword("byrynalibrary2");
+		mailSender.setUsername(adminEmail);
+		mailSender.setPassword(adminPassword);
 		Properties javaMailProperties = new Properties();
 		javaMailProperties.put("mail.smtp.starttls.enable", mailSmtpStarttlsEnableProperty);
 		javaMailProperties.put("mail.smtp.auth", mailSmtpAuthProperty);

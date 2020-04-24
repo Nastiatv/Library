@@ -18,9 +18,9 @@ import by.runa.lib.entities.User_;
 
 @Repository
 public class UserDao extends AGenericDao<User> implements IUserDao {
-	
+
 	@Autowired
-	private IDepartmentDao departmentDao;  
+	private IDepartmentDao departmentDao;
 
 	public UserDao() {
 		super(User.class);
@@ -46,13 +46,28 @@ public class UserDao extends AGenericDao<User> implements IUserDao {
 			CriteriaBuilder cb = entityManager.getCriteriaBuilder();
 			CriteriaQuery<User> cq = cb.createQuery(getGenericClass());
 			Root<User> rootEntry = cq.from(User.class);
-			CriteriaQuery<User> all = cq.select(rootEntry).where(cb.equal(rootEntry.get(User_.department), departmentDao.getByName(department)));
+			CriteriaQuery<User> all = cq.select(rootEntry)
+					.where(cb.equal(rootEntry.get(User_.department), departmentDao.getByName(department)));
 			TypedQuery<User> result = entityManager.createQuery(all);
 			return result.getResultList();
 		} catch (NoResultException e) {
 			return null;
 		}
 	}
-	
-	//TODO autowired&
+
+	@Override
+	public User getByName(String name) {
+		try {
+			CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+			CriteriaQuery<User> cq = cb.createQuery(getGenericClass());
+			Root<User> rootEntry = cq.from(User.class);
+			CriteriaQuery<User> all = cq.select(rootEntry).where(cb.equal(rootEntry.get(User_.username), name));
+			TypedQuery<User> result = entityManager.createQuery(all);
+			return result.getSingleResult();
+		} catch (NoResultException e) {
+			return null;
+		}
+
+		// TODO autowired&
+	}
 }

@@ -10,4 +10,6 @@ public interface IUserDao extends IAGenericDao<User> {
 
 	List<User> getByDepartment(String department);
 
+	User getByName(String name);
+
 }

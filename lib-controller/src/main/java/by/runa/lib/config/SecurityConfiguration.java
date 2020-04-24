@@ -30,7 +30,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.antMatchers("/", "/users/**", "/books/**", "/departments/**", "/roles/**", "/orders/**", "/feedbacks/**", "/login",
 						"/logout", "/register", "/css/**", "/img/**")
 				.permitAll().antMatchers("/admin/**").hasAnyRole("ADMIN").anyRequest().authenticated().and().formLogin()
-				.loginPage("/login").defaultSuccessUrl("/home", true).permitAll().and().logout().invalidateHttpSession(true).clearAuthentication(true)
+				.loginPage("/login").defaultSuccessUrl("/users/{user}", true).permitAll().and().logout().invalidateHttpSession(true).clearAuthentication(true)
 				.logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/bye").permitAll().and()
 				.exceptionHandling().accessDeniedHandler(accessDeniedHandler);
 	}

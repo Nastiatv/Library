@@ -1,6 +1,7 @@
 package by.runa.lib.service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -55,9 +56,7 @@ public class UserService implements IUserService {
 		user.setUsername(userDto.getUsername());
 		user.setDepartment(department);
 		user.setPassword(passwordEncoder.encode(userDto.getPassword()));
-		List<Role> role = new ArrayList<>();
-		role.add(roleDao.get(2L));
-		user.setRoles(role);
+		user.setRoles(Collections.singletonList(roleDao.get(2L)));
 		return userMapper.toDto(userDao.create(user));
 	}
 
@@ -69,6 +68,11 @@ public class UserService implements IUserService {
 	@Override
 	public UserDto getUserByEmail(String email) throws Exception {
 		return Optional.ofNullable(userMapper.toDto(userDao.getByEmail(email))).orElseThrow(Exception::new);
+	}
+
+	@Override
+	public UserDto getUserByName(String name) throws Exception {
+		return Optional.ofNullable(userMapper.toDto(userDao.getByName(name))).orElseThrow(Exception::new);
 	}
 
 	@Override

@@ -19,4 +19,6 @@ public interface IUserService {
 
 	UserDto createUser(UserDto userDto, DepartmentDto departmentDto);
 
+	UserDto getUserByName(String name) throws Exception;
+
 }
