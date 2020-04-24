@@ -30,10 +30,18 @@
 					<input type="submit" value="Sign In" />
 				</div>
 			</form>
+
+			<form action="/signin/facebook" method="post">
+				<input type="hidden" name="scope" value="email, public_profile" />
+				<input type="submit" value="loginWithFacebook" />
+			</form>
+
+
+
 		</div>
 	</div>
 	<a href="/adduser">Add new user</a>
 </body>
-<hr>	
+<hr>
 <a href="javascript:history.back()">Go back</a>
 </html>
