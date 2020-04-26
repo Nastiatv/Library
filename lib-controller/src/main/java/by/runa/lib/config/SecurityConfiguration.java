@@ -31,15 +31,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private javax.sql.DataSource dataSource;
 
-	@Autowired
-	private ConnectionFactoryLocator connectionFactoryLocator;
-
-	@Autowired
-	private UsersConnectionRepository usersConnectionRepository;
-
-	@Autowired
-	private FacebookConnectionSignUp facebookConnectionSignUp;
-
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 
@@ -64,11 +55,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	}
 
 	@Bean
-	public ProviderSignInController providerSignInController() {
+	public ProviderSignInController providerSignInController(ConnectionFactoryLocator connectionFactoryLocator,
+			FacebookConnectionSignUp facebookConnectionSignUp, UsersConnectionRepository usersConnectionRepository) {
 		((InMemoryUsersConnectionRepository) usersConnectionRepository).setConnectionSignUp(facebookConnectionSignUp);
 		ProviderSignInController providerSignInController = new ProviderSignInController(connectionFactoryLocator,
 				usersConnectionRepository, new FacebookSignInAdapter());
-		providerSignInController.setPostSignInUrl("/users/");
+		providerSignInController.setPostSignInUrl("/users/{user}");
 		return providerSignInController;
 
 	}

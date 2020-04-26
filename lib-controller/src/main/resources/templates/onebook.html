@@ -6,10 +6,11 @@
 <link href="../css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-	<h1>This Book:</h1>
+<h1>Book details:</h1>
 	<a href="http://localhost:8080/books/">All books</a>
 	<br />
 	<table border="1">
+	<caption></caption>
 		<tr>
 			<th id="id">Id</th>
 			<th id="isbn">Isbn</th>
@@ -31,10 +32,11 @@
 				th:text="${department.name}"></span></td>
 			<td th:text="${book.bookDetails.name}"></td>
 			<td th:text="${book.bookDetails.author}"></td>
-			<td><img th:src="@{${book.bookDetails.picture}}" height="200" /></td>
+			<td><img th:src="@{${book.bookDetails.picture}}" height="200" alt="Cover" /></td>
 			<td th:text="${book.bookDetails.description}"></td>
 		</tr>
 	</table>
 </body>
+<hr>
 <a href="javascript:history.back()" >Go	back</a>
 </html>

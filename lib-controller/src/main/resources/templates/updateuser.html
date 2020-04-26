@@ -8,7 +8,7 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 </head>
 <body>
-	<h1>Personal Info</h1>
+	<h1>Personal Info :</h1>
 	<br />
 
 	<form th:action="@{{user}}" th:object="${user}" method="POST"
@@ -63,7 +63,14 @@
 		</div>
 	</form>
 </body>
-
+<script>
+	$('#password, #confpassword').on('keyup', function() {
+		if ($('#password').val() == $('#confpassword').val()) {
+			$('#message').html('Matching').css('color', 'green');
+		} else
+			$('#message').html('Not Matching').css('color', 'red');
+	});
+</script>
 <hr>
 <a href="javascript:history.back()">Go back</a>
 </html>

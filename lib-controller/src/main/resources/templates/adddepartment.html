@@ -8,13 +8,11 @@
 <body>
 	<h1>Create a Department:</h1>
 	<br />
-	<form th:action="@{/adddepartment}" th:object="${dto}" method="POST">
+	<form th:action="@{adddepartment}" th:object="${dto}" method="POST">
 		Name: <input type="text" th:field="*{name}" /> <br /> <input
 			type="submit" value="Create" /> <input type="reset" value="Reset">
 	</form>
 	</body>
-<a href="javascript:history.back()" class="btn btn-back single-button">Go
-	back</a>
+<hr>
+<a href="javascript:history.back()">Go back</a>
 </html>
-
-

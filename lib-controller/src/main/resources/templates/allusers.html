@@ -6,21 +6,22 @@
 <link href="../css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-	<h1>Our Users:</h1>
+<h1>Our Users:</h1>
 	<a href="adduser">Add User</a>
 	<table border="1">
+	<caption></caption>
 		<tr>
-			<th >User name</th>
-			<th >Photo</th>
-			<th >Email</th>
-			<th >Department</th>
+			<th scope="col">User name</th>
+			<th scope="col">Photo</th>
+			<th scope="col">Email</th>
+			<th scope="col">Department</th>
 			
 		</tr>
 		<tr>
 		<tr th:each="user : ${userList}">
 			<td th:text="${user.username}"></td>
-			<td><img th:src="@{'../img/' + ${user.username} + '.png'}"
-				height="200" /></td>
+			<td ><img th:src="@{'../img/' + ${user.username} + '.png'}"
+				height="200" alt="Avatar" /></td>
 			<td th:text="${user.email}"></td>
 			<td th:text="${user.departmentName}"></td>
 		</tr>

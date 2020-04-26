@@ -8,14 +8,13 @@
 <body>
 	<h1>Create a Feedback:</h1>
 	<br />
-	<form th:action="@{/addfeedback}" th:object="${dto}" method="POST">
+	<form th:action="@{addfeedback}" th:object="${dto}" method="POST">
 		Rating: <input type="text" th:field="*{rating}" /> <br /> Comment: <input
 			type="text" th:field="*{comment}" /> <br /> <input type="submit"
 			value="Create" /> <input type="reset" value="Reset">
 	</form>
 	</body>
-<a href="javascript:history.back()" class="btn btn-back single-button">Go
-	back</a>
+<hr>
+<a href="javascript:history.back()">Go back</a>
 </html>
-
 
