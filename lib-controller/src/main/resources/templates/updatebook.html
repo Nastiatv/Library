@@ -1,0 +1,70 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://thymeleaf.org" lang="en">
+<head>
+<title>Library - Book page</title>
+<link href="../css/styles.css" rel="stylesheet" />
+<link href="../css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+	<h1>Book Info :</h1>
+	<br />
+	<img th:src="@{${book.bookDetails.picture}}" height="200" alt="Cover" />
+
+	<form th:action="@{{book}}" th:object="${book}" method="POST"
+		enctype="multipart/form-data">
+
+		<div class="col-sm-4">
+			<div class="form-group">
+				<label for="name"> Name <input type="text" id="name"
+					th:field="*{bookDetails.name}"
+					value="${book.bookDetails.name}" />
+				</label>
+			</div>
+		</div>
+
+		<div class="col-sm-4">
+			<div class="form-group">
+				<label for="author">Author</label> <input type="text" id="author"
+					name="author" th:field="*{bookDetails.author}"
+					class="form-control input-sm" value="${book.bookDetails.author}"
+					required />
+			</div>
+		</div>
+
+		<div class="col-sm-4">
+			<div class="form-group">
+				<label for="department">Department</label> <select id="department"
+					th:object="${departmentdto}" th:field="*{name}">
+					<option th:each="department : ${departmentsList}"
+						th:value="${department.name}" th:text="${department.name}"
+						value="${book.departmentName}"></option>
+				</select> <br />
+			</div>
+		</div>
+
+		<div class="col-sm-4">
+			<div class="form-group">
+				<label for="description"> Description <input type="text"
+					id="description" th:field="*{bookDetails.description}"
+					value="${book.bookDetails.description}" />
+				</label>
+			</div>
+		</div>
+
+		<div class="col-sm-4">
+			<div class="form-group">
+				<label for="imageUploader">Cover</label> <input type="file"
+					id="imageUploader" name="file" />
+			</div>
+		</div>
+
+		<div class="col-sm-4">
+			<input type="submit" value="Update Book" />
+		</div>
+	</form>
+</body>
+
+<hr>
+<a href="javascript:history.back()">Go back</a>
+</html>
+

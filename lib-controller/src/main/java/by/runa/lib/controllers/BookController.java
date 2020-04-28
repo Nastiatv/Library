@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import by.runa.lib.api.dto.BookDetailsDto;
 import by.runa.lib.api.dto.BookDto;
 import by.runa.lib.api.dto.DepartmentDto;
 import by.runa.lib.api.service.IBookService;
@@ -26,10 +27,10 @@ public class BookController {
 
 	@Autowired
 	IBookService bookService;
-	
+
 	@Autowired
 	IDepartmentService departmentService;
-	
+
 	@Autowired
 	ImgFileUploader imgFileUploader;
 
@@ -45,7 +46,7 @@ public class BookController {
 	@GetMapping(value = "addbook")
 	public ModelAndView addBook() {
 		ModelAndView modelAndView = new ModelAndView();
-		List<DepartmentDto> departments=departmentService.getAllDepartments();
+		List<DepartmentDto> departments = departmentService.getAllDepartments();
 		modelAndView.addObject("departmentsList", departments);
 		modelAndView.setViewName("addbook");
 		modelAndView.addObject("departmentdto", new DepartmentDto());
@@ -60,15 +61,31 @@ public class BookController {
 		return modelAndView.addObject("book", newbook);
 	}
 
-	@GetMapping("edit/{book}")
-	public ModelAndView getBookEditForm(@PathVariable Long id) {
+//	@GetMapping(value = "id")
+//	public ModelAndView getBook(Long id) {
+//		ModelAndView modelAndView = new ModelAndView();
+//		try {
+//			BookDto book = bookService.getBookById(id);
+//			modelAndView.addObject("book", book);
+//		} catch (Exception e) {
+//			modelAndView.setViewName("403");
+//			// TODO There is no book with id="id"
+//		}
+//		return modelAndView;
+//	}
+
+	@GetMapping("edit/{id}")
+	public ModelAndView getBookEditForm(@PathVariable String id) {
 		ModelAndView modelAndView = new ModelAndView();
+		Long ids=Long.parseLong(id);
+		
 		try {
-			BookDto bookDto = bookService.getBookById(id);
+			BookDto bookDto = bookService.getBookById(ids);
 			List<DepartmentDto> departments = departmentService.getAllDepartments();
 			modelAndView.addObject("departmentsList", departments);
 			modelAndView.setViewName("updatebook");
 			modelAndView.addObject("book", bookDto);
+			modelAndView.addObject("detailsdto", new BookDetailsDto());
 			modelAndView.addObject("departmentdto", new DepartmentDto());
 			modelAndView.addObject("dto", new BookDto());
 		} catch (Exception e) {
@@ -79,7 +96,7 @@ public class BookController {
 	}
 
 	@PostMapping("edit/{book}")
-	public ModelAndView saveBookChanges(BookDto bookDto, DepartmentDto departmentDto,
+	public ModelAndView saveBookChanges(BookDto bookDto, BookDetailsDto bookDetailsDto, DepartmentDto departmentDto,
 			@RequestParam(value = "file", required = false) MultipartFile file) {
 		ModelAndView modelAndView = new ModelAndView();
 		BookDto bookUpdated = bookService.updateBook(bookDto, departmentDto);
@@ -99,4 +116,3 @@ public class BookController {
 		return getAllBooks();
 	}
 }
-
