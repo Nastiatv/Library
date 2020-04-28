@@ -25,7 +25,6 @@ import by.runa.lib.utils.ImgFileUploader;
 @RequestMapping("/users/")
 public class UserController {
 
-	private static final String ID = "{id}";
 	private Long principalId;
 
 	@Autowired
@@ -61,7 +60,7 @@ public class UserController {
 			@RequestParam(value = "file", required = false) MultipartFile file) {
 		ModelAndView modelAndView = new ModelAndView();
 		UserDto newuser = userService.createUser(userDto, departmentDto);
-		
+
 		try {
 			imgFileUploader.createOrUpdate(userDto, file);
 			modelAndView.addObject("user", newuser);
@@ -107,13 +106,12 @@ public class UserController {
 		}
 		return modelAndView;
 	}
-	
-	
+
 	@PostMapping("edit/{user}")
 	public ModelAndView saveUserChanges(UserDto userDto, DepartmentDto departmentDto,
 			@RequestParam(value = "file", required = false) MultipartFile file) {
 		ModelAndView modelAndView = new ModelAndView();
-		UserDto userUpdated = userService.updateUser(principalId, userDto);
+		UserDto userUpdated = userService.updateUser(principalId, userDto, departmentDto);
 		try {
 			imgFileUploader.createOrUpdate(userDto, file);
 			modelAndView.addObject("user", userUpdated);
@@ -124,7 +122,7 @@ public class UserController {
 		return modelAndView;
 	}
 
-	@DeleteMapping(value = ID)
+	@DeleteMapping("delete/{user}")
 	public ModelAndView deleteUser(@PathVariable Long id) {
 		userService.deleteUserById(id);
 		return getAllUsers();

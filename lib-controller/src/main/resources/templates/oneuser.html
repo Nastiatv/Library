@@ -7,7 +7,7 @@
 </head>
 <body>
 	<h1 th:text="'Hello, ' + ${user.username}"> </h1>
-	<a href="..">Home</a>
+	<a href="http://localhost:8080/">Home</a>
 	<br /><h3>My personal info:</h3>
 	<table border="1">
 	<caption></caption>
@@ -21,10 +21,10 @@
 		<tr>
 		<tr>
 			<td th:text="${user.username}"></td>
-			<td><img th:src="@{'../img/' + ${user.username} + '.png'}" height="200" alt="Avatar"/></td>
+			<td><img th:src="@{'../../img/' + ${user.username} + '.png'}" height="200" alt="Avatar"/></td>
 			<td th:text="${user.email}"></td>
 			<td th:text="${user.departmentName}"></td>
-			<td><a href="../users/edit/${user.id}">Edit</a></td>
+			<td><a href="../../users/edit/${user.id}">Edit</a></td>
 			
 		</tr>
 	</table>

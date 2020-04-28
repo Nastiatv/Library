@@ -12,9 +12,9 @@ public interface IBookDetailsService  {
 
 	void deleteBookDetailsById(Long id);
 
-	void updateBookDetails(Long id, BookDetailsDto dto);
-
 	BookDetailsDto createBookDetails(String isbn);
+
+	void updateBookDetails(BookDetailsDto bookDetailsDto);
 
 
 

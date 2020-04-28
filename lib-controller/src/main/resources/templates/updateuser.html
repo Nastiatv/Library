@@ -10,51 +10,58 @@
 <body>
 	<h1>Personal Info :</h1>
 	<br />
-
+	<img th:src="@{'../../img/' + ${user.username} + '.png'}" height="200"
+		alt="Avatar" />
 	<form th:action="@{{user}}" th:object="${user}" method="POST"
 		enctype="multipart/form-data">
 
 		<div class="col-sm-4">
 			<div class="form-group">
-				<label for="email"> Email <input type="email" id="email" th:field="*{email}" value="${user.email}" />
+				<label for="email"> Email <input type="email" id="email"
+					th:field="*{email}" value="${user.email}" />
 				</label>
 			</div>
 		</div>
 
 		<div class="col-sm-4">
 			<div class="form-group">
-				<label for="username">Name</label> <input type="text" id="username" th:field="*{username}" class="form-control input-sm"
+				<label for="username">Name</label> <input type="text" id="username" name="username"
+					th:field="*{username}" class="form-control input-sm"
 					value="${user.username}" required />
 			</div>
 		</div>
 
 		<div class="col-sm-4">
 			<div class="form-group">
-				<label for="department">Department</label> 
-				<select id="department" th:object="${departmentdto}" th:field="*{name}">
-					<option th:each="department : ${departmentsList}" th:value="${department.name}" 
-					th:text="${department.name}"  value="${user.departmentName}"></option>
+				<label for="department">Department</label> <select id="department"
+					th:object="${departmentdto}" th:field="*{name}">
+					<option th:each="department : ${departmentsList}"
+						th:value="${department.name}" th:text="${department.name}"
+						value="${user.departmentName}"></option>
 				</select> <br />
 			</div>
 		</div>
 
 		<div class="col-sm-4">
 			<div class="form-group">
-				<label for="imageUploader">Photo</label> <input type="file" id="imageUploader" name="file" />
+				<label for="imageUploader">Photo</label> <input type="file"
+					id="imageUploader" name="file" />
 			</div>
 		</div>
 
 		<div class="col-sm-4">
 			<div class="form-group">
-				<label for="password">Password</label> <input name="password" 
-				type="password" id="password" th:field="*{password}" class="form-control input-sm" required />
+				<label for="password">Password</label> <input name="password"
+					type="password" id="password" th:field="*{password}"
+					class="form-control input-sm" required />
 			</div>
 		</div>
 
 		<div class="col-sm-4">
 			<div class="form-group">
-				<label for="confpassword">Confirm Password</label> <input name="confirm_password" 
-				type="password" id="confpassword" class="form-control input-sm" required /> <span id='message'></span>
+				<label for="confpassword">Confirm Password</label> <input
+					name="confirm_password" type="password" id="confpassword"
+					class="form-control input-sm" required /> <span id='message'></span>
 			</div>
 		</div>
 

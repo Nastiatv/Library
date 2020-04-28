@@ -13,8 +13,10 @@ public interface IBookService {
 
 	void deleteBookById(Long id);
 
-	BookDto updateBook(Long id, BookDto bookDto);
-
 	BookDto createBook(BookDto bookDto, DepartmentDto departmentDto);
+
+	BookDto updateBook(BookDto bookDto, DepartmentDto departmentDto);
+
+	
 
 }

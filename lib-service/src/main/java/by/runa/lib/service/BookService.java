@@ -1,6 +1,7 @@
 package by.runa.lib.service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -103,11 +104,14 @@ public class BookService implements IBookService {
 	}
 
 	@Override
-	public BookDto updateBook(Long id, BookDto bookDto) {
-		Book existingBook = Optional.ofNullable(bookDao.get(id)).orElse(new Book());
-		existingBook.setQuantity(bookDto.getQuantity());
-		existingBook.setOccupied(bookDto.isOccupied());
-		existingBook.setDepartments(bookDto.getDepartments());
+	public BookDto updateBook(BookDto bookDto, DepartmentDto departmentDto) {
+		Book existingBook = Optional.ofNullable(bookDao.get(bookDto.getId())).orElse(new Book());
+		if (departmentDto.getName() != null) {
+			existingBook.setDepartments(Collections.singletonList(departmentDao.getByName(departmentDto.getName())));
+		}
+		if (bookDto.getBookDetails()!= null) {
+			bookDetailsService.updateBookDetails(bookDetailsMapper.toDto(bookDto.getBookDetails()));
+		}
 		bookDao.update(existingBook);
 		return bookMapper.toDto(existingBook);
 

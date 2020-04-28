@@ -80,13 +80,21 @@ public class UserService implements IUserService {
 	}
 
 	@Override
-	public UserDto updateUser(Long id, UserDto userDto) {
+	public UserDto updateUser(Long id, UserDto userDto, DepartmentDto departmentDto) {
 		User existingUser = Optional.ofNullable(userDao.get(id)).orElse(new User());
-		existingUser.setPassword(passwordEncoder.encode(userDto.getPassword()));
-		existingUser.setEmail(userDto.getEmail());
-		existingUser.setUsername(userDto.getUsername());
+		if (userDto.getPassword() != null) {
+			existingUser.setPassword(passwordEncoder.encode(userDto.getPassword()));
+		}
+		if (userDto.getEmail() != null) {
+			existingUser.setEmail(userDto.getEmail());
+		}
+		if (userDto.getUsername() != null) {
+			existingUser.setUsername(userDto.getUsername());
+		}
+		if (departmentDto.getName() != null) {
+			existingUser.setDepartment(departmentDao.getByName(departmentDto.getName()));
+		}
 		userDao.update(existingUser);
 		return userMapper.toDto(existingUser);
-//TODO check if null
 	}
 }

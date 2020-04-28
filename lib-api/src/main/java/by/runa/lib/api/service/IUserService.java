@@ -13,12 +13,12 @@ public interface IUserService {
 
 	void deleteUserById(Long id);
 
-	UserDto updateUser(Long id, UserDto dto);
-
 	UserDto getUserByEmail(String email) throws Exception;
 
 	UserDto createUser(UserDto userDto, DepartmentDto departmentDto);
 
 	UserDto getUserByName(String name) throws Exception;
+
+	UserDto updateUser(Long id, UserDto userDto, DepartmentDto departmentDto);
 
 }

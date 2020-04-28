@@ -98,7 +98,7 @@ public class BookDetailsServiceTest {
 		String nameToUpdate = TEST_NAME + "new";
 		BookDetailsDto bookDetailsDto = new BookDetailsDto();
 		bookDetailsDto.setName(nameToUpdate);
-		bookDetailsService.updateBookDetails(1L, bookDetailsDto);
+		bookDetailsService.updateBookDetails(bookDetailsDto);
 		verify(bookDetailsDao, times(1)).update(bookDetails);
 		assertThat(bookDetailsDao.get(1L).getName() == nameToUpdate);
 	}
