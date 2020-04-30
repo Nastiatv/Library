@@ -3,6 +3,7 @@ package by.runa.lib.api.service;
 import java.util.List;
 
 import by.runa.lib.api.dto.BookDetailsDto;
+import by.runa.lib.entities.BookDetails;
 
 public interface IBookDetailsService  {
 
@@ -14,7 +15,7 @@ public interface IBookDetailsService  {
 
 	BookDetailsDto createBookDetails(String isbn);
 
-	void updateBookDetails(BookDetailsDto bookDetailsDto);
+	void updateBookDetails(BookDetails existingBookDetails, BookDetailsDto newbookDetailsDto);
 
 
 

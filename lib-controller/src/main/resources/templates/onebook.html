@@ -6,11 +6,15 @@
 <link href="../css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-<h1>Book details:</h1>
+	<h1>Book details:</h1>
 	<a href="http://localhost:8080/books/">All books</a>
+	<br>
+	<a href="http://localhost:8080">Home</a>
+	<br>
+	<a href="http://localhost:8080/books/addbook">Add book</a>
 	<br />
 	<table border="1">
-	<caption></caption>
+		<caption></caption>
 		<tr>
 			<th id="id">Id</th>
 			<th id="isbn">Isbn</th>
@@ -24,7 +28,6 @@
 			<th scope="col"></th>
 		</tr>
 		<tr>
-		<tr>
 			<td th:text="${book.id}" id="bookid"></td>
 			<td th:text="${book.isbn}"></td>
 			<td th:text="${book.quantity}"></td>
@@ -32,20 +35,29 @@
 			<td><span th:each="department : ${book.departments}"> <span
 					th:text="${department.name}"> </span>
 			</span></td>
-			<td th:text="${book.bookDetails.name}"></td>
-			<td th:text="${book.bookDetails.author}"></td>
-			<td><img th:src="@{${book.bookDetails.picture}}" height="200" alt="Cover" /></td>
-			<td th:text="${book.bookDetails.description}"></td>
-			<td><a id="myLink" href="#" onclick="MyFunction();">Edit</a></td>
+			<td th:text="${book.bookDetailsDto.name}"></td>
+			<td th:text="${book.bookDetailsDto.author}"></td>
+			<td><img th:src="@{${book.bookDetailsDto.picture}}" height="200"
+				alt="Cover" /></td>
+			<td th:text="${book.bookDetailsDto.description}"></td>
+			<td><a id="myLink" href="#" onclick="EditFunction();">Edit</a> <br>
+				<a id="myLink" href="#" onclick="DeleteFunction();">Delete</a></td>
 		</tr>
 	</table>
 </body>
-<script type="text/javascript">
-	function MyFunction() {
+<script>
+	function EditFunction() {
 		var id = document.getElementById('bookid').innerHTML;
 		window.location.href = "http://localhost:8080/books/edit/" + id;
 	}
 </script>
+<script>
+	function DeleteFunction() {
+		var id = document.getElementById('bookid').innerHTML;
+		window.location.href = "http://localhost:8080/books/delete/" + id;
+
+	}
+</script>
 <hr>
-<a href="javascript:history.back()" >Go	back</a>
+<a href="javascript:history.back()">Go back</a>
 </html>

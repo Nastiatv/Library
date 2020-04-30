@@ -11,11 +11,11 @@ public interface IBookService {
 
 	BookDto getBookById(Long id) throws Exception;
 
-	void deleteBookById(Long id);
-
 	BookDto createBook(BookDto bookDto, DepartmentDto departmentDto);
 
-	BookDto updateBook(BookDto bookDto, DepartmentDto departmentDto);
+	BookDto updateBook(BookDto bookDto, DepartmentDto departmentDto) throws Exception;
+
+	void deleteBookById(Long id, DepartmentDto departmentDto);
 
 	
 

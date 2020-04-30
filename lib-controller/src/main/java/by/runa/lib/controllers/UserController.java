@@ -5,9 +5,9 @@ import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -60,18 +60,20 @@ public class UserController {
 			@RequestParam(value = "file", required = false) MultipartFile file) {
 		ModelAndView modelAndView = new ModelAndView();
 		UserDto newuser = userService.createUser(userDto, departmentDto);
-
 		try {
 			imgFileUploader.createOrUpdate(userDto, file);
 			modelAndView.addObject("user", newuser);
 			modelAndView.setViewName("oneuser");
-		} catch (IOException e) {
+			UsernamePasswordAuthenticationToken token=new UsernamePasswordAuthenticationToken(newuser, null);
+			SecurityContextHolder.getContext().setAuthentication(token);
+			
+			} catch (IOException e) {
 			modelAndView.setViewName("403");
 		}
 		return modelAndView;
 	}
 
-	@GetMapping("{user}")
+	@GetMapping("{id}")
 	public ModelAndView getUser(Principal principal) {
 		final String currentUser = principal.getName();
 		ModelAndView modelAndView = new ModelAndView();
@@ -87,7 +89,7 @@ public class UserController {
 		return modelAndView;
 	}
 
-	@GetMapping("edit/{user}")
+	@GetMapping("edit/{id}")
 	public ModelAndView getUserEditForm(Principal principal) {
 		final String currentUser = principal.getName();
 		ModelAndView modelAndView = new ModelAndView();
@@ -107,7 +109,7 @@ public class UserController {
 		return modelAndView;
 	}
 
-	@PostMapping("edit/{user}")
+	@PostMapping("edit/{id}")
 	public ModelAndView saveUserChanges(UserDto userDto, DepartmentDto departmentDto,
 			@RequestParam(value = "file", required = false) MultipartFile file) {
 		ModelAndView modelAndView = new ModelAndView();
@@ -120,11 +122,5 @@ public class UserController {
 			modelAndView.setViewName("403");
 		}
 		return modelAndView;
-	}
-
-	@DeleteMapping("delete/{user}")
-	public ModelAndView deleteUser(@PathVariable Long id) {
-		userService.deleteUserById(id);
-		return getAllUsers();
 	}
 }

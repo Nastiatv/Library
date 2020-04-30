@@ -6,18 +6,19 @@
 <link href="../css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
+<a href="http://localhost:8080">Home</a>
 	<h1>Book Info :</h1>
 	<br />
-	<img th:src="@{${book.bookDetails.picture}}" height="200" alt="Cover" />
+	<img th:src="@{${book.bookDetailsDto.picture}}" height="200" alt="Cover" />
 
-	<form th:action="@{{book}}" th:object="${book}" method="POST"
+	<form th:action="@{${book.id}}" th:object="${book}" method="POST"
 		enctype="multipart/form-data">
 
 		<div class="col-sm-4">
 			<div class="form-group">
 				<label for="name"> Name <input type="text" id="name"
-					th:field="*{bookDetails.name}"
-					value="${book.bookDetails.name}" />
+					th:field="*{bookDetailsDto.name}"
+					value="${book.bookDetailsDto.name}" />
 				</label>
 			</div>
 		</div>
@@ -25,28 +26,17 @@
 		<div class="col-sm-4">
 			<div class="form-group">
 				<label for="author">Author</label> <input type="text" id="author"
-					name="author" th:field="*{bookDetails.author}"
-					class="form-control input-sm" value="${book.bookDetails.author}"
+					name="author" th:field="*{bookDetailsDto.author}"
+					class="form-control input-sm" value="${book.bookDetailsDto.author}"
 					required />
 			</div>
 		</div>
 
 		<div class="col-sm-4">
 			<div class="form-group">
-				<label for="department">Department</label> <select id="department"
-					th:object="${departmentdto}" th:field="*{name}">
-					<option th:each="department : ${departmentsList}"
-						th:value="${department.name}" th:text="${department.name}"
-						value="${book.departmentName}"></option>
-				</select> <br />
-			</div>
-		</div>
-
-		<div class="col-sm-4">
-			<div class="form-group">
 				<label for="description"> Description <input type="text"
-					id="description" th:field="*{bookDetails.description}"
-					value="${book.bookDetails.description}" />
+					id="description" th:field="*{bookDetailsDto.description}"
+					value="${book.bookDetailsDto.description}" />
 				</label>
 			</div>
 		</div>

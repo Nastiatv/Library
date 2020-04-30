@@ -53,17 +53,15 @@ public class BookDetailsService implements IBookDetailsService {
 	}
 
 	@Override
-	public void updateBookDetails(BookDetailsDto bookDetailsDto) {
-		BookDetails existingBookDetails = Optional.ofNullable(bookDetailsDao.get(bookDetailsDto.getId()))
-				.orElse(new BookDetails());
-		if (bookDetailsDto.getAuthor() != null) {
-			existingBookDetails.setAuthor(bookDetailsDto.getAuthor());
+	public void updateBookDetails(BookDetails existingBookDetails, BookDetailsDto newbookDetailsDto) {
+		if (newbookDetailsDto.getAuthor() != null) {
+			existingBookDetails.setAuthor(newbookDetailsDto.getAuthor());
 		}
-		if (bookDetailsDto.getDescription() != null) {
-			existingBookDetails.setDescription(bookDetailsDto.getDescription());
+		if (newbookDetailsDto.getDescription() != null) {
+			existingBookDetails.setDescription(newbookDetailsDto.getDescription());
 		}
-		if (bookDetailsDto.getName() != null) {
-			existingBookDetails.setName(bookDetailsDto.getName());
+		if (newbookDetailsDto.getName() != null) {
+			existingBookDetails.setName(newbookDetailsDto.getName());
 		}
 		bookDetailsDao.update(existingBookDetails);
 		log.info("BookDetails successfully updated");

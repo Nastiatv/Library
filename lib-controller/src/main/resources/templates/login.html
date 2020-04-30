@@ -15,8 +15,9 @@
 
 			<div class="col-sm-4">
 				<div class="form-group">
-					<label for="username">User Name<input type="text" name="username"
-						id="username" class="form-control input-sm" required />
+					<label for="username">User Name<input type="text"
+						name="username" id="username" class="form-control input-sm"
+						required />
 					</label>
 				</div>
 			</div>
@@ -44,14 +45,8 @@
 		</form>
 		<hr>
 		<div class="col-sm-4">
-			<form action="../users/adduser" method="post">
+			<form action="http://localhost:8080/users/adduser" method="post">
 				<input type="submit" value="Sign Up here" />
-			</form>
-		</div>
-		<div class="col-sm-4">
-			<form action="/signin/facebook" method="post">
-				<input type="hidden" name="scope" value="email, public_profile" />
-				<input type="submit" value="Login With Facebook" />
 			</form>
 		</div>
 	</div>

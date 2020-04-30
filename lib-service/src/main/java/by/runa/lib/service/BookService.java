@@ -1,9 +1,10 @@
 package by.runa.lib.service;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.mail.MessagingException;
 import javax.transaction.Transactional;
@@ -59,12 +60,8 @@ public class BookService implements IBookService {
 	public BookDto createBook(BookDto dto, DepartmentDto departmentDto) {
 		Department department = departmentDao.getByName(departmentDto.getName());
 		if (getBookbyIsbn(dto) != null) {
-			if (getBookbyIsbn(dto).getDepartments().contains(department)) {
-				getBookbyIsbn(dto).setQuantity(getBookbyIsbn(dto).getQuantity() + 1);
-			} else {
-				getBookbyIsbn(dto).setQuantity(getBookbyIsbn(dto).getQuantity() + 1);
-				getBookbyIsbn(dto).getDepartments().add(department);
-			}
+			getBookbyIsbn(dto).setQuantity(getBookbyIsbn(dto).getQuantity() + 1);
+			getBookbyIsbn(dto).getDepartments().add(department);
 			return bookMapper.toDto(getBookbyIsbn(dto));
 		} else {
 			Book book = new Book();
@@ -98,19 +95,35 @@ public class BookService implements IBookService {
 	}
 
 	@Override
-	public void deleteBookById(Long id) {
-		bookDao.delete(bookDao.get(id));
-		log.info("Book successfully deleted");
+	public void deleteBookById(Long id, DepartmentDto departmentDto) {
+		if (bookDao.get(id).getQuantity() == 1) {
+			bookDao.delete(bookDao.get(id));
+		} else {
+			bookDao.get(id).setQuantity(bookDao.get(id).getQuantity() - 1);
+			Department dep = departmentDao.getByName(departmentDto.getName());
+			if (bookDao.get(id).getDepartments().contains(dep)) {
+				List<Department> list = bookDao.get(id).getDepartments();
+				for (Department depart : list) {
+					if (depart.getName().equals(departmentDto.getName())) {
+						bookDao.get(id).getDepartments().remove(depart);
+						break;
+					}
+				}
+				bookDao.update(bookDao.get(id));
+			}
+		}
 	}
 
 	@Override
-	public BookDto updateBook(BookDto bookDto, DepartmentDto departmentDto) {
-		Book existingBook = Optional.ofNullable(bookDao.get(bookDto.getId())).orElse(new Book());
+	public BookDto updateBook(BookDto bookDto, DepartmentDto departmentDto) throws Exception {
+		Book existingBook = Optional.ofNullable(bookDao.get(bookDto.getId())).orElseThrow(Exception::new);
+		BookDetails ebd = existingBook.getBookDetails();
 		if (departmentDto.getName() != null) {
-			existingBook.setDepartments(Collections.singletonList(departmentDao.getByName(departmentDto.getName())));
+			existingBook.setDepartments(
+					Stream.of(departmentDao.getByName(departmentDto.getName())).collect(Collectors.toList()));
 		}
-		if (bookDto.getBookDetails()!= null) {
-			bookDetailsService.updateBookDetails(bookDetailsMapper.toDto(bookDto.getBookDetails()));
+		if (bookDto.getBookDetailsDto() != null) {
+			bookDetailsService.updateBookDetails(ebd, bookDto.getBookDetailsDto());
 		}
 		bookDao.update(existingBook);
 		return bookMapper.toDto(existingBook);

@@ -2,7 +2,6 @@ package by.runa.lib.api.dto;
 
 import java.util.List;
 
-import by.runa.lib.entities.BookDetails;
 import by.runa.lib.entities.Department;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,6 +19,6 @@ public class BookDto extends ADto {
 	private int quantity;
 	private double rating;
 	private List<Department> departments;
-	private BookDetails bookDetails;
+	private BookDetailsDto bookDetailsDto;
 
 }

@@ -1,0 +1,51 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://thymeleaf.org" lang="en">
+<head>
+<title>Library - Book page</title>
+<link href="../css/styles.css" rel="stylesheet" />
+<link href="../css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+	<a href="http://localhost:8080">Home</a>
+	<h1>Book Info :</h1>
+	<br />
+	<img th:src="@{${book.bookDetailsDto.picture}}" height="200" alt="Cover" />
+	<div class="col-sm-4">
+		<div class="form-group">
+			Name:
+			<p th:text="${book.bookDetailsDto.name}"></p>
+		</div>
+	</div>
+
+	<div class="col-sm-4">
+		<div class="form-group">
+			Author:
+			<p th:text="${book.bookDetailsDto.author}"></p>
+		</div>
+	</div>
+
+	<form th:action="@{${book.id}}" th:object="${departmentdto}"
+		method="POST" enctype="multipart/form-data">
+
+		<div class="col-sm-4">
+			<div class="form-group">
+				<label for="department">Department</label>
+			 <select id="department" th:object="${departmentdto}" th:field="*{name}">
+			 	<option th:each="department : ${book.departments}"
+						th:value="${department.name}" th:text="${department.name}"
+						value="${book.departmentName}"></option>
+				</select> <br />
+			</div>
+		</div>
+
+
+		<div class="col-sm-4">
+			<input type="submit" value="Delete Book" />
+		</div>
+	</form>
+</body>
+
+<hr>
+<a href="javascript:history.back()">Go back</a>
+</html>
+

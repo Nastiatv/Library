@@ -8,11 +8,12 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 </head>
 <body>
+<a href="http://localhost:8080">Home</a>
 	<h1>Personal Info :</h1>
 	<br />
 	<img th:src="@{'../../img/' + ${user.username} + '.png'}" height="200"
 		alt="Avatar" />
-	<form th:action="@{{user}}" th:object="${user}" method="POST"
+	<form th:action="@{${user.id}}" th:object="${user}" method="POST"
 		enctype="multipart/form-data">
 
 		<div class="col-sm-4">
@@ -53,7 +54,7 @@
 			<div class="form-group">
 				<label for="password">Password</label> <input name="password"
 					type="password" id="password" th:field="*{password}"
-					class="form-control input-sm" required />
+					class="form-control input-sm" />
 			</div>
 		</div>
 
@@ -61,7 +62,7 @@
 			<div class="form-group">
 				<label for="confpassword">Confirm Password</label> <input
 					name="confirm_password" type="password" id="confpassword"
-					class="form-control input-sm" required /> <span id='message'></span>
+					class="form-control input-sm" /> <span id='message'></span>
 			</div>
 		</div>
 

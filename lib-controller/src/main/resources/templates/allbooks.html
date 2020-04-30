@@ -7,7 +7,9 @@
 </head>
 <body>
 <h1>Our Books:</h1>
-	<a href="addbook">Add Book</a>
+	<a href="http://localhost:8080/books/addbook">Add Book</a>
+	<br>
+	<a href="http://localhost:8080">Home</a>
 	<br />
 	<table border="1" >
 	<caption></caption>
@@ -31,10 +33,10 @@
 			<td><span th:each="department : ${book.departments}"> <span
 					th:text="${department.name}"> </span>
 			</span></td>
-			<td th:text="${book.bookDetails.name}"></td>
-			<td th:text="${book.bookDetails.author}"></td>
-			<td><img th:src="@{${book.bookDetails.picture}}" height="200" alt="Cover"/></td>
-			<td th:text="${book.bookDetails.description}"></td>
+			<td th:text="${book.bookDetailsDto.name}"></td>
+			<td th:text="${book.bookDetailsDto.author}"></td>
+			<td><img th:src="@{${book.bookDetailsDto.picture}}" height="200" alt="Cover"/></td>
+			<td th:text="${book.bookDetailsDto.description}"></td>
 		</tr>
 	</table>
 </body>

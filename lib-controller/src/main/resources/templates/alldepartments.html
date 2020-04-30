@@ -7,7 +7,9 @@
 </head>
 <body>
 <h1>Our Departments:</h1>
-	<a href="addDepartment">Add Department</a>
+	<a href="http://localhost:8080/departments/adddepartment">Add Department</a>
+	<br>
+	<a href="http://localhost:8080">Home</a>
 	<br />
 	<table border="1" >
 	<caption></caption>
@@ -16,7 +18,7 @@
 			<th id="name">Name</th>
 		</tr>
 		<tr>
-		<tr th:each="department : ${departmentsList}">
+		<tr th:each="department : ${departmentList}">
 			<td th:text="${department.id}"></td>
 			<td th:text="${department.name}"></td>
 		</tr>

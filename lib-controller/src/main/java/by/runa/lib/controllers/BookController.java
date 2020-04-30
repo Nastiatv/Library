@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -61,32 +60,14 @@ public class BookController {
 		return modelAndView.addObject("book", newbook);
 	}
 
-//	@GetMapping(value = "id")
-//	public ModelAndView getBook(Long id) {
-//		ModelAndView modelAndView = new ModelAndView();
-//		try {
-//			BookDto book = bookService.getBookById(id);
-//			modelAndView.addObject("book", book);
-//		} catch (Exception e) {
-//			modelAndView.setViewName("403");
-//			// TODO There is no book with id="id"
-//		}
-//		return modelAndView;
-//	}
-
 	@GetMapping("edit/{id}")
-	public ModelAndView getBookEditForm(@PathVariable String id) {
+	public ModelAndView getBookEditForm(@PathVariable Long id) {
 		ModelAndView modelAndView = new ModelAndView();
-		Long ids=Long.parseLong(id);
-		
 		try {
-			BookDto bookDto = bookService.getBookById(ids);
-			List<DepartmentDto> departments = departmentService.getAllDepartments();
-			modelAndView.addObject("departmentsList", departments);
+			BookDto bookDto = bookService.getBookById(id);
 			modelAndView.setViewName("updatebook");
 			modelAndView.addObject("book", bookDto);
 			modelAndView.addObject("detailsdto", new BookDetailsDto());
-			modelAndView.addObject("departmentdto", new DepartmentDto());
 			modelAndView.addObject("dto", new BookDto());
 		} catch (Exception e) {
 			modelAndView.setViewName("403");
@@ -95,24 +76,43 @@ public class BookController {
 		return modelAndView;
 	}
 
-	@PostMapping("edit/{book}")
-	public ModelAndView saveBookChanges(BookDto bookDto, BookDetailsDto bookDetailsDto, DepartmentDto departmentDto,
+	@PostMapping("edit/{id}")
+	public ModelAndView saveBookChanges(BookDto bookDto, DepartmentDto departmentDto,
 			@RequestParam(value = "file", required = false) MultipartFile file) {
 		ModelAndView modelAndView = new ModelAndView();
-		BookDto bookUpdated = bookService.updateBook(bookDto, departmentDto);
 		try {
+			BookDto bookUpdated = bookService.updateBook(bookDto, departmentDto);
 			imgFileUploader.createOrUpdate(bookDto, file);
 			modelAndView.addObject("book", bookUpdated);
 			modelAndView.setViewName("onebook");
 		} catch (IOException e) {
 			modelAndView.setViewName("403");
+		} catch (Exception e) {
+			modelAndView.setViewName("403");
+			// TODO There is no book with id="id"
 		}
 		return modelAndView;
 	}
 
-	@DeleteMapping("delete/{book}")
+	@GetMapping("delete/{id}")
 	public ModelAndView deleteBook(@PathVariable Long id) {
-		bookService.deleteBookById(id);
+		ModelAndView modelAndView = new ModelAndView();
+		try {
+			BookDto bookDto = bookService.getBookById(id);
+			modelAndView.addObject("book", bookDto);
+			modelAndView.setViewName("deletebook");
+			modelAndView.addObject("departmentdto", new DepartmentDto());
+			modelAndView.addObject("bookDto", new BookDto());
+		} catch (Exception e) {
+			modelAndView.setViewName("403");
+			// TODO There is no book with id="id"
+		}
+		return modelAndView;
+	}
+
+	@PostMapping("delete/{id}")
+	public ModelAndView deletebookSubmit(BookDto bookDto, DepartmentDto departmentDto) {
+		bookService.deleteBookById(bookDto.getId(), departmentDto);
 		return getAllBooks();
 	}
 }

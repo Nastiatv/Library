@@ -6,11 +6,12 @@
 <link href="../css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-	<h1>Create a Department:</h1>
+	<h1>Create Department:</h1>
 	<br />
-	<form th:action="@{adddepartment}" th:object="${dto}" method="POST">
-		Name: <input type="text" th:field="*{name}" /> <br /> <input
-			type="submit" value="Create" /> <input type="reset" value="Reset">
+	<form th:action="@{adddepartment}" th:object="${departmentdto}" method="POST">
+		Name: <input type="text" th:field="*{name}" /> <br />
+		 <input type="submit" value="Create" /> 
+		 <input type="reset" value="Reset">
 	</form>
 	</body>
 <hr>

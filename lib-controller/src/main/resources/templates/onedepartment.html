@@ -1,0 +1,46 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://thymeleaf.org" lang="en">
+<head>
+<title>Library - Department page</title>
+<link href="../css/styles.css" rel="stylesheet" />
+<link href="../css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+	<h1>Department details:</h1>
+	<a href="http://localhost:8080/departments/">All departments</a>
+	<br>
+	<a href="http://localhost:8080">Home</a>
+	<br>
+	<a href="http://localhost:8080/departments/adddepartment">Add
+		department</a>
+	<br />
+	<table border="1">
+		<caption></caption>
+		<tr>
+			<th id="id">Id</th>
+			<th id="name">Name</th>
+			<th scope="col"></th>
+		</tr>
+		<tr>
+			<td th:text="${department.id}" id="departmentid"></td>
+			<td th:text="${department.name}"></td>
+			<td><a id="myLink" href="#" onclick="EditFunction();">Edit</a> <br>
+				<a id="myLink" href="#" onclick="DeleteFunction();">Delete</a></td>
+		</tr>
+	</table>
+</body>
+<script>
+	function EditFunction() {
+		var id = document.getElementById('departmentid').innerHTML;
+		window.location.href = "http://localhost:8080/departments/edit/" + id;
+	}
+</script>
+<script>
+	function DeleteFunction() {
+		var id = document.getElementById('departmentid').innerHTML;
+		window.location.href = "http://localhost:8080/departments/delete/" + id;
+	}
+</script>
+<hr>
+<a href="javascript:history.back()">Go back</a>
+</html>
