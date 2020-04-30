@@ -1,27 +1,88 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://thymeleaf.org" lang="en">
 <head>
-<title>Add user</title>
+<title>Library - Add user</title>
 <link href="../css/styles.css" rel="stylesheet" />
-<link rel="stylesheet"
-	href="/lib-web/src/main/resources/css/bootstrap.min.css">
+<link href="../css/bootstrap.min.css" rel="stylesheet">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 </head>
 <body>
 	<h1>Create a User:</h1>
 	<br />
-	<form th:action="@{/adduser}" th:object="${dto}" method="POST">
-		Email: <input type="text" th:field="*{email}" required> <br />
-		Name: <input type="text" th:field="*{name}" required> <br />
-		Department: <input type="text" th:field="*{departmentName}" required> <br /> 
-		Password: <input type="password" th:field="*{password}" required> <br /> 
-		Repeat Password: <input type="password" th:field="*{password}" required> <br /> 
-		<input type="submit" value="Create" /> 
-		<input type="reset" value="Reset">
-	</form>
-	<script src="/lib-web/src/main/resources/js/jquery-3.4.1.min.js"></script>
-	<script src="/lib-web/src/main/resources/js/bootstrap.min.js"></script>
+	<form th:action="@{adduser}" th:object="${dto}" method="POST"
+		enctype="multipart/form-data">
+
+		<div class="col-sm-4">
+			<div class="form-group">
+				<label for="email">Email <input type="email"
+					th:field="*{email}"
+					class="form-control input-sm" required /> </label>
+			</div>
+		</div>
+
+		<div class="col-sm-4">
+			<div class="form-group">
+				<label for="username">User Name <input type="text" id="username"
+					th:field="*{username}" class="form-control input-sm" required /> </label>
+			</div>
+		</div>
+
+		<div class="col-sm-4">
+			<div class="form-group">
+				<label for="department">Department <select id="department"
+					th:object="${departmentdto}" th:field="*{name}">
+					<option th:each="department : ${departmentsList}"
+						th:value="${department.name}" th:text="${department.name}"></option>
+				</select></label> <br />
+			</div>
+		</div>
+
+		<div class="col-sm-4">
+			<div class="form-group">
+				<label for="file">Photo<input type="file" id="file"
+					name="file" /></label>
+			</div>
+		</div>
+
+		<div class="col-sm-4">
+			<div class="form-group">
+				<label for="password">Password <input name="password"
+					type="password" id="password" th:field="*{password}"
+					class="form-control input-sm" required /> </label>
+			</div>
+		</div>
+
+		<div class="col-sm-4">
+			<div class="form-group">
+				<label for="confirm_password">Confirm Password <input
+					name="confirm_password" type="password" id="confirm_password"
+					class="form-control input-sm" required /></label> <span id='message'></span>
+			</div>
+		</div>
+
+		<div class="col-sm-4">
+			<input type="submit" value="Create" /> <input type="reset"
+				value="Reset">
+		</div>
+		</form>
+		<div class="col-sm-4">
+			<form action="/signin/facebook" method="post">
+				<input type="hidden" name="scope" value="email, public_profile" />
+				<input type="submit" value="Sign Up With Facebook" />
+			</form>
+		</div>
 </body>
-<a href="javascript:history.back()" class="btn btn-back single-button">Go back</a>
+<script>
+	$('#password, #confirm_password').on('keyup', function() {
+		if ($('#password').val() == $('#confirm_password').val()) {
+			$('#message').html('Matching').css('color', 'green');
+		} else
+			$('#message').html('Not Matching').css('color', 'red');
+	});
+</script>
+ <script>
+</script>
+<hr>
+<a href="javascript:history.back()">Go back</a>
 </html>
-
-

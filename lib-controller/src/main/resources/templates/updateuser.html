@@ -1,0 +1,85 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://thymeleaf.org" lang="en">
+<head>
+<title>Library - User page</title>
+<link href="../css/styles.css" rel="stylesheet" />
+<link href="../css/bootstrap.min.css" rel="stylesheet">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+</head>
+<body>
+<a href="http://localhost:8080">Home</a>
+	<h1>Personal Info :</h1>
+	<br />
+	<img th:src="@{'../../img/' + ${user.username} + '.png'}" height="200"
+		alt="Avatar" />
+	<form th:action="@{${user.id}}" th:object="${user}" method="POST"
+		enctype="multipart/form-data">
+
+		<div class="col-sm-4">
+			<div class="form-group">
+				<label for="email"> Email <input type="email" id="email"
+					th:field="*{email}" value="${user.email}" />
+				</label>
+			</div>
+		</div>
+
+		<div class="col-sm-4">
+			<div class="form-group">
+				<label for="username">Name</label> <input type="text" id="username" name="username"
+					th:field="*{username}" class="form-control input-sm"
+					value="${user.username}" required />
+			</div>
+		</div>
+
+		<div class="col-sm-4">
+			<div class="form-group">
+				<label for="department">Department</label> <select id="department"
+					th:object="${departmentdto}" th:field="*{name}">
+					<option th:each="department : ${departmentsList}"
+						th:value="${department.name}" th:text="${department.name}"
+						value="${user.departmentName}"></option>
+				</select> <br />
+			</div>
+		</div>
+
+		<div class="col-sm-4">
+			<div class="form-group">
+				<label for="imageUploader">Photo</label> <input type="file"
+					id="imageUploader" name="file" />
+			</div>
+		</div>
+
+		<div class="col-sm-4">
+			<div class="form-group">
+				<label for="password">Password</label> <input name="password"
+					type="password" id="password" th:field="*{password}"
+					class="form-control input-sm" />
+			</div>
+		</div>
+
+		<div class="col-sm-4">
+			<div class="form-group">
+				<label for="confpassword">Confirm Password</label> <input
+					name="confirm_password" type="password" id="confpassword"
+					class="form-control input-sm" /> <span id='message'></span>
+			</div>
+		</div>
+
+		<div class="col-sm-4">
+			<input type="submit" value="Update Profile" />
+		</div>
+	</form>
+</body>
+<script>
+	$('#password, #confpassword').on('keyup', function() {
+		if ($('#password').val() == $('#confpassword').val()) {
+			$('#message').html('Matching').css('color', 'green');
+		} else
+			$('#message').html('Not Matching').css('color', 'red');
+	});
+</script>
+<hr>
+<a href="javascript:history.back()">Go back</a>
+</html>
+

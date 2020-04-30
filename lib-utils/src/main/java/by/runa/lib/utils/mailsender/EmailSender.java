@@ -13,10 +13,10 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
-import by.runa.lib.api.dao.IBookDao;
-import by.runa.lib.api.dto.BookDto;
+import by.runa.lib.api.dao.IUserDao;
 import by.runa.lib.api.dto.OrderDto;
 import by.runa.lib.api.utils.IEmailSender;
+import by.runa.lib.entities.Book;
 import by.runa.lib.entities.User;
 
 @Component
@@ -33,7 +33,7 @@ public class EmailSender implements IEmailSender {
 	private JavaMailSender mailSender;
 
 	@Autowired
-	private IBookDao bookDao;
+	private IUserDao userDao;
 
 	@Async
 	public void sendEmailToAdmin(OrderDto dto) throws MessagingException {
@@ -45,28 +45,29 @@ public class EmailSender implements IEmailSender {
 	}
 
 	@Async
-	public void sendEmailsFromAdmin(BookDto dto) throws MessagingException {
+	public void sendEmailsFromAdmin(Book book) throws MessagingException {
 		MimeMessage message = mailSender.createMimeMessage();
 		MimeMessageHelper helper = new MimeMessageHelper(message);
-		String text = prepareActivateRequestEmail(dto);
-		for (User user : dto.getDepartments().get(0).getUsers()) {
+		String text = prepareActivateRequestEmail(book);
+
+		for (User user : userDao.getByDepartment(book.getDepartments().get(0).getName())) {
 			configureMimeMessageHelper(helper, ADMIN_FROM_EMAIL_ADDRESS, user.getEmail(), text,
-					"New Book in your department!");
+					"New Book in our Library!");
 			mailSender.send(message);
 		}
 	}
 
-	private String prepareActivateRequestEmail(BookDto dto) {
-		VelocityContext context = createVelocityContextWithBasicParameters(dto);
+	private String prepareActivateRequestEmail(Book book) {
+		VelocityContext context = createVelocityContextWithBasicParameters(book);
 		StringWriter stringWriter = new StringWriter();
 		velocityEngine.mergeTemplate("mailtemplates/newBookMessage.vm", "UTF-8", context, stringWriter);
 		return stringWriter.toString();
 	}
 
-	private VelocityContext createVelocityContextWithBasicParameters(BookDto dto) {
+	private VelocityContext createVelocityContextWithBasicParameters(Book book) {
 		VelocityContext context = new VelocityContext();
-		context.put("name", bookDao.getByIsbn(dto.getIsbn()).getBookDetails().getName());
-		context.put("author", bookDao.getByIsbn(dto.getIsbn()).getBookDetails().getAuthor());
+		context.put("name", book.getBookDetails().getName());
+		context.put("author", book.getBookDetails().getAuthor());
 		return context;
 	}
 

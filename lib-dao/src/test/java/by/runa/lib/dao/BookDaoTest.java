@@ -41,14 +41,14 @@ public class BookDaoTest {
 		assertThat(bookInRep.getId().equals(id)).isTrue();
 	}
 
-//	@Test
-//	public void getAll() {
-//		createBook(TEST_ISBN);
-//		createBook(TEST_ISBN + 1);
-//		createBook(TEST_ISBN + 2);
-//		List<Book> allBooksInRep = bookDao.getAll();
-//		assertThat(allBooksInRep.size() == 3).isTrue();
-//	}
+	@Test
+	public void getAll() {
+		entityManager.persist(createBook(TEST_ISBN));
+		entityManager.persist(createBook(TEST_ISBN + 1));
+		entityManager.persist(createBook(TEST_ISBN + 2));
+		List<Book> allBooksInRep = bookDao.getAll();
+		assertThat(allBooksInRep.size() == 3).isTrue();
+	}
 
 	@Test
 	public void update() {

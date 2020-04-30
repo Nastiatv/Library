@@ -6,11 +6,14 @@
                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
 	<changeSet author="runa" id="01">
 		<createTable tableName="department_book">
-			<column name="book_id" type="bigint">
+			<column name="id" type="bigint" autoIncrement="true">
 				<constraints nullable="false" primaryKey="true" />
 			</column>
+			<column name="book_id" type="bigint">
+				<constraints nullable="false"  />
+			</column>
 			<column name="department_id" type="bigint">
-				<constraints nullable="false" primaryKey="true" />
+				<constraints nullable="false"  />
 			</column>
 		</createTable>
 	</changeSet>

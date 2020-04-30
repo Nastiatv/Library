@@ -13,7 +13,7 @@ public class UserDto extends ADto {
 
 	private String email;
 	private String password;
-	private String name;
+	private String username;
 	private Long departmentId;
 	private String departmentName;
 

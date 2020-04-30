@@ -8,10 +8,9 @@ import javax.persistence.criteria.Root;
 
 import org.springframework.stereotype.Repository;
 
-import by.runa.lib.entities.Book_;
-
 import by.runa.lib.api.dao.IBookDao;
 import by.runa.lib.entities.Book;
+import by.runa.lib.entities.Book_;
 
 @Repository
 public class BookDao extends AGenericDao<Book> implements IBookDao {

@@ -14,6 +14,7 @@ import javax.persistence.criteria.Root;
 import by.runa.lib.api.dao.IAGenericDao;
 import by.runa.lib.entities.AEntity;
 
+//@PersistenceContext(type=PersistenceContextType.EXTENDED)
 public abstract class AGenericDao<T extends AEntity> implements IAGenericDao<T> {
 
 	protected Class<T> clazz;

@@ -1,36 +1,15 @@
-@charset "UTF-8";
-p {
-	color: grey;
-	font-size:10pt;
-	margin-top: 0px;
-	margin-bottom: 0px;
+h1 {
+    color:#0000FF;
 }
-
-#wrapper, .userblock {
-	border: 1px solid grey;
+ 
+h2 {
+    color:#FF0000;
 }
-
-#wrapper {
-	margin: 0 auto;
-	width: 550px;
-	height: 550px;
-	display:grid;
-	grid-template-columns: 250px 250px;
-	grid-gap:50px;
+ 
+table {
+    border-collapse: collapse;
 }
-
-.userblock {
-	width: 250px;
-	height: 250px;
-	text-align:center;
-}
-
-.image {
-	width:75px;
-	height:75px;
-	margin: 0 auto;
-}
-
-.single-button {
-	width:100px; 
+ 
+table th, table td {
+    padding: 5px;
 }

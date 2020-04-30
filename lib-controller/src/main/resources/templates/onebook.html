@@ -1,16 +1,20 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://thymeleaf.org" lang="en">
 <head>
-<title>Book page</title>
+<title>Library - Book page</title>
 <link href="../css/styles.css" rel="stylesheet" />
-<link rel="stylesheet"
-	href="/lib-web/src/main/resources/css/bootstrap.min.css">
+<link href="../css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-	<h1>Our Book:</h1>
-	<a href="addbook">Add Book</a>
+	<h1>Book details:</h1>
+	<a href="http://localhost:8080/books/">All books</a>
+	<br>
+	<a href="http://localhost:8080">Home</a>
+	<br>
+	<a href="http://localhost:8080/books/addbook">Add book</a>
 	<br />
 	<table border="1">
+		<caption></caption>
 		<tr>
 			<th id="id">Id</th>
 			<th id="isbn">Isbn</th>
@@ -21,22 +25,39 @@
 			<th id="bookDetails.author">Author</th>
 			<th id="bookDetails.picture">Cover</th>
 			<th id="bookDetails.description">Description</th>
+			<th scope="col"></th>
 		</tr>
 		<tr>
-		<tr>
-			<td th:text="${book.id}"></td>
+			<td th:text="${book.id}" id="bookid"></td>
 			<td th:text="${book.isbn}"></td>
 			<td th:text="${book.quantity}"></td>
 			<td th:text="${book.rating}"></td>
-			<td th:text="${book.department}"></td>
-			<td th:text="${book.bookDetails.name}"></td>
-			<td th:text="${book.bookDetails.author}"></td>
-			<td><img th:src="@{${book.bookDetails.picture}}" height="200"/></td>
-			<td th:text="${book.bookDetails.description}"></td>
+			<td><span th:each="department : ${book.departments}"> <span
+					th:text="${department.name}"> </span>
+			</span></td>
+			<td th:text="${book.bookDetailsDto.name}"></td>
+			<td th:text="${book.bookDetailsDto.author}"></td>
+			<td><img th:src="@{${book.bookDetailsDto.picture}}" height="200"
+				alt="Cover" /></td>
+			<td th:text="${book.bookDetailsDto.description}"></td>
+			<td><a id="myLink" href="#" onclick="EditFunction();">Edit</a> <br>
+				<a id="myLink" href="#" onclick="DeleteFunction();">Delete</a></td>
 		</tr>
 	</table>
-	<script src="/lib-web/src/main/resources/js/jquery-3.4.1.min.js"></script>
-	<script src="/lib-web/src/main/resources/js/bootstrap.min.js"></script>
 </body>
-<a href="javascript:history.back()" class="btn btn-back single-button">Go back</a>
+<script>
+	function EditFunction() {
+		var id = document.getElementById('bookid').innerHTML;
+		window.location.href = "http://localhost:8080/books/edit/" + id;
+	}
+</script>
+<script>
+	function DeleteFunction() {
+		var id = document.getElementById('bookid').innerHTML;
+		window.location.href = "http://localhost:8080/books/delete/" + id;
+
+	}
+</script>
+<hr>
+<a href="javascript:history.back()">Go back</a>
 </html>

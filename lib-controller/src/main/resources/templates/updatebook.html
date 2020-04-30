@@ -1,0 +1,60 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://thymeleaf.org" lang="en">
+<head>
+<title>Library - Book page</title>
+<link href="../css/styles.css" rel="stylesheet" />
+<link href="../css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<a href="http://localhost:8080">Home</a>
+	<h1>Book Info :</h1>
+	<br />
+	<img th:src="@{${book.bookDetailsDto.picture}}" height="200" alt="Cover" />
+
+	<form th:action="@{${book.id}}" th:object="${book}" method="POST"
+		enctype="multipart/form-data">
+
+		<div class="col-sm-4">
+			<div class="form-group">
+				<label for="name"> Name <input type="text" id="name"
+					th:field="*{bookDetailsDto.name}"
+					value="${book.bookDetailsDto.name}" />
+				</label>
+			</div>
+		</div>
+
+		<div class="col-sm-4">
+			<div class="form-group">
+				<label for="author">Author</label> <input type="text" id="author"
+					name="author" th:field="*{bookDetailsDto.author}"
+					class="form-control input-sm" value="${book.bookDetailsDto.author}"
+					required />
+			</div>
+		</div>
+
+		<div class="col-sm-4">
+			<div class="form-group">
+				<label for="description"> Description <input type="text"
+					id="description" th:field="*{bookDetailsDto.description}"
+					value="${book.bookDetailsDto.description}" />
+				</label>
+			</div>
+		</div>
+
+		<div class="col-sm-4">
+			<div class="form-group">
+				<label for="imageUploader">Cover</label> <input type="file"
+					id="imageUploader" name="file" />
+			</div>
+		</div>
+
+		<div class="col-sm-4">
+			<input type="submit" value="Update Book" />
+		</div>
+	</form>
+</body>
+
+<hr>
+<a href="javascript:history.back()">Go back</a>
+</html>
+

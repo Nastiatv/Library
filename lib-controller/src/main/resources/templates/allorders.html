@@ -1,16 +1,18 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://thymeleaf.org" lang="en">
 <head>
-<title>Orders page</title>
+<title>Library - Orders page</title>
 <link href="../css/styles.css" rel="stylesheet" />
-<link rel="stylesheet"
-	href="/lib-web/src/main/resources/css/bootstrap.min.css">
+<link href="../css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-	<h1>Our Orders:</h1>
-	<a href="addOrder">Add Order</a>
+<h1>Our Orders:</h1>
+	<a href="http://localhost:8080/orders/addorder">Make order</a>
+	<br>
+	<a href="http://localhost:8080">Home</a>
 	<br />
 	<table border="1">
+	<caption></caption>
 		<tr>
 			<th id="orderDate">orderDate</th>
 			<th id="dueDate">dueDate</th>
@@ -29,8 +31,6 @@
 			<td th:text="${order.user.id}"></td>
 		</tr>
 	</table>
-	<script src="/lib-web/src/main/resources/js/jquery-3.4.1.min.js"></script>
-	<script src="/lib-web/src/main/resources/js/bootstrap.min.js"></script>
-</body>
-<a href="javascript:history.back()" class="btn btn-back single-button">Go back</a>
+	</body>
+<a href="javascript:history.back()" >Go back</a>
 </html>

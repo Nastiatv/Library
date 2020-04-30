@@ -6,10 +6,13 @@
                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
 	<changeSet author="runa" id="01">
 		<insert tableName="role">
-			<column name="name" type="varchar(255)" value="Admin" />
+			<column name="name" type="varchar(255)" value="ROLE_ADMIN" />
 		</insert>
 		<insert tableName="role">
-			<column name="name" type="varchar(255)" value="User" />
+			<column name="name" type="varchar(255)" value="ROLE_USER" />
+		</insert>
+		<insert tableName="role">
+			<column name="name" type="varchar(255)" value="ROLE_FROMFACEBOOK" />
 		</insert>
 	</changeSet>
 </databaseChangeLog> 

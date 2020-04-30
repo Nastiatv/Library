@@ -1,15 +1,14 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://thymeleaf.org" lang="en">
 <head>
-<title>Add order</title>
+<title>Library - Make order</title>
 <link href="../css/styles.css" rel="stylesheet" />
-<link rel="stylesheet"
-	href="/lib-web/src/main/resources/css/bootstrap.min.css">
+<link href="../css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-	<h1>Create a Order:</h1>
+	<h1>Create an Order:</h1>
 	<br />
-	<form th:action="@{/addorder}" th:object="${dto}" method="POST">
+	<form th:action="@{addorder}" th:object="${dto}" method="POST">
 		orderDate: <input type="text" th:field="*{isbn}" /> <br /> 
 		
 		
@@ -17,10 +16,9 @@
 		
 		<input type="submit" value="Create" /> 
 	</form>
-	<script src="/lib-web/src/main/resources/js/jquery-3.4.1.min.js"></script>
-	<script src="/lib-web/src/main/resources/js/bootstrap.min.js"></script>
-</body>
-<a href="javascript:history.back()" class="btn btn-back single-button">Go back</a>
+	</body>
+<hr>
+<a href="javascript:history.back()">Go back</a>
 </html>
 
 

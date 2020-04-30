@@ -1,27 +1,44 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://thymeleaf.org" lang="en">
 <head>
-<title>User page</title>
+<title>Library - User page</title>
 <link href="../css/styles.css" rel="stylesheet" />
-<link rel="stylesheet"
-	href="/lib-web/src/main/resources/css/bootstrap.min.css">
+<link href="../css/bootstrap.min.css" rel="stylesheet">
+<link href="../js/bootstrap.min.js" rel="stylesheet">
 </head>
 <body>
-	<h1>Our user:</h1>
-	<a href="addUser">Add User</a>
+	<h1 th:text="'Hello, ' + ${user.username}"></h1>
+	<a href="http://localhost:8080/">Home</a>
 	<br />
+	<h3>My personal info:</h3>
 	<table border="1">
+		<caption></caption>
 		<tr>
-			<th>Name</th>
-			<th>Email</th>
-			<th>Department</th>
+			<th scope="col">Id</th>
+			<th scope="col">Name</th>
+			<th scope="col">Photo</th>
+			<th scope="col">Email</th>
+			<th scope="col">Department</th>
+			<th scope="col"></th>
 		</tr>
 		<tr>
-		<tr th:each="user : ${userList}">
-			<td th:text="${user.name}"></td>
+		<tr>
+			<td th:text="${user.id}" id="userid"></td>
+			<td th:text="${user.username}"></td>
+			<td><img th:src="@{'http://localhost:8080/img/' + ${user.username} + '.png'}"
+				height="200" alt="Avatar" /></td>
 			<td th:text="${user.email}"></td>
 			<td th:text="${user.departmentName}"></td>
+			<td><a id="myLink" href="#" onclick="EditFunction();">Edit</a>
+				</td>
 		</tr>
 	</table>
 </body>
+<script>
+	function EditFunction() {
+		var id = document.getElementById('userid').innerHTML;
+		window.location.href = "http://localhost:8080/users/edit/" + id;
+	}
+</script>
+
 </html>

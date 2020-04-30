@@ -1,35 +1,35 @@
-D:\courses IT\Практика\Library\lib-api\src\main\java\by\runa\lib\api\service\IBookDetailsService.java
-D:\courses IT\Практика\Library\lib-api\src\main\java\by\runa\lib\api\mappers\AMapper.java
-D:\courses IT\Практика\Library\lib-api\src\main\java\by\runa\lib\api\service\IFeedbackService.java
-D:\courses IT\Практика\Library\lib-api\src\main\java\by\runa\lib\api\mappers\FeedbackMapper.java
-D:\courses IT\Практика\Library\lib-api\src\main\java\by\runa\lib\api\dto\RoleDto.java
-D:\courses IT\Практика\Library\lib-api\src\main\java\by\runa\lib\api\mappers\RoleMapper.java
-D:\courses IT\Практика\Library\lib-api\src\main\java\by\runa\lib\api\dao\IBookDetailsDao.java
-D:\courses IT\Практика\Library\lib-api\src\main\java\by\runa\lib\api\service\IBookService.java
-D:\courses IT\Практика\Library\lib-api\src\main\java\by\runa\lib\api\service\IRoleService.java
-D:\courses IT\Практика\Library\lib-api\src\main\java\by\runa\lib\api\dto\FeedbackDto.java
-D:\courses IT\Практика\Library\lib-api\src\main\java\by\runa\lib\api\mappers\BookDetailsMapper.java
-D:\courses IT\Практика\Library\lib-api\src\main\java\by\runa\lib\api\dao\IOrderDao.java
-D:\courses IT\Практика\Library\lib-api\src\main\java\by\runa\lib\api\mappers\BookMapper.java
-D:\courses IT\Практика\Library\lib-api\src\main\java\by\runa\lib\api\service\IDepartmentService.java
-D:\courses IT\Практика\Library\lib-api\src\main\java\by\runa\lib\api\dto\UserDto.java
-D:\courses IT\Практика\Library\lib-api\src\main\java\by\runa\lib\api\dao\IBookDao.java
-D:\courses IT\Практика\Library\lib-api\src\main\java\by\runa\lib\api\dao\IFeedbackDao.java
-D:\courses IT\Практика\Library\lib-api\src\main\java\by\runa\lib\api\mappers\DepartmentMapper.java
-D:\courses IT\Практика\Library\lib-api\src\main\java\by\runa\lib\api\dto\OrderDto.java
-D:\courses IT\Практика\Library\lib-api\src\main\java\by\runa\lib\api\dto\BookDetailsDto.java
-D:\courses IT\Практика\Library\lib-api\src\main\java\by\runa\lib\api\utils\IMapper.java
-D:\courses IT\Практика\Library\lib-api\src\main\java\by\runa\lib\api\config\ApiConfig.java
-D:\courses IT\Практика\Library\lib-api\src\main\java\by\runa\lib\api\dao\IDepartmentDao.java
-D:\courses IT\Практика\Library\lib-api\src\main\java\by\runa\lib\api\mappers\UserMapper.java
-D:\courses IT\Практика\Library\lib-api\src\main\java\by\runa\lib\api\dto\DepartmentDto.java
-D:\courses IT\Практика\Library\lib-api\src\main\java\by\runa\lib\api\dao\IRoleDao.java
-D:\courses IT\Практика\Library\lib-api\src\main\java\by\runa\lib\api\dto\ADto.java
-D:\courses IT\Практика\Library\lib-api\src\main\java\by\runa\lib\api\exceptions\NoSuchBookException.java
-D:\courses IT\Практика\Library\lib-api\src\main\java\by\runa\lib\api\utils\IEmailSender.java
-D:\courses IT\Практика\Library\lib-api\src\main\java\by\runa\lib\api\dao\IAGenericDao.java
-D:\courses IT\Практика\Library\lib-api\src\main\java\by\runa\lib\api\service\IUserService.java
-D:\courses IT\Практика\Library\lib-api\src\main\java\by\runa\lib\api\dao\IUserDao.java
-D:\courses IT\Практика\Library\lib-api\src\main\java\by\runa\lib\api\dto\BookDto.java
-D:\courses IT\Практика\Library\lib-api\src\main\java\by\runa\lib\api\service\IOrderService.java
-D:\courses IT\Практика\Library\lib-api\src\main\java\by\runa\lib\api\mappers\OrderMapper.java
+D:\coursesIT\practice\Library\lib-api\src\main\java\by\runa\lib\api\mappers\DepartmentMapper.java
+D:\coursesIT\practice\Library\lib-api\src\main\java\by\runa\lib\api\config\ApiConfig.java
+D:\coursesIT\practice\Library\lib-api\src\main\java\by\runa\lib\api\dao\IBookDao.java
+D:\coursesIT\practice\Library\lib-api\src\main\java\by\runa\lib\api\service\IBookDetailsService.java
+D:\coursesIT\practice\Library\lib-api\src\main\java\by\runa\lib\api\mappers\BookDetailsMapper.java
+D:\coursesIT\practice\Library\lib-api\src\main\java\by\runa\lib\api\service\IUserService.java
+D:\coursesIT\practice\Library\lib-api\src\main\java\by\runa\lib\api\dto\RoleDto.java
+D:\coursesIT\practice\Library\lib-api\src\main\java\by\runa\lib\api\dto\FeedbackDto.java
+D:\coursesIT\practice\Library\lib-api\src\main\java\by\runa\lib\api\dao\IAGenericDao.java
+D:\coursesIT\practice\Library\lib-api\src\main\java\by\runa\lib\api\mappers\UserMapper.java
+D:\coursesIT\practice\Library\lib-api\src\main\java\by\runa\lib\api\utils\IEmailSender.java
+D:\coursesIT\practice\Library\lib-api\src\main\java\by\runa\lib\api\dao\IDepartmentDao.java
+D:\coursesIT\practice\Library\lib-api\src\main\java\by\runa\lib\api\dto\UserDto.java
+D:\coursesIT\practice\Library\lib-api\src\main\java\by\runa\lib\api\service\IDepartmentService.java
+D:\coursesIT\practice\Library\lib-api\src\main\java\by\runa\lib\api\dto\ADto.java
+D:\coursesIT\practice\Library\lib-api\src\main\java\by\runa\lib\api\dto\DepartmentDto.java
+D:\coursesIT\practice\Library\lib-api\src\main\java\by\runa\lib\api\service\IBookService.java
+D:\coursesIT\practice\Library\lib-api\src\main\java\by\runa\lib\api\dto\BookDetailsDto.java
+D:\coursesIT\practice\Library\lib-api\src\main\java\by\runa\lib\api\service\IRoleService.java
+D:\coursesIT\practice\Library\lib-api\src\main\java\by\runa\lib\api\dao\IOrderDao.java
+D:\coursesIT\practice\Library\lib-api\src\main\java\by\runa\lib\api\dao\IRoleDao.java
+D:\coursesIT\practice\Library\lib-api\src\main\java\by\runa\lib\api\dao\IUserDao.java
+D:\coursesIT\practice\Library\lib-api\src\main\java\by\runa\lib\api\service\IFeedbackService.java
+D:\coursesIT\practice\Library\lib-api\src\main\java\by\runa\lib\api\exceptions\NoSuchBookException.java
+D:\coursesIT\practice\Library\lib-api\src\main\java\by\runa\lib\api\service\IOrderService.java
+D:\coursesIT\practice\Library\lib-api\src\main\java\by\runa\lib\api\utils\IMapper.java
+D:\coursesIT\practice\Library\lib-api\src\main\java\by\runa\lib\api\mappers\OrderMapper.java
+D:\coursesIT\practice\Library\lib-api\src\main\java\by\runa\lib\api\mappers\BookMapper.java
+D:\coursesIT\practice\Library\lib-api\src\main\java\by\runa\lib\api\dao\IFeedbackDao.java
+D:\coursesIT\practice\Library\lib-api\src\main\java\by\runa\lib\api\mappers\RoleMapper.java
+D:\coursesIT\practice\Library\lib-api\src\main\java\by\runa\lib\api\mappers\AMapper.java
+D:\coursesIT\practice\Library\lib-api\src\main\java\by\runa\lib\api\dto\OrderDto.java
+D:\coursesIT\practice\Library\lib-api\src\main\java\by\runa\lib\api\dao\IBookDetailsDao.java
+D:\coursesIT\practice\Library\lib-api\src\main\java\by\runa\lib\api\dto\BookDto.java
+D:\coursesIT\practice\Library\lib-api\src\main\java\by\runa\lib\api\mappers\FeedbackMapper.java
