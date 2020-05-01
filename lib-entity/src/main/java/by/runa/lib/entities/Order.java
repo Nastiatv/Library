@@ -1,6 +1,6 @@
 package by.runa.lib.entities;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -24,10 +24,10 @@ import lombok.NoArgsConstructor;
 public class Order extends AEntity {
 
 	@Column(name = "order_date")
-	private LocalDateTime orderDate;
+	private LocalDate orderDate;
 
 	@Column(name = "due_date")
-	private LocalDateTime dueDate;
+	private LocalDate dueDate;
 
 	@Column(name = "is_finished")
 	private boolean isFinished;

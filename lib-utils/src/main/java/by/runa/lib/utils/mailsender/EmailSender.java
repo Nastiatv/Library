@@ -80,8 +80,7 @@ public class EmailSender implements IEmailSender {
 
 	private VelocityContext createVelocityContextWithBasicParameters(OrderDto dto) {
 		VelocityContext context = new VelocityContext();
-		context.put("UserId", dto.getUser().getId());
-
+		context.put("UserId", dto.getUserDto().getId());
 		return context;
 	}
 

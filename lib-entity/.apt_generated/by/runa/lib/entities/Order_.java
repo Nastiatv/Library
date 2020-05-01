@@ -1,6 +1,6 @@
 package by.runa.lib.entities;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import javax.annotation.Generated;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
@@ -9,11 +9,11 @@ import javax.persistence.metamodel.StaticMetamodel;
 @StaticMetamodel(Order.class)
 public abstract class Order_ extends by.runa.lib.entities.AEntity_ {
 
-	public static volatile SingularAttribute<Order, LocalDateTime> dueDate;
+	public static volatile SingularAttribute<Order, LocalDate> dueDate;
 	public static volatile SingularAttribute<Order, Book> book;
 	public static volatile SingularAttribute<Order, Boolean> isFinished;
 	public static volatile SingularAttribute<Order, Boolean> isProlonged;
-	public static volatile SingularAttribute<Order, LocalDateTime> orderDate;
+	public static volatile SingularAttribute<Order, LocalDate> orderDate;
 	public static volatile SingularAttribute<Order, User> user;
 
 	public static final String DUE_DATE = "dueDate";

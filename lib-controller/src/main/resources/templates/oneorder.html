@@ -7,8 +7,6 @@
 </head>
 <body>
 	<h1>Order details:</h1>
-	<a href="http://localhost:8080/orders/addorder">Make order</a>
-	<br>
 	<a href="http://localhost:8080">Home</a>
 	<br />
 	<table border="1">
@@ -17,10 +15,11 @@
 			<th id="id">Id</th>
 			<th id="orderDate">Order date</th>
 			<th id="dueDate">Due date</th>
-			<th id="book.name">Name</th>
-			<th id="book.author">Author</th>
-			<th id="user.name">User Name</th>
-			<th id="user.email">User Email</th>
+			<th id="bookDto.name">Name</th>
+			<th id="bookDto.author">Author</th>
+			<th id="userDto.name">User Name</th>
+			<th id="userDto.email">User Email</th>
+			<th id="isProlonged">is Prolonged</th>
 			<th id="isFinished">is Finished</th>
 		</tr>
 		<tr>
@@ -28,11 +27,12 @@
 			<td th:text="${order.id}"></td>
 			<td th:text="${order.orderDate}"></td>
 			<td th:text="${order.dueDate}"></td>
-			<td th:text="${order.book.name}"></td>
-			<td th:text="${order.book.author}"></td>
-			<td th:text="${order.user.name}"></td>
-			<td th:text="${order.user.email}"></td>
-			<td th:text="${order.isFinished}"></td>
+			<td th:text="${order.bookDto.bookDetailsDto.name}"></td>
+			<td th:text="${order.bookDto.bookDetailsDto.author}"></td>
+			<td th:text="${order.userDto.username}"></td>
+			<td th:text="${order.userDto.email}"></td>
+			<td th:text="${order.Prolonged}" ></td>
+			<td th:text="${order.Finished}" ></td>
 		</tr>
 	</table>
 </body>
