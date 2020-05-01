@@ -5,8 +5,6 @@ import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import by.runa.lib.api.dao.IRoleDao;
 import by.runa.lib.api.dto.DepartmentDto;
 import by.runa.lib.api.dto.UserDto;
 import by.runa.lib.api.service.IDepartmentService;
@@ -29,6 +28,9 @@ public class UserController {
 
 	@Autowired
 	IUserService userService;
+
+	@Autowired
+	IRoleDao roleDao;
 
 	@Autowired
 	IDepartmentService departmentService;
@@ -59,15 +61,11 @@ public class UserController {
 	public ModelAndView addUserSubmit(UserDto userDto, DepartmentDto departmentDto,
 			@RequestParam(value = "file", required = false) MultipartFile file) {
 		ModelAndView modelAndView = new ModelAndView();
-		UserDto newuser = userService.createUser(userDto, departmentDto);
+		userService.createUser(userDto, departmentDto);
 		try {
 			imgFileUploader.createOrUpdate(userDto, file);
-			modelAndView.addObject("user", newuser);
-			modelAndView.setViewName("oneuser");
-			UsernamePasswordAuthenticationToken token=new UsernamePasswordAuthenticationToken(newuser, null);
-			SecurityContextHolder.getContext().setAuthentication(token);
-			
-			} catch (IOException e) {
+			modelAndView.setViewName("login");
+		} catch (IOException e) {
 			modelAndView.setViewName("403");
 		}
 		return modelAndView;

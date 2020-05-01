@@ -2,7 +2,7 @@ package by.runa.lib.dao;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 
 import org.junit.Test;
@@ -19,7 +19,7 @@ import by.runa.lib.entities.Order;
 @RunWith(SpringRunner.class)
 public class OrderDaoTest {
 
-	private static final LocalDateTime TEST_DATE =LocalDateTime.now();
+	private static final LocalDate TEST_DATE = LocalDate.now();
 
 	@Autowired
 	private TestEntityManager entityManager;
@@ -65,9 +65,9 @@ public class OrderDaoTest {
 		assertThat(orderDao.getAll().isEmpty()).isTrue();
 	}
 
-	private Order createOrder(LocalDateTime order_date) {
+	private Order createOrder(LocalDate testDate) {
 		Order order = new Order();
-		order.setOrderDate(order_date);
+		order.setOrderDate(testDate);
 		return order;
 	}
 }

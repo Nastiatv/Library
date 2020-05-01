@@ -11,7 +11,7 @@
 	<div>
 		<div th:if="${param.error}">Invalid Email and password.</div>
 		<div th:if="${param.logout}">You have been logged out.</div>
-		<form th:action="@{login}" method="post">
+		<form th:action="@{../login}" method="post">
 
 			<div class="col-sm-4">
 				<div class="form-group">
@@ -32,11 +32,12 @@
 
 			<div class="col-sm-4">
 				<div class="form-group">
-					<label for="remember-me">Remember Me? <input
-						type="checkbox" id="remember-me" name="obscure-remember-me"
+					<label for="remember_me">Keep me logged in <input
+						type="checkbox" id="remember_me" name="_remember_me"
 						th:checked="true" /></label>
 				</div>
 			</div>
+
 			<div class="col-sm-4">
 				<div class="form-group">
 					<input type="submit" value="Sign In" />

@@ -1,6 +1,6 @@
 package by.runa.lib.service;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -12,10 +12,14 @@ import org.springframework.stereotype.Service;
 import by.runa.lib.api.dao.IBookDao;
 import by.runa.lib.api.dao.IOrderDao;
 import by.runa.lib.api.dao.IUserDao;
+import by.runa.lib.api.dto.BookDto;
 import by.runa.lib.api.dto.OrderDto;
+import by.runa.lib.api.dto.UserDto;
 import by.runa.lib.api.mappers.AMapper;
 import by.runa.lib.api.service.IOrderService;
+import by.runa.lib.entities.Book;
 import by.runa.lib.entities.Order;
+import by.runa.lib.entities.User;
 import lombok.extern.slf4j.Slf4j;
 
 @Service
@@ -35,6 +39,12 @@ public class OrderService implements IOrderService {
 	@Autowired
 	private AMapper<Order, OrderDto> orderMapper;
 
+	@Autowired
+	private AMapper<Book, BookDto> bookMapper;
+
+	@Autowired
+	private AMapper<User, UserDto> userMapper;
+
 	@Override
 	public List<OrderDto> getAllOrders() {
 		return orderMapper.toListEntities(orderDao.getAll());
@@ -44,8 +54,9 @@ public class OrderService implements IOrderService {
 	public OrderDto createOrder(Long BookId, String userName) {
 		Order order = new Order();
 		order.setBook(bookDao.get(BookId));
+		bookDao.get(BookId).setOccupied(true);
 		order.setUser(userDao.getByName(userName));
-		order.setOrderDate(LocalDateTime.now());
+		order.setOrderDate(LocalDate.now());
 		order.setDueDate(order.getOrderDate().plusDays(10));
 		order.setProlonged(false);
 		order.setFinished(false);
@@ -66,8 +77,8 @@ public class OrderService implements IOrderService {
 	@Override
 	public OrderDto updateOrder(Long id, OrderDto orderDto) {
 		Order existingOrder = Optional.ofNullable(orderDao.get(id)).orElse(new Order());
-		existingOrder.setBook(orderDto.getBook());
-		existingOrder.setUser(orderDto.getUser());
+		existingOrder.setBook(bookMapper.toEntity(orderDto.getBookDto()));
+		existingOrder.setUser(userMapper.toEntity(orderDto.getUserDto()));
 		existingOrder.setOrderDate(orderDto.getOrderDate());
 		existingOrder.setDueDate(orderDto.getDueDate());
 		existingOrder.setProlonged(orderDto.isProlonged());

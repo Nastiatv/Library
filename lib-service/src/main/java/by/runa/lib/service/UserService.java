@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import javax.transaction.Transactional;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -82,7 +83,7 @@ public class UserService implements IUserService {
 	@Override
 	public UserDto updateUser(Long id, UserDto userDto, DepartmentDto departmentDto) {
 		User existingUser = Optional.ofNullable(userDao.get(id)).orElse(new User());
-		if (userDto.getPassword() != null) {
+		if (StringUtils.isBlank(userDto.getPassword())) {
 			existingUser.setPassword(passwordEncoder.encode(userDto.getPassword()));
 		}
 		if (userDto.getEmail() != null) {
