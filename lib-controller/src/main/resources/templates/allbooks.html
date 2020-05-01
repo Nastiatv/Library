@@ -23,10 +23,11 @@
 			<th id="bookDetails.author">Author</th>
 			<th id="bookDetails.picture">Cover</th>
 			<th id="bookDetails.description">Description</th>
+			<th id="for.actions"></th>
 		</tr>
 		<tr>
 		<tr th:each="book : ${bookList}">
-			<td th:text="${book.id}"></td>
+			<td th:text="${book.id}"  id="bookid"></td>
 			<td th:text="${book.isbn}"></td>
 			<td th:text="${book.quantity}"></td>
 			<td th:text="${book.rating}"></td>
@@ -37,9 +38,16 @@
 			<td th:text="${book.bookDetailsDto.author}"></td>
 			<td><img th:src="@{${book.bookDetailsDto.picture}}" height="200" alt="Cover"/></td>
 			<td th:text="${book.bookDetailsDto.description}"></td>
+			<td><a id="myLink" href="#" onclick="SeeMoreFunction();">See more</a> <br>
 		</tr>
 	</table>
 </body>
+<script>
+	function SeeMoreFunction() {
+		var id = document.getElementById('bookid').innerHTML;
+		window.location.href = "http://localhost:8080/books/" + id;
+	}
+</script>
 <hr>
 <a href="javascript:history.back()">Go back</a>
 </html>

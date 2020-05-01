@@ -42,6 +42,20 @@ public class BookController {
 		return modelAndView;
 	}
 
+	@GetMapping("{id}")
+	public ModelAndView getBookById(@PathVariable Long id) {
+		ModelAndView modelAndView = new ModelAndView();
+		try {
+			BookDto book = bookService.getBookById(id);
+			modelAndView.setViewName("onebook");
+			modelAndView.addObject("book", book);
+		} catch (Exception e) {
+			modelAndView.setViewName("403");
+			// TODO There is no book with id="id"
+		}
+		return modelAndView;
+	}
+
 	@GetMapping(value = "addbook")
 	public ModelAndView addBook() {
 		ModelAndView modelAndView = new ModelAndView();

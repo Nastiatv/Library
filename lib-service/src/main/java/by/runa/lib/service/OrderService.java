@@ -9,7 +9,9 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import by.runa.lib.api.dao.IBookDao;
 import by.runa.lib.api.dao.IOrderDao;
+import by.runa.lib.api.dao.IUserDao;
 import by.runa.lib.api.dto.OrderDto;
 import by.runa.lib.api.mappers.AMapper;
 import by.runa.lib.api.service.IOrderService;
@@ -25,6 +27,12 @@ public class OrderService implements IOrderService {
 	private IOrderDao orderDao;
 
 	@Autowired
+	private IBookDao bookDao;
+
+	@Autowired
+	private IUserDao userDao;
+
+	@Autowired
 	private AMapper<Order, OrderDto> orderMapper;
 
 	@Override
@@ -33,10 +41,10 @@ public class OrderService implements IOrderService {
 	}
 
 	@Override
-	public OrderDto createOrder(OrderDto orderDto) {
+	public OrderDto createOrder(Long BookId, String userName) {
 		Order order = new Order();
-		order.setBook(orderDto.getBook());
-		order.setUser(orderDto.getUser());
+		order.setBook(bookDao.get(BookId));
+		order.setUser(userDao.getByName(userName));
 		order.setOrderDate(LocalDateTime.now());
 		order.setDueDate(order.getOrderDate().plusDays(10));
 		order.setProlonged(false);

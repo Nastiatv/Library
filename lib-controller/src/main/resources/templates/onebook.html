@@ -41,7 +41,8 @@
 				alt="Cover" /></td>
 			<td th:text="${book.bookDetailsDto.description}"></td>
 			<td><a id="myLink" href="#" onclick="EditFunction();">Edit</a> <br>
-				<a id="myLink" href="#" onclick="DeleteFunction();">Delete</a></td>
+				<a id="myLink" href="#" onclick="DeleteFunction();">Delete</a> <br>
+				<a id="myLink" href="#" onclick="MakeOrderFunction();">Make order</a></td>
 		</tr>
 	</table>
 </body>
@@ -56,6 +57,12 @@
 		var id = document.getElementById('bookid').innerHTML;
 		window.location.href = "http://localhost:8080/books/delete/" + id;
 
+	}
+</script>
+<script>
+	function MakeOrderFunction() {
+		var id = document.getElementById('bookid').innerHTML;
+		window.location.href = "http://localhost:8080/orders/addorder/" + id;
 	}
 </script>
 <hr>
