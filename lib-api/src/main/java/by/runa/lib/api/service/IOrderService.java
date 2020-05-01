@@ -14,6 +14,6 @@ public interface IOrderService {
 
 	OrderDto updateOrder(Long id, OrderDto dto);
 
-	OrderDto createOrder(OrderDto orderDto);
+	OrderDto createOrder(Long BookId, String userName);
 
-}
+	}

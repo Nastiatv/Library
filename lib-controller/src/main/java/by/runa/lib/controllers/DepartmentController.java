@@ -35,7 +35,6 @@ public class DepartmentController {
 		List<DepartmentDto> departments = departmentService.getAllDepartments();
 		modelAndView.addObject("departmentsList", departments);
 		modelAndView.setViewName("adddepartment");
-		modelAndView.addObject("departmentdto", new DepartmentDto());
 		return modelAndView.addObject("departmentdto", new DepartmentDto());
 	}
 
