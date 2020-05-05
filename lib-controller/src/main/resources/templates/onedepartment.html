@@ -7,11 +7,11 @@
 </head>
 <body>
 	<h1>Department details:</h1>
-	<a href="http://localhost:8080/departments/">All departments</a>
+	<a href="../">All departments</a>
 	<br>
-	<a href="http://localhost:8080">Home</a>
+	<a href="../../">Home</a>
 	<br>
-	<a href="http://localhost:8080/departments/adddepartment">Add
+	<a href="../adddepartment">Add
 		department</a>
 	<br />
 	<table border="1">
@@ -24,23 +24,11 @@
 		<tr>
 			<td th:text="${department.id}" id="departmentid"></td>
 			<td th:text="${department.name}"></td>
-			<td><a id="myLink" href="#" onclick="EditFunction();">Edit</a> <br>
-				<a id="myLink" href="#" onclick="DeleteFunction();">Delete</a></td>
+			<td><a th:href="@{'edit/' + ${department.id}}">Edit</a> <br> <a
+				th:href="@{'delete/' + ${department.id}}">Delete</a> <br> </td>
 		</tr>
 	</table>
 </body>
-<script>
-	function EditFunction() {
-		var id = document.getElementById('departmentid').innerHTML;
-		window.location.href = "http://localhost:8080/departments/edit/" + id;
-	}
-</script>
-<script>
-	function DeleteFunction() {
-		var id = document.getElementById('departmentid').innerHTML;
-		window.location.href = "http://localhost:8080/departments/delete/" + id;
-	}
-</script>
 <hr>
 <a href="javascript:history.back()">Go back</a>
 </html>

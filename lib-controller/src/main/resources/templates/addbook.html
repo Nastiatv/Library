@@ -8,7 +8,7 @@
 <body>
 	<h1>Add book to library:</h1>
 	<br />
-	<form th:action="@{addbook}" th:object="${bookdto}" method="POST">
+	<form th:action="@{${id}}" th:object="${bookdto}" method="POST">
 		ISBN: <input type="text" th:field="*{isbn}" /> <br /> 
 		Department: <select	th:object="${departmentdto}" th:field="*{name}">
 						<option th:each="department : ${departmentsList}" th:value="${department.name}" th:text="${department.name}"></option>

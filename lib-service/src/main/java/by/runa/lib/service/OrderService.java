@@ -12,14 +12,14 @@ import org.springframework.stereotype.Service;
 import by.runa.lib.api.dao.IBookDao;
 import by.runa.lib.api.dao.IOrderDao;
 import by.runa.lib.api.dao.IUserDao;
-import by.runa.lib.api.dto.BookDto;
 import by.runa.lib.api.dto.OrderDto;
-import by.runa.lib.api.dto.UserDto;
 import by.runa.lib.api.mappers.AMapper;
 import by.runa.lib.api.service.IOrderService;
 import by.runa.lib.entities.Book;
 import by.runa.lib.entities.Order;
-import by.runa.lib.entities.User;
+import by.runa.lib.exceptions.IsAlreadyClosedException;
+import by.runa.lib.exceptions.IsAlreadyProlongedException;
+import by.runa.lib.exceptions.NoBooksAvailableException;
 import lombok.extern.slf4j.Slf4j;
 
 @Service
@@ -39,27 +39,27 @@ public class OrderService implements IOrderService {
 	@Autowired
 	private AMapper<Order, OrderDto> orderMapper;
 
-	@Autowired
-	private AMapper<Book, BookDto> bookMapper;
-
-	@Autowired
-	private AMapper<User, UserDto> userMapper;
-
 	@Override
 	public List<OrderDto> getAllOrders() {
 		return orderMapper.toListEntities(orderDao.getAll());
 	}
 
 	@Override
-	public OrderDto createOrder(Long BookId, String userName) {
+	public OrderDto createOrder(Long bookId, String userName) throws NoBooksAvailableException {
 		Order order = new Order();
-		order.setBook(bookDao.get(BookId));
-		bookDao.get(BookId).setOccupied(true);
-		order.setUser(userDao.getByName(userName));
-		order.setOrderDate(LocalDate.now());
-		order.setDueDate(order.getOrderDate().plusDays(10));
-		order.setProlonged(false);
-		order.setFinished(false);
+		Book book = bookDao.get(bookId);
+		if (book.getQuantityAvailable() != 0) {
+			order.setBook(book);
+			book.setQuantityAvailable(book.getQuantityAvailable() - 1);
+			order.setUser(userDao.getByName(userName));
+			order.setOrderDate(LocalDate.now());
+			order.setDueDate(order.getOrderDate().plusDays(10));
+			order.setProlonged(false);
+			order.setFinished(false);
+		} else {
+			throw new NoBooksAvailableException();
+		}
+
 		return orderMapper.toDto(orderDao.create(order));
 	}
 
@@ -75,16 +75,28 @@ public class OrderService implements IOrderService {
 	}
 
 	@Override
-	public OrderDto updateOrder(Long id, OrderDto orderDto) {
-		Order existingOrder = Optional.ofNullable(orderDao.get(id)).orElse(new Order());
-		existingOrder.setBook(bookMapper.toEntity(orderDto.getBookDto()));
-		existingOrder.setUser(userMapper.toEntity(orderDto.getUserDto()));
-		existingOrder.setOrderDate(orderDto.getOrderDate());
-		existingOrder.setDueDate(orderDto.getDueDate());
-		existingOrder.setProlonged(orderDto.isProlonged());
-		existingOrder.setFinished(orderDto.isFinished());
-		orderDao.update(existingOrder);
+	public OrderDto prolongOrder(Long id) throws Exception {
+		Order existingOrder = Optional.ofNullable(orderDao.get(id)).orElseThrow(Exception::new);
+		if (existingOrder.isProlonged()) {
+			throw new IsAlreadyProlongedException();
+		} else {
+			existingOrder.setProlonged(true);
+			existingOrder.setDueDate(LocalDate.now().plusDays(10));
+			orderDao.update(existingOrder);
+		}
 		return orderMapper.toDto(existingOrder);
+	}
 
+	@Override
+	public OrderDto closeOrder(Long id) throws Exception {
+		Order existingOrder = Optional.ofNullable(orderDao.get(id)).orElseThrow(Exception::new);
+		if (existingOrder.isFinished()) {
+			throw new IsAlreadyClosedException();
+		} else {
+			existingOrder.setFinished(true);
+			bookDao.get(existingOrder.getBook().getId()).setQuantityAvailable(bookDao.get(existingOrder.getBook().getId()).getQuantityAvailable()+1);
+			orderDao.update(existingOrder);
+		}
+		return orderMapper.toDto(existingOrder);
 	}
 }

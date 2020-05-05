@@ -35,14 +35,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 
 		http.csrf().disable().authorizeRequests()
-				.antMatchers("/", "/users/**", "/books/**", "/departments/**", "/roles/**", "/orders/**",
-						"/feedbacks/**", "/login", "/logout", "/signin/**", "/signup/**", "/register", "/css/**",
-						"/img/**")
-				.permitAll().antMatchers("/admin/**").hasAnyRole("ADMIN").anyRequest().authenticated().and().formLogin()
-				.loginPage("/login").defaultSuccessUrl("/users/{id}", true).permitAll().and().logout()
-				.invalidateHttpSession(true).clearAuthentication(true)
-				.logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/bye").permitAll().and()
-				.exceptionHandling().accessDeniedHandler(accessDeniedHandler);
+				.antMatchers("/", "/books/**", "/feedbacks/**", "/login", "/logout", "/users/**", "/css/**", "/img/**").permitAll()
+				.antMatchers("/admin/**", "/roles/**", "/departments/**").hasRole("ADMIN")
+				.antMatchers("/orders/**").hasAnyRole("ADMIN","USER")
+
+				.and().formLogin().loginPage("/login").defaultSuccessUrl("/users/{id}", true).permitAll()
+				.and().logout().invalidateHttpSession(true).clearAuthentication(true)
+				.logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/bye").permitAll()
+				.and().exceptionHandling().accessDeniedHandler(accessDeniedHandler);
 	}
 
 	@Autowired

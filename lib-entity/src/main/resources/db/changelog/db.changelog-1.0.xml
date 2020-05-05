@@ -13,13 +13,13 @@
 			<column name="isbn" type="varchar(13)">
 				<constraints nullable="false" />
 			</column>
-			<column name="quantity" type="int(20)">
+			<column name="quantity_available" type="int(20)">
+				<constraints nullable="false" />
+			</column>
+			<column name="quantity_in_library" type="int(20)">
 				<constraints nullable="false" />
 			</column>
 			<column name="rating" type="double">
-			</column>
-			<column name="is_occupied" type="tinyint(2)">
-				<constraints nullable="false" />
 			</column>
 			</createTable>
 	</changeSet>

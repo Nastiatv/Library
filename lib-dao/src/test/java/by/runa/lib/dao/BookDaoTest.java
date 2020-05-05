@@ -54,9 +54,9 @@ public class BookDaoTest {
 	public void update() {
 		Long id = entityManager.persistAndGetId(createBook(TEST_ISBN), Long.class);
 		Book bookInRep = bookDao.get(id);
-		bookInRep.setQuantity(999);
+		bookInRep.setQuantityInLibrary(999);
 		entityManager.merge(bookInRep);
-		assertThat(bookInRep.getQuantity() == 999).isTrue();
+		assertThat(bookInRep.getQuantityInLibrary() == 999).isTrue();
 	}
 
 	@Test

@@ -26,16 +26,16 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode(callSuper = true)
 @Table(name = "book")
 public class Book extends AEntity {
-	
+
 	@Column(name = "isbn")
 	private String isbn;
-	
-	@Column(name = "is_occupied")
-	private boolean isOccupied;
-	
-	@Column(name = "quantity")
-	private int quantity = 0;
-	
+
+	@Column(name = "quantity_available")
+	private int quantityAvailable = 0;
+
+	@Column(name = "quantity_in_library")
+	private int quantityInLibrary = 0;
+
 	@Column(name = "rating")
 	private Double rating;
 
@@ -49,7 +49,7 @@ public class Book extends AEntity {
 	@OneToMany(mappedBy = "book", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Order> orders;
 
-	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
+	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
 	@PrimaryKeyJoinColumn
 	private BookDetails bookDetails;
 

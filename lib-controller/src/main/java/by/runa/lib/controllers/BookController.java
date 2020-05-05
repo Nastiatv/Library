@@ -50,7 +50,7 @@ public class BookController {
 			modelAndView.setViewName("onebook");
 			modelAndView.addObject("book", book);
 		} catch (Exception e) {
-			modelAndView.setViewName("403");
+			modelAndView.setViewName("errors/403");
 			// TODO There is no book with id="id"
 		}
 		return modelAndView;
@@ -84,25 +84,24 @@ public class BookController {
 			modelAndView.addObject("detailsdto", new BookDetailsDto());
 			modelAndView.addObject("dto", new BookDto());
 		} catch (Exception e) {
-			modelAndView.setViewName("403");
+			modelAndView.setViewName("errors/403");
 			// TODO There is no book with id="id"
 		}
 		return modelAndView;
 	}
 
 	@PostMapping("edit/{id}")
-	public ModelAndView saveBookChanges(BookDto bookDto, DepartmentDto departmentDto,
-			@RequestParam(value = "file", required = false) MultipartFile file) {
+	public ModelAndView saveBookChanges(BookDto bookDto, @RequestParam(value = "file", required = false) MultipartFile file) {
 		ModelAndView modelAndView = new ModelAndView();
 		try {
-			BookDto bookUpdated = bookService.updateBook(bookDto, departmentDto);
+			BookDto bookUpdated = bookService.updateBook(bookDto, file);
 			imgFileUploader.createOrUpdate(bookDto, file);
 			modelAndView.addObject("book", bookUpdated);
-			modelAndView.setViewName("onebook");
-		} catch (IOException e) {
-			modelAndView.setViewName("403");
+			modelAndView.setViewName("changesSaved");
+			} catch (IOException e) {
+			modelAndView.setViewName("errors/403");
 		} catch (Exception e) {
-			modelAndView.setViewName("403");
+			modelAndView.setViewName("errors/403");
 			// TODO There is no book with id="id"
 		}
 		return modelAndView;
@@ -118,7 +117,7 @@ public class BookController {
 			modelAndView.addObject("departmentdto", new DepartmentDto());
 			modelAndView.addObject("bookDto", new BookDto());
 		} catch (Exception e) {
-			modelAndView.setViewName("403");
+			modelAndView.setViewName("errors/403");
 			// TODO There is no book with id="id"
 		}
 		return modelAndView;

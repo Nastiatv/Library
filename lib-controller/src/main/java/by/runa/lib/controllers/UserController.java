@@ -66,7 +66,7 @@ public class UserController {
 			imgFileUploader.createOrUpdate(userDto, file);
 			modelAndView.setViewName("login");
 		} catch (IOException e) {
-			modelAndView.setViewName("403");
+			modelAndView.setViewName("errors/403");
 		}
 		return modelAndView;
 	}
@@ -81,7 +81,7 @@ public class UserController {
 			UserDto user = userService.getUserById(principalId);
 			modelAndView.addObject("user", user);
 		} catch (Exception e) {
-			modelAndView.setViewName("403");
+			modelAndView.setViewName("errors/403");
 			// TODO There is no user with id="id"
 		}
 		return modelAndView;
@@ -101,7 +101,7 @@ public class UserController {
 			modelAndView.addObject("departmentdto", new DepartmentDto());
 			modelAndView.addObject("dto", new UserDto());
 		} catch (Exception e) {
-			modelAndView.setViewName("403");
+			modelAndView.setViewName("errors/403");
 			// TODO There is no user with id="id"
 		}
 		return modelAndView;
@@ -115,9 +115,9 @@ public class UserController {
 		try {
 			imgFileUploader.createOrUpdate(userDto, file);
 			modelAndView.addObject("user", userUpdated);
-			modelAndView.setViewName("oneuser");
+			modelAndView.setViewName("changesSaved");
 		} catch (IOException e) {
-			modelAndView.setViewName("403");
+			modelAndView.setViewName("errors/403");
 		}
 		return modelAndView;
 	}

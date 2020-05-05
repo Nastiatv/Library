@@ -1,6 +1,6 @@
 package by.runa.lib.entities;
 
-import by.runa.lib.enums.Rating;
+import by.runa.lib.exceptions.Rating;
 import javax.annotation.Generated;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;

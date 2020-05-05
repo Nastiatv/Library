@@ -10,7 +10,7 @@
 <body>
 	<h1>Create a User:</h1>
 	<br />
-	<form th:action="@{adduser}" th:object="${dto}" method="POST"
+	<form th:action="@{${id}}" th:object="${dto}" method="POST"
 		enctype="multipart/form-data">
 
 		<div class="col-sm-4">
@@ -37,7 +37,7 @@
 				</select></label> <br />
 			</div>
 		</div>
-
+		
 		<div class="col-sm-4">
 			<div class="form-group">
 				<label for="file">Photo<input type="file" id="file"

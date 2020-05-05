@@ -7,16 +7,17 @@
 </head>
 <body>
 <h1>Our Books:</h1>
-	<a href="http://localhost:8080/books/addbook">Add Book</a>
+	<a href="addbook">Add Book</a>
 	<br>
-	<a href="http://localhost:8080">Home</a>
+	<a href="../">Home</a>
 	<br />
 	<table border="1" >
 	<caption></caption>
 		<tr>
 			<th id="id">Id</th>
 			<th id="isbn">Isbn</th>
-			<th id="quantity">Quantity</th>
+			<th id="quantityInLibrary">QuantityInLibrary</th>
+			<th id="quantityAvailable">QuantityAvailable</th>
 			<th id="rating">Rating</th>
 			<th id="departments">Department</th>
 			<th id="bookDetails.name">Name</th>
@@ -27,9 +28,10 @@
 		</tr>
 		<tr>
 		<tr th:each="book : ${bookList}">
-			<td th:text="${book.id}"  id="bookid"></td>
+			<td th:text="${book.id}"></td>
 			<td th:text="${book.isbn}"></td>
-			<td th:text="${book.quantity}"></td>
+			<td th:text="${book.quantityInLibrary}"></td>
+			<td th:text="${book.quantityAvailable}"></td>
 			<td th:text="${book.rating}"></td>
 			<td><span th:each="department : ${book.departments}"> <span
 					th:text="${department.name}"> </span>
@@ -38,16 +40,10 @@
 			<td th:text="${book.bookDetailsDto.author}"></td>
 			<td><img th:src="@{${book.bookDetailsDto.picture}}" height="200" alt="Cover"/></td>
 			<td th:text="${book.bookDetailsDto.description}"></td>
-			<td><a id="myLink" href="#" onclick="SeeMoreFunction();">See more</a> <br>
+			<td><a th:href="@{${book.id}}">See more</a> <br>
 		</tr>
 	</table>
 </body>
-<script>
-	function SeeMoreFunction() {
-		var id = document.getElementById('bookid').innerHTML;
-		window.location.href = "http://localhost:8080/books/" + id;
-	}
-</script>
 <hr>
 <a href="javascript:history.back()">Go back</a>
 </html>

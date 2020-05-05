@@ -16,12 +16,15 @@ import org.springframework.web.multipart.MultipartFile;
 import by.runa.lib.api.dto.BookDto;
 import by.runa.lib.api.dto.UserDto;
 import by.runa.lib.dao.BookDao;
+import by.runa.lib.dao.BookDetailsDao;
 
 @Component
 public class ImgFileUploader {
 
 	@Autowired
 	BookDao bookDao;
+	@Autowired
+	BookDetailsDao bookDetailsDao;
 
 	private static final String IMAGE_EXTENSION = ".png";
 
@@ -47,21 +50,19 @@ public class ImgFileUploader {
 
 	public void createOrUpdate(BookDto dto, MultipartFile file) throws IOException {
 		if (file != null && !file.isEmpty()) {
-			String bookIsbn = dto.getIsbn();
-			String filePath = new StringBuilder(FOLDER_PATH).append(bookIsbn).append(IMAGE_EXTENSION).toString();
+			Long bookId = dto.getId();
+			String filePath = new StringBuilder(FOLDER_PATH).append(bookId).append(IMAGE_EXTENSION).toString();
 			File bookImage;
 			try {
 				bookImage = ResourceUtils.getFile(filePath);
 			} catch (FileNotFoundException e) {
 				URL fileUrl = ResourceUtils.getURL(FOLDER_PATH);
 				bookImage = new File(
-						new StringBuilder(fileUrl.getPath()).append(bookIsbn).append(IMAGE_EXTENSION).toString());
+						new StringBuilder(fileUrl.getPath()).append(bookId).append(IMAGE_EXTENSION).toString());
 			}
 			Path path = Paths.get(bookImage.getPath());
 			byte[] bytes = file.getBytes();
 			Files.write(path, bytes);
-			bookDao.getByIsbn(bookIsbn).getBookDetails().setPicture("http://localhost:8080/img/" + bookIsbn + ".png");
 		}
 	}
-
 }
