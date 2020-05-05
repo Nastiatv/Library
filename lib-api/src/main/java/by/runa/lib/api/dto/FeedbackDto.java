@@ -3,7 +3,7 @@ package by.runa.lib.api.dto;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 
-import by.runa.lib.enums.Rating;
+import by.runa.lib.exceptions.Rating;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

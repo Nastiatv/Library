@@ -7,6 +7,7 @@ import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import by.runa.lib.api.dao.IBookDetailsDao;
 import by.runa.lib.api.dto.BookDetailsDto;
@@ -53,7 +54,8 @@ public class BookDetailsService implements IBookDetailsService {
 	}
 
 	@Override
-	public void updateBookDetails(BookDetails existingBookDetails, BookDetailsDto newbookDetailsDto) {
+	public void updateBookDetails(BookDetails existingBookDetails, BookDetailsDto newbookDetailsDto,
+			MultipartFile file) {
 		if (newbookDetailsDto.getAuthor() != null) {
 			existingBookDetails.setAuthor(newbookDetailsDto.getAuthor());
 		}
@@ -62,6 +64,9 @@ public class BookDetailsService implements IBookDetailsService {
 		}
 		if (newbookDetailsDto.getName() != null) {
 			existingBookDetails.setName(newbookDetailsDto.getName());
+		}
+		if (file.getSize() != 0) {
+			existingBookDetails.setPicture("http://localhost:8080/img/" + existingBookDetails.getId() + ".png");
 		}
 		bookDetailsDao.update(existingBookDetails);
 		log.info("BookDetails successfully updated");

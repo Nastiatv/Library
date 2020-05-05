@@ -3,8 +3,6 @@ package by.runa.lib.service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.mail.MessagingException;
 import javax.transaction.Transactional;
@@ -13,6 +11,7 @@ import org.apache.commons.lang3.RegExUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import by.runa.lib.api.dao.IBookDao;
 import by.runa.lib.api.dao.IDepartmentDao;
@@ -60,15 +59,16 @@ public class BookService implements IBookService {
 	public BookDto createBook(BookDto dto, DepartmentDto departmentDto) {
 		Department department = departmentDao.getByName(departmentDto.getName());
 		if (getBookbyIsbn(dto) != null) {
-			getBookbyIsbn(dto).setQuantity(getBookbyIsbn(dto).getQuantity() + 1);
+			getBookbyIsbn(dto).setQuantityAvailable(getBookbyIsbn(dto).getQuantityAvailable() + 1);
+			getBookbyIsbn(dto).setQuantityInLibrary(getBookbyIsbn(dto).getQuantityInLibrary() + 1);
 			getBookbyIsbn(dto).getDepartments().add(department);
 			return bookMapper.toDto(getBookbyIsbn(dto));
 		} else {
 			Book book = new Book();
-			book.setQuantity(1);
+			book.setQuantityInLibrary(1);
+			book.setQuantityAvailable(1);
 			dto.setIsbn(RegExUtils.replaceAll(dto.getIsbn(), "-", StringUtils.EMPTY).trim());
 			book.setIsbn(dto.getIsbn());
-			book.setOccupied(false);
 			book.setRating(null);
 			List<Department> departmentInList = new ArrayList<>();
 			departmentInList.add(department);
@@ -96,16 +96,18 @@ public class BookService implements IBookService {
 
 	@Override
 	public void deleteBookById(Long id, DepartmentDto departmentDto) {
-		if (bookDao.get(id).getQuantity() == 1) {
-			bookDao.delete(bookDao.get(id));
+		Book book=bookDao.get(id);
+		if (book.getQuantityInLibrary() == 1) {
+			bookDao.delete(book);
 		} else {
-			bookDao.get(id).setQuantity(bookDao.get(id).getQuantity() - 1);
+			book.setQuantityInLibrary(book.getQuantityInLibrary() - 1);
+			book.setQuantityAvailable(book.getQuantityAvailable() - 1);
 			Department dep = departmentDao.getByName(departmentDto.getName());
-			if (bookDao.get(id).getDepartments().contains(dep)) {
-				List<Department> list = bookDao.get(id).getDepartments();
+			if (book.getDepartments().contains(dep)) {
+				List<Department> list = book.getDepartments();
 				for (Department depart : list) {
 					if (depart.getName().equals(departmentDto.getName())) {
-						bookDao.get(id).getDepartments().remove(depart);
+						book.getDepartments().remove(depart);
 						break;
 					}
 				}
@@ -115,18 +117,13 @@ public class BookService implements IBookService {
 	}
 
 	@Override
-	public BookDto updateBook(BookDto bookDto, DepartmentDto departmentDto) throws Exception {
+	public BookDto updateBook(BookDto bookDto, MultipartFile file) throws Exception {
 		Book existingBook = Optional.ofNullable(bookDao.get(bookDto.getId())).orElseThrow(Exception::new);
 		BookDetails ebd = existingBook.getBookDetails();
-		if (departmentDto.getName() != null) {
-			existingBook.setDepartments(
-					Stream.of(departmentDao.getByName(departmentDto.getName())).collect(Collectors.toList()));
-		}
 		if (bookDto.getBookDetailsDto() != null) {
-			bookDetailsService.updateBookDetails(ebd, bookDto.getBookDetailsDto());
+			bookDetailsService.updateBookDetails(ebd, bookDto.getBookDetailsDto(), file);
 		}
 		bookDao.update(existingBook);
 		return bookMapper.toDto(existingBook);
-
 	}
 }

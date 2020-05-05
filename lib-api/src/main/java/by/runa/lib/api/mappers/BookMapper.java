@@ -16,16 +16,17 @@ import by.runa.lib.entities.BookDetails;
 
 @Component
 public class BookMapper extends AMapper<Book, BookDto> {
-	
+
 	@Autowired
 	private IBookDetailsDao bookDetailsDao;
 	@Autowired
 	private AMapper<BookDetails, BookDetailsDto> bookDetailsMapper;
 
-	public BookMapper(ModelMapper mapper, IBookDetailsDao bookDetailsDao, AMapper<BookDetails, BookDetailsDto> bookDetailsMapper) {
+	public BookMapper(ModelMapper mapper, IBookDetailsDao bookDetailsDao,
+			AMapper<BookDetails, BookDetailsDto> bookDetailsMapper) {
 		super(Book.class, BookDto.class);
-		this.bookDetailsDao =bookDetailsDao;
-		this.bookDetailsMapper=bookDetailsMapper;
+		this.bookDetailsDao = bookDetailsDao;
+		this.bookDetailsMapper = bookDetailsMapper;
 		this.mapper = mapper;
 	}
 
@@ -43,35 +44,12 @@ public class BookMapper extends AMapper<Book, BookDto> {
 	}
 
 	private BookDetailsDto getBookDetails(Book source) {
-		return Objects.isNull(source) || Objects.isNull(source.getId()) ? null : bookDetailsMapper.toDto(source.getBookDetails());
+		return Objects.isNull(source) || Objects.isNull(source.getId()) ? null
+				: bookDetailsMapper.toDto(source.getBookDetails());
 	}
 
 	@Override
 	void mapSpecificFields(BookDto source, Book destination) {
-		destination.setBookDetails(bookDetailsDao.get(source.getBookDetailsDto().getId())); 
+		destination.setBookDetails(bookDetailsDao.get(source.getBookDetailsDto().getId()));
 	}
-
-//	public static String convertListDepartmentsToString(List<Department> departments) {
-//		String departmentsInString = "";
-//		int n = 0;
-//		for (Department department : departments) {
-//			if (n == 0) {
-//				departmentsInString = department.getName();
-//				n++;
-//			} else {
-//				departmentsInString = departmentsInString.concat(", " + department.getName());
-//			}
-//		}
-//		return departmentsInString;
-//	}
-//
-//	public List<Department> convertStringToListDepartments(String departmentsInString) {
-//		List<Department> departments = new ArrayList<>();
-//		String[] list = departmentsInString.split(", ");
-//		for (String dep : list) {
-//			departments.add(departmentDao.getAll().stream().filter(c -> c.getName().equals(dep)).findFirst()
-//					.orElseThrow(() -> new IllegalArgumentException("Invalid enum number : " + dep)));
-//		}
-//		return departments;
-//	}
 }

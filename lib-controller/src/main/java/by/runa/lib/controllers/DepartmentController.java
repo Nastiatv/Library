@@ -55,7 +55,7 @@ public class DepartmentController {
 			modelAndView.addObject("department", departmentDto);
 			modelAndView.addObject("dto", new DepartmentDto());
 		} catch (Exception e) {
-			modelAndView.setViewName("403");
+			modelAndView.setViewName("errors/403");
 			// TODO There is no department with id="id"
 		}
 		return modelAndView;
@@ -67,9 +67,9 @@ public class DepartmentController {
 		try {
 			DepartmentDto departmentUpdated = departmentService.updateDepartment(id, departmentDto);
 			modelAndView.addObject("department", departmentUpdated);
-			modelAndView.setViewName("onedepartment");
+			modelAndView.setViewName("changesSaved");
 		} catch (Exception e) {
-			modelAndView.setViewName("403");
+			modelAndView.setViewName("errors/403");
 			// TODO There is no department with id="id"
 		}
 		return modelAndView;
@@ -83,7 +83,7 @@ public class DepartmentController {
 			modelAndView.addObject("department", departmentDto);
 			modelAndView.setViewName("deletedepartment");
 		} catch (Exception e) {
-			modelAndView.setViewName("403");
+			modelAndView.setViewName("errors/403");
 			// TODO There is no department with id="id"
 		}
 		return modelAndView;

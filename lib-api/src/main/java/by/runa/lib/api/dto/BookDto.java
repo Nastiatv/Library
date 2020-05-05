@@ -15,8 +15,8 @@ import lombok.NoArgsConstructor;
 public class BookDto extends ADto {
 
 	private String isbn;
-	private boolean isOccupied;
-	private int quantity;
+	private int quantityAvailable;
+	private int quantityInLibrary;
 	private double rating;
 	private List<Department> departments;
 	private BookDetailsDto bookDetailsDto;

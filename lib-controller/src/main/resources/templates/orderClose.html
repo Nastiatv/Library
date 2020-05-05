@@ -6,8 +6,7 @@
 <link href="../css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-<h1>Thanks for your order</h1>
-<h2>You can take the book, just remember to return it after 10 days)</h2>
+	<h1>Thank you for returning the book.</h1>
 	<h3>Order details:</h3>
 	<a href="../../">Home</a>
 	<br />
@@ -23,7 +22,6 @@
 			<th id="userDto.email">User Email</th>
 			<th id="isProlonged">is Prolonged</th>
 			<th id="isFinished">is Finished</th>
-			<th ></th>
 		</tr>
 		<tr>
 		<tr>
@@ -34,12 +32,9 @@
 			<td th:text="${order.bookDto.bookDetailsDto.author}"></td>
 			<td th:text="${order.userDto.username}"></td>
 			<td th:text="${order.userDto.email}"></td>
-			<td th:text="${order.Prolonged}" ></td>
-			<td th:text="${order.Finished}" ></td>
-		<td><a th:href="@{'../return/' + ${order.id}}">Return book</a> <br> <a
-				th:href="@{'../prolong/' + ${order.id}}">Prolong reading</a> <br> </td>
+			<td th:text="${order.Prolonged}"></td>
+			<td th:text="${order.Finished}"></td>
 		</tr>
 	</table>
 </body>
-<hr>
 </html>

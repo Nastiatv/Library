@@ -64,7 +64,7 @@ public class FeedbackController {
 			modelAndView.setViewName("feedback");
 			modelAndView.addObject("feedback", feedback);
 		} catch (Exception e) {
-			modelAndView.setViewName("403");
+			modelAndView.setViewName("errors/403");
 			//TODO There is no feedback with id="id"
 		}
 		return modelAndView;

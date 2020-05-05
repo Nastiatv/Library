@@ -2,6 +2,8 @@ package by.runa.lib.api.service;
 
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import by.runa.lib.api.dto.BookDetailsDto;
 import by.runa.lib.entities.BookDetails;
 
@@ -15,7 +17,7 @@ public interface IBookDetailsService  {
 
 	BookDetailsDto createBookDetails(String isbn);
 
-	void updateBookDetails(BookDetails existingBookDetails, BookDetailsDto newbookDetailsDto);
+	void updateBookDetails(BookDetails existingBookDetails, BookDetailsDto newbookDetailsDto, MultipartFile file);
 
 
 

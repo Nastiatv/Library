@@ -1,4 +1,4 @@
-package by.runa.lib.enums;
+package by.runa.lib.exceptions;
 
 import lombok.Getter;
 

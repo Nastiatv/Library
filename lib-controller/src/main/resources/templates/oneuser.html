@@ -8,7 +8,7 @@
 </head>
 <body>
 	<h1 th:text="'Hello, ' + ${user.username}"></h1>
-	<a href="http://localhost:8080/">Home</a>
+	<a href="../../">Home</a>
 	<br />
 	<h3>My personal info:</h3>
 	<table border="1">
@@ -29,16 +29,9 @@
 				height="200" alt="Avatar" /></td>
 			<td th:text="${user.email}"></td>
 			<td th:text="${user.departmentName}"></td>
-			<td><a id="myLink" href="#" onclick="EditFunction();">Edit</a>
+			<td><a th:href="@{'edit/' + ${user.id}}">Edit</a>
 				</td>
 		</tr>
 	</table>
 </body>
-<script>
-	function EditFunction() {
-		var id = document.getElementById('userid').innerHTML;
-		window.location.href = "http://localhost:8080/users/edit/" + id;
-	}
-</script>
-
 </html>

@@ -3,6 +3,7 @@ package by.runa.lib.api.service;
 import java.util.List;
 
 import by.runa.lib.api.dto.OrderDto;
+import by.runa.lib.exceptions.NoBooksAvailableException;
 
 public interface IOrderService {
 
@@ -12,8 +13,10 @@ public interface IOrderService {
 
 	void deleteOrderById(Long id);
 
-	OrderDto updateOrder(Long id, OrderDto dto);
+	OrderDto createOrder(Long bookId, String userName) throws NoBooksAvailableException;
 
-	OrderDto createOrder(Long BookId, String userName);
+	OrderDto closeOrder(Long id) throws Exception;
 
-	}
+	OrderDto prolongOrder(Long id) throws Exception;
+
+}

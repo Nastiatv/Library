@@ -13,6 +13,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import by.runa.lib.api.dto.OrderDto;
 import by.runa.lib.api.service.IOrderService;
+import by.runa.lib.exceptions.IsAlreadyClosedException;
+import by.runa.lib.exceptions.IsAlreadyProlongedException;
+import by.runa.lib.exceptions.NoBooksAvailableException;
 
 @RestController
 @RequestMapping("/orders/")
@@ -41,35 +44,43 @@ public class OrderController {
 	public ModelAndView addOrderSubmit(@PathVariable Long id, Principal principal) {
 		final String userName = principal.getName();
 		ModelAndView modelAndView = new ModelAndView();
-		OrderDto neworder = orderService.createOrder(id, userName);
+		OrderDto neworder = null;
+		try {
+			neworder = orderService.createOrder(id, userName);
+		} catch (NoBooksAvailableException e) {
+			modelAndView.setViewName("errors/noBooksAvailable");
+		}
 		modelAndView.setViewName("oneorder");
 		return modelAndView.addObject("order", neworder);
 	}
 
-	@GetMapping("edit/{id}")
-	public ModelAndView getOrderEditForm(@PathVariable Long id) {
+	@GetMapping("prolong/{id}")
+	public ModelAndView editProlongInOrder(@PathVariable Long id) {
 		ModelAndView modelAndView = new ModelAndView();
 		try {
-			OrderDto orderDto = orderService.getOrderById(id);
-			modelAndView.setViewName("updateorder");
+			OrderDto orderDto = orderService.prolongOrder(id);
+			modelAndView.setViewName("orderProlong");
 			modelAndView.addObject("order", orderDto);
-			modelAndView.addObject("dto", new OrderDto());
+		} catch (IsAlreadyProlongedException e) {
+			modelAndView.setViewName("errors/isAlreadyProlonged");
 		} catch (Exception e) {
-			modelAndView.setViewName("403");
+			modelAndView.setViewName("errors/403");
 			// TODO There is no order with id="id"
 		}
 		return modelAndView;
 	}
 
-	@PostMapping("edit/{id}")
-	public ModelAndView saveOrderChanges(@PathVariable Long id, OrderDto orderDto) {
+	@GetMapping("return/{id}")
+	public ModelAndView closeOrder(@PathVariable Long id) {
 		ModelAndView modelAndView = new ModelAndView();
 		try {
-			OrderDto orderUpdated = orderService.updateOrder(id, orderDto);
-			modelAndView.addObject("order", orderUpdated);
-			modelAndView.setViewName("oneorder");
+			OrderDto orderDto = orderService.closeOrder(id);
+			modelAndView.setViewName("orderClose");
+			modelAndView.addObject("order", orderDto);
+		} catch (IsAlreadyClosedException e) {
+			modelAndView.setViewName("errors/isAlreadyClosed");
 		} catch (Exception e) {
-			modelAndView.setViewName("403");
+			modelAndView.setViewName("errors/403");
 			// TODO There is no order with id="id"
 		}
 		return modelAndView;
