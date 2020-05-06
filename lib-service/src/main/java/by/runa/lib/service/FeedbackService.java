@@ -9,10 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import by.runa.lib.api.dao.IFeedbackDao;
+import by.runa.lib.api.dao.IOrderDao;
 import by.runa.lib.api.dto.FeedbackDto;
 import by.runa.lib.api.mappers.AMapper;
 import by.runa.lib.api.service.IFeedbackService;
 import by.runa.lib.entities.Feedback;
+import by.runa.lib.exceptions.Rating;
 import lombok.extern.slf4j.Slf4j;
 
 @Service
@@ -22,6 +24,9 @@ public class FeedbackService implements IFeedbackService {
 
 	@Autowired
 	private IFeedbackDao feedbackDao;
+	
+	@Autowired
+	private IOrderDao orderDao;
 
 	@Autowired
 	private AMapper<Feedback, FeedbackDto> feedbackMapper;
@@ -32,11 +37,12 @@ public class FeedbackService implements IFeedbackService {
 	}
 
 	@Override
-	public FeedbackDto createFeedback(FeedbackDto feedbackDto) {
+	public FeedbackDto createFeedback(FeedbackDto feedbackDto, Long id) {
 		Feedback feedback = new Feedback();
-		feedback.getBook().setId(feedbackDto.getBookId());
-		feedback.getUser().setId(feedbackDto.getUserId());
-		feedback.setRating(feedbackDto.getRating());
+		feedback.setId(id);
+		feedback.setBook(orderDao.get(id).getBook());
+		feedback.setUser(orderDao.get(id).getUser());
+		feedback.setRating(Rating.findRatingFromInt((feedbackDto.getRating())));
 		feedback.setUserName(feedbackDto.getUserName());
 		feedback.setComment(feedbackDto.getComment());
 		return feedbackMapper.toDto(feedbackDao.create(feedback));
@@ -56,11 +62,8 @@ public class FeedbackService implements IFeedbackService {
 	@Override
 	public FeedbackDto updateFeedback(Long id, FeedbackDto feedbackDto) {
 		Feedback existingFeedback = Optional.ofNullable(feedbackDao.get(id)).orElse(new Feedback());
-		existingFeedback.setRating(feedbackDto.getRating());
-		existingFeedback.getBook().setId(feedbackDto.getBookId());
-		existingFeedback.getUser().setId(feedbackDto.getUserId());
+		existingFeedback.setRating(Rating.findRatingFromInt(feedbackDto.getRating()));
 		existingFeedback.setComment(feedbackDto.getComment());
-		existingFeedback.setUserName(feedbackDto.getUserName());
 		feedbackDao.update(existingFeedback);
 		return feedbackMapper.toDto(existingFeedback);
 

@@ -17,7 +17,7 @@ public class OrderDto extends ADto {
 	private BookDto bookDto;
 	private LocalDate orderDate;
 	private LocalDate dueDate;
-	private boolean Finished;
-	private boolean Prolonged;
+	private boolean finished;
+	private boolean prolonged;
 
 }

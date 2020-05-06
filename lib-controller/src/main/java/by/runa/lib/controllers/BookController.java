@@ -125,7 +125,9 @@ public class BookController {
 
 	@PostMapping("delete/{id}")
 	public ModelAndView deletebookSubmit(BookDto bookDto, DepartmentDto departmentDto) {
+		ModelAndView modelAndView = new ModelAndView();
 		bookService.deleteBookById(bookDto.getId(), departmentDto);
-		return getAllBooks();
+		modelAndView.setViewName("changesSaved");
+		return modelAndView;
 	}
 }
