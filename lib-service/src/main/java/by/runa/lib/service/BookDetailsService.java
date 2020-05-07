@@ -33,7 +33,7 @@ public class BookDetailsService implements IBookDetailsService {
 
 	@Override
 	public List<BookDetailsDto> getAllBookDetails() {
-		return bookDetailsMapper.toListEntities(bookDetailsDao.getAll());
+		return bookDetailsMapper.toListDto(bookDetailsDao.getAll());
 	}
 
 	@Override

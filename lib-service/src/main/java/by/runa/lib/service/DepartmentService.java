@@ -28,7 +28,7 @@ public class DepartmentService implements IDepartmentService {
 
 	@Override
 	public List<DepartmentDto> getAllDepartments() {
-		return departmentMapper.toListEntities(departmentDao.getAll());
+		return departmentMapper.toListDto(departmentDao.getAll());
 	}
 
 	@Override

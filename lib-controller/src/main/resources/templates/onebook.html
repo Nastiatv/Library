@@ -47,6 +47,18 @@
 				th:href="@{'../orders/addorder/' + ${book.id}}">Make order</a> <br></td>
 		</tr>
 	</table>
+	<hr>
+
+	<div class="container" th:each="feedback : ${listFeedbacks}">
+		<img
+			th:src="@{'http://localhost:8080/img/' + ${feedback.userName} + '.png'}"
+			alt="Avatar" style="width: 90px">
+		<p>
+			<span th:text="${feedback.userName}"></span><span th:text="${feedback.rating}"></span>  
+		</p>
+		<p th:text="${feedback.comment}" ></p>
+	</div>
+
 </body>
 <hr>
 <a href="javascript:history.back()">Go back</a>

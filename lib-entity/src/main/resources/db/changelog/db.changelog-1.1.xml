@@ -16,8 +16,7 @@
 			<column name="user_id" type="bigint">
 				<constraints nullable="false" />
 			</column>
-			<column name="rating"
-				type="ENUM('ONE', 'TWO', 'THREE', 'FOUR', 'FIVE')">
+			<column name="rating"  type="bigint">
 				<constraints nullable="false" />
 			</column>
 			<column name="user_name" type="varchar(255)">

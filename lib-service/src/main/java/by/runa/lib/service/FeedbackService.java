@@ -8,15 +8,15 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import by.runa.lib.api.dao.IBookDao;
 import by.runa.lib.api.dao.IFeedbackDao;
+import by.runa.lib.api.dao.IOrderDao;
 import by.runa.lib.api.dto.FeedbackDto;
 import by.runa.lib.api.mappers.AMapper;
 import by.runa.lib.api.service.IFeedbackService;
 import by.runa.lib.entities.Feedback;
-import lombok.extern.slf4j.Slf4j;
 
 @Service
-@Slf4j
 @Transactional
 public class FeedbackService implements IFeedbackService {
 
@@ -24,22 +24,30 @@ public class FeedbackService implements IFeedbackService {
 	private IFeedbackDao feedbackDao;
 
 	@Autowired
+	private IOrderDao orderDao;
+
+	@Autowired
+	private IBookDao bookDao;
+
+	@Autowired
 	private AMapper<Feedback, FeedbackDto> feedbackMapper;
 
 	@Override
 	public List<FeedbackDto> getAllFeedbacks() {
-		return feedbackMapper.toListEntities(feedbackDao.getAll());
+		return feedbackMapper.toListDto(feedbackDao.getAll());
 	}
 
 	@Override
-	public FeedbackDto createFeedback(FeedbackDto feedbackDto) {
+	public FeedbackDto createFeedback(FeedbackDto feedbackDto, Long orderId) {
 		Feedback feedback = new Feedback();
-		feedback.getBook().setId(feedbackDto.getBookId());
-		feedback.getUser().setId(feedbackDto.getUserId());
+		feedback.setBook(orderDao.get(orderId).getBook());
+		feedback.setUser(orderDao.get(orderId).getUser());
 		feedback.setRating(feedbackDto.getRating());
-		feedback.setUserName(feedbackDto.getUserName());
+		feedback.setUserName(orderDao.get(orderId).getUser().getUsername());
 		feedback.setComment(feedbackDto.getComment());
-		return feedbackMapper.toDto(feedbackDao.create(feedback));
+		feedbackDao.create(feedback);
+		countAvgRatingForBook(orderDao.get(orderId).getBook().getId());
+		return feedbackMapper.toDto(feedback);
 	}
 
 	@Override
@@ -50,19 +58,32 @@ public class FeedbackService implements IFeedbackService {
 	@Override
 	public void deleteFeedbackById(Long id) {
 		feedbackDao.delete(feedbackDao.get(id));
-		log.info("Feedback successfully deleted");
+		countAvgRatingForBook(feedbackDao.get(id).getBook().getId());
 	}
 
 	@Override
 	public FeedbackDto updateFeedback(Long id, FeedbackDto feedbackDto) {
 		Feedback existingFeedback = Optional.ofNullable(feedbackDao.get(id)).orElse(new Feedback());
 		existingFeedback.setRating(feedbackDto.getRating());
-		existingFeedback.getBook().setId(feedbackDto.getBookId());
-		existingFeedback.getUser().setId(feedbackDto.getUserId());
 		existingFeedback.setComment(feedbackDto.getComment());
-		existingFeedback.setUserName(feedbackDto.getUserName());
 		feedbackDao.update(existingFeedback);
+		countAvgRatingForBook(feedbackDao.get(id).getBook().getId());
 		return feedbackMapper.toDto(existingFeedback);
 
+	}
+
+	private void countAvgRatingForBook(Long bookId) {
+		int num = 0;
+		double sum = 0;
+		for (Feedback feedback : bookDao.get(bookId).getFeedbacks()) {
+			sum += feedback.getRating();
+			num++;
+		}
+		bookDao.get(bookId).setRating(sum / num);
+	}
+
+	@Override
+	public List<FeedbackDto> getAllFeedbacksByBookId(Long id) {
+		return feedbackMapper.toListDto(feedbackDao.getAllFeedbacksByBookId(id));
 	}
 }

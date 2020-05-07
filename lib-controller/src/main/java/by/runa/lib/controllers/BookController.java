@@ -16,8 +16,10 @@ import org.springframework.web.servlet.ModelAndView;
 import by.runa.lib.api.dto.BookDetailsDto;
 import by.runa.lib.api.dto.BookDto;
 import by.runa.lib.api.dto.DepartmentDto;
+import by.runa.lib.api.dto.FeedbackDto;
 import by.runa.lib.api.service.IBookService;
 import by.runa.lib.api.service.IDepartmentService;
+import by.runa.lib.api.service.IFeedbackService;
 import by.runa.lib.utils.ImgFileUploader;
 
 @RestController
@@ -26,6 +28,9 @@ public class BookController {
 
 	@Autowired
 	IBookService bookService;
+
+	@Autowired
+	IFeedbackService feedbackService;
 
 	@Autowired
 	IDepartmentService departmentService;
@@ -47,8 +52,10 @@ public class BookController {
 		ModelAndView modelAndView = new ModelAndView();
 		try {
 			BookDto book = bookService.getBookById(id);
+			List<FeedbackDto> listFeedbacks = feedbackService.getAllFeedbacksByBookId(id);
 			modelAndView.setViewName("onebook");
 			modelAndView.addObject("book", book);
+			modelAndView.addObject("listFeedbacks", listFeedbacks);
 		} catch (Exception e) {
 			modelAndView.setViewName("errors/403");
 			// TODO There is no book with id="id"
@@ -91,14 +98,15 @@ public class BookController {
 	}
 
 	@PostMapping("edit/{id}")
-	public ModelAndView saveBookChanges(BookDto bookDto, @RequestParam(value = "file", required = false) MultipartFile file) {
+	public ModelAndView saveBookChanges(BookDto bookDto,
+			@RequestParam(value = "file", required = false) MultipartFile file) {
 		ModelAndView modelAndView = new ModelAndView();
 		try {
 			BookDto bookUpdated = bookService.updateBook(bookDto, file);
 			imgFileUploader.createOrUpdate(bookDto, file);
 			modelAndView.addObject("book", bookUpdated);
 			modelAndView.setViewName("changesSaved");
-			} catch (IOException e) {
+		} catch (IOException e) {
 			modelAndView.setViewName("errors/403");
 		} catch (Exception e) {
 			modelAndView.setViewName("errors/403");
@@ -125,7 +133,9 @@ public class BookController {
 
 	@PostMapping("delete/{id}")
 	public ModelAndView deletebookSubmit(BookDto bookDto, DepartmentDto departmentDto) {
+		ModelAndView modelAndView = new ModelAndView();
 		bookService.deleteBookById(bookDto.getId(), departmentDto);
-		return getAllBooks();
+		modelAndView.setViewName("changesSaved");
+		return modelAndView;
 	}
 }

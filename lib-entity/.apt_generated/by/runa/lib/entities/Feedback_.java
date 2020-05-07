@@ -1,6 +1,5 @@
 package by.runa.lib.entities;
 
-import by.runa.lib.exceptions.Rating;
 import javax.annotation.Generated;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
@@ -10,7 +9,7 @@ import javax.persistence.metamodel.StaticMetamodel;
 public abstract class Feedback_ extends by.runa.lib.entities.AEntity_ {
 
 	public static volatile SingularAttribute<Feedback, Book> book;
-	public static volatile SingularAttribute<Feedback, Rating> rating;
+	public static volatile SingularAttribute<Feedback, Integer> rating;
 	public static volatile SingularAttribute<Feedback, String> comment;
 	public static volatile SingularAttribute<Feedback, String> userName;
 	public static volatile SingularAttribute<Feedback, User> user;

@@ -44,7 +44,7 @@ public class UserService implements IUserService {
 
 	@Override
 	public List<UserDto> getAllUsers() {
-		return userMapper.toListEntities(userDao.getAll());
+		return userMapper.toListDto(userDao.getAll());
 	}
 
 	@Override

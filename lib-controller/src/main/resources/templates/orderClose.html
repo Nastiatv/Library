@@ -8,7 +8,6 @@
 <body>
 	<h1>Thank you for returning the book.</h1>
 	<h3>Order details:</h3>
-	<a href="../../">Home</a>
 	<br />
 	<table border="1">
 		<caption></caption>
@@ -36,5 +35,9 @@
 			<td th:text="${order.Finished}"></td>
 		</tr>
 	</table>
+	<hr>
+	<h3>
+		<a th:href="@{'../../../feedbacks/addfeedback/' + ${order.id}}">Write feedback</a>
+	</h3>
 </body>
 </html>

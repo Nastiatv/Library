@@ -3,11 +3,9 @@ package by.runa.lib.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
@@ -19,8 +17,8 @@ import by.runa.lib.api.service.IFeedbackService;
 @RequestMapping("/feedbacks/")
 public class FeedbackController {
 
-	private static final String ID = "{id}";
-
+	private static final String ERRORS_403 = "errors/403";
+	private static final String FEEDBACK = "feedback";
 	@Autowired
 	IFeedbackService feedbackService;
 
@@ -33,46 +31,81 @@ public class FeedbackController {
 		return modelAndView;
 	}
 
-	@GetMapping(value = "addfeedback")
-	public ModelAndView addFeedback() {
-		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("addfeedback");
-		return modelAndView.addObject("dto", new FeedbackDto());
-	}
-
-	@PostMapping(value = "addfeedback")
-	public ModelAndView addFeedbackSubmit(FeedbackDto feedbackDto) {
-		ModelAndView modelAndView = new ModelAndView();
-		FeedbackDto newfeedback = feedbackService.createFeedback(feedbackDto);
-		modelAndView.setViewName("feedback");
-		return modelAndView.addObject("newfeedback", newfeedback);
-	}
-
-	@PutMapping(value = ID)
-	public ModelAndView updateFeedback(@PathVariable Long id, FeedbackDto feedbackDto) {
-		ModelAndView modelAndView = new ModelAndView();
-		FeedbackDto updatedFeedback = feedbackService.updateFeedback(id, feedbackDto);
-		modelAndView.setViewName("feedback");
-		return modelAndView.addObject("feedback", updatedFeedback);
-	}
-
-	@GetMapping(value = ID)
-	public ModelAndView getFeedback(@PathVariable Long id) {
+	@GetMapping("{id}")
+	public ModelAndView getFeedbackById(@PathVariable Long id) {
 		ModelAndView modelAndView = new ModelAndView();
 		try {
 			FeedbackDto feedback = feedbackService.getFeedbackById(id);
-			modelAndView.setViewName("feedback");
-			modelAndView.addObject("feedback", feedback);
+			modelAndView.setViewName("onefeedback");
+			modelAndView.addObject(FEEDBACK, feedback);
 		} catch (Exception e) {
-			modelAndView.setViewName("errors/403");
-			//TODO There is no feedback with id="id"
+			modelAndView.setViewName(ERRORS_403);
+			// TODO There is no feedback with id="id"
 		}
 		return modelAndView;
 	}
 
-	@DeleteMapping(value = ID)
+	@GetMapping(value = "addfeedback/{id}")
+	public ModelAndView addFeedback(@PathVariable Long id) {
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("addfeedback");
+		return modelAndView.addObject("feedbackdto", new FeedbackDto());
+	}
+
+	@PostMapping(value = "addfeedback/{id}")
+	public ModelAndView addFeedbackSubmit(@PathVariable Long id, FeedbackDto feedbackDto) {
+		ModelAndView modelAndView = new ModelAndView();
+		FeedbackDto newfeedback = feedbackService.createFeedback(feedbackDto, id);
+		modelAndView.setViewName("onefeedback");
+		return modelAndView.addObject(FEEDBACK, newfeedback);
+	}
+
+	@GetMapping("edit/{id}")
+	public ModelAndView getFeedbackEditForm(@PathVariable Long id) {
+		ModelAndView modelAndView = new ModelAndView();
+		try {
+			FeedbackDto feedbackDto = feedbackService.getFeedbackById(id);
+			modelAndView.setViewName("updatefeedback");
+			modelAndView.addObject(FEEDBACK, feedbackDto);
+			modelAndView.addObject("dto", new FeedbackDto());
+		} catch (Exception e) {
+			modelAndView.setViewName(ERRORS_403);
+			// TODO There is no feedback with id="id"
+		}
+		return modelAndView;
+	}
+
+	@PostMapping("edit/{id}")
+	public ModelAndView saveFeedbackChanges(FeedbackDto feedbackDto) {
+		ModelAndView modelAndView = new ModelAndView();
+		try {
+			FeedbackDto feedbackUpdated = feedbackService.updateFeedback(null, feedbackDto);
+			modelAndView.addObject(FEEDBACK, feedbackUpdated);
+			modelAndView.setViewName("changesSaved");
+		} catch (Exception e) {
+			modelAndView.setViewName(ERRORS_403);
+		}
+		return modelAndView;
+	}
+
+	@GetMapping("delete/{id}")
 	public ModelAndView deleteFeedback(@PathVariable Long id) {
-		feedbackService.deleteFeedbackById(id);
+		ModelAndView modelAndView = new ModelAndView();
+		try {
+			FeedbackDto feedbackDto = feedbackService.getFeedbackById(id);
+			modelAndView.addObject(FEEDBACK, feedbackDto);
+			modelAndView.setViewName("deletefeedback");
+			modelAndView.addObject("feedbackDto", new FeedbackDto());
+		} catch (Exception e) {
+			modelAndView.setViewName(ERRORS_403);
+			// TODO There is no feedback with id="id"
+		}
+		return modelAndView;
+	}
+
+	@PostMapping("delete/{id}")
+	public ModelAndView deletefeedbackSubmit(FeedbackDto feedbackDto) {
+		feedbackService.deleteFeedbackById(feedbackDto.getId());
 		return getAllFeedbacks();
 	}
 }

@@ -1,9 +1,5 @@
 package by.runa.lib.api.dto;
 
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-
-import by.runa.lib.exceptions.Rating;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -18,8 +14,7 @@ public class FeedbackDto extends ADto {
 	private Long bookId;
 	private Long userId;
 
-	@Enumerated(EnumType.STRING)
-	private Rating rating;
+	private int rating;
 
 	private String userName;
 	private String comment;

@@ -52,7 +52,7 @@ public class BookService implements IBookService {
 
 	@Override
 	public List<BookDto> getAllBooks() {
-		return bookMapper.toListEntities(bookDao.getAll());
+		return bookMapper.toListDto(bookDao.getAll());
 	}
 
 	@Override

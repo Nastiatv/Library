@@ -46,7 +46,7 @@ public abstract class AMapper<E extends AEntity, D extends ADto> implements IMap
 	}
 
 	@Override
-	public List<D> toListEntities(List<E> entities) {
+	public List<D> toListDto(List<E> entities) {
 		List<D> listDto = new ArrayList<>();
 		for (E entity : entities) {
 			listDto.add(toDto(entity));

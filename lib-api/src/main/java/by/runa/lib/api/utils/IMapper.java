@@ -15,6 +15,6 @@ public interface IMapper<E extends AEntity, D extends ADto> {
 
 	D toLiteDto(E entity);
 
-	List<D> toListEntities(List<E> entities);
+	List<D> toListDto(List<E> entities);
 
 }
