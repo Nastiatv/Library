@@ -28,7 +28,7 @@ public class RoleService implements IRoleService {
 
 	@Override
 	public List<RoleDto> getAllRoles() {
-		return roleMapper.toListEntities(roleDao.getAll());
+		return roleMapper.toListDto(roleDao.getAll());
 	}
 
 	@Override

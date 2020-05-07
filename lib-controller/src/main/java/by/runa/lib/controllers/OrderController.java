@@ -33,6 +33,20 @@ public class OrderController {
 		return modelAndView;
 	}
 
+	@GetMapping("{id}")
+	public ModelAndView getOrderById(@PathVariable Long id) {
+		ModelAndView modelAndView = new ModelAndView();
+		try {
+			OrderDto order = orderService.getOrderById(id);
+			modelAndView.setViewName("oneorder");
+			modelAndView.addObject("order", order);
+		} catch (Exception e) {
+			modelAndView.setViewName("errors/403");
+			// TODO There is no order with id="id"
+		}
+		return modelAndView;
+	}
+
 	@GetMapping(value = "addorder/{id}")
 	public ModelAndView addOrder(@PathVariable Long id) {
 		ModelAndView modelAndView = new ModelAndView();
@@ -47,11 +61,12 @@ public class OrderController {
 		OrderDto neworder = null;
 		try {
 			neworder = orderService.createOrder(id, userName);
+			modelAndView.setViewName("thanksfororder");
+			modelAndView.addObject("order", neworder);
 		} catch (NoBooksAvailableException e) {
 			modelAndView.setViewName("errors/noBooksAvailable");
 		}
-		modelAndView.setViewName("oneorder");
-		return modelAndView.addObject("order", neworder);
+		return modelAndView;
 	}
 
 	@GetMapping("prolong/{id}")

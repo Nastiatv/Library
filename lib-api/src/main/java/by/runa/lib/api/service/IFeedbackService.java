@@ -16,4 +16,6 @@ public interface IFeedbackService {
 
 	FeedbackDto createFeedback(FeedbackDto feedbackDto, Long id);
 
+	List<FeedbackDto> getAllFeedbacksByBookId(Long id);
+
 }

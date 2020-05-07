@@ -1,3 +1,4 @@
+FORALL:
 h1 {
 	color: #0000FF;
 }
@@ -14,29 +15,71 @@ table th, table td {
 	padding: 5px;
 }
 
+
+FOR RATING STAR:
 .rating_block {
-	width: 125px;
-	height: 25px;
+  width: 125px;
+  height: 25px;
 }
-
 .rating_block input[type="radio"] {
-	display: none;
+  display: none;
 }
-
 .label_rating {
-	float: right;
-	display: block;
-	width: 25px;
-	height: 25px;
-	background: url(img/rating.png) no-repeat 50% 0;
-	cursor: pointer;
+  float: right;
+  display: block;
+  width: 25px;
+  height: 25px;
+ background: url(../img/rating.png) no-repeat 50% 0;
+  cursor: pointer;
 }
 /*Пишем правила смены положения background-а*/
-.rating_block .label_rating:hover,
-	/*Правило для ховера на текущий лейбл*/ .rating_block .label_rating:hover 
-	~ .label_rating, /*Правило для всех следующих лейблов по DOM дереву*/
-	.rating_block input[type="radio"]:checked ~ .label_rating
-	/*Правило для всех следующих лейблов после выбранного инпута, чтобы звездочки как бы зафиксировались*/
-	{
-	background-position: 50% -25px;
+.rating_block .label_rating:hover, /*Правило для ховера на текущий лейбл*/
+.rating_block .label_rating:hover ~ .label_rating, /*Правило для всех следующих лейблов по DOM дереву*/
+.rating_block input[type="radio"]:checked ~ .label_rating /*Правило для всех следующих лейблов после выбранного инпута, чтобы звездочки как бы зафиксировались*/
+{
+  background-position: 50% -25px;
+}
+
+
+FOR FEEDBACKS:
+/* Style the container with a rounded border, grey background and some padding and margin */
+.container {
+    border: 2px solid #ccc;
+    background-color: #eee;
+    border-radius: 5px;
+    padding: 16px;
+    margin: 16px 0;
+}
+
+/* Clear floats after containers */
+.container::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+/* Float images inside the container to the left. Add a right margin, and style the image as a circle */
+.container img {
+    float: left;
+    margin-right: 20px;
+    border-radius: 50%;
+}
+
+/* Increase the font-size of a span element */
+.container span {
+    font-size: 20px;
+    margin-right: 15px;
+}
+
+/* Add media queries for responsiveness. This will center both the text and the image inside the container */
+@media (max-width: 500px) {
+  .container {
+    text-align: center;
+  }
+
+  .container img {
+    margin: auto;
+    float: none;
+    display: block;
+  }
 }

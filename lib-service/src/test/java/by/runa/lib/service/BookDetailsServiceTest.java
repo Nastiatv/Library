@@ -59,7 +59,7 @@ public class BookDetailsServiceTest {
 		listBookDetails.add(bookDetails3);
 		when(bookDetailsDao.getAll()).thenReturn(listBookDetails);
 		List<BookDetailsDto> dtoList = bookDetailsService.getAllBookDetails();
-		verify(bookDetailsMapper, times(1)).toListEntities(listBookDetails);
+		verify(bookDetailsMapper, times(1)).toListDto(listBookDetails);
 		assertThat(listBookDetails.size() == dtoList.size());
 	}
 

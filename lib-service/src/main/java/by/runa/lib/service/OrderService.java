@@ -41,7 +41,7 @@ public class OrderService implements IOrderService {
 
 	@Override
 	public List<OrderDto> getAllOrders() {
-		return orderMapper.toListEntities(orderDao.getAll());
+		return orderMapper.toListDto(orderDao.getAll());
 	}
 
 	@Override

@@ -34,7 +34,7 @@ public class FeedbackService implements IFeedbackService {
 
 	@Override
 	public List<FeedbackDto> getAllFeedbacks() {
-		return feedbackMapper.toListEntities(feedbackDao.getAll());
+		return feedbackMapper.toListDto(feedbackDao.getAll());
 	}
 
 	@Override
@@ -80,5 +80,10 @@ public class FeedbackService implements IFeedbackService {
 			num++;
 		}
 		bookDao.get(bookId).setRating(sum / num);
+	}
+
+	@Override
+	public List<FeedbackDto> getAllFeedbacksByBookId(Long id) {
+		return feedbackMapper.toListDto(feedbackDao.getAllFeedbacksByBookId(id));
 	}
 }
