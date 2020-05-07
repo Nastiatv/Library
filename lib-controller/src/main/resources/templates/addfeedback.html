@@ -9,26 +9,21 @@
 	<h1>Create a Feedback:</h1>
 	<br />
 	<form th:action="@{${id}}" th:object="${feedbackdto}" method="POST">
-		Rating:
-		<div class="rating_block">
-			<input name="rating" value="5" th:field="*{rating}" id="rating_5"
-				type="radio" /> <label for="rating_5" class="label_rating"></label>
-
-			<input name="rating" value="4" th:field="*{rating}" id="rating_4"
-				type="radio" /> <label for="rating_4" class="label_rating"></label>
-
-			<input name="rating" value="3" th:field="*{rating}" id="rating_3"
-				type="radio" /> <label for="rating_3" class="label_rating"></label>
-
-			<input name="rating" value="2" th:field="*{rating}" id="rating_2"
-				type="radio" /> <label for="rating_2" class="label_rating"></label>
-
+		Rating:	<div class="rating_block">
 			<input name="rating" value="1" th:field="*{rating}" id="rating_1"
 				type="radio" /> <label for="rating_1" class="label_rating"></label>
+			<input name="rating" value="2" th:field="*{rating}" id="rating_2"
+				type="radio" /> <label for="rating_2" class="label_rating"></label>
+			<input name="rating" value="3" th:field="*{rating}" id="rating_3"
+				type="radio" /> <label for="rating_3" class="label_rating"></label>			
+			<input name="rating" value="4" th:field="*{rating}" id="rating_4"
+				type="radio" /> <label for="rating_4" class="label_rating"></label>
+			<input name="rating" value="5" th:field="*{rating}" id="rating_5"
+				type="radio" /> <label for="rating_5" class="label_rating"></label>
 		</div>
 		<br /> 
 		Comment: <input type="text" th:field="*{comment}" /> <br />
-		<input type="submit" value="Create" />
+		<input type="submit" value="Add feedback" />
 		<input type="reset" value="Reset">
 	</form>
 </body>

@@ -28,7 +28,7 @@ table th, table td {
 	display: block;
 	width: 25px;
 	height: 25px;
-	background: url(../img/rating.png) no-repeat 50% 0;
+	background: url(img/rating.png) no-repeat 50% 0;
 	cursor: pointer;
 }
 /*Пишем правила смены положения background-а*/

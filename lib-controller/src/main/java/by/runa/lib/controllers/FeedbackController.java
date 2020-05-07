@@ -17,6 +17,8 @@ import by.runa.lib.api.service.IFeedbackService;
 @RequestMapping("/feedbacks/")
 public class FeedbackController {
 
+	private static final String ERRORS_403 = "errors/403";
+	private static final String FEEDBACK = "feedback";
 	@Autowired
 	IFeedbackService feedbackService;
 
@@ -35,9 +37,9 @@ public class FeedbackController {
 		try {
 			FeedbackDto feedback = feedbackService.getFeedbackById(id);
 			modelAndView.setViewName("onefeedback");
-			modelAndView.addObject("feedback", feedback);
+			modelAndView.addObject(FEEDBACK, feedback);
 		} catch (Exception e) {
-			modelAndView.setViewName("errors/403");
+			modelAndView.setViewName(ERRORS_403);
 			// TODO There is no feedback with id="id"
 		}
 		return modelAndView;
@@ -55,7 +57,7 @@ public class FeedbackController {
 		ModelAndView modelAndView = new ModelAndView();
 		FeedbackDto newfeedback = feedbackService.createFeedback(feedbackDto, id);
 		modelAndView.setViewName("onefeedback");
-		return modelAndView.addObject("feedback", newfeedback);
+		return modelAndView.addObject(FEEDBACK, newfeedback);
 	}
 
 	@GetMapping("edit/{id}")
@@ -64,10 +66,10 @@ public class FeedbackController {
 		try {
 			FeedbackDto feedbackDto = feedbackService.getFeedbackById(id);
 			modelAndView.setViewName("updatefeedback");
-			modelAndView.addObject("feedback", feedbackDto);
+			modelAndView.addObject(FEEDBACK, feedbackDto);
 			modelAndView.addObject("dto", new FeedbackDto());
 		} catch (Exception e) {
-			modelAndView.setViewName("errors/403");
+			modelAndView.setViewName(ERRORS_403);
 			// TODO There is no feedback with id="id"
 		}
 		return modelAndView;
@@ -78,10 +80,10 @@ public class FeedbackController {
 		ModelAndView modelAndView = new ModelAndView();
 		try {
 			FeedbackDto feedbackUpdated = feedbackService.updateFeedback(null, feedbackDto);
-			modelAndView.addObject("feedback", feedbackUpdated);
+			modelAndView.addObject(FEEDBACK, feedbackUpdated);
 			modelAndView.setViewName("changesSaved");
 		} catch (Exception e) {
-			modelAndView.setViewName("errors/403");
+			modelAndView.setViewName(ERRORS_403);
 		}
 		return modelAndView;
 	}
@@ -91,11 +93,11 @@ public class FeedbackController {
 		ModelAndView modelAndView = new ModelAndView();
 		try {
 			FeedbackDto feedbackDto = feedbackService.getFeedbackById(id);
-			modelAndView.addObject("feedback", feedbackDto);
+			modelAndView.addObject(FEEDBACK, feedbackDto);
 			modelAndView.setViewName("deletefeedback");
 			modelAndView.addObject("feedbackDto", new FeedbackDto());
 		} catch (Exception e) {
-			modelAndView.setViewName("errors/403");
+			modelAndView.setViewName(ERRORS_403);
 			// TODO There is no feedback with id="id"
 		}
 		return modelAndView;
