@@ -21,6 +21,7 @@ import by.runa.lib.api.service.IBookService;
 import by.runa.lib.api.service.IDepartmentService;
 import by.runa.lib.api.service.IFeedbackService;
 import by.runa.lib.exceptions.NoBookWithThisIdException;
+import by.runa.lib.exceptions.NoFeedbackWithThisIdException;
 import by.runa.lib.utils.ImgFileUploader;
 
 @RestController
@@ -61,7 +62,7 @@ public class BookController {
 			modelAndView.setViewName("onebook");
 			modelAndView.addObject(BOOK, book);
 			modelAndView.addObject("listFeedbacks", listFeedbacks);
-		} catch (NoBookWithThisIdException e) {
+		} catch (NoBookWithThisIdException | NoFeedbackWithThisIdException e) {
 			modelAndView.setViewName(ERRORS);
 			modelAndView.addObject(MESSAGE, e.getMessage());
 		}
