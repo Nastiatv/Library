@@ -20,10 +20,9 @@ import by.runa.lib.entities.Order;
 import by.runa.lib.exceptions.IsAlreadyClosedException;
 import by.runa.lib.exceptions.IsAlreadyProlongedException;
 import by.runa.lib.exceptions.NoBooksAvailableException;
-import lombok.extern.slf4j.Slf4j;
+import by.runa.lib.exceptions.NoOrderWithThisIdException;
 
 @Service
-@Slf4j
 @Transactional
 public class OrderService implements IOrderService {
 
@@ -64,37 +63,47 @@ public class OrderService implements IOrderService {
 	}
 
 	@Override
-	public OrderDto getOrderById(Long id) {
-		return Optional.ofNullable(orderMapper.toDto(orderDao.get(id))).orElse(new OrderDto());
+	public OrderDto getOrderById(Long id) throws NoOrderWithThisIdException {
+		return Optional.ofNullable(orderMapper.toDto(orderDao.get(id))).orElseThrow(NoOrderWithThisIdException::new);
+	}
+	
+	@Override
+	public List<OrderDto> getAllOrdersByUserId(Long id) throws NoOrderWithThisIdException {
+		return Optional.ofNullable(orderMapper.toListDto(orderDao.getAllOrdersByUserId(id))).orElseThrow(NoOrderWithThisIdException::new);
 	}
 
 	@Override
 	public void deleteOrderById(Long id) {
 		orderDao.delete(orderDao.get(id));
-		log.info("Order successfully deleted");
 	}
 
 	@Override
-	public OrderDto prolongOrder(Long id) throws Exception {
-		Order existingOrder = Optional.ofNullable(orderDao.get(id)).orElseThrow(Exception::new);
-		if (existingOrder.isProlonged()) {
-			throw new IsAlreadyProlongedException();
+	public OrderDto prolongOrder(Long id)
+			throws NoOrderWithThisIdException, IsAlreadyClosedException, IsAlreadyProlongedException {
+		Order existingOrder = Optional.ofNullable(orderDao.get(id)).orElseThrow(NoOrderWithThisIdException::new);
+		if (existingOrder.isFinished()) {
+			throw new IsAlreadyClosedException();
 		} else {
-			existingOrder.setProlonged(true);
-			existingOrder.setDueDate(LocalDate.now().plusDays(10));
-			orderDao.update(existingOrder);
+			if (existingOrder.isProlonged()) {
+				throw new IsAlreadyProlongedException();
+			} else {
+				existingOrder.setProlonged(true);
+				existingOrder.setDueDate(LocalDate.now().plusDays(10));
+				orderDao.update(existingOrder);
+			}
 		}
 		return orderMapper.toDto(existingOrder);
 	}
 
 	@Override
-	public OrderDto closeOrder(Long id) throws Exception {
-		Order existingOrder = Optional.ofNullable(orderDao.get(id)).orElseThrow(Exception::new);
+	public OrderDto closeOrder(Long id) throws IsAlreadyClosedException, NoOrderWithThisIdException {
+		Order existingOrder = Optional.ofNullable(orderDao.get(id)).orElseThrow(NoOrderWithThisIdException::new);
 		if (existingOrder.isFinished()) {
 			throw new IsAlreadyClosedException();
 		} else {
 			existingOrder.setFinished(true);
-			bookDao.get(existingOrder.getBook().getId()).setQuantityAvailable(bookDao.get(existingOrder.getBook().getId()).getQuantityAvailable()+1);
+			bookDao.get(existingOrder.getBook().getId())
+					.setQuantityAvailable(bookDao.get(existingOrder.getBook().getId()).getQuantityAvailable() + 1);
 			orderDao.update(existingOrder);
 		}
 		return orderMapper.toDto(existingOrder);

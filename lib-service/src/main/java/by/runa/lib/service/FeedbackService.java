@@ -15,6 +15,7 @@ import by.runa.lib.api.dto.FeedbackDto;
 import by.runa.lib.api.mappers.AMapper;
 import by.runa.lib.api.service.IFeedbackService;
 import by.runa.lib.entities.Feedback;
+import by.runa.lib.exceptions.NoFeedbackWithThisIdException;
 
 @Service
 @Transactional
@@ -51,8 +52,9 @@ public class FeedbackService implements IFeedbackService {
 	}
 
 	@Override
-	public FeedbackDto getFeedbackById(Long id) {
-		return Optional.ofNullable(feedbackMapper.toDto(feedbackDao.get(id))).orElse(new FeedbackDto());
+	public FeedbackDto getFeedbackById(Long id) throws NoFeedbackWithThisIdException {
+		return Optional.ofNullable(feedbackMapper.toDto(feedbackDao.get(id)))
+				.orElseThrow(NoFeedbackWithThisIdException::new);
 	}
 
 	@Override
@@ -62,14 +64,15 @@ public class FeedbackService implements IFeedbackService {
 	}
 
 	@Override
-	public FeedbackDto updateFeedback(Long id, FeedbackDto feedbackDto) {
-		Feedback existingFeedback = Optional.ofNullable(feedbackDao.get(id)).orElse(new Feedback());
+	public FeedbackDto updateFeedback(Long id, FeedbackDto feedbackDto) throws NoFeedbackWithThisIdException {
+		Feedback existingFeedback = Optional.ofNullable(feedbackDao.get(id))
+				.orElseThrow(NoFeedbackWithThisIdException::new);
 		existingFeedback.setRating(feedbackDto.getRating());
 		existingFeedback.setComment(feedbackDto.getComment());
 		feedbackDao.update(existingFeedback);
+
 		countAvgRatingForBook(feedbackDao.get(id).getBook().getId());
 		return feedbackMapper.toDto(existingFeedback);
-
 	}
 
 	private void countAvgRatingForBook(Long bookId) {
@@ -79,11 +82,20 @@ public class FeedbackService implements IFeedbackService {
 			sum += feedback.getRating();
 			num++;
 		}
-		bookDao.get(bookId).setRating(sum / num);
+		if (num != 0) {
+			bookDao.get(bookId).setRating(sum / num);
+		}
 	}
 
 	@Override
-	public List<FeedbackDto> getAllFeedbacksByBookId(Long id) {
-		return feedbackMapper.toListDto(feedbackDao.getAllFeedbacksByBookId(id));
+	public List<FeedbackDto> getAllFeedbacksByBookId(Long id) throws NoFeedbackWithThisIdException {
+		return Optional.ofNullable(feedbackMapper.toListDto(feedbackDao.getAllFeedbacksByBookId(id)))
+				.orElseThrow(NoFeedbackWithThisIdException::new);
+	}
+
+	@Override
+	public List<FeedbackDto> getAllFeedbacksByUserId(Long id) throws NoFeedbackWithThisIdException {
+		return Optional.ofNullable(feedbackMapper.toListDto(feedbackDao.getAllFeedbacksByUserId(id)))
+				.orElseThrow(NoFeedbackWithThisIdException::new);
 	}
 }

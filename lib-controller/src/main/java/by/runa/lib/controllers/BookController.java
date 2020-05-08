@@ -20,11 +20,16 @@ import by.runa.lib.api.dto.FeedbackDto;
 import by.runa.lib.api.service.IBookService;
 import by.runa.lib.api.service.IDepartmentService;
 import by.runa.lib.api.service.IFeedbackService;
+import by.runa.lib.exceptions.NoBookWithThisIdException;
 import by.runa.lib.utils.ImgFileUploader;
 
 @RestController
 @RequestMapping("/books/")
 public class BookController {
+	
+	private static final String ERRORS = "errors";
+	private static final String MESSAGE = "message";
+	private static final String BOOK = "book";
 
 	@Autowired
 	IBookService bookService;
@@ -54,11 +59,11 @@ public class BookController {
 			BookDto book = bookService.getBookById(id);
 			List<FeedbackDto> listFeedbacks = feedbackService.getAllFeedbacksByBookId(id);
 			modelAndView.setViewName("onebook");
-			modelAndView.addObject("book", book);
+			modelAndView.addObject(BOOK, book);
 			modelAndView.addObject("listFeedbacks", listFeedbacks);
-		} catch (Exception e) {
-			modelAndView.setViewName("errors/403");
-			// TODO There is no book with id="id"
+		} catch (NoBookWithThisIdException e) {
+			modelAndView.setViewName(ERRORS);
+			modelAndView.addObject(MESSAGE, e.getMessage());
 		}
 		return modelAndView;
 	}
@@ -87,12 +92,12 @@ public class BookController {
 		try {
 			BookDto bookDto = bookService.getBookById(id);
 			modelAndView.setViewName("updatebook");
-			modelAndView.addObject("book", bookDto);
+			modelAndView.addObject(BOOK, bookDto);
 			modelAndView.addObject("detailsdto", new BookDetailsDto());
 			modelAndView.addObject("dto", new BookDto());
-		} catch (Exception e) {
-			modelAndView.setViewName("errors/403");
-			// TODO There is no book with id="id"
+		} catch (NoBookWithThisIdException e) {
+			modelAndView.setViewName(ERRORS);
+			modelAndView.addObject(MESSAGE, e.getMessage());
 		}
 		return modelAndView;
 	}
@@ -106,11 +111,9 @@ public class BookController {
 			imgFileUploader.createOrUpdate(bookDto, file);
 			modelAndView.addObject("book", bookUpdated);
 			modelAndView.setViewName("changesSaved");
-		} catch (IOException e) {
-			modelAndView.setViewName("errors/403");
-		} catch (Exception e) {
-			modelAndView.setViewName("errors/403");
-			// TODO There is no book with id="id"
+		} catch (IOException|NoBookWithThisIdException e) {
+			modelAndView.setViewName(ERRORS);
+			modelAndView.addObject(MESSAGE, e.getMessage());
 		}
 		return modelAndView;
 	}
@@ -124,9 +127,9 @@ public class BookController {
 			modelAndView.setViewName("deletebook");
 			modelAndView.addObject("departmentdto", new DepartmentDto());
 			modelAndView.addObject("bookDto", new BookDto());
-		} catch (Exception e) {
-			modelAndView.setViewName("errors/403");
-			// TODO There is no book with id="id"
+		} catch (NoBookWithThisIdException e) {
+			modelAndView.setViewName(ERRORS);
+			modelAndView.addObject(MESSAGE, e.getMessage());
 		}
 		return modelAndView;
 	}

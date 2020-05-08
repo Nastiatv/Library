@@ -67,7 +67,5 @@ public class UserDao extends AGenericDao<User> implements IUserDao {
 		} catch (NoResultException e) {
 			return null;
 		}
-
-		// TODO autowired&
 	}
 }

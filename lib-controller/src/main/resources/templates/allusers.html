@@ -15,7 +15,7 @@
 			<th scope="col">Photo</th>
 			<th scope="col">Email</th>
 			<th scope="col">Department</th>
-			
+			<th id="forActions"></th>
 		</tr>
 		<tr>
 		<tr th:each="user : ${userList}">
@@ -24,6 +24,7 @@
 				height="200" alt="Avatar" /></td>
 			<td th:text="${user.email}"></td>
 			<td th:text="${user.departmentName}"></td>
+			<td><a th:href="@{${user.id}}">See more</a> <br>
 		</tr>
 	</table>
 </body>

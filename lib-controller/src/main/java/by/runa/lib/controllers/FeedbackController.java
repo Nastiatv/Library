@@ -1,5 +1,6 @@
 package by.runa.lib.controllers;
 
+import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,15 +13,23 @@ import org.springframework.web.servlet.ModelAndView;
 
 import by.runa.lib.api.dto.FeedbackDto;
 import by.runa.lib.api.service.IFeedbackService;
+import by.runa.lib.api.service.IUserService;
+import by.runa.lib.exceptions.NoFeedbackWithThisIdException;
+import by.runa.lib.exceptions.NoUserWithThisIdException;
 
 @RestController
 @RequestMapping("/feedbacks/")
 public class FeedbackController {
 
-	private static final String ERRORS_403 = "errors/403";
+	private static final String ERRORS = "errors";
+	private static final String MESSAGE = "message";
 	private static final String FEEDBACK = "feedback";
+
 	@Autowired
 	IFeedbackService feedbackService;
+
+	@Autowired
+	IUserService userService;
 
 	@GetMapping
 	public ModelAndView getAllFeedbacks() {
@@ -38,9 +47,25 @@ public class FeedbackController {
 			FeedbackDto feedback = feedbackService.getFeedbackById(id);
 			modelAndView.setViewName("onefeedback");
 			modelAndView.addObject(FEEDBACK, feedback);
-		} catch (Exception e) {
-			modelAndView.setViewName(ERRORS_403);
-			// TODO There is no feedback with id="id"
+		} catch (NoFeedbackWithThisIdException e) {
+			modelAndView.setViewName(ERRORS);
+			modelAndView.addObject(MESSAGE, e.getMessage());
+		}
+		return modelAndView;
+	}
+
+	@GetMapping("my")
+	public ModelAndView getMyOrders(Principal principal) {
+		ModelAndView modelAndView = new ModelAndView();
+		final String currentUser = principal.getName();
+		try {
+			long principalId = userService.getUserByName(currentUser).getId();
+			List<FeedbackDto> feedbacklist = feedbackService.getAllFeedbacksByUserId(principalId);
+			modelAndView.setViewName("allfeedbacks");
+			modelAndView.addObject("feedbackList", feedbacklist);
+		} catch (NoUserWithThisIdException | NoFeedbackWithThisIdException e) {
+			modelAndView.setViewName(ERRORS);
+			modelAndView.addObject(MESSAGE, e.getMessage());
 		}
 		return modelAndView;
 	}
@@ -68,9 +93,9 @@ public class FeedbackController {
 			modelAndView.setViewName("updatefeedback");
 			modelAndView.addObject(FEEDBACK, feedbackDto);
 			modelAndView.addObject("dto", new FeedbackDto());
-		} catch (Exception e) {
-			modelAndView.setViewName(ERRORS_403);
-			// TODO There is no feedback with id="id"
+		} catch (NoFeedbackWithThisIdException e) {
+			modelAndView.setViewName(ERRORS);
+			modelAndView.addObject(MESSAGE, e.getMessage());
 		}
 		return modelAndView;
 	}
@@ -82,8 +107,9 @@ public class FeedbackController {
 			FeedbackDto feedbackUpdated = feedbackService.updateFeedback(null, feedbackDto);
 			modelAndView.addObject(FEEDBACK, feedbackUpdated);
 			modelAndView.setViewName("changesSaved");
-		} catch (Exception e) {
-			modelAndView.setViewName(ERRORS_403);
+		} catch (NoFeedbackWithThisIdException e) {
+			modelAndView.setViewName(ERRORS);
+			modelAndView.addObject(MESSAGE, e.getMessage());
 		}
 		return modelAndView;
 	}
@@ -96,9 +122,9 @@ public class FeedbackController {
 			modelAndView.addObject(FEEDBACK, feedbackDto);
 			modelAndView.setViewName("deletefeedback");
 			modelAndView.addObject("feedbackDto", new FeedbackDto());
-		} catch (Exception e) {
-			modelAndView.setViewName(ERRORS_403);
-			// TODO There is no feedback with id="id"
+		} catch (NoFeedbackWithThisIdException e) {
+			modelAndView.setViewName(ERRORS);
+			modelAndView.addObject(MESSAGE, e.getMessage());
 		}
 		return modelAndView;
 	}

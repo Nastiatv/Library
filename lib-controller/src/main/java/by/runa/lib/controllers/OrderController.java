@@ -13,16 +13,26 @@ import org.springframework.web.servlet.ModelAndView;
 
 import by.runa.lib.api.dto.OrderDto;
 import by.runa.lib.api.service.IOrderService;
+import by.runa.lib.api.service.IUserService;
 import by.runa.lib.exceptions.IsAlreadyClosedException;
 import by.runa.lib.exceptions.IsAlreadyProlongedException;
 import by.runa.lib.exceptions.NoBooksAvailableException;
+import by.runa.lib.exceptions.NoOrderWithThisIdException;
+import by.runa.lib.exceptions.NoUserWithThisIdException;
 
 @RestController
 @RequestMapping("/orders/")
 public class OrderController {
 
+	private static final String ERRORS = "errors";
+	private static final String MESSAGE = "message";
+	private static final String ORDER = "order";
+
 	@Autowired
 	IOrderService orderService;
+
+	@Autowired
+	IUserService userService;
 
 	@GetMapping
 	public ModelAndView getAllOrders() {
@@ -33,16 +43,32 @@ public class OrderController {
 		return modelAndView;
 	}
 
+	@GetMapping("my")
+	public ModelAndView getMyOrders(Principal principal) {
+		ModelAndView modelAndView = new ModelAndView();
+		final String currentUser = principal.getName();
+		try {
+			long principalId = userService.getUserByName(currentUser).getId();
+			List<OrderDto> orders = orderService.getAllOrdersByUserId(principalId);
+			modelAndView.setViewName("allorders");
+			modelAndView.addObject("orderList", orders);
+		} catch (NoUserWithThisIdException | NoOrderWithThisIdException e) {
+			modelAndView.setViewName(ERRORS);
+			modelAndView.addObject(MESSAGE, e.getMessage());
+		}
+		return modelAndView;
+	}
+
 	@GetMapping("{id}")
 	public ModelAndView getOrderById(@PathVariable Long id) {
 		ModelAndView modelAndView = new ModelAndView();
 		try {
 			OrderDto order = orderService.getOrderById(id);
 			modelAndView.setViewName("oneorder");
-			modelAndView.addObject("order", order);
-		} catch (Exception e) {
-			modelAndView.setViewName("errors/403");
-			// TODO There is no order with id="id"
+			modelAndView.addObject(ORDER, order);
+		} catch (NoOrderWithThisIdException e) {
+			modelAndView.setViewName(ERRORS);
+			modelAndView.addObject(MESSAGE, e.getMessage());
 		}
 		return modelAndView;
 	}
@@ -62,9 +88,10 @@ public class OrderController {
 		try {
 			neworder = orderService.createOrder(id, userName);
 			modelAndView.setViewName("thanksfororder");
-			modelAndView.addObject("order", neworder);
+			modelAndView.addObject(ORDER, neworder);
 		} catch (NoBooksAvailableException e) {
-			modelAndView.setViewName("errors/noBooksAvailable");
+			modelAndView.setViewName(ERRORS);
+			modelAndView.addObject(MESSAGE, e.getMessage());
 		}
 		return modelAndView;
 	}
@@ -75,12 +102,10 @@ public class OrderController {
 		try {
 			OrderDto orderDto = orderService.prolongOrder(id);
 			modelAndView.setViewName("orderProlong");
-			modelAndView.addObject("order", orderDto);
-		} catch (IsAlreadyProlongedException e) {
-			modelAndView.setViewName("errors/isAlreadyProlonged");
-		} catch (Exception e) {
-			modelAndView.setViewName("errors/403");
-			// TODO There is no order with id="id"
+			modelAndView.addObject(ORDER, orderDto);
+		} catch (IsAlreadyProlongedException | IsAlreadyClosedException | NoOrderWithThisIdException e) {
+			modelAndView.setViewName(ERRORS);
+			modelAndView.addObject(MESSAGE, e.getMessage());
 		}
 		return modelAndView;
 	}
@@ -91,12 +116,10 @@ public class OrderController {
 		try {
 			OrderDto orderDto = orderService.closeOrder(id);
 			modelAndView.setViewName("orderClose");
-			modelAndView.addObject("order", orderDto);
-		} catch (IsAlreadyClosedException e) {
-			modelAndView.setViewName("errors/isAlreadyClosed");
-		} catch (Exception e) {
-			modelAndView.setViewName("errors/403");
-			// TODO There is no order with id="id"
+			modelAndView.addObject(ORDER, orderDto);
+		} catch (IsAlreadyClosedException | NoOrderWithThisIdException e) {
+			modelAndView.setViewName(ERRORS);
+			modelAndView.addObject(MESSAGE, e.getMessage());
 		}
 		return modelAndView;
 	}
