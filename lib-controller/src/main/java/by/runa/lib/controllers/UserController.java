@@ -15,9 +15,13 @@ import org.springframework.web.servlet.ModelAndView;
 
 import by.runa.lib.api.dao.IRoleDao;
 import by.runa.lib.api.dto.DepartmentDto;
+import by.runa.lib.api.dto.OrderDto;
 import by.runa.lib.api.dto.UserDto;
 import by.runa.lib.api.service.IDepartmentService;
+import by.runa.lib.api.service.IOrderService;
 import by.runa.lib.api.service.IUserService;
+import by.runa.lib.exceptions.NoOrderWithThisIdException;
+import by.runa.lib.exceptions.NoUserWithThisIdException;
 import by.runa.lib.utils.ImgFileUploader;
 
 @RestController
@@ -25,6 +29,9 @@ import by.runa.lib.utils.ImgFileUploader;
 public class UserController {
 
 	private Long principalId;
+	private static final String ERRORS = "errors";
+	private static final String MESSAGE = "message";
+	private static final String USER = "user";
 
 	@Autowired
 	IUserService userService;
@@ -34,6 +41,9 @@ public class UserController {
 
 	@Autowired
 	IDepartmentService departmentService;
+	
+	@Autowired
+	IOrderService orderService;
 
 	@Autowired
 	ImgFileUploader imgFileUploader;
@@ -66,7 +76,8 @@ public class UserController {
 			imgFileUploader.createOrUpdate(userDto, file);
 			modelAndView.setViewName("login");
 		} catch (IOException e) {
-			modelAndView.setViewName("errors/403");
+			modelAndView.setViewName(ERRORS);
+			modelAndView.addObject(MESSAGE, e.getMessage());
 		}
 		return modelAndView;
 	}
@@ -79,10 +90,12 @@ public class UserController {
 		try {
 			principalId = userService.getUserByName(currentUser).getId();
 			UserDto user = userService.getUserById(principalId);
-			modelAndView.addObject("user", user);
-		} catch (Exception e) {
-			modelAndView.setViewName("errors/403");
-			// TODO There is no user with id="id"
+			modelAndView.addObject(USER, user);
+			List<OrderDto> listorders=orderService.getAllOrdersByUserId(principalId);
+			modelAndView.addObject("ListOrders", listorders);
+		} catch (NoUserWithThisIdException|NoOrderWithThisIdException e) {
+			modelAndView.setViewName(ERRORS);
+			modelAndView.addObject(MESSAGE, e.getMessage());
 		}
 		return modelAndView;
 	}
@@ -97,12 +110,12 @@ public class UserController {
 			List<DepartmentDto> departments = departmentService.getAllDepartments();
 			modelAndView.addObject("departmentsList", departments);
 			modelAndView.setViewName("updateuser");
-			modelAndView.addObject("user", user);
+			modelAndView.addObject(USER, user);
 			modelAndView.addObject("departmentdto", new DepartmentDto());
 			modelAndView.addObject("dto", new UserDto());
-		} catch (Exception e) {
-			modelAndView.setViewName("errors/403");
-			// TODO There is no user with id="id"
+		} catch (NoUserWithThisIdException e) {
+			modelAndView.setViewName(ERRORS);
+			modelAndView.addObject(MESSAGE, e.getMessage());
 		}
 		return modelAndView;
 	}
@@ -111,13 +124,14 @@ public class UserController {
 	public ModelAndView saveUserChanges(UserDto userDto, DepartmentDto departmentDto,
 			@RequestParam(value = "file", required = false) MultipartFile file) {
 		ModelAndView modelAndView = new ModelAndView();
-		UserDto userUpdated = userService.updateUser(principalId, userDto, departmentDto);
 		try {
+			UserDto userUpdated = userService.updateUser(principalId, userDto, departmentDto);
 			imgFileUploader.createOrUpdate(userDto, file);
-			modelAndView.addObject("user", userUpdated);
+			modelAndView.addObject(USER, userUpdated);
 			modelAndView.setViewName("changesSaved");
-		} catch (IOException e) {
-			modelAndView.setViewName("errors/403");
+		} catch (IOException | NoUserWithThisIdException e) {
+			modelAndView.setViewName(ERRORS);
+			modelAndView.addObject(MESSAGE, e.getMessage());
 		}
 		return modelAndView;
 	}

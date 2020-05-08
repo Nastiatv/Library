@@ -17,6 +17,7 @@
 			<th id="rating">rating</th>
 			<th id="userName">userName</th>
 			<th id="comment">comment</th>
+			<th id="forActions"></th>
 		</tr>
 		<tr>
 		<tr th:each="feedback : ${feedbackList}">
@@ -25,6 +26,7 @@
 			<td th:text="${feedback.rating}"></td>
 			<td th:text="${feedback.userName}"></td>
 			<td th:text="${feedback.comment}"></td>
+			<td><a th:href="@{${feedback.id}}">See more</a> <br>
 		</tr>
 	</table>
 </body>

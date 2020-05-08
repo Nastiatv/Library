@@ -16,11 +16,13 @@
 		<tr>
 			<th id="id">Id</th>
 			<th id="name">Name</th>
+			<th id="forActions"></th>
 		</tr>
 		<tr>
 		<tr th:each="department : ${departmentList}">
 			<td th:text="${department.id}"></td>
 			<td th:text="${department.name}"></td>
+			<td><a th:href="@{${department.id}}">See more</a> <br>
 		</tr>
 	</table>
 	</body>

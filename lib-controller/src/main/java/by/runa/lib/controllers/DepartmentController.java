@@ -12,10 +12,15 @@ import org.springframework.web.servlet.ModelAndView;
 
 import by.runa.lib.api.dto.DepartmentDto;
 import by.runa.lib.api.service.IDepartmentService;
+import by.runa.lib.exceptions.NoDepartmentWithThisIdException;
 
 @RestController
 @RequestMapping("/departments/")
 public class DepartmentController {
+
+	private static final String ERRORS = "errors";
+	private static final String MESSAGE = "message";
+	private static final String DEPARTMENT = "department";
 
 	@Autowired
 	IDepartmentService departmentService;
@@ -26,6 +31,20 @@ public class DepartmentController {
 		List<DepartmentDto> departments = departmentService.getAllDepartments();
 		modelAndView.setViewName("alldepartments");
 		modelAndView.addObject("departmentList", departments);
+		return modelAndView;
+	}
+
+	@GetMapping("{id}")
+	public ModelAndView getDepartmentById(@PathVariable Long id) {
+		ModelAndView modelAndView = new ModelAndView();
+		try {
+			DepartmentDto department = departmentService.getDepartmentById(id);
+			modelAndView.setViewName("onedepartment");
+			modelAndView.addObject(DEPARTMENT, department);
+		} catch (NoDepartmentWithThisIdException e) {
+			modelAndView.setViewName(ERRORS);
+			modelAndView.addObject(MESSAGE, e.getMessage());
+		}
 		return modelAndView;
 	}
 
@@ -43,7 +62,7 @@ public class DepartmentController {
 		ModelAndView modelAndView = new ModelAndView();
 		DepartmentDto newdepartment = departmentService.createDepartment(departmentDto);
 		modelAndView.setViewName("onedepartment");
-		return modelAndView.addObject("department", newdepartment);
+		return modelAndView.addObject(DEPARTMENT, newdepartment);
 	}
 
 	@GetMapping("edit/{id}")
@@ -52,11 +71,11 @@ public class DepartmentController {
 		try {
 			DepartmentDto departmentDto = departmentService.getDepartmentById(id);
 			modelAndView.setViewName("updatedepartment");
-			modelAndView.addObject("department", departmentDto);
+			modelAndView.addObject(DEPARTMENT, departmentDto);
 			modelAndView.addObject("dto", new DepartmentDto());
-		} catch (Exception e) {
-			modelAndView.setViewName("errors/403");
-			// TODO There is no department with id="id"
+		} catch (NoDepartmentWithThisIdException e) {
+			modelAndView.setViewName(ERRORS);
+			modelAndView.addObject(MESSAGE, e.getMessage());
 		}
 		return modelAndView;
 	}
@@ -66,11 +85,11 @@ public class DepartmentController {
 		ModelAndView modelAndView = new ModelAndView();
 		try {
 			DepartmentDto departmentUpdated = departmentService.updateDepartment(id, departmentDto);
-			modelAndView.addObject("department", departmentUpdated);
+			modelAndView.addObject(DEPARTMENT, departmentUpdated);
 			modelAndView.setViewName("changesSaved");
-		} catch (Exception e) {
-			modelAndView.setViewName("errors/403");
-			// TODO There is no department with id="id"
+		} catch (NoDepartmentWithThisIdException e) {
+			modelAndView.setViewName(ERRORS);
+			modelAndView.addObject(MESSAGE, e.getMessage());
 		}
 		return modelAndView;
 	}
@@ -80,11 +99,11 @@ public class DepartmentController {
 		ModelAndView modelAndView = new ModelAndView();
 		try {
 			DepartmentDto departmentDto = departmentService.getDepartmentById(id);
-			modelAndView.addObject("department", departmentDto);
+			modelAndView.addObject(DEPARTMENT, departmentDto);
 			modelAndView.setViewName("deletedepartment");
-		} catch (Exception e) {
-			modelAndView.setViewName("errors/403");
-			// TODO There is no department with id="id"
+		} catch (NoDepartmentWithThisIdException e) {
+			modelAndView.setViewName(ERRORS);
+			modelAndView.addObject(MESSAGE, e.getMessage());
 		}
 		return modelAndView;
 	}

@@ -24,6 +24,7 @@ import by.runa.lib.api.service.IBookService;
 import by.runa.lib.entities.Book;
 import by.runa.lib.entities.BookDetails;
 import by.runa.lib.entities.Department;
+import by.runa.lib.exceptions.NoBookWithThisIdException;
 import by.runa.lib.utils.mailsender.EmailSender;
 import lombok.extern.slf4j.Slf4j;
 
@@ -90,13 +91,13 @@ public class BookService implements IBookService {
 	}
 
 	@Override
-	public BookDto getBookById(Long id) throws Exception {
-		return Optional.ofNullable(bookMapper.toDto(bookDao.get(id))).orElseThrow(Exception::new);
+	public BookDto getBookById(Long id) throws NoBookWithThisIdException {
+		return Optional.ofNullable(bookMapper.toDto(bookDao.get(id))).orElseThrow(NoBookWithThisIdException::new);
 	}
 
 	@Override
 	public void deleteBookById(Long id, DepartmentDto departmentDto) {
-		Book book=bookDao.get(id);
+		Book book = bookDao.get(id);
 		if (book.getQuantityInLibrary() == 1) {
 			bookDao.delete(book);
 		} else {
@@ -117,8 +118,8 @@ public class BookService implements IBookService {
 	}
 
 	@Override
-	public BookDto updateBook(BookDto bookDto, MultipartFile file) throws Exception {
-		Book existingBook = Optional.ofNullable(bookDao.get(bookDto.getId())).orElseThrow(Exception::new);
+	public BookDto updateBook(BookDto bookDto, MultipartFile file) throws NoBookWithThisIdException {
+		Book existingBook = Optional.ofNullable(bookDao.get(bookDto.getId())).orElseThrow(NoBookWithThisIdException::new);
 		BookDetails ebd = existingBook.getBookDetails();
 		if (bookDto.getBookDetailsDto() != null) {
 			bookDetailsService.updateBookDetails(ebd, bookDto.getBookDetailsDto(), file);

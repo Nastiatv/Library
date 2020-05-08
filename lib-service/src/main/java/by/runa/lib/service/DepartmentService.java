@@ -13,10 +13,9 @@ import by.runa.lib.api.dto.DepartmentDto;
 import by.runa.lib.api.mappers.AMapper;
 import by.runa.lib.api.service.IDepartmentService;
 import by.runa.lib.entities.Department;
-import lombok.extern.slf4j.Slf4j;
+import by.runa.lib.exceptions.NoDepartmentWithThisIdException;
 
 @Service
-@Slf4j
 @Transactional
 public class DepartmentService implements IDepartmentService {
 
@@ -39,19 +38,20 @@ public class DepartmentService implements IDepartmentService {
 	}
 
 	@Override
-	public DepartmentDto getDepartmentById(Long id) {
-		return Optional.ofNullable(departmentMapper.toDto(departmentDao.get(id))).orElse(new DepartmentDto());
+	public DepartmentDto getDepartmentById(Long id) throws NoDepartmentWithThisIdException {
+		return Optional.ofNullable(departmentMapper.toDto(departmentDao.get(id)))
+				.orElseThrow(NoDepartmentWithThisIdException::new);
 	}
 
 	@Override
 	public void deleteDepartmentById(Long id) {
 		departmentDao.delete(departmentDao.get(id));
-		log.info("Department successfully deleted");
 	}
 
 	@Override
-	public DepartmentDto updateDepartment(Long id, DepartmentDto departmentDto) {
-		Department existingDepartment = Optional.ofNullable(departmentDao.get(id)).orElse(new Department());
+	public DepartmentDto updateDepartment(Long id, DepartmentDto departmentDto) throws NoDepartmentWithThisIdException {
+		Department existingDepartment = Optional.ofNullable(departmentDao.get(id))
+				.orElseThrow(NoDepartmentWithThisIdException::new);
 		existingDepartment.setName(departmentDto.getName());
 		departmentDao.update(existingDepartment);
 		return departmentMapper.toDto(existingDepartment);

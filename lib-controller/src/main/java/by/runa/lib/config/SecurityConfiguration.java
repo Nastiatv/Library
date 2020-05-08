@@ -22,7 +22,6 @@ import by.runa.lib.utils.FacebookSignInAdapter;
 @Configuration
 @Import(value = { ServiceConfig.class })
 @EnableScheduling
-//@EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Autowired
@@ -35,9 +34,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 
 		http.csrf().disable().authorizeRequests()
-				.antMatchers("/", "/books/**", "/feedbacks/**", "/login", "/logout", "/users/**", "/css/**", "/img/**").permitAll()
-				.antMatchers("/admin/**", "/roles/**", "/departments/**").hasRole("ADMIN")
-				.antMatchers("/orders/**").hasAnyRole("ADMIN","USER")
+				.antMatchers("/", "/books/**", "/login", "/logout", "/users/**", "/css/**", "/img/**").permitAll()
+				.antMatchers("/admin/**", "/departments/**").hasRole("ADMIN")
+				.antMatchers("/orders/**", "/feedbacks/**").hasAnyRole("ADMIN","USER")
 
 				.and().formLogin().loginPage("/login").defaultSuccessUrl("/users/{id}", true).permitAll()
 				.and().logout().invalidateHttpSession(true).clearAuthentication(true)
@@ -62,6 +61,5 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				usersConnectionRepository, new FacebookSignInAdapter());
 		providerSignInController.setPostSignInUrl("/books/");
 		return providerSignInController;
-
 	}
 }

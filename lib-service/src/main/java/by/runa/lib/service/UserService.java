@@ -20,10 +20,9 @@ import by.runa.lib.api.mappers.AMapper;
 import by.runa.lib.api.service.IUserService;
 import by.runa.lib.entities.Department;
 import by.runa.lib.entities.User;
-import lombok.extern.slf4j.Slf4j;
+import by.runa.lib.exceptions.NoUserWithThisIdException;
 
 @Service
-@Slf4j
 @Transactional
 public class UserService implements IUserService {
 
@@ -60,29 +59,30 @@ public class UserService implements IUserService {
 	}
 
 	@Override
-	public UserDto getUserById(Long id) throws Exception {
-		return Optional.ofNullable(userMapper.toDto(userDao.get(id))).orElseThrow(Exception::new);
+	public UserDto getUserById(Long id) throws NoUserWithThisIdException {
+		return Optional.ofNullable(userMapper.toDto(userDao.get(id))).orElseThrow(NoUserWithThisIdException::new);
 	}
 
 	@Override
-	public UserDto getUserByEmail(String email) throws Exception {
-		return Optional.ofNullable(userMapper.toDto(userDao.getByEmail(email))).orElseThrow(Exception::new);
+	public UserDto getUserByEmail(String email) throws NoUserWithThisIdException {
+		return Optional.ofNullable(userMapper.toDto(userDao.getByEmail(email)))
+				.orElseThrow(NoUserWithThisIdException::new);
 	}
 
 	@Override
-	public UserDto getUserByName(String name) throws Exception {
-		return Optional.ofNullable(userMapper.toDto(userDao.getByName(name))).orElseThrow(Exception::new);
+	public UserDto getUserByName(String name) throws NoUserWithThisIdException {
+		return Optional.ofNullable(userMapper.toDto(userDao.getByName(name)))
+				.orElseThrow(NoUserWithThisIdException::new);
 	}
 
 	@Override
 	public void deleteUserById(Long id) {
 		userDao.delete(userDao.get(id));
-		log.info("User successfully deleted");
 	}
 
 	@Override
-	public UserDto updateUser(Long id, UserDto userDto, DepartmentDto departmentDto) {
-		User existingUser = Optional.ofNullable(userDao.get(id)).orElse(new User());
+	public UserDto updateUser(Long id, UserDto userDto, DepartmentDto departmentDto) throws NoUserWithThisIdException {
+		User existingUser = Optional.ofNullable(userDao.get(id)).orElseThrow(NoUserWithThisIdException::new);
 		if (StringUtils.isBlank(userDto.getPassword())) {
 			existingUser.setPassword(passwordEncoder.encode(userDto.getPassword()));
 		}

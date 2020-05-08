@@ -19,7 +19,7 @@ public class MvcConfig implements WebMvcConfigurer{
 		registry.addViewController("/").setViewName("home");
 		registry.addViewController("/admin").setViewName("admin");
 		registry.addViewController("/login").setViewName("login");
-		registry.addViewController("/403").setViewName("errors/403");
+		registry.addViewController("/403").setViewName("403");
 		registry.addViewController("/bye").setViewName("bye");
 	}
 
@@ -41,6 +41,5 @@ public class MvcConfig implements WebMvcConfigurer{
 	@Bean
 	public UsersConnectionRepository usersConnectionRepository(ConnectionFactoryLocator connectionFactoryLocator) {
 		return new InMemoryUsersConnectionRepository(connectionFactoryLocator());
-
 	}
 }

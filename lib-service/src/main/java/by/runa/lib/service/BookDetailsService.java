@@ -15,10 +15,8 @@ import by.runa.lib.api.mappers.AMapper;
 import by.runa.lib.api.service.IBookDetailsService;
 import by.runa.lib.entities.BookDetails;
 import by.runa.lib.web.WebScraper;
-import lombok.extern.slf4j.Slf4j;
 
 @Service
-@Slf4j
 @Transactional
 public class BookDetailsService implements IBookDetailsService {
 
@@ -50,7 +48,6 @@ public class BookDetailsService implements IBookDetailsService {
 	@Override
 	public void deleteBookDetailsById(Long id) {
 		bookDetailsDao.delete(bookDetailsDao.get(id));
-		log.info("BookDetails successfully deleted");
 	}
 
 	@Override
@@ -69,7 +66,6 @@ public class BookDetailsService implements IBookDetailsService {
 			existingBookDetails.setPicture("http://localhost:8080/img/" + existingBookDetails.getId() + ".png");
 		}
 		bookDetailsDao.update(existingBookDetails);
-		log.info("BookDetails successfully updated");
 
 	}
 }
