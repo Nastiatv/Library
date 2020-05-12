@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import by.runa.lib.api.dao.IAGenericDao;
 import by.runa.lib.api.dao.IBookDetailsDao;
 import by.runa.lib.api.dto.BookDetailsDto;
 import by.runa.lib.api.mappers.AMapper;
@@ -29,9 +30,13 @@ public class BookDetailsService implements IBookDetailsService {
 	@Autowired
 	private WebScraper webScraper;
 
+	public IAGenericDao<BookDetails> getBookDetailsDao() {
+		return bookDetailsDao;
+	}
+	
 	@Override
 	public List<BookDetailsDto> getAllBookDetails() {
-		return bookDetailsMapper.toListDto(bookDetailsDao.getAll());
+		return bookDetailsMapper.toListDto(getBookDetailsDao().getAll());
 	}
 
 	@Override
@@ -42,12 +47,12 @@ public class BookDetailsService implements IBookDetailsService {
 
 	@Override
 	public BookDetailsDto getBookDetailsById(Long id) {
-		return Optional.ofNullable(bookDetailsMapper.toDto(bookDetailsDao.get(id))).orElse(new BookDetailsDto());
+		return Optional.ofNullable(bookDetailsMapper.toDto(getBookDetailsDao().get(id))).orElse(new BookDetailsDto());
 	}
 
 	@Override
 	public void deleteBookDetailsById(Long id) {
-		bookDetailsDao.delete(bookDetailsDao.get(id));
+		getBookDetailsDao().delete(getBookDetailsDao().get(id));
 	}
 
 	@Override
@@ -65,7 +70,7 @@ public class BookDetailsService implements IBookDetailsService {
 		if (file.getSize() != 0) {
 			existingBookDetails.setPicture("http://localhost:8080/img/" + existingBookDetails.getId() + ".png");
 		}
-		bookDetailsDao.update(existingBookDetails);
+		getBookDetailsDao().update(existingBookDetails);
 
 	}
 }

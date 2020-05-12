@@ -17,6 +17,7 @@
 			<th id="rating">rating</th>
 			<th id="userName">userName</th>
 			<th id="comment">comment</th>
+			<th scope="col"></th>
 			</tr>
 		<tr>
 		<tr>
@@ -25,6 +26,8 @@
 			<td th:text="${feedback.rating}"></td>
 			<td th:text="${feedback.userName}"></td>
 			<td th:text="${feedback.comment}"></td>
+			<td><a th:href="@{'edit/' + ${feedback.id}}">Edit</a> <br> <a
+				th:href="@{'delete/' + ${feedback.id}}">Delete</a> <br> </td>
 		</tr>
 	</table>
 </body>

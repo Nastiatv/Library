@@ -1,5 +1,6 @@
 package by.runa.lib.dao;
 
+import java.util.Collections;
 import java.util.List;
 
 import javax.persistence.NoResultException;
@@ -51,7 +52,7 @@ public class UserDao extends AGenericDao<User> implements IUserDao {
 			TypedQuery<User> result = entityManager.createQuery(all);
 			return result.getResultList();
 		} catch (NoResultException e) {
-			return null;
+			return Collections.emptyList();
 		}
 	}
 

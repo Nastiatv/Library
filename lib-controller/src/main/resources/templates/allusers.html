@@ -6,28 +6,32 @@
 <link href="../css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-<h1>Our Users:</h1>
+	<h1>Our Users:</h1>
 	<a href="../">Home</a>
-	<table border="1">
-	<caption></caption>
-		<tr>
-			<th scope="col">User name</th>
-			<th scope="col">Photo</th>
-			<th scope="col">Email</th>
-			<th scope="col">Department</th>
-			<th id="forActions"></th>
-		</tr>
-		<tr>
-		<tr th:each="user : ${userList}">
-			<td th:text="${user.username}"></td>
-			<td ><img th:src="@{'../img/' + ${user.username} + '.png'}"
-				height="200" alt="Avatar" /></td>
-			<td th:text="${user.email}"></td>
-			<td th:text="${user.departmentName}"></td>
-			<td><a th:href="@{${user.id}}">See more</a> <br>
-		</tr>
+	<table class="table">
+		<caption></caption>
+		<thead>
+			<tr>
+				<th scope="col">User name</th>
+				<th scope="col">Photo</th>
+				<th scope="col">Email</th>
+				<th scope="col">Department</th>
+				<th scope="col">#</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+			<tr th:each="user : ${userList}">
+				<td th:text="${user.username}"></td>
+				<td><img th:src="@{'../img/' + ${user.username} + '.png'}"
+					class="img-thumbnail" alt="Avatar" /></td>
+				<td th:text="${user.email}"></td>
+				<td th:text="${user.departmentName}"></td>
+				<td><a th:href="@{${user.id}}">See more</a> <br>
+			</tr>
+		</tbody>
 	</table>
 </body>
-<hr>	
+<hr>
 <a href="javascript:history.back()">Go back</a>
 </html>

@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import by.runa.lib.api.dao.IAGenericDao;
 import by.runa.lib.api.dao.IBookDao;
 import by.runa.lib.api.dao.IDepartmentDao;
 import by.runa.lib.api.dto.BookDetailsDto;
@@ -50,10 +51,14 @@ public class BookService implements IBookService {
 
 	@Autowired
 	private EmailSender emailSender;
-
+	
+	public IAGenericDao<Book> getBookDao() {
+		return bookDao;
+	}
+	
 	@Override
 	public List<BookDto> getAllBooks() {
-		return bookMapper.toListDto(bookDao.getAll());
+		return bookMapper.toListDto(getBookDao().getAll());
 	}
 
 	@Override
@@ -76,9 +81,9 @@ public class BookService implements IBookService {
 			book.setDepartments(departmentInList);
 			BookDetails bd = bookDetailsMapper.toEntity(bookDetailsService.createBookDetails(dto.getIsbn()));
 			book.setBookDetails(bd);
-			bookMapper.toDto(bookDao.create(book));
+			bookMapper.toDto(getBookDao().create(book));
 			try {
-				emailSender.sendEmailsFromAdmin(book);
+				emailSender.sendEmailsFromAdminAboutNewBook(book);
 			} catch (MessagingException e) {
 				log.info("Mail not sent!");
 			}
@@ -92,14 +97,14 @@ public class BookService implements IBookService {
 
 	@Override
 	public BookDto getBookById(Long id) throws NoBookWithThisIdException {
-		return Optional.ofNullable(bookMapper.toDto(bookDao.get(id))).orElseThrow(NoBookWithThisIdException::new);
+		return Optional.ofNullable(bookMapper.toDto(getBookDao().get(id))).orElseThrow(NoBookWithThisIdException::new);
 	}
 
 	@Override
 	public void deleteBookById(Long id, DepartmentDto departmentDto) {
-		Book book = bookDao.get(id);
+		Book book = getBookDao().get(id);
 		if (book.getQuantityInLibrary() == 1) {
-			bookDao.delete(book);
+			getBookDao().delete(book);
 		} else {
 			book.setQuantityInLibrary(book.getQuantityInLibrary() - 1);
 			book.setQuantityAvailable(book.getQuantityAvailable() - 1);
@@ -112,19 +117,19 @@ public class BookService implements IBookService {
 						break;
 					}
 				}
-				bookDao.update(bookDao.get(id));
+				getBookDao().update(getBookDao().get(id));
 			}
 		}
 	}
 
 	@Override
 	public BookDto updateBook(BookDto bookDto, MultipartFile file) throws NoBookWithThisIdException {
-		Book existingBook = Optional.ofNullable(bookDao.get(bookDto.getId())).orElseThrow(NoBookWithThisIdException::new);
+		Book existingBook = Optional.ofNullable(getBookDao().get(bookDto.getId())).orElseThrow(NoBookWithThisIdException::new);
 		BookDetails ebd = existingBook.getBookDetails();
 		if (bookDto.getBookDetailsDto() != null) {
 			bookDetailsService.updateBookDetails(ebd, bookDto.getBookDetailsDto(), file);
 		}
-		bookDao.update(existingBook);
+		getBookDao().update(existingBook);
 		return bookMapper.toDto(existingBook);
 	}
 }

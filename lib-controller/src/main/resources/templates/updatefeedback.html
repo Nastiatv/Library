@@ -1,0 +1,51 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://thymeleaf.org" lang="en">
+<head>
+<title>Library - Feedback page</title>
+<link href="../../css/styles.css" rel="stylesheet" />
+<link href="../../css/bootstrap.min.css" rel="stylesheet">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+</head>
+<body>
+	<a href="../../../">Home</a>
+	<h1>Feedback:</h1>
+	<br />
+	<form th:action="@{${feedback.id}}" th:object="${feedback}"
+		method="POST" enctype="multipart/form-data">
+
+		<div class="col-sm-4">
+			<div class="form-group">
+				<div class="rating_block">
+					<input name="rating" value="5" id="rating_5" type="radio" th:field="*{rating}" /> 
+					<label for="rating_5" class="label_rating"></label> 
+					<input name="rating" value="4" id="rating_4" type="radio" th:field="*{rating}" />
+					<label for="rating_4" class="label_rating"></label> 
+					<input name="rating" value="3" id="rating_3" type="radio" th:field="*{rating}" /> 
+					<label for="rating_3" class="label_rating"></label> 
+					<input name="rating" value="2" id="rating_2" type="radio" th:field="*{rating}" /> 
+					<label for="rating_2" class="label_rating"></label> 
+					<input name="rating" value="1" id="rating_1" type="radio" th:field="*{rating}" /> 
+					<label for="rating_1" class="label_rating"></label>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-sm-4">
+			<div class="form-group">
+				<label for="comment"> Comment <input type="text" id="comment"
+					name="comment" th:field="*{comment}" 
+					class="form-control input-sm" value="${feedback.comment}" required/>
+				</label>
+			</div>
+		</div>
+
+		<div class="col-sm-4">
+			<input type="submit" value="Update Feedback" />
+		</div>
+	</form>
+</body>
+
+<hr>
+<a href="javascript:history.back()">Go back</a>
+</html>

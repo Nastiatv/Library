@@ -101,10 +101,10 @@ public class FeedbackController {
 	}
 
 	@PostMapping("edit/{id}")
-	public ModelAndView saveFeedbackChanges(FeedbackDto feedbackDto) {
+	public ModelAndView saveFeedbackChanges(@PathVariable Long id,FeedbackDto feedbackDto) {
 		ModelAndView modelAndView = new ModelAndView();
 		try {
-			FeedbackDto feedbackUpdated = feedbackService.updateFeedback(null, feedbackDto);
+			FeedbackDto feedbackUpdated = feedbackService.updateFeedback(id, feedbackDto);
 			modelAndView.addObject(FEEDBACK, feedbackUpdated);
 			modelAndView.setViewName("changesSaved");
 		} catch (NoFeedbackWithThisIdException e) {

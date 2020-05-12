@@ -14,17 +14,15 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 import by.runa.lib.api.dao.IUserDao;
-import by.runa.lib.api.dto.OrderDto;
 import by.runa.lib.api.utils.IEmailSender;
 import by.runa.lib.entities.Book;
+import by.runa.lib.entities.Order;
 import by.runa.lib.entities.User;
 
 @Component
 public class EmailSender implements IEmailSender {
 
-	private static final String ADMIN_FROM_EMAIL_ADDRESS = "litvinenoknastia@gmail.com";
-
-	private static final String ADMIN_TO_EMAIL_ADDRESS = "litvinenoknastia@gmail.com";
+	private static final String ADMIN_EMAIL_ADDRESS = "litvinenoknastia@gmail.com";
 
 	@Autowired
 	private VelocityEngine velocityEngine;
@@ -36,31 +34,41 @@ public class EmailSender implements IEmailSender {
 	private IUserDao userDao;
 
 	@Async
-	public void sendEmailToAdmin(OrderDto dto) throws MessagingException {
+	public void sendEmailsFromAdminAboutNewBook(Book book) throws MessagingException {
 		MimeMessage message = mailSender.createMimeMessage();
 		MimeMessageHelper helper = new MimeMessageHelper(message);
-		String text = prepareActivateRequestEmail(dto);
-		configureMimeMessageHelper(helper, ADMIN_FROM_EMAIL_ADDRESS, ADMIN_TO_EMAIL_ADDRESS, text, "New Book!");
-		mailSender.send(message);
-	}
-
-	@Async
-	public void sendEmailsFromAdmin(Book book) throws MessagingException {
-		MimeMessage message = mailSender.createMimeMessage();
-		MimeMessageHelper helper = new MimeMessageHelper(message);
-		String text = prepareActivateRequestEmail(book);
+		String text = prepareActivateRequestEmail(book, "mailtemplates/newBookMessage.vm");
 
 		for (User user : userDao.getByDepartment(book.getDepartments().get(0).getName())) {
-			configureMimeMessageHelper(helper, ADMIN_FROM_EMAIL_ADDRESS, user.getEmail(), text,
-					"New Book in our Library!");
+			configureMimeMessageHelper(helper, ADMIN_EMAIL_ADDRESS, user.getEmail(), text, "New Book in our Library!");
 			mailSender.send(message);
 		}
 	}
 
-	private String prepareActivateRequestEmail(Book book) {
+	@Async
+	public void sendEmailsFromAdminAboutDebts(Order order) throws MessagingException {
+		MimeMessage message = mailSender.createMimeMessage();
+		MimeMessageHelper helper = new MimeMessageHelper(message);
+		String text = prepareActivateRequestEmail(order.getBook(), "mailtemplates/returnBookMessage.vm");
+		configureMimeMessageHelper(helper, ADMIN_EMAIL_ADDRESS, order.getUser().getEmail(), text,
+				"Please return book!");
+		mailSender.send(message);
+	}
+	
+	@Async
+	public void sendEmailsFromAdminDueDateTomorrow(Order order) throws MessagingException {
+		MimeMessage message = mailSender.createMimeMessage();
+		MimeMessageHelper helper = new MimeMessageHelper(message);
+		String text = prepareActivateRequestEmail(order.getBook(), "mailtemplates/dueDateBookMessage.vm");
+		configureMimeMessageHelper(helper, ADMIN_EMAIL_ADDRESS, order.getUser().getEmail(), text,
+				"Due date is tomorrow))");
+		mailSender.send(message);
+	}
+
+	private String prepareActivateRequestEmail(Book book, String mailtemplates) {
 		VelocityContext context = createVelocityContextWithBasicParameters(book);
 		StringWriter stringWriter = new StringWriter();
-		velocityEngine.mergeTemplate("mailtemplates/newBookMessage.vm", "UTF-8", context, stringWriter);
+		velocityEngine.mergeTemplate(mailtemplates, "UTF-8", context, stringWriter);
 		return stringWriter.toString();
 	}
 
@@ -68,19 +76,6 @@ public class EmailSender implements IEmailSender {
 		VelocityContext context = new VelocityContext();
 		context.put("name", book.getBookDetails().getName());
 		context.put("author", book.getBookDetails().getAuthor());
-		return context;
-	}
-
-	private String prepareActivateRequestEmail(OrderDto dto) {
-		VelocityContext context = createVelocityContextWithBasicParameters(dto);
-		StringWriter stringWriter = new StringWriter();
-		velocityEngine.mergeTemplate("mailtemplates/newBookMessage.vm", "UTF-8", context, stringWriter);
-		return stringWriter.toString();
-	}
-
-	private VelocityContext createVelocityContextWithBasicParameters(OrderDto dto) {
-		VelocityContext context = new VelocityContext();
-		context.put("UserId", dto.getUserDto().getId());
 		return context;
 	}
 

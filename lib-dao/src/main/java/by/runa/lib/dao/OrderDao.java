@@ -11,10 +11,10 @@ import javax.persistence.criteria.Root;
 import org.springframework.stereotype.Repository;
 
 import by.runa.lib.api.dao.IOrderDao;
+import by.runa.lib.entities.AEntity_;
 import by.runa.lib.entities.Order;
 import by.runa.lib.entities.Order_;
 import by.runa.lib.entities.User;
-import by.runa.lib.entities.User_;
 
 @Repository
 public class OrderDao extends AGenericDao<Order> implements IOrderDao {
@@ -29,7 +29,7 @@ public class OrderDao extends AGenericDao<Order> implements IOrderDao {
 		Root<Order> linkRoot = criteria.from(Order.class);
 		Join<Order, User> userJoin = linkRoot.join(Order_.user);
 		criteria.select(linkRoot);
-		criteria.where(cBuilder.equal(userJoin.get(User_.id), userId));
+		criteria.where(cBuilder.equal(userJoin.get(AEntity_.id), userId));
 		TypedQuery<Order> query = entityManager.createQuery(criteria);
 		return query.getResultList();
 	}
