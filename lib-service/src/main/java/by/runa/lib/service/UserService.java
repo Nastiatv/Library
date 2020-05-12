@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import by.runa.lib.api.dao.IAGenericDao;
 import by.runa.lib.api.dao.IDepartmentDao;
 import by.runa.lib.api.dao.IRoleDao;
 import by.runa.lib.api.dao.IUserDao;
@@ -19,6 +20,7 @@ import by.runa.lib.api.dto.UserDto;
 import by.runa.lib.api.mappers.AMapper;
 import by.runa.lib.api.service.IUserService;
 import by.runa.lib.entities.Department;
+import by.runa.lib.entities.Role;
 import by.runa.lib.entities.User;
 import by.runa.lib.exceptions.NoUserWithThisIdException;
 
@@ -41,9 +43,18 @@ public class UserService implements IUserService {
 	@Autowired
 	private IDepartmentDao departmentDao;
 
+	
+	public IAGenericDao<User> getUserDao() {
+		return userDao;
+	}
+	
+	public IAGenericDao<Role> getRoleDao() {
+		return roleDao;
+	}
+	
 	@Override
 	public List<UserDto> getAllUsers() {
-		return userMapper.toListDto(userDao.getAll());
+		return userMapper.toListDto(getUserDao().getAll());
 	}
 
 	@Override
@@ -54,13 +65,13 @@ public class UserService implements IUserService {
 		user.setUsername(userDto.getUsername());
 		user.setDepartment(department);
 		user.setPassword(passwordEncoder.encode(userDto.getPassword()));
-		user.setRoles(Collections.singletonList(roleDao.get(2L)));
-		return userMapper.toDto(userDao.create(user));
+		user.setRoles(Collections.singletonList(getRoleDao().get(2L)));
+		return userMapper.toDto(getUserDao().create(user));
 	}
 
 	@Override
 	public UserDto getUserById(Long id) throws NoUserWithThisIdException {
-		return Optional.ofNullable(userMapper.toDto(userDao.get(id))).orElseThrow(NoUserWithThisIdException::new);
+		return Optional.ofNullable(userMapper.toDto(getUserDao().get(id))).orElseThrow(NoUserWithThisIdException::new);
 	}
 
 	@Override
@@ -77,12 +88,12 @@ public class UserService implements IUserService {
 
 	@Override
 	public void deleteUserById(Long id) {
-		userDao.delete(userDao.get(id));
+		getUserDao().delete(getUserDao().get(id));
 	}
 
 	@Override
 	public UserDto updateUser(Long id, UserDto userDto, DepartmentDto departmentDto) throws NoUserWithThisIdException {
-		User existingUser = Optional.ofNullable(userDao.get(id)).orElseThrow(NoUserWithThisIdException::new);
+		User existingUser = Optional.ofNullable(getUserDao().get(id)).orElseThrow(NoUserWithThisIdException::new);
 		if (StringUtils.isBlank(userDto.getPassword())) {
 			existingUser.setPassword(passwordEncoder.encode(userDto.getPassword()));
 		}
@@ -95,7 +106,7 @@ public class UserService implements IUserService {
 		if (departmentDto.getName() != null) {
 			existingUser.setDepartment(departmentDao.getByName(departmentDto.getName()));
 		}
-		userDao.update(existingUser);
+		getUserDao().update(existingUser);
 		return userMapper.toDto(existingUser);
 	}
 }

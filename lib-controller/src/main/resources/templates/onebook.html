@@ -1,5 +1,6 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://thymeleaf.org" lang="en">
+<html xmlns:th="http://thymeleaf.org" lang="en"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
 <title>Library - Book page</title>
 <link href="../css/styles.css" rel="stylesheet" />
@@ -13,44 +14,59 @@
 	<br>
 	<a href="http://localhost:8080/books/addbook">Add book</a>
 	<br />
-	<table border="1">
-		<caption></caption>
-		<tr>
-			<th id="id">Id</th>
-			<th id="isbn">Isbn</th>
-			<th id="quantityInLibrary">QuantityInLibrary</th>
-			<th id="quantityAvailable">QuantityAvailable</th>
-			<th id="rating">Rating</th>
-			<th id="department">Department</th>
-			<th id="bookDetails.name">Title</th>
-			<th id="bookDetails.author">Author</th>
-			<th id="bookDetails.picture">Cover</th>
-			<th id="bookDetails.description">Description</th>
-			<th scope="col"></th>
-		</tr>
-		<tr>
-			<td th:text="${book.id}" id="bookid"></td>
-			<td th:text="${book.isbn}"></td>
-			<td th:text="${book.quantityInLibrary}"></td>
-			<td th:text="${book.quantityAvailable}"></td>
-			<td th:text="${#numbers.formatDecimal(book.rating,0,2)}"></td>
-			<td><span th:each="department : ${book.departments}"> <span
-					th:text="${department.name}"> </span>
-			</span></td>
-			<td th:text="${book.bookDetailsDto.name}"></td>
-			<td th:text="${book.bookDetailsDto.author}"></td>
-			<td><img th:src="@{${book.bookDetailsDto.picture}}" height="200"
-				alt="Cover" /></td>
-			<td th:text="${book.bookDetailsDto.description}"></td>
-			<td><a sec:authorize="isAuthenticated()"
-				th:href="@{'edit/' + ${book.id}}">Edit</a> <br> <a
-				sec:authorize="hasRole('ADMIN')" th:href="@{'delete/' + ${book.id}}">Delete</a>
-				<br> <a sec:authorize="isAuthenticated()"
-				th:href="@{'../orders/addorder/' + ${book.id}}">Make order</a> <br></td>
-		</tr>
+
+	<img th:src="@{${book.bookDetailsDto.picture}}" height="200"
+		alt="Cover" />
+
+	<table>
+		<tbody>
+			<tr>
+				<td>Book ISBN</td>
+				<td th:text="${book.isbn}"></td>
+			</tr>
+			<tr>
+				<td>Book Available</td>
+				<td th:text="${book.quantityAvailable}"></td>
+			</tr>
+			<tr>
+				<td>Rating</td>
+				<td th:text="${#numbers.formatDecimal(book.rating,1,2)}"></td>
+			</tr>
+			<tr>
+				<td>Department</td>
+				<td><span th:each="department : ${book.departments}"> <span
+						th:text="${department.name}"> </span>
+				</span></td>
+			</tr>
+			<tr>
+				<td>Name</td>
+				<td th:text="${book.bookDetailsDto.name}"></td>
+			</tr>
+
+			<tr>
+				<td>Author</td>
+				<td th:text="${book.bookDetailsDto.author}"></td>
+			</tr>
+			<tr>
+				<td>Description</td>
+				<td th:text="${book.bookDetailsDto.description}"></td>
+			</tr>
+			<tr>
+				<td>Name</td>
+				<td th:text="${book.bookDetailsDto.name}"></td>
+			</tr>
+
+			<tr>
+				<td><a sec:authorize="isAuthenticated()"
+					th:href="@{'edit/' + ${book.id}}">Edit</a> <br> <a
+					sec:authorize="hasRole('ADMIN')"
+					th:href="@{'delete/' + ${book.id}}">Delete</a> <br> <a
+					sec:authorize="isAuthenticated()"
+					th:href="@{'../orders/addorder/' + ${book.id}}">Make order</a> <br></td>
+		</tbody>
 	</table>
 	<hr>
-
+	<h3>Feedbacks:</h3>
 	<div class="container" th:each="feedback : ${listFeedbacks}">
 		<img
 			th:src="@{'http://localhost:8080/img/' + ${feedback.userName} + '.png'}"

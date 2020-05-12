@@ -2,19 +2,36 @@
 <html xmlns:th="http://thymeleaf.org" lang="en">
 <head>
 <title>Library - Add book</title>
-<link href="../../css/styles.css" rel="stylesheet" />
-<link href="../../css/bootstrap.min.css" rel="stylesheet">
+<link href="../css/styles.css" rel="stylesheet" />
+<link href="../css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 	<h1>Add book to library:</h1>
 	<br />
 	<form th:action="@{${id}}" th:object="${bookdto}" method="POST">
-		ISBN: <input type="text" th:field="*{isbn}" /> <br /> 
-		Department: <select	th:object="${departmentdto}" th:field="*{name}">
-						<option th:each="department : ${departmentsList}" th:value="${department.name}" th:text="${department.name}"></option>
-					</select> <br />
-					 <input type="submit" value="Add" />
-					 <input	type="reset" value="Reset">
+
+		<div class="col-sm-4">
+			<div class="form-group">
+				<label for="isbn"> ISBN <input type="text" id="isbn"
+					name="isbn" th:field="*{isbn}" class="form-control input-sm"
+					required />
+				</label>
+			</div>
+		</div>
+		<div class="col-sm-4">
+			<div class="form-group">
+				<label for="isbn"> Department <select
+					th:object="${departmentdto}" th:field="*{name}">
+						<option th:each="department : ${departmentsList}"
+							th:value="${department.name}" th:text="${department.name}"></option>
+				</select>
+				</label>
+			</div>
+		</div>
+		<div class="col-sm-4">
+			<input type="submit" value="Add" /> <input type="reset"
+				value="Reset">
+		</div>
 	</form>
 </body>
 <hr>

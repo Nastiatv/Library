@@ -2,14 +2,15 @@
 <html xmlns:th="http://thymeleaf.org" lang="en">
 <head>
 <title>Library - Book page</title>
-<link href="../css/styles.css" rel="stylesheet" />
-<link href="../css/bootstrap.min.css" rel="stylesheet">
+<link href="../../css/styles.css" rel="stylesheet" />
+<link href="../../css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-<a href="../../../">Home</a>
+	<a href="../../../">Home</a>
 	<h1>Book Info :</h1>
 	<br />
-	<img th:src="@{${book.bookDetailsDto.picture}}" height="200" alt="Cover" />
+	<img th:src="@{${book.bookDetailsDto.picture}}" class="img-thumbnail"
+		alt="Cover" />
 
 	<form th:action="@{${book.id}}" th:object="${book}" method="POST"
 		enctype="multipart/form-data">
@@ -17,8 +18,9 @@
 		<div class="col-sm-4">
 			<div class="form-group">
 				<label for="name"> Name <input type="text" id="name"
-					th:field="*{bookDetailsDto.name}"
-					value="${book.bookDetailsDto.name}" />
+					name="name" th:field="*{bookDetailsDto.name}"
+					class="form-control input-sm" value="${book.bookDetailsDto.name}"
+					required />
 				</label>
 			</div>
 		</div>
@@ -35,8 +37,8 @@
 		<div class="col-sm-4">
 			<div class="form-group">
 				<label for="description"> Description <input type="text"
-					id="description" th:field="*{bookDetailsDto.description}"
-					value="${book.bookDetailsDto.description}" />
+					id="description" name="description" th:field="*{bookDetailsDto.description}"
+					class="form-control input-sm" value="${book.bookDetailsDto.description}" required />
 				</label>
 			</div>
 		</div>

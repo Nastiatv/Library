@@ -8,6 +8,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import by.runa.lib.api.dao.IAGenericDao;
 import by.runa.lib.api.dao.IBookDao;
 import by.runa.lib.api.dao.IFeedbackDao;
 import by.runa.lib.api.dao.IOrderDao;
@@ -32,10 +33,14 @@ public class FeedbackService implements IFeedbackService {
 
 	@Autowired
 	private AMapper<Feedback, FeedbackDto> feedbackMapper;
+	
+	public IAGenericDao<Feedback> getFeedbackDao() {
+		return feedbackDao;
+	}
 
 	@Override
 	public List<FeedbackDto> getAllFeedbacks() {
-		return feedbackMapper.toListDto(feedbackDao.getAll());
+		return feedbackMapper.toListDto(getFeedbackDao().getAll());
 	}
 
 	@Override
@@ -46,32 +51,32 @@ public class FeedbackService implements IFeedbackService {
 		feedback.setRating(feedbackDto.getRating());
 		feedback.setUserName(orderDao.get(orderId).getUser().getUsername());
 		feedback.setComment(feedbackDto.getComment());
-		feedbackDao.create(feedback);
+		getFeedbackDao().create(feedback);
 		countAvgRatingForBook(orderDao.get(orderId).getBook().getId());
 		return feedbackMapper.toDto(feedback);
 	}
 
 	@Override
 	public FeedbackDto getFeedbackById(Long id) throws NoFeedbackWithThisIdException {
-		return Optional.ofNullable(feedbackMapper.toDto(feedbackDao.get(id)))
+		return Optional.ofNullable(feedbackMapper.toDto(getFeedbackDao().get(id)))
 				.orElseThrow(NoFeedbackWithThisIdException::new);
 	}
 
 	@Override
 	public void deleteFeedbackById(Long id) {
-		feedbackDao.delete(feedbackDao.get(id));
-		countAvgRatingForBook(feedbackDao.get(id).getBook().getId());
+		getFeedbackDao().delete(getFeedbackDao().get(id));
+		countAvgRatingForBook(getFeedbackDao().get(id).getBook().getId());
 	}
 
 	@Override
 	public FeedbackDto updateFeedback(Long id, FeedbackDto feedbackDto) throws NoFeedbackWithThisIdException {
-		Feedback existingFeedback = Optional.ofNullable(feedbackDao.get(id))
+		Feedback existingFeedback = Optional.ofNullable(getFeedbackDao().get(id))
 				.orElseThrow(NoFeedbackWithThisIdException::new);
 		existingFeedback.setRating(feedbackDto.getRating());
 		existingFeedback.setComment(feedbackDto.getComment());
-		feedbackDao.update(existingFeedback);
+		getFeedbackDao().update(existingFeedback);
 
-		countAvgRatingForBook(feedbackDao.get(id).getBook().getId());
+		countAvgRatingForBook(getFeedbackDao().get(id).getBook().getId());
 		return feedbackMapper.toDto(existingFeedback);
 	}
 

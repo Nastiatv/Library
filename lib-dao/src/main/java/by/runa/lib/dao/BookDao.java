@@ -32,35 +32,4 @@ public class BookDao extends AGenericDao<Book> implements IBookDao {
 			return null;
 		}
 	}
-
-//	public List<Book> getBooksByDepartments(List<Department> departments) {
-//		CriteriaBuilder builder = entityManager.getCriteriaBuilder();
-//		CriteriaQuery<Book> query = builder.createQuery(getGenericClass());
-//		Root<Book> rootBook = query.from(getGenericClass());
-//		ListJoin<Book, String> joinBookDepartments = rootBook.join(Book_.departmentName);
-//		Expression<List<String>> bookDepartments = rootBook.get(Book_.departmentName);
-//		Expression<Integer> countOfBookDepartments = builder.size(bookDepartments);
-//		Expression<Long> countOfBooksInGroup = builder.count(rootBook);
-//		Predicate predicateCountOfBookDepartmentsEqualsInputListSize = builder.equal(countOfBookDepartments,
-//				departments.size());
-//		Predicate predicateBookDepartmentsInInputList = joinBookDepartments.in(departments);
-//
-//		query.where(
-//				builder.and(predicateCountOfBookDepartmentsEqualsInputListSize, predicateBookDepartmentsInInputList))
-//				.groupBy(rootBook).having(builder.equal(countOfBooksInGroup, departments.size()));
-//
-//		return entityManager.createQuery(query).getResultList();
-//	}
-//
-//	public List<Book> getBooksByDepartment(String department) {
-//
-//		CriteriaBuilder cBuilder = entityManager.getCriteriaBuilder();
-//		CriteriaQuery<Book> criteria = cBuilder.createQuery(Book.class);
-//		Root<Book> linkRoot = criteria.from(Book.class);
-//		Join<Book, String> departmentJoin = linkRoot.join(Book_.departmentName);
-//		criteria.select(linkRoot);
-//		criteria.where(cBuilder.equal(departmentJoin.get(Department_.name), department));
-//		TypedQuery<Book> query = entityManager.createQuery(criteria);
-//		return query.getResultList();
-//	}
 }

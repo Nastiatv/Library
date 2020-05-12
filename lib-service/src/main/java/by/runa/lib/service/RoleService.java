@@ -8,6 +8,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import by.runa.lib.api.dao.IAGenericDao;
 import by.runa.lib.api.dao.IRoleDao;
 import by.runa.lib.api.dto.RoleDto;
 import by.runa.lib.api.mappers.AMapper;
@@ -26,34 +27,38 @@ public class RoleService implements IRoleService {
 	@Autowired
 	private AMapper<Role, RoleDto> roleMapper;
 
+	public IAGenericDao<Role> getRoleDao() {
+		return roleDao;
+	}
+
 	@Override
 	public List<RoleDto> getAllRoles() {
-		return roleMapper.toListDto(roleDao.getAll());
+		return roleMapper.toListDto(getRoleDao().getAll());
 	}
 
 	@Override
 	public RoleDto createRole(RoleDto roleDto) {
 		Role role = new Role();
 		role.setName(roleDto.getName());
-		return roleMapper.toDto(roleDao.create(role));
+		return roleMapper.toDto(getRoleDao().create(role));
 	}
 
 	@Override
 	public RoleDto getRoleById(Long id) {
-		return Optional.ofNullable(roleMapper.toDto(roleDao.get(id))).orElse(new RoleDto());
+		return Optional.ofNullable(roleMapper.toDto(getRoleDao().get(id))).orElse(new RoleDto());
 	}
 
 	@Override
 	public void deleteRoleById(Long id) {
-		roleDao.delete(roleDao.get(id));
+		getRoleDao().delete(getRoleDao().get(id));
 		log.info("Role successfully deleted");
 	}
 
 	@Override
 	public RoleDto updateRole(Long id, RoleDto roleDto) {
-		Role existingRole = Optional.ofNullable(roleDao.get(id)).orElse(new Role());
+		Role existingRole = Optional.ofNullable(getRoleDao().get(id)).orElse(new Role());
 		existingRole.setName(roleDto.getName());
-		roleDao.update(existingRole);
+		getRoleDao().update(existingRole);
 		return roleMapper.toDto(existingRole);
 
 	}

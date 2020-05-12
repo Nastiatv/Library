@@ -4,11 +4,9 @@
 <title>Library - User page</title>
 <link href="../css/styles.css" rel="stylesheet" />
 <link href="../css/bootstrap.min.css" rel="stylesheet">
-<link href="../js/bootstrap.min.js" rel="stylesheet">
 </head>
 <body>
 	<h1 th:text="'Hello, ' + ${user.username}"></h1>
-	<a href="../../">Home</a>
 	<br />
 	<h3>My personal info:</h3>
 	<table border="1">
@@ -22,19 +20,21 @@
 			<th scope="col"></th>
 		</tr>
 		<tr>
-		<tr>
 			<td th:text="${user.id}" id="userid"></td>
 			<td th:text="${user.username}"></td>
-			<td><img th:src="@{'http://localhost:8080/img/' + ${user.username} + '.png'}"
+			<td><img
+				th:src="@{'http://localhost:8080/img/' + ${user.username} + '.png'}"
 				height="200" alt="Avatar" /></td>
 			<td th:text="${user.email}"></td>
 			<td th:text="${user.departmentName}"></td>
-			<td><a th:href="@{'edit/' + ${user.id}}">Edit</a>
-				</td>
+			<td><a th:href="@{'edit/' + ${user.id}}">Edit</a></td>
 		</tr>
 	</table>
-	
-	
+	<div class="col-sm-4">
+		<div class="form-group">
+			<a href="../../">Home</a>
+		</div>
+	</div>
 	<div class="col-sm-4">
 		<div class="form-group">
 			<a href="../orders/my">My orders</a>
@@ -45,8 +45,5 @@
 			<a href="../feedbacks/my">My feedbacks</a>
 		</div>
 	</div>
-	
-	
-	
 </body>
 </html>
