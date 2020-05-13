@@ -3,10 +3,10 @@ package by.runa.lib.api.service;
 import java.util.List;
 
 import by.runa.lib.api.dto.OrderDto;
-import by.runa.lib.exceptions.IsAlreadyClosedException;
-import by.runa.lib.exceptions.IsAlreadyProlongedException;
-import by.runa.lib.exceptions.NoBooksAvailableException;
-import by.runa.lib.exceptions.NoOrderWithThisIdException;
+import by.runa.lib.api.exceptions.IsAlreadyClosedException;
+import by.runa.lib.api.exceptions.IsAlreadyProlongedException;
+import by.runa.lib.api.exceptions.NoBooksAvailableException;
+import by.runa.lib.api.exceptions.NoOrderWithThisIdException;
 
 public interface IOrderService {
 

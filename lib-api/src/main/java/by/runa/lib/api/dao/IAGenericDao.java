@@ -6,16 +6,16 @@ import by.runa.lib.entities.AEntity;
 
 public interface IAGenericDao<T extends AEntity> {
 
-	Class<T> getGenericClass();
+    Class<T> getGenericClass();
 
-	T create(T entity);
+    T create(T entity);
 
-	T get(Long id);
+    T get(Long id);
 
-	void update(T entity);
+    void update(T entity);
 
-	void delete(T entity);
+    void delete(T entity);
 
-	List<T> getAll();
+    List<T> getAll();
 
 }

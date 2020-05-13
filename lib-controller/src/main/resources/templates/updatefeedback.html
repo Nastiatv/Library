@@ -16,26 +16,27 @@
 
 		<div class="col-sm-4">
 			<div class="form-group">
-				<div class="rating_block">
-					<input name="rating" value="5" id="rating_5" type="radio" th:field="*{rating}" /> 
-					<label for="rating_5" class="label_rating"></label> 
-					<input name="rating" value="4" id="rating_4" type="radio" th:field="*{rating}" />
-					<label for="rating_4" class="label_rating"></label> 
-					<input name="rating" value="3" id="rating_3" type="radio" th:field="*{rating}" /> 
-					<label for="rating_3" class="label_rating"></label> 
-					<input name="rating" value="2" id="rating_2" type="radio" th:field="*{rating}" /> 
-					<label for="rating_2" class="label_rating"></label> 
-					<input name="rating" value="1" id="rating_1" type="radio" th:field="*{rating}" /> 
-					<label for="rating_1" class="label_rating"></label>
+				<div class="rating-area">
+					<input name="rating" value="5" id="rating_5" type="radio"
+						th:field="*{rating}" /> <label for="rating_5"
+						class="label_rating"></label> <input name="rating" value="4"
+						id="rating_4" type="radio" th:field="*{rating}" /> <label
+						for="rating_4" class="label_rating"></label> <input name="rating"
+						value="3" id="rating_3" type="radio" th:field="*{rating}" /> <label
+						for="rating_3" class="label_rating"></label> <input name="rating"
+						value="2" id="rating_2" type="radio" th:field="*{rating}" /> <label
+						for="rating_2" class="label_rating"></label> <input name="rating"
+						value="1" id="rating_1" type="radio" th:field="*{rating}" /> <label
+						for="rating_1" class="label_rating"></label>
 				</div>
 			</div>
 		</div>
 
 		<div class="col-sm-4">
 			<div class="form-group">
-				<label for="comment"> Comment <input type="text" id="comment"
-					name="comment" th:field="*{comment}" 
-					class="form-control input-sm" value="${feedback.comment}" required/>
+				<label for="comment"> Comment <input type="text"
+					id="comment" name="comment" th:field="*{comment}"
+					class="form-control input-sm" value="${feedback.comment}" required />
 				</label>
 			</div>
 		</div>

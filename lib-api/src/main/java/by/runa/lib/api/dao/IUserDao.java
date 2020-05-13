@@ -6,10 +6,10 @@ import by.runa.lib.entities.User;
 
 public interface IUserDao extends IAGenericDao<User> {
 
-	User getByEmail(String email);
+    User getByEmail(String email);
 
-	List<User> getByDepartment(String department);
+    List<User> getByDepartment(String department);
 
-	User getByName(String name);
+    User getByName(String name);
 
 }

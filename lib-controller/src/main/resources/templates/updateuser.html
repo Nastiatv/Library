@@ -18,6 +18,13 @@
 
 		<div class="col-sm-4">
 			<div class="form-group">
+				<label for="imageUploader">Photo</label> <input type="file"
+					id="imageUploader" name="file" />
+			</div>
+		</div>
+
+		<div class="col-sm-4">
+			<div class="form-group">
 				<label for="email"> Email <input type="email" id="email"
 					name="email" th:field="*{email}" class="form-control input-sm"
 					value="${user.email}" required />
@@ -41,13 +48,6 @@
 						th:value="${department.name}" th:text="${department.name}"
 						value="${user.departmentName}"></option>
 				</select> <br />
-			</div>
-		</div>
-
-		<div class="col-sm-4">
-			<div class="form-group">
-				<label for="imageUploader">Photo</label> <input type="file"
-					id="imageUploader" name="file" />
 			</div>
 		</div>
 

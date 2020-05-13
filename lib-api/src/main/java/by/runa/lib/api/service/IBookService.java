@@ -6,7 +6,7 @@ import java.util.List;
 
 import by.runa.lib.api.dto.BookDto;
 import by.runa.lib.api.dto.DepartmentDto;
-import by.runa.lib.exceptions.NoBookWithThisIdException;
+import by.runa.lib.api.exceptions.NoBookWithThisIdException;
 
 public interface IBookService {
 

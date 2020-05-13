@@ -1,5 +1,13 @@
 package by.runa.lib.dao;
 
+import by.runa.lib.api.dao.IDepartmentDao;
+import by.runa.lib.api.dao.IUserDao;
+import by.runa.lib.entities.User;
+import by.runa.lib.entities.User_;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -8,14 +16,6 @@ import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
-
-import by.runa.lib.api.dao.IDepartmentDao;
-import by.runa.lib.api.dao.IUserDao;
-import by.runa.lib.entities.User;
-import by.runa.lib.entities.User_;
 
 @Repository
 public class UserDao extends AGenericDao<User> implements IUserDao {

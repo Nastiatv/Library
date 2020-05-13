@@ -1,5 +1,8 @@
 package by.runa.lib.dao;
 
+import by.runa.lib.api.dao.IAGenericDao;
+import by.runa.lib.entities.AEntity;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -11,58 +14,54 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
-import by.runa.lib.api.dao.IAGenericDao;
-import by.runa.lib.entities.AEntity;
-
-//@PersistenceContext(type=PersistenceContextType.EXTENDED)
 public abstract class AGenericDao<T extends AEntity> implements IAGenericDao<T> {
 
-	protected Class<T> clazz;
+    protected Class<T> clazz;
 
-	public AGenericDao(Class<T> clazz) {
-		this.clazz = clazz;
-	}
+    public AGenericDao(Class<T> clazz) {
+        this.clazz = clazz;
+    }
 
-	public Class<T> getGenericClass() {
-		return this.clazz;
-	}
+    public Class<T> getGenericClass() {
+        return this.clazz;
+    }
 
-	@PersistenceContext
-	protected EntityManager entityManager;
+    @PersistenceContext
+    protected EntityManager entityManager;
 
-	@Override
-	public T create(T entity) {
-		entityManager.persist(entity);
-		return entity;
-	}
+    @Override
+    public T create(T entity) {
+        entityManager.persist(entity);
+        return entity;
+    }
 
-	@Override
-	public T get(Long id) {
-		return entityManager.find(getGenericClass(), id);
-	}
+    @Override
+    public T get(Long id) {
+        return entityManager.find(getGenericClass(), id);
+    }
 
-	@Override
-	public void update(T entity) {
-		entityManager.merge(entity);
-		entityManager.flush();
-	}
+    @Override
+    public void update(T entity) {
+        entityManager.merge(entity);
+        entityManager.flush();
+    }
 
-	@Override
-	public void delete(T entity) {
-		entityManager.remove(entity);
-	}
+    @Override
+    public void delete(T entity) {
+        entityManager.remove(entity);
+    }
 
-	@Override
-	public List<T> getAll() {
-		try {
-			CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-			CriteriaQuery<T> cq = cb.createQuery(getGenericClass());
-			Root<T> rootEntry = cq.from(getGenericClass());
-			cq.select(rootEntry);
-			TypedQuery<T> result = entityManager.createQuery(cq);
-			return result.getResultList();
-		} catch (NoResultException e) {
-			return Collections.emptyList();
-		}
-	}
+    @Override
+    public List<T> getAll() {
+        try {
+            CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+            CriteriaQuery<T> cq = cb.createQuery(getGenericClass());
+            Root<T> rootEntry = cq.from(getGenericClass());
+            cq.select(rootEntry);
+            TypedQuery<T> result = entityManager.createQuery(cq);
+            return result.getResultList();
+        } catch (NoResultException e) {
+            return Collections.emptyList();
+        }
+    }
 }

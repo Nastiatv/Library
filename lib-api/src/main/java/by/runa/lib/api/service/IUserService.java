@@ -4,7 +4,7 @@ import java.util.List;
 
 import by.runa.lib.api.dto.DepartmentDto;
 import by.runa.lib.api.dto.UserDto;
-import by.runa.lib.exceptions.NoUserWithThisIdException;
+import by.runa.lib.api.exceptions.NoUserWithThisIdException;
 
 public interface IUserService {
 

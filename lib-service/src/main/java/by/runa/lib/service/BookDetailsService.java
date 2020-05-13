@@ -12,9 +12,9 @@ import org.springframework.web.multipart.MultipartFile;
 import by.runa.lib.api.dao.IAGenericDao;
 import by.runa.lib.api.dao.IBookDetailsDao;
 import by.runa.lib.api.dto.BookDetailsDto;
-import by.runa.lib.api.mappers.AMapper;
 import by.runa.lib.api.service.IBookDetailsService;
 import by.runa.lib.entities.BookDetails;
+import by.runa.lib.utils.mappers.AMapper;
 import by.runa.lib.web.WebScraper;
 
 @Service

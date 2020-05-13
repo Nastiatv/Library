@@ -1,5 +1,13 @@
 package by.runa.lib.dao;
 
+import by.runa.lib.api.dao.IOrderDao;
+import by.runa.lib.entities.AEntity_;
+import by.runa.lib.entities.Order;
+import by.runa.lib.entities.Order_;
+import by.runa.lib.entities.User;
+
+import org.springframework.stereotype.Repository;
+
 import java.util.List;
 
 import javax.persistence.TypedQuery;
@@ -7,14 +15,6 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Root;
-
-import org.springframework.stereotype.Repository;
-
-import by.runa.lib.api.dao.IOrderDao;
-import by.runa.lib.entities.AEntity_;
-import by.runa.lib.entities.Order;
-import by.runa.lib.entities.Order_;
-import by.runa.lib.entities.User;
 
 @Repository
 public class OrderDao extends AGenericDao<Order> implements IOrderDao {

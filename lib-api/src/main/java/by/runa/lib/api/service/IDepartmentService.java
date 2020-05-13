@@ -3,7 +3,7 @@ package by.runa.lib.api.service;
 import java.util.List;
 
 import by.runa.lib.api.dto.DepartmentDto;
-import by.runa.lib.exceptions.NoDepartmentWithThisIdException;
+import by.runa.lib.api.exceptions.NoDepartmentWithThisIdException;
 
 public interface IDepartmentService {
 

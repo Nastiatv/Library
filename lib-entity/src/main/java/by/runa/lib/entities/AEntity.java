@@ -11,8 +11,8 @@ import lombok.Data;
 @Data
 public abstract class AEntity {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	protected Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    protected Long id;
 
 }

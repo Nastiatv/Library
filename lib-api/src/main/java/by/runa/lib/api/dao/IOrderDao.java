@@ -6,6 +6,6 @@ import by.runa.lib.entities.Order;
 
 public interface IOrderDao extends IAGenericDao<Order> {
 
-	List<Order> getAllOrdersByUserId(Long id);
+    List<Order> getAllOrdersByUserId(Long id);
 
 }

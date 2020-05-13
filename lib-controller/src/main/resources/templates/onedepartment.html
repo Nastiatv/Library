@@ -6,27 +6,28 @@
 <link href="../css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-	<h1>Department details:</h1>
-	<a href="../">All departments</a>
-	<br>
 	<a href="../../">Home</a>
-	<br>
-	<a href="../adddepartment">Add
-		department</a>
-	<br />
-	<table border="1">
+	<a href="../">All departments</a>
+	<a href="../adddepartment">Add department</a>
+
+	<h1>Department details:</h1>
+	<table class="table">
 		<caption></caption>
-		<tr>
-			<th id="id">Id</th>
-			<th id="name">Name</th>
-			<th scope="col"></th>
-		</tr>
-		<tr>
-			<td th:text="${department.id}" id="departmentid"></td>
-			<td th:text="${department.name}"></td>
-			<td><a th:href="@{'edit/' + ${department.id}}">Edit</a> <br> <a
-				th:href="@{'delete/' + ${department.id}}">Delete</a> <br> </td>
-		</tr>
+		<thead>
+			<tr>
+				<th scope="col">Id</th>
+				<th scope="col">Name</th>
+				<th scope="col">#</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td th:text="${department.id}" id="departmentid"></td>
+				<td th:text="${department.name}"></td>
+				<td><a th:href="@{'edit/' + ${department.id}}">Edit</a> <br>
+					<a th:href="@{'delete/' + ${department.id}}">Delete</a> <br></td>
+			</tr>
+		</tbody>
 	</table>
 </body>
 <hr>

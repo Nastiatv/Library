@@ -19,14 +19,14 @@ import by.runa.lib.api.dao.IDepartmentDao;
 import by.runa.lib.api.dto.BookDetailsDto;
 import by.runa.lib.api.dto.BookDto;
 import by.runa.lib.api.dto.DepartmentDto;
-import by.runa.lib.api.mappers.AMapper;
+import by.runa.lib.api.exceptions.NoBookWithThisIdException;
 import by.runa.lib.api.service.IBookDetailsService;
 import by.runa.lib.api.service.IBookService;
 import by.runa.lib.entities.Book;
 import by.runa.lib.entities.BookDetails;
 import by.runa.lib.entities.Department;
-import by.runa.lib.exceptions.NoBookWithThisIdException;
 import by.runa.lib.utils.mailsender.EmailSender;
+import by.runa.lib.utils.mappers.AMapper;
 import lombok.extern.slf4j.Slf4j;
 
 @Service

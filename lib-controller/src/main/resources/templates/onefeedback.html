@@ -1,34 +1,39 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://thymeleaf.org" lang="en">
+<html xmlns:th="http://thymeleaf.org" lang="en"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
 <title>Library - Feedback page</title>
-<link href="../css/styles.css" rel="stylesheet" />
-<link href="../css/bootstrap.min.css" rel="stylesheet">
+<link href="../../css/styles.css" rel="stylesheet" />
+<link href="../../css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-	<h1>Thanks for your feedback</h1>
 	<a href="../../">Home</a>
+	<h1>Thanks for your feedback</h1>
 	<br />
-	<table border="1">
+	<table class="table">
 		<caption></caption>
-		<tr>
-			<th id="id">Id</th>
-			<th id="bookId">Book Id</th>
-			<th id="rating">rating</th>
-			<th id="userName">userName</th>
-			<th id="comment">comment</th>
-			<th scope="col"></th>
+		<thead>
+			<tr>
+				<th scope="col">Id</th>
+				<th scope="col">Book Id</th>
+				<th scope="col">rating</th>
+				<th scope="col">userName</th>
+				<th scope="col">comment</th>
+				<th scope="col"></th>
 			</tr>
-		<tr>
-		<tr>
-			<td th:text="${feedback.id}"></td>
-			<td th:text="${feedback.bookId}"></td>
-			<td th:text="${feedback.rating}"></td>
-			<td th:text="${feedback.userName}"></td>
-			<td th:text="${feedback.comment}"></td>
-			<td><a th:href="@{'edit/' + ${feedback.id}}">Edit</a> <br> <a
-				th:href="@{'delete/' + ${feedback.id}}">Delete</a> <br> </td>
-		</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td th:text="${feedback.id}"></td>
+				<td th:text="${feedback.bookId}"></td>
+				<td th:text="${feedback.rating}"></td>
+				<td th:text="${feedback.userName}"></td>
+				<td th:text="${feedback.comment}"></td>
+				<td><a th:href="@{'edit/' + ${feedback.id}}">Edit</a> <br>
+					<a sec:authorize="hasRole('ADMIN')"
+					th:href="@{'delete/' + ${feedback.id}}">Delete</a> <br></td>
+			</tr>
+		</tbody>
 	</table>
 </body>
 <hr>

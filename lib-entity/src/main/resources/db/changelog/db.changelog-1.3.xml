@@ -25,7 +25,7 @@
 			<column name="is_finished" type="tinyint(2)">
 				<constraints nullable="false" />
 			</column>
-			<column name="isProlonged" type="tinyint(2)">
+			<column name="is_prolonged" type="tinyint(2)">
 				<constraints nullable="false" />
 			</column>
 		</createTable>

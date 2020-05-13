@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import by.runa.lib.api.dto.FeedbackDto;
+import by.runa.lib.api.exceptions.NoFeedbackWithThisIdException;
+import by.runa.lib.api.exceptions.NoUserWithThisIdException;
 import by.runa.lib.api.service.IFeedbackService;
 import by.runa.lib.api.service.IUserService;
-import by.runa.lib.exceptions.NoFeedbackWithThisIdException;
-import by.runa.lib.exceptions.NoUserWithThisIdException;
 
 @RestController
 @RequestMapping("/feedbacks/")
@@ -81,7 +81,7 @@ public class FeedbackController {
 	public ModelAndView addFeedbackSubmit(@PathVariable Long id, FeedbackDto feedbackDto) {
 		ModelAndView modelAndView = new ModelAndView();
 		FeedbackDto newfeedback = feedbackService.createFeedback(feedbackDto, id);
-		modelAndView.setViewName("onefeedback");
+		modelAndView.setViewName("changesSaved");
 		return modelAndView.addObject(FEEDBACK, newfeedback);
 	}
 

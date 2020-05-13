@@ -17,11 +17,11 @@ import by.runa.lib.api.dao.IRoleDao;
 import by.runa.lib.api.dto.DepartmentDto;
 import by.runa.lib.api.dto.OrderDto;
 import by.runa.lib.api.dto.UserDto;
+import by.runa.lib.api.exceptions.NoOrderWithThisIdException;
+import by.runa.lib.api.exceptions.NoUserWithThisIdException;
 import by.runa.lib.api.service.IDepartmentService;
 import by.runa.lib.api.service.IOrderService;
 import by.runa.lib.api.service.IUserService;
-import by.runa.lib.exceptions.NoOrderWithThisIdException;
-import by.runa.lib.exceptions.NoUserWithThisIdException;
 import by.runa.lib.utils.ImgFileUploader;
 
 @RestController

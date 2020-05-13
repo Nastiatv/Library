@@ -17,12 +17,12 @@ import by.runa.lib.api.dao.IRoleDao;
 import by.runa.lib.api.dao.IUserDao;
 import by.runa.lib.api.dto.DepartmentDto;
 import by.runa.lib.api.dto.UserDto;
-import by.runa.lib.api.mappers.AMapper;
+import by.runa.lib.api.exceptions.NoUserWithThisIdException;
 import by.runa.lib.api.service.IUserService;
 import by.runa.lib.entities.Department;
 import by.runa.lib.entities.Role;
 import by.runa.lib.entities.User;
-import by.runa.lib.exceptions.NoUserWithThisIdException;
+import by.runa.lib.utils.mappers.AMapper;
 
 @Service
 @Transactional

@@ -3,7 +3,7 @@ package by.runa.lib.api.service;
 import java.util.List;
 
 import by.runa.lib.api.dto.FeedbackDto;
-import by.runa.lib.exceptions.NoFeedbackWithThisIdException;
+import by.runa.lib.api.exceptions.NoFeedbackWithThisIdException;
 
 public interface IFeedbackService {
 

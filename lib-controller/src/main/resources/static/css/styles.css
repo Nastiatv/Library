@@ -17,34 +17,74 @@ table th, table td {
 
 
 /*FOR RATING STAR:*/
-.rating_block {
-  width: 125px;
-  height: 25px;
+.rating-area {
+    overflow: hidden;
+    width: 265px;
+    margin: 0 0 auto 0;
 }
-.rating_block input[type="radio"] {
-  display: none;
+.rating-area:not(:checked) > input {
+    display: none;
 }
-.label_rating {
-  float: right;
-  display: block;
-  width: 25px;
-  height: 25px;
- background: url(../img/rating.png) no-repeat 50% 0;
-  cursor: pointer;
+.rating-area:not(:checked) > label {
+    float: right;
+    width: 42px;
+    padding: 0;
+    cursor: pointer;
+    font-size: 50px;
+    line-height: 50px;
+    color: lightgrey;
+    text-shadow: 1px 1px #bbb;
 }
-/*the rules for changing the position of the background*/
-.rating_block .label_rating:hover, /*Rule for hover on the current label*/
-.rating_block .label_rating:hover ~ .label_rating, /*The rule for all following labels on the DOM tree*/
-.rating_block input[type="radio"]:checked ~ .label_rating /*The rule for all the following labels after the chosen input is so that the stars seem to be fixed*/
-{
-  background-position: 50% -25px;
+.rating-area:not(:checked) > label:before {
+    content: '★';
 }
+.rating-area > input:checked ~ label {
+    color: gold;
+    text-shadow: 1px 1px #c60;
+}
+.rating-area:not(:checked) > label:hover,
+.rating-area:not(:checked) > label:hover ~ label {
+    color: gold;
+}
+.rating-area > input:checked + label:hover,
+.rating-area > input:checked + label:hover ~ label,
+.rating-area > input:checked ~ label:hover,
+.rating-area > input:checked ~ label:hover ~ label,
+.rating-area > label:hover ~ input:checked ~ label {
+    color: gold;
+    text-shadow: 1px 1px goldenrod;
+}
+.rate-area > label:active {
+    position: relative;
+}
+
+/*FOR exit RATING STAR:*/
+.rating-result {
+    width: 265px;
+    margin: 0 auto;
+}
+.rating-result span {
+    padding: 0;
+    font-size: 40px;
+    line-height: 1;
+    color: lightgrey;
+    text-shadow: 1px 1px #bbb;
+}
+.rating-result > span:before {
+    content: '★';
+}
+.rating-result > span.active {
+    color: gold;
+    text-shadow: 1px 1px #c60;
+}
+
+
 
 /*FOR FEEDBACKS:*/
 /* Style the container with a rounded border, grey background and some padding and margin */
 .container {
     border: 2px solid #ccc;
-    background-color: #eee;
+    background-color: #f8f9fa;
     border-radius: 5px;
     padding: 16px;
     margin: 16px 0;

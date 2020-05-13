@@ -9,35 +9,38 @@
 	<h1>Thank you for returning the book.</h1>
 	<h3>Order details:</h3>
 	<br />
-	<table border="1">
+	<table class="table">
 		<caption></caption>
-		<tr>
-			<th id="id">Id</th>
-			<th id="orderDate">Order date</th>
-			<th id="dueDate">Due date</th>
-			<th id="bookDto.name">Name</th>
-			<th id="bookDto.author">Author</th>
-			<th id="userDto.name">User Name</th>
-			<th id="userDto.email">User Email</th>
-			<th id="isProlonged">is Prolonged</th>
-			<th id="isFinished">is Finished</th>
-		</tr>
-		<tr>
-		<tr>
-			<td th:text="${order.id}"></td>
-			<td th:text="${order.orderDate}"></td>
-			<td th:text="${order.dueDate}"></td>
-			<td th:text="${order.bookDto.bookDetailsDto.name}"></td>
-			<td th:text="${order.bookDto.bookDetailsDto.author}"></td>
-			<td th:text="${order.userDto.username}"></td>
-			<td th:text="${order.userDto.email}"></td>
-			<td th:text="${order.Prolonged}"></td>
-			<td th:text="${order.Finished}"></td>
-		</tr>
+		<thead>
+			<tr>
+				<th scope="col">Id</th>
+				<th scope="col">Order date</th>
+				<th scope="col">Due date</th>
+				<th scope="col">Name</th>
+				<th scope="col">Author</th>
+				<th scope="col">User Name</th>
+				<th scope="col">User Email</th>
+				<th scope="col">is Prolonged</th>
+				<th scope="col">is Finished</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td th:text="${order.id}"></td>
+				<td th:text="${order.orderDate}"></td>
+				<td th:text="${order.dueDate}"></td>
+				<td th:text="${order.bookDto.bookDetailsDto.name}"></td>
+				<td th:text="${order.bookDto.bookDetailsDto.author}"></td>
+				<td th:text="${order.userDto.username}"></td>
+				<td th:text="${order.userDto.email}"></td>
+				<td th:text="${order.isProlonged}"></td>
+				<td th:text="${order.isFinished}"></td>
+			</tr>
+		</tbody>
 	</table>
 	<hr>
-	<h3>
-		<a th:href="@{'../../../feedbacks/addfeedback/' + ${order.id}}">Write feedback</a>
-	</h3>
+	<a th:href="@{'../../../feedbacks/addfeedback/' + ${order.id}}">Write
+		feedback</a>
+
 </body>
 </html>

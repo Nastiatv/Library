@@ -9,7 +9,7 @@
 	<a href="../../../">Home</a>
 	<h1>Book Info :</h1>
 	<br />
-	<img th:src="@{${book.bookDetailsDto.picture}}" class="img-thumbnail"
+	<img th:src="@{${book.bookDetailsDto.picture}}" height="150" class="img-thumbnail"
 		alt="Cover" />
 
 	<form th:action="@{${book.id}}" th:object="${book}" method="POST"

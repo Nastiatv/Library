@@ -1,4 +1,4 @@
-package by.runa.lib.api.mappers;
+package by.runa.lib.utils.mappers;
 
 import java.util.Objects;
 

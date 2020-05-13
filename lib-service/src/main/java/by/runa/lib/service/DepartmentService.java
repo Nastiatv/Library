@@ -11,10 +11,10 @@ import org.springframework.stereotype.Service;
 import by.runa.lib.api.dao.IAGenericDao;
 import by.runa.lib.api.dao.IDepartmentDao;
 import by.runa.lib.api.dto.DepartmentDto;
-import by.runa.lib.api.mappers.AMapper;
+import by.runa.lib.api.exceptions.NoDepartmentWithThisIdException;
 import by.runa.lib.api.service.IDepartmentService;
 import by.runa.lib.entities.Department;
-import by.runa.lib.exceptions.NoDepartmentWithThisIdException;
+import by.runa.lib.utils.mappers.AMapper;
 
 @Service
 @Transactional

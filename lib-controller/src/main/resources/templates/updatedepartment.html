@@ -6,17 +6,17 @@
 <link href="../../css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-<a href="../../../">Home</a>
+	<a href="../../../">Home</a>
 	<h1>Department Info :</h1>
 	<br />
-	<form th:action="@{${department.id}}" th:object="${department}" method="POST"
-		enctype="multipart/form-data">
+	<form th:action="@{${department.id}}" th:object="${department}"
+		method="POST" enctype="multipart/form-data">
 
 		<div class="col-sm-4">
 			<div class="form-group">
 				<label for="name"> Name <input type="text" id="name"
-					name="name" th:field="*{name}"
-					class="form-control input-sm" value="${department.name}" required/>
+					name="name" th:field="*{name}" class="form-control input-sm"
+					value="${department.name}" required />
 				</label>
 			</div>
 		</div>

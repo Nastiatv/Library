@@ -2,43 +2,45 @@
 <html xmlns:th="http://thymeleaf.org" lang="en">
 <head>
 <title>Library - Order page</title>
-<link href="../css/styles.css" rel="stylesheet" />
-<link href="../css/bootstrap.min.css" rel="stylesheet">
+<link href="../../css/styles.css" rel="stylesheet" />
+<link href="../../css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-<h1>Thanks for your order</h1>
-<h2>You can take the book, just remember to return it after 10 days)</h2>
-	<h3>Order details:</h3>
 	<a href="../../">Home</a>
-	<br />
-	<table border="1">
+	<h1>Thanks for your order. You can take the book, just remember to return it after 10 days)</h1>
+	<h3>Order details:</h3>
+	<table class="table">
 		<caption></caption>
-		<tr>
-			<th id="id">Id</th>
-			<th id="orderDate">Order date</th>
-			<th id="dueDate">Due date</th>
-			<th id="bookDto.name">Name</th>
-			<th id="bookDto.author">Author</th>
-			<th id="userDto.name">User Name</th>
-			<th id="userDto.email">User Email</th>
-			<th id="isProlonged">is Prolonged</th>
-			<th id="isFinished">is Finished</th>
-			<th id="forActions// TODO There is no order with id="id"" ></th>
-		</tr>
-		<tr>
-		<tr>
-			<td th:text="${order.id}"></td>
-			<td th:text="${order.orderDate}"></td>
-			<td th:text="${order.dueDate}"></td>
-			<td th:text="${order.bookDto.bookDetailsDto.name}"></td>
-			<td th:text="${order.bookDto.bookDetailsDto.author}"></td>
-			<td th:text="${order.userDto.username}"></td>
-			<td th:text="${order.userDto.email}"></td>
-			<td th:text="${order.Prolonged}" ></td>
-			<td th:text="${order.Finished}" ></td>
-		<td><a th:href="@{'../return/' + ${order.id}}">Return book</a> <br> <a
-				th:href="@{'../prolong/' + ${order.id}}">Prolong reading</a> <br> </td>
-		</tr>
+		<thead>
+			<tr>
+				<th scope="col">Id</th>
+				<th scope="col">Order date</th>
+				<th scope="col">Due date</th>
+				<th scope="col">Name</th>
+				<th scope="col">Author</th>
+				<th scope="col">User Name</th>
+				<th scope="col">User Email</th>
+				<th scope="col">is Prolonged</th>
+				<th scope="col">is Finished</th>
+				<th scope="col"></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td th:text="${order.id}"></td>
+				<td th:text="${order.orderDate}"></td>
+				<td th:text="${order.dueDate}"></td>
+				<td th:text="${order.bookDto.bookDetailsDto.name}"></td>
+				<td th:text="${order.bookDto.bookDetailsDto.author}"></td>
+				<td th:text="${order.userDto.username}"></td>
+				<td th:text="${order.userDto.email}"></td>
+				<td th:text="${order.isProlonged}"></td>
+				<td th:text="${order.isFinished}"></td>
+				<td><a th:href="@{'../return/' + ${order.id}}">Return book</a>
+					<br> <a th:href="@{'../prolong/' + ${order.id}}">Prolong
+						reading</a> <br></td>
+			</tr>
+		</tbody>
 	</table>
 </body>
 <hr>

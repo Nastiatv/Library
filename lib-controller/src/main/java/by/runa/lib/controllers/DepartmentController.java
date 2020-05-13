@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import by.runa.lib.api.dto.DepartmentDto;
+import by.runa.lib.api.exceptions.NoDepartmentWithThisIdException;
 import by.runa.lib.api.service.IDepartmentService;
-import by.runa.lib.exceptions.NoDepartmentWithThisIdException;
 
 @RestController
 @RequestMapping("/departments/")
