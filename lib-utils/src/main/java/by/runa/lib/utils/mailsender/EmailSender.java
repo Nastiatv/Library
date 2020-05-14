@@ -1,5 +1,11 @@
 package by.runa.lib.utils.mailsender;
 
+import by.runa.lib.api.dao.IUserDao;
+import by.runa.lib.api.utils.IEmailSender;
+import by.runa.lib.entities.Book;
+import by.runa.lib.entities.Order;
+import by.runa.lib.entities.User;
+
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,12 +18,6 @@ import java.io.StringWriter;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
-
-import by.runa.lib.api.dao.IUserDao;
-import by.runa.lib.api.utils.IEmailSender;
-import by.runa.lib.entities.Book;
-import by.runa.lib.entities.Order;
-import by.runa.lib.entities.User;
 
 @Component
 public class EmailSender implements IEmailSender {

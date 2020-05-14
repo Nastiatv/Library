@@ -16,10 +16,12 @@ import javax.persistence.Table;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
 
 @Entity
 @Data
 @EqualsAndHashCode(callSuper = true)
+@Accessors(fluent = false, chain=true)
 @Table(name = "book")
 public class Book extends AEntity {
 

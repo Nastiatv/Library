@@ -8,8 +8,8 @@
 </head>
 <body>
 
-	<a href="http://localhost:8080" >Home</a>
-	<a href="http://localhost:8080/books/">All books</a>
+	<a href="http://localhost:8080" >Home</a> | 
+	<a href="http://localhost:8080/books/">All books</a> | 
 	<a href="http://localhost:8080/books/addbook">Add book</a>
 
 	<h1>Book details:</h1>
@@ -64,7 +64,7 @@
 		</tbody>
 	</table>
 	<hr>
-	<h3 align="center">Feedbacks:</h3>
+	<h3>Feedbacks:</h3>
 	<div class="container" th:each="feedback : ${listFeedbacks}">
 		<img
 			th:src="@{'http://localhost:8080/img/' + ${feedback.userName} + '.png'}"

@@ -10,11 +10,13 @@ import javax.persistence.Table;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
 
 @Entity
 @Data
-@Table(name = "feedback")
 @EqualsAndHashCode(callSuper = true)
+@Accessors(fluent = false, chain = true)
+@Table(name = "feedback")
 public class Feedback extends AEntity {
 
     @Column(name = "rating")

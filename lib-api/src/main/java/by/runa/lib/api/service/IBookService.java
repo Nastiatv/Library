@@ -6,17 +6,17 @@ import java.util.List;
 
 import by.runa.lib.api.dto.BookDto;
 import by.runa.lib.api.dto.DepartmentDto;
-import by.runa.lib.api.exceptions.NoBookWithThisIdException;
+import by.runa.lib.api.exceptions.EntityNotFoundException;
 
 public interface IBookService {
 
-	List<BookDto> getAllBooks();
+    List<BookDto> getAllBooks();
 
-	BookDto getBookById(Long id) throws NoBookWithThisIdException;
+    BookDto getBookById(Long id) throws EntityNotFoundException;
 
-	BookDto createBook(BookDto bookDto, DepartmentDto departmentDto);
+    BookDto createBook(BookDto bookDto, DepartmentDto departmentDto);
 
-	BookDto updateBook(BookDto bookDto, MultipartFile file) throws NoBookWithThisIdException;
+    BookDto updateBook(BookDto bookDto, MultipartFile file) throws EntityNotFoundException;
 
-	void deleteBookById(Long id, DepartmentDto departmentDto);
+    void deleteBookById(Long id, DepartmentDto departmentDto);
 }

@@ -1,32 +1,33 @@
 package by.runa.lib.service;
 
-import java.time.LocalDate;
-import java.util.List;
-import java.util.Optional;
-
-import javax.mail.MessagingException;
-import javax.transaction.Transactional;
+import by.runa.lib.api.dao.IAGenericDao;
+import by.runa.lib.api.dao.IBookDao;
+import by.runa.lib.api.dao.IOrderDao;
+import by.runa.lib.api.dao.IUserDao;
+import by.runa.lib.api.dto.OrderDto;
+import by.runa.lib.api.exceptions.EntityNotFoundException;
+import by.runa.lib.api.exceptions.IsAlreadyClosedException;
+import by.runa.lib.api.exceptions.IsAlreadyProlongedException;
+import by.runa.lib.api.exceptions.NoBooksAvailableException;
+import by.runa.lib.api.service.IOrderService;
+import by.runa.lib.api.utils.IEmailSender;
+import by.runa.lib.entities.Book;
+import by.runa.lib.entities.Order;
+import by.runa.lib.utils.mappers.AMapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import by.runa.lib.api.dao.IAGenericDao;
-import by.runa.lib.api.dao.IBookDao;
-import by.runa.lib.api.dao.IOrderDao;
-import by.runa.lib.api.dao.IUserDao;
-import by.runa.lib.api.dto.OrderDto;
-import by.runa.lib.api.exceptions.IsAlreadyClosedException;
-import by.runa.lib.api.exceptions.IsAlreadyProlongedException;
-import by.runa.lib.api.exceptions.NoBooksAvailableException;
-import by.runa.lib.api.exceptions.NoOrderWithThisIdException;
-import by.runa.lib.api.service.IOrderService;
-import by.runa.lib.api.utils.IEmailSender;
-import by.runa.lib.entities.Book;
-import by.runa.lib.entities.Order;
-import by.runa.lib.utils.mappers.AMapper;
 import lombok.extern.slf4j.Slf4j;
+
+import javax.mail.MessagingException;
+import javax.transaction.Transactional;
+
+import java.time.LocalDate;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 @Slf4j
@@ -34,118 +35,135 @@ import lombok.extern.slf4j.Slf4j;
 @Transactional
 public class OrderService implements IOrderService {
 
-	@Autowired
-	private IOrderDao orderDao;
+    private static final String ORDER = "Order";
 
-	@Autowired
-	private IBookDao bookDao;
+    @Autowired
+    private IOrderDao orderDao;
 
-	@Autowired
-	private IUserDao userDao;
+    @Autowired
+    private IBookDao bookDao;
 
-	@Autowired
-	private IEmailSender emailSender;
+    @Autowired
+    private IUserDao userDao;
 
-	@Autowired
-	private AMapper<Order, OrderDto> orderMapper;
+    @Autowired
+    private IEmailSender emailSender;
 
-	public IAGenericDao<Order> getOrderDao() {
-		return orderDao;
-	}	
-	
-	public IAGenericDao<Book> getBookDao() {
-		return bookDao;
-	}
-	
-	@Override
-	public List<OrderDto> getAllOrders() {
-		return orderMapper.toListDto(getOrderDao().getAll());
-	}
+    @Autowired
+    private AMapper<Order, OrderDto> orderMapper;
 
-	@Override
-	public OrderDto createOrder(Long bookId, String userName) throws NoBooksAvailableException {
-		Order order = new Order();
-		Book book = getBookDao().get(bookId);
-		if (book.getQuantityAvailable() != 0) {
-			order.setBook(book);
-			book.setQuantityAvailable(book.getQuantityAvailable() - 1);
-			order.setUser(userDao.getByName(userName));
-			order.setOrderDate(LocalDate.now());
-			order.setDueDate(order.getOrderDate().plusDays(10));
-			order.setProlonged(false);
-			order.setFinished(false);
-		} else {
-			throw new NoBooksAvailableException();
-		}
+    public IAGenericDao<Order> getOrderDao() {
+        return orderDao;
+    }
 
-		return orderMapper.toDto(getOrderDao().create(order));
-	}
+    public IAGenericDao<Book> getBookDao() {
+        return bookDao;
+    }
 
-	@Override
-	public OrderDto getOrderById(Long id) throws NoOrderWithThisIdException {
-		return Optional.ofNullable(orderMapper.toDto(getOrderDao().get(id))).orElseThrow(NoOrderWithThisIdException::new);
-	}
+    @Override
+    public List<OrderDto> getAllOrders() {
+        return orderMapper.toListDto(getOrderDao().getAll());
+    }
 
-	@Override
-	public List<OrderDto> getAllOrdersByUserId(Long id) throws NoOrderWithThisIdException {
-		return Optional.ofNullable(orderMapper.toListDto(orderDao.getAllOrdersByUserId(id)))
-				.orElseThrow(NoOrderWithThisIdException::new);
-	}
+    @Override
+    public OrderDto createOrder(Long bookId, String userName) throws NoBooksAvailableException {
+        Order order = new Order();
+        Book book = getBookDao().get(bookId);
+        if (book.getQuantityAvailable() != 0) {
+            book.setQuantityAvailable(book.getQuantityAvailable() - 1);
+            writeOrder(userName, order, book);
+        } else {
+            throw new NoBooksAvailableException();
+        }
 
-	@Override
-	public void deleteOrderById(Long id) {
-		getOrderDao().delete(getOrderDao().get(id));
-	}
+        return orderMapper.toDto(getOrderDao().create(order));
+    }
 
-	@Override
-	public OrderDto prolongOrder(Long id)
-			throws NoOrderWithThisIdException, IsAlreadyClosedException, IsAlreadyProlongedException {
-		Order existingOrder = Optional.ofNullable(getOrderDao().get(id)).orElseThrow(NoOrderWithThisIdException::new);
-		if (existingOrder.isFinished()) {
-			throw new IsAlreadyClosedException();
-		} else {
-			if (existingOrder.isProlonged()) {
-				throw new IsAlreadyProlongedException();
-			} else {
-				existingOrder.setProlonged(true);
-				existingOrder.setDueDate(LocalDate.now().plusDays(10));
-				getOrderDao().update(existingOrder);
-			}
-		}
-		return orderMapper.toDto(existingOrder);
-	}
+    @Override
+    public OrderDto getOrderById(Long id) throws EntityNotFoundException {
+        return Optional.ofNullable(orderMapper.toDto(getOrderDao().get(id)))
+                .orElseThrow(() -> new EntityNotFoundException(ORDER));
+    }
 
-	@Override
-	public OrderDto closeOrder(Long id) throws IsAlreadyClosedException, NoOrderWithThisIdException {
-		Order existingOrder = Optional.ofNullable(getOrderDao().get(id)).orElseThrow(NoOrderWithThisIdException::new);
-		if (existingOrder.isFinished()) {
-			throw new IsAlreadyClosedException();
-		} else {
-			existingOrder.setFinished(true);
-			getBookDao().get(existingOrder.getBook().getId())
-					.setQuantityAvailable(getBookDao().get(existingOrder.getBook().getId()).getQuantityAvailable() + 1);
-			getOrderDao().update(existingOrder);
-		}
-		return orderMapper.toDto(existingOrder);
-	}
+    @Override
+    public List<OrderDto> getAllOrdersByUserId(Long id) throws EntityNotFoundException {
+        return Optional.ofNullable(orderMapper.toListDto(orderDao.getAllOrdersByUserId(id)))
+                .orElseThrow(() -> new EntityNotFoundException(ORDER));
+    }
 
-	@Scheduled(cron = "0 17 16 * * *")
-	public void checkIfOrderIsExpired() {
-		for (Order order : getOrderDao().getAll()) {
-			if (order.getDueDate().isBefore(LocalDate.now()) && !order.isFinished()) {
-				try {
-					emailSender.sendEmailsFromAdminAboutDebts(order);
-				} catch (MessagingException e) {
-					log.info("Mail not sent!");
-				}
-			}
-			if (order.getDueDate().isEqual(LocalDate.now().plusDays(1)) && !order.isFinished()) {
-				try {
-					emailSender.sendEmailsFromAdminDueDateTomorrow(order);
-				} catch (MessagingException e) {
-					log.info("Mail not sent!");
-				}
-			}
-		}
-	}
+    @Override
+    public void deleteOrderById(Long id) {
+        getOrderDao().delete(getOrderDao().get(id));
+    }
+
+    @Override
+    public OrderDto prolongOrder(Long id)
+            throws EntityNotFoundException, IsAlreadyClosedException, IsAlreadyProlongedException {
+        Order existingOrder = Optional.ofNullable(getOrderDao().get(id))
+                .orElseThrow(() -> new EntityNotFoundException(ORDER));
+        if (existingOrder.isFinished()) {
+            throw new IsAlreadyClosedException();
+        } else {
+            if (existingOrder.isProlonged()) {
+                throw new IsAlreadyProlongedException();
+            } else {
+                changeOrder(existingOrder);
+                getOrderDao().update(existingOrder);
+            }
+        }
+        return orderMapper.toDto(existingOrder);
+    }
+
+    @Override
+    public OrderDto closeOrder(Long id) throws IsAlreadyClosedException, EntityNotFoundException {
+        Order existingOrder = Optional.ofNullable(getOrderDao().get(id))
+                .orElseThrow(() -> new EntityNotFoundException(ORDER));
+        if (existingOrder.isFinished()) {
+            throw new IsAlreadyClosedException();
+        } else {
+            existingOrder.setFinished(true);
+            incrementQuantity(existingOrder);
+            getOrderDao().update(existingOrder);
+        }
+        return orderMapper.toDto(existingOrder);
+    }
+
+    @Scheduled(cron = "0 40 16 * * *")
+    public void checkIfOrderIsExpired() {
+        for (Order order : getOrderDao().getAll()) {
+            if (order.getDueDate().isBefore(LocalDate.now()) && !order.isFinished()) {
+                try {
+                    emailSender.sendEmailsFromAdminAboutDebts(order);
+                } catch (MessagingException e) {
+                    log.info("Mail not sent!");
+                }
+            }
+            if (order.getDueDate().isEqual(LocalDate.now().plusDays(1)) && !order.isFinished()) {
+                try {
+                    emailSender.sendEmailsFromAdminDueDateTomorrow(order);
+                } catch (MessagingException e) {
+                    log.info("Mail not sent!");
+                }
+            }
+        }
+    }
+
+    private void incrementQuantity(Order existingOrder) {
+        getBookById(existingOrder).setQuantityAvailable(getBookById(existingOrder).getQuantityAvailable() + 1);
+    }
+
+    private Book getBookById(Order existingOrder) {
+        return getBookDao().get(existingOrder.getBook().getId());
+    }
+
+    private void changeOrder(Order existingOrder) {
+        existingOrder.setProlonged(true);
+        existingOrder.setDueDate(LocalDate.now().plusDays(10));
+    }
+
+    private void writeOrder(String userName, Order order, Book book) {
+        order.setBook(book).setUser(userDao.getByName(userName)).setOrderDate(LocalDate.now())
+                .setDueDate(order.getOrderDate().plusDays(10)).setProlonged(false).setFinished(false);
+    }
+
 }

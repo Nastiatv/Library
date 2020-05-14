@@ -13,10 +13,12 @@ import javax.persistence.Table;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
 
 @Entity
 @Data
 @EqualsAndHashCode(callSuper = true)
+@Accessors(fluent = false, chain=true)
 @Table(name = "department")
 public class Department extends AEntity {
 

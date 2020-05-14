@@ -1,5 +1,9 @@
 package by.runa.lib.utils.mappers;
 
+import by.runa.lib.api.dto.ADto;
+import by.runa.lib.api.utils.IMapper;
+import by.runa.lib.entities.AEntity;
+
 import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,10 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-
-import by.runa.lib.api.dto.ADto;
-import by.runa.lib.api.utils.IMapper;
-import by.runa.lib.entities.AEntity;
 
 public abstract class AMapper<E extends AEntity, D extends ADto> implements IMapper<E, D> {
 
