@@ -11,9 +11,9 @@ import org.springframework.stereotype.Service;
 import by.runa.lib.api.dao.IAGenericDao;
 import by.runa.lib.api.dao.IRoleDao;
 import by.runa.lib.api.dto.RoleDto;
-import by.runa.lib.api.mappers.AMapper;
 import by.runa.lib.api.service.IRoleService;
 import by.runa.lib.entities.Role;
+import by.runa.lib.utils.mappers.AMapper;
 import lombok.extern.slf4j.Slf4j;
 
 @Service

@@ -13,39 +13,37 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 
 @Entity
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
+@Accessors(fluent = false, chain = true)
 @Table(name = "user")
 public class User extends AEntity {
 
-	@Column(name = "email")
-	private String email;
-	
-	@Column(name = "password")
-	private String password;
-	
-	@Column(name = "username")
-	private String username;
+    @Column(name = "email")
+    private String email;
 
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinColumn(name = "department_id", referencedColumnName = "id")
-	private Department department;
+    @Column(name = "password")
+    private String password;
 
-	@ManyToMany(cascade = { CascadeType.ALL })
-	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
-	private List<Role> roles;
+    @Column(name = "username")
+    private String username;
 
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private List<Feedback> feedbacks;
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "department_id", referencedColumnName = "id")
+    private Department department;
 
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private List<Order> orders;
+    @ManyToMany(cascade = { CascadeType.ALL })
+    @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private List<Role> roles;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Feedback> feedbacks;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Order> orders;
 }

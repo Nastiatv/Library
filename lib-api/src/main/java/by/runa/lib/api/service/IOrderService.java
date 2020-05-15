@@ -3,25 +3,26 @@ package by.runa.lib.api.service;
 import java.util.List;
 
 import by.runa.lib.api.dto.OrderDto;
-import by.runa.lib.exceptions.IsAlreadyClosedException;
-import by.runa.lib.exceptions.IsAlreadyProlongedException;
-import by.runa.lib.exceptions.NoBooksAvailableException;
-import by.runa.lib.exceptions.NoOrderWithThisIdException;
+import by.runa.lib.api.exceptions.EntityNotFoundException;
+import by.runa.lib.api.exceptions.IsAlreadyClosedException;
+import by.runa.lib.api.exceptions.IsAlreadyProlongedException;
+import by.runa.lib.api.exceptions.NoBooksAvailableException;
 
 public interface IOrderService {
 
-	List<OrderDto> getAllOrders();
+    List<OrderDto> getAllOrders();
 
-	OrderDto getOrderById(Long id) throws NoOrderWithThisIdException;
+    OrderDto getOrderById(Long id) throws EntityNotFoundException;
 
-	void deleteOrderById(Long id);
+    void deleteOrderById(Long id);
 
-	OrderDto createOrder(Long bookId, String userName) throws NoBooksAvailableException;
+    OrderDto createOrder(Long bookId, String userName) throws NoBooksAvailableException;
 
-	OrderDto closeOrder(Long id) throws IsAlreadyClosedException, NoOrderWithThisIdException;
+    OrderDto closeOrder(Long id) throws IsAlreadyClosedException, EntityNotFoundException;
 
-	OrderDto prolongOrder(Long id) throws NoOrderWithThisIdException, IsAlreadyClosedException, IsAlreadyProlongedException;
+    OrderDto prolongOrder(Long id)
+            throws EntityNotFoundException, IsAlreadyClosedException, IsAlreadyProlongedException;
 
-	List<OrderDto> getAllOrdersByUserId(Long id) throws NoOrderWithThisIdException;
+    List<OrderDto> getAllOrdersByUserId(Long id) throws EntityNotFoundException;
 
 }

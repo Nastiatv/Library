@@ -1,16 +1,16 @@
 package by.runa.lib.dao;
 
+import by.runa.lib.api.dao.IDepartmentDao;
+import by.runa.lib.entities.Department;
+import by.runa.lib.entities.Department_;
+
+import org.springframework.stereotype.Repository;
+
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-
-import org.springframework.stereotype.Repository;
-
-import by.runa.lib.api.dao.IDepartmentDao;
-import by.runa.lib.entities.Department;
-import by.runa.lib.entities.Department_;
 
 @Repository
 public class DepartmentDao extends AGenericDao<Department> implements IDepartmentDao {

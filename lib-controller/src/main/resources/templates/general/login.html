@@ -1,0 +1,47 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://thymeleaf.org" lang="en">
+<head>
+<title>Library - Please login</title>
+<link href="../css/styles.css" rel="stylesheet" />
+<link href="../css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+	<div class="form-wrapper">
+		<h1 class="form-center">Please login:</h1>
+		<hr>
+		<div>
+			<div th:if="${param.error}">Invalid Email and password.</div>
+			<div th:if="${param.logout}">You have been logged out.</div>
+			<form th:action="@{../login}" method="post">
+				<div class="form-center">
+					<label for="username">User Name<input type="text"
+						name="username" id="username" class="form-control input-sm"
+						required />
+					</label>
+				</div>
+				<div class="form-center">
+					<label for="password">Password <input type="password"
+						name="password" id="password" class="form-control input-sm"
+						required /></label>
+				</div>
+				<div class="form-center">
+					<label for="remember_me">Keep me logged in <input
+						type="checkbox" id="remember_me" name="_remember_me"
+						th:checked="true" /></label>
+				</div>
+				<div class="form-center">
+					<input type="submit" value="Sign In" />
+				</div>
+			</form>
+			<hr>
+			<div class="form-center">
+				<a href="users/adduser">Sign Up</a>
+			</div>
+		</div>
+	</div>
+</body>
+<hr>
+<div class="form-center">
+	<a href="javascript:history.back()">Go back</a>
+</div>
+</html>

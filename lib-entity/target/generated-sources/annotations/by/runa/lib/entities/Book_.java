@@ -9,8 +9,8 @@ import javax.persistence.metamodel.StaticMetamodel;
 @StaticMetamodel(Book.class)
 public abstract class Book_ extends by.runa.lib.entities.AEntity_ {
 
-	public static volatile SingularAttribute<Book, Boolean> isOccupied;
-	public static volatile SingularAttribute<Book, Integer> quantity;
+	public static volatile SingularAttribute<Book, Integer> quantityAvailable;
+	public static volatile SingularAttribute<Book, Integer> quantityInLibrary;
 	public static volatile SingularAttribute<Book, BookDetails> bookDetails;
 	public static volatile SingularAttribute<Book, String> isbn;
 	public static volatile SingularAttribute<Book, Double> rating;
@@ -18,8 +18,8 @@ public abstract class Book_ extends by.runa.lib.entities.AEntity_ {
 	public static volatile ListAttribute<Book, Order> orders;
 	public static volatile ListAttribute<Book, Department> departments;
 
-	public static final String IS_OCCUPIED = "isOccupied";
-	public static final String QUANTITY = "quantity";
+	public static final String QUANTITY_AVAILABLE = "quantityAvailable";
+	public static final String QUANTITY_IN_LIBRARY = "quantityInLibrary";
 	public static final String BOOK_DETAILS = "bookDetails";
 	public static final String ISBN = "isbn";
 	public static final String RATING = "rating";

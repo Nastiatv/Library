@@ -16,9 +16,9 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import by.runa.lib.api.dto.BookDetailsDto;
-import by.runa.lib.api.mappers.BookDetailsMapper;
 import by.runa.lib.dao.BookDetailsDao;
 import by.runa.lib.entities.BookDetails;
+import by.runa.lib.utils.mappers.BookDetailsMapper;
 import by.runa.lib.web.WebScraper;
 
 @RunWith(MockitoJUnitRunner.class)

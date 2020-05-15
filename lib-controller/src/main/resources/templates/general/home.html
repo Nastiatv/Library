@@ -1,0 +1,35 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://thymeleaf.org" lang="en"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<title>Library - Home page</title>
+<link href="../css/styles.css" rel="stylesheet" />
+<link href="../css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+	<div class="form-wrapper">
+		<div class="form-center">
+			<a href="login">Sign In</a>
+		</div>
+		<div class="form-center">
+			<a href="users/adduser">Sign Up</a>
+		</div>
+		<hr>
+		<div class="form-center">
+			<a href="books/">All books</a>
+		</div>
+		<div sec:authorize="isAuthenticated()" class="form-center">
+			<a href="users/{id}">My profile</a>
+		</div>
+		<div sec:authorize="hasRole('ADMIN')" class="form-center">
+			<a href="admin">Admin page</a>
+		</div>
+		<hr>
+		<div sec:authorize="isAuthenticated()" class="form-center">
+			<form th:action="@{/logout}" method="post">
+				<input type="submit" value="Sign Out" />
+			</form>
+		</div>
+	</div>
+</body>
+</html>

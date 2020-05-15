@@ -10,37 +10,35 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 
 @Entity
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
+@Accessors(fluent = false, chain = true)
 @Table(name = "order_book")
 public class Order extends AEntity {
 
-	@Column(name = "order_date")
-	private LocalDate orderDate;
+    @Column(name = "order_date")
+    private LocalDate orderDate;
 
-	@Column(name = "due_date")
-	private LocalDate dueDate;
+    @Column(name = "due_date")
+    private LocalDate dueDate;
 
-	@Column(name = "is_finished")
-	private boolean isFinished;
+    @Column(name = "is_finished")
+    private boolean isFinished;
 
-	@Column(name = "isProlonged")
-	private boolean isProlonged;
+    @Column(name = "is_prolonged")
+    private boolean isProlonged;
 
-	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinColumn(name = "book_id", referencedColumnName = "id")
-	private Book book;
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "book_id", referencedColumnName = "id")
+    private Book book;
 
-	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinColumn(name = "user_id", referencedColumnName = "id")
-	private User user;
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user;
 
 }

@@ -1,2 +1,11 @@
-by\runa\lib\utils\mailsender\EmailSender.class
+by\runa\lib\utils\mappers\FeedbackMapper.class
+by\runa\lib\utils\mappers\OrderMapper.class
+by\runa\lib\utils\mappers\RoleMapper.class
+by\runa\lib\utils\mappers\DepartmentMapper.class
+by\runa\lib\utils\mappers\BookDetailsMapper.class
+by\runa\lib\utils\mappers\AMapper.class
+by\runa\lib\utils\config\MapperConfiguration.class
 by\runa\lib\utils\config\MailConfiguration.class
+by\runa\lib\utils\mappers\UserMapper.class
+by\runa\lib\utils\mappers\BookMapper.class
+by\runa\lib\utils\mailsender\EmailSender.class
