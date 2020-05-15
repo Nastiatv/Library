@@ -23,7 +23,7 @@ import java.util.List;
 @RequestMapping("/orders/")
 public class OrderController {
 
-    private static final String ERRORS = "errors";
+    private static final String ERRORS = "errors/errors";
     private static final String MESSAGE = "message";
     private static final String ORDER = "order";
 

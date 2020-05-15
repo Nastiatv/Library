@@ -6,27 +6,28 @@
 <link href="../css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-	<a href="../">Home</a> | 
-	<a href="adddepartment">Add Department</a>
-	<h1>Our Departments:</h1>
-	<table class="table">
-		<caption></caption>
-		<thead>
-			<tr>
-				<th scope="col">Id</th>
-				<th scope="col">Name</th>
-				<th scope="col">#</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr>
-			<tr th:each="department : ${departmentList}">
-				<td th:text="${department.id}"></td>
-				<td th:text="${department.name}"></td>
-				<td><a th:href="@{${department.id}}">See more</a> <br>
-			</tr>
-		</tbody>
-	</table>
+	<div class="form-wrapper">
+		<a href="../">Home</a> | <a href="adddepartment">Add Department</a><hr>
+		<h1 class="form-center">Our Departments:</h1>
+		<table class="table">
+			<caption></caption>
+			<thead>
+				<tr>
+					<th scope="col">Id</th>
+					<th scope="col">Name</th>
+					<th scope="col">#</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+				<tr th:each="department : ${departmentList}">
+					<td th:text="${department.id}"></td>
+					<td th:text="${department.name}"></td>
+					<td><a th:href="@{${department.id}}">See more</a> <br>
+				</tr>
+			</tbody>
+		</table>
+	</div>
 </body>
 <hr>
 <a href="javascript:history.back()">Go back</a>

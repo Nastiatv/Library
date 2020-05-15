@@ -6,34 +6,36 @@
 <link href="../css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-	<a href="../">Home</a>
-	<h1>Our Orders:</h1>
-	<table class="table">
-		<caption></caption>
-		<thead>
-			<tr>
-				<th scope="col">orderDate</th>
-				<th scope="col">dueDate</th>
-				<th scope="col">isFinished</th>
-				<th scope="col">isProlonged</th>
-				<th scope="col">book</th>
-				<th scope="col">user</th>
-				<th scope="col">#</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr>
-			<tr th:each="order : ${orderList}">
-				<td th:text="${order.orderDate}"></td>
-				<td th:text="${order.dueDate}"></td>
-				<td th:text="${order.isFinished}"></td>
-				<td th:text="${order.isProlonged}"></td>
-				<td th:text="${order.bookDto.isbn}"></td>
-				<td th:text="${order.userDto.username}"></td>
-				<td><a th:href="@{${order.id}}">See more</a> <br>
-			</tr>
-		</tbody>
-	</table>
+	<div class="form-wrapper">
+		<a href="../">Home</a><hr>
+		<h1 class="form-center">Our Orders:</h1>
+		<table class="table">
+			<caption></caption>
+			<thead>
+				<tr>
+					<th scope="col">orderDate</th>
+					<th scope="col">dueDate</th>
+					<th scope="col">isFinished</th>
+					<th scope="col">isProlonged</th>
+					<th scope="col">book</th>
+					<th scope="col">user</th>
+					<th scope="col">#</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+				<tr th:each="order : ${orderList}">
+					<td th:text="${order.orderDate}"></td>
+					<td th:text="${order.dueDate}"></td>
+					<td th:text="${order.isFinished}"></td>
+					<td th:text="${order.isProlonged}"></td>
+					<td th:text="${order.bookDto.isbn}"></td>
+					<td th:text="${order.userDto.username}"></td>
+					<td><a th:href="@{${order.id}}">See more</a> <br>
+				</tr>
+			</tbody>
+		</table>
+	</div>
 </body>
 <a href="javascript:history.back()">Go back</a>
 </html>

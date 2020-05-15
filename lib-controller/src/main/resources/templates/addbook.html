@@ -6,20 +6,17 @@
 <link href="../css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-	<h1>Add book to library:</h1>
-	<br />
-	<form th:action="@{${id}}" th:object="${bookdto}" method="POST">
-
-		<div class="col-sm-4">
-			<div class="form-group">
+	<div class="form-wrapper">
+		<h1 class="form-center">Add book to library:</h1>
+		<hr>
+		<form th:action="@{${id}}" th:object="${bookdto}" method="POST">
+			<div class="form-center">
 				<label for="isbn"> ISBN <input type="text" id="isbn"
 					name="isbn" th:field="*{isbn}" class="form-control input-sm"
 					required />
 				</label>
 			</div>
-		</div>
-		<div class="col-sm-4">
-			<div class="form-group">
+			<div class="form-center">
 				<label for="isbn"> Department <select
 					th:object="${departmentdto}" th:field="*{name}">
 						<option th:each="department : ${departmentsList}"
@@ -27,12 +24,12 @@
 				</select>
 				</label>
 			</div>
-		</div>
-		<div class="col-sm-4">
-			<input type="submit" value="Add" /> <input type="reset"
-				value="Reset">
-		</div>
-	</form>
+			<div align="center">
+				<input type="submit" value="Add"> <input type="reset"
+					value="Reset">
+			</div>
+		</form>
+	</div>
 </body>
 <hr>
 <a href="javascript:history.back()">Go back</a>

@@ -8,40 +8,31 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 </head>
 <body>
-	<a href="../../../">Home</a>
-	<h1>Personal Info :</h1>
-	<br />
-	<img th:src="@{'../../img/' + ${user.username} + '.png'}"
-		class="img-thumbnail" alt="Avatar" />
-	<form th:action="@{${user.id}}" th:object="${user}" method="POST"
-		enctype="multipart/form-data">
-
-		<div class="col-sm-4">
-			<div class="form-group">
+	<div class="form-wrapper">
+		<a href="../../../">Home</a>
+		<hr>
+		<h1 class="form-center">Personal Info :</h1>
+		<hr>
+		<img th:src="@{'../../img/' + ${user.username} + '.png'}"
+			class="form-center" alt="Avatar" />
+		<form th:action="@{${user.id}}" th:object="${user}" method="POST"
+			enctype="multipart/form-data">
+			<div class="form-center">
 				<label for="imageUploader">Photo</label> <input type="file"
 					id="imageUploader" name="file" />
 			</div>
-		</div>
-
-		<div class="col-sm-4">
-			<div class="form-group">
+			<div class="form-center">
 				<label for="email"> Email <input type="email" id="email"
 					name="email" th:field="*{email}" class="form-control input-sm"
 					value="${user.email}" required />
 				</label>
 			</div>
-		</div>
-
-		<div class="col-sm-4">
-			<div class="form-group">
+			<div class="form-center">
 				<label for="username">Name</label> <input type="text" id="username"
 					name="username" th:field="*{username}"
 					class="form-control input-sm" value="${user.username}" required />
 			</div>
-		</div>
-
-		<div class="col-sm-4">
-			<div class="form-group">
+			<div class="form-center">
 				<label for="department">Department</label> <select id="department"
 					th:object="${departmentdto}" th:field="*{name}">
 					<option th:each="department : ${departmentsList}"
@@ -49,28 +40,21 @@
 						value="${user.departmentName}"></option>
 				</select> <br />
 			</div>
-		</div>
-
-		<div class="col-sm-4">
-			<div class="form-group">
+			<div class="form-center">
 				<label for="password">Password</label> <input name="password"
 					type="password" id="password" th:field="*{password}"
 					class="form-control input-sm" />
 			</div>
-		</div>
-
-		<div class="col-sm-4">
-			<div class="form-group">
+			<div class="form-center">
 				<label for="confpassword">Confirm Password</label> <input
 					name="confirm_password" type="password" id="confpassword"
 					class="form-control input-sm" /> <span id='message'></span>
 			</div>
-		</div>
-
-		<div class="col-sm-4">
-			<input type="submit" value="Update Profile" />
-		</div>
-	</form>
+			<div class="form-center">
+				<input type="submit" value="Update Profile" />
+			</div>
+		</form>
+	</div>
 </body>
 <script>
 	$('#password, #confpassword').on('keyup', function() {

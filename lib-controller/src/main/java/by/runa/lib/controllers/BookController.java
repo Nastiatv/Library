@@ -27,7 +27,7 @@ import java.util.List;
 @RequestMapping("/books/")
 public class BookController {
 
-    private static final String ERRORS = "errors";
+    private static final String ERRORS = "errors/errors";
     private static final String MESSAGE = "message";
     private static final String BOOK = "book";
 
@@ -110,7 +110,7 @@ public class BookController {
             BookDto bookUpdated = bookService.updateBook(bookDto, file);
             imgFileUploader.createOrUpdate(bookDto, file);
             modelAndView.addObject("book", bookUpdated);
-            modelAndView.setViewName("changesSaved");
+            modelAndView.setViewName("general/changesSaved");
         } catch (IOException | EntityNotFoundException e) {
             modelAndView.setViewName(ERRORS);
             modelAndView.addObject(MESSAGE, e.getMessage());
@@ -138,7 +138,7 @@ public class BookController {
     public ModelAndView deletebookSubmit(BookDto bookDto, DepartmentDto departmentDto) {
         ModelAndView modelAndView = new ModelAndView();
         bookService.deleteBookById(bookDto.getId(), departmentDto);
-        modelAndView.setViewName("changesSaved");
+        modelAndView.setViewName("general/changesSaved");
         return modelAndView;
     }
 }

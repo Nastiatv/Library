@@ -6,32 +6,34 @@
 <link href="../css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-	<a href="../">Home</a>
-	<h1>Our Feedbacks:</h1>
-	<table class="table">
-		<caption></caption>
-		<thead>
-			<tr>
-				<th scope="col">Id</th>
-				<th scope="col">Book Id</th>
-				<th scope="col">rating</th>
-				<th scope="col">userName</th>
-				<th scope="col">comment</th>
-				<th scope="col">#</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr>
-			<tr th:each="feedback : ${feedbackList}">
-				<td th:text="${feedback.id}"></td>
-				<td th:text="${feedback.bookId}"></td>
-				<td th:text="${feedback.rating}"></td>
-				<td th:text="${feedback.userName}"></td>
-				<td th:text="${feedback.comment}"></td>
-				<td><a th:href="@{${feedback.id}}">See more</a> <br>
-			</tr>
-		</tbody>
-	</table>
+	<div class="form-wrapper">
+		<a href="../">Home</a><hr>
+		<h1 class="form-center">Our Feedbacks:</h1>
+		<table class="table">
+			<caption></caption>
+			<thead>
+				<tr>
+					<th scope="col">Id</th>
+					<th scope="col">Book Id</th>
+					<th scope="col">rating</th>
+					<th scope="col">userName</th>
+					<th scope="col">comment</th>
+					<th scope="col">#</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+				<tr th:each="feedback : ${feedbackList}">
+					<td th:text="${feedback.id}"></td>
+					<td th:text="${feedback.bookId}"></td>
+					<td th:text="${feedback.rating}"></td>
+					<td th:text="${feedback.userName}"></td>
+					<td th:text="${feedback.comment}"></td>
+					<td><a th:href="@{${feedback.id}}">See more</a> <br>
+				</tr>
+			</tbody>
+		</table>
+	</div>
 </body>
 <a href="javascript:history.back()">Go back</a>
 </html>

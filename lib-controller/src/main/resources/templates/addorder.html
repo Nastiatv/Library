@@ -6,12 +6,16 @@
 <link href="../../css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-	<h1>Are you sure you want to read this book?</h1>
-	<br />
-	<form th:action="@{${id}}" th:object="${dto}" method="POST" >
-		<input type="submit" value="Confirm" /> 
-	</form>
-	</body>
+	<div class="form-wrapper">
+		<h1 class="form-center">Are you sure you want to read this book?</h1>
+		<br />
+		<div class="form-center">
+			<form th:action="@{${id}}" th:object="${dto}" method="POST">
+				<input type="submit" value="Confirm" />
+			</form>
+		</div>
+	</div>
+</body>
 <hr>
 <a href="javascript:history.back()">Go back</a>
 </html>

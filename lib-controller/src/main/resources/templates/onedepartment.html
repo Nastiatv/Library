@@ -6,29 +6,29 @@
 <link href="../css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-	<a href="../../">Home</a> | 
-	<a href="../">All departments</a> | 
-	<a href="../adddepartment">Add department</a> | 
-
-	<h1>Department details:</h1>
-	<table class="table">
-		<caption></caption>
-		<thead>
-			<tr>
-				<th scope="col">Id</th>
-				<th scope="col">Name</th>
-				<th scope="col">#</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr>
-				<td th:text="${department.id}" id="departmentid"></td>
-				<td th:text="${department.name}"></td>
-				<td><a th:href="@{'edit/' + ${department.id}}">Edit</a> <br>
-					<a th:href="@{'delete/' + ${department.id}}">Delete</a> <br></td>
-			</tr>
-		</tbody>
-	</table>
+	<div class="form-wrapper">
+		<a href="../../">Home</a> | <a href="../">All departments</a> | <a
+			href="../adddepartment">Add department</a> <hr>
+		<h1 class="form-center">Department details:</h1>
+		<table class="table">
+			<caption></caption>
+			<thead>
+				<tr>
+					<th scope="col">Id</th>
+					<th scope="col">Name</th>
+					<th scope="col">#</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td th:text="${department.id}" id="departmentid"></td>
+					<td th:text="${department.name}"></td>
+					<td><a th:href="@{'edit/' + ${department.id}}">Edit</a> <br>
+						<a th:href="@{'delete/' + ${department.id}}">Delete</a> <br></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
 </body>
 <hr>
 <a href="javascript:history.back()">Go back</a>

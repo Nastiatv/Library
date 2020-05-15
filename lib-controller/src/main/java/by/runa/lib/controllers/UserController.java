@@ -28,7 +28,7 @@ import java.util.List;
 public class UserController {
 
     private Long principalId;
-    private static final String ERRORS = "errors";
+    private static final String ERRORS = "errors/errors";
     private static final String MESSAGE = "message";
     private static final String USER = "user";
 
@@ -127,7 +127,7 @@ public class UserController {
             UserDto userUpdated = userService.updateUser(principalId, userDto, departmentDto);
             imgFileUploader.createOrUpdate(userDto, file);
             modelAndView.addObject(USER, userUpdated);
-            modelAndView.setViewName("changesSaved");
+            modelAndView.setViewName("general/changesSaved");
         } catch (IOException | EntityNotFoundException e) {
             modelAndView.setViewName(ERRORS);
             modelAndView.addObject(MESSAGE, e.getMessage());

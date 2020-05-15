@@ -6,42 +6,43 @@
 <link href="../../css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-	<a href="../../">Home</a>
-	<h1>Thanks for your order. You can take the book, just remember to return it after 10 days)</h1>
-	<h3>Order details:</h3>
-	<table class="table">
-		<caption></caption>
-		<thead>
-			<tr>
-				<th scope="col">Id</th>
-				<th scope="col">Order date</th>
-				<th scope="col">Due date</th>
-				<th scope="col">Name</th>
-				<th scope="col">Author</th>
-				<th scope="col">User Name</th>
-				<th scope="col">User Email</th>
-				<th scope="col">is Prolonged</th>
-				<th scope="col">is Finished</th>
-				<th scope="col"></th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr>
-				<td th:text="${order.id}"></td>
-				<td th:text="${order.orderDate}"></td>
-				<td th:text="${order.dueDate}"></td>
-				<td th:text="${order.bookDto.bookDetailsDto.name}"></td>
-				<td th:text="${order.bookDto.bookDetailsDto.author}"></td>
-				<td th:text="${order.userDto.username}"></td>
-				<td th:text="${order.userDto.email}"></td>
-				<td th:text="${order.isProlonged}"></td>
-				<td th:text="${order.isFinished}"></td>
-				<td><a th:href="@{'../return/' + ${order.id}}">Return book</a>
-					<br> <a th:href="@{'../prolong/' + ${order.id}}">Prolong
-						reading</a> <br></td>
-			</tr>
-		</tbody>
-	</table>
+	<div class="form-wrapper">
+		<a href="../../">Home</a><hr>
+		<h1 class="form-center">Thanks for your order. You can take the book, just remember
+			to return it after 10 days)</h1>
+		<h3 >Order details:</h3>
+		<table class="table">
+			<caption></caption>
+			<thead>
+				<tr>
+					<th scope="col">Id</th>
+					<th scope="col">Order date</th>
+					<th scope="col">Due date</th>
+					<th scope="col">Name</th>
+					<th scope="col">Author</th>
+					<th scope="col">User Name</th>
+					<th scope="col">is Prolonged</th>
+					<th scope="col">is Finished</th>
+					<th scope="col"></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td th:text="${order.id}"></td>
+					<td th:text="${order.orderDate}"></td>
+					<td th:text="${order.dueDate}"></td>
+					<td th:text="${order.bookDto.bookDetailsDto.name}"></td>
+					<td th:text="${order.bookDto.bookDetailsDto.author}"></td>
+					<td th:text="${order.userDto.username}"></td>
+					<td th:text="${order.isProlonged}"></td>
+					<td th:text="${order.isFinished}"></td>
+					<td><a th:href="@{'../return/' + ${order.id}}">Return book</a>
+						<br> <a th:href="@{'../prolong/' + ${order.id}}">Prolong
+							reading</a> <br></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
 </body>
 <hr>
 </html>

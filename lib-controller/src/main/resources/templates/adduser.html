@@ -8,70 +8,57 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 </head>
 <body>
-	<h1>Create a User:</h1>
-	<br />
-	<form th:action="@{${id}}" th:object="${dto}" method="POST"
-		enctype="multipart/form-data">
-
-		<div class="col-sm-4">
-			<div class="form-group">
+	<div class="form-wrapper">
+		<h1 class="form-center">Sign up:</h1>
+		<hr>
+		<form th:action="@{${id}}" th:object="${dto}" method="POST"
+			enctype="multipart/form-data">
+			<div class="form-center">
 				<label for="email">Email <input type="email"
-					th:field="*{email}"
-					class="form-control input-sm" required /> </label>
+					th:field="*{email}" class="form-control input-sm" required />
+				</label>
 			</div>
-		</div>
-
-		<div class="col-sm-4">
-			<div class="form-group">
-				<label for="username">User Name <input type="text" id="username"
-					th:field="*{username}" class="form-control input-sm" required /> </label>
+			<div class="form-center">
+				<label for="username">User Name <input type="text"
+					id="username" th:field="*{username}" class="form-control input-sm"
+					required />
+				</label>
 			</div>
-		</div>
-
-		<div class="col-sm-4">
-			<div class="form-group">
+			<div class="form-center">
 				<label for="department">Department <select id="department"
 					th:object="${departmentdto}" th:field="*{name}">
-					<option th:each="department : ${departmentsList}"
-						th:value="${department.name}" th:text="${department.name}"></option>
+						<option th:each="department : ${departmentsList}"
+							th:value="${department.name}" th:text="${department.name}"></option>
 				</select></label> <br />
 			</div>
-		</div>
-		
-		<div class="col-sm-4">
-			<div class="form-group">
+			<div class="form-center">
 				<label for="file">Photo<input type="file" id="file"
 					name="file" /></label>
 			</div>
-		</div>
-
-		<div class="col-sm-4">
-			<div class="form-group">
+			<div class="form-center">
 				<label for="password">Password <input name="password"
 					type="password" id="password" th:field="*{password}"
-					class="form-control input-sm" required /> </label>
+					class="form-control input-sm" required />
+				</label>
 			</div>
-		</div>
+			<div class="form-center">
 
-		<div class="col-sm-4">
-			<div class="form-group">
 				<label for="confirm_password">Confirm Password <input
 					name="confirm_password" type="password" id="confirm_password"
 					class="form-control input-sm" required /></label> <span id='message'></span>
 			</div>
-		</div>
-
-		<div class="col-sm-4">
-			<input type="submit" value="Create" /> <input type="reset"
-				value="Reset">
-		</div>
+			<div class="form-center">
+				<input type="submit" value="Create" /> <input type="reset"
+					value="Reset">
+			</div>
 		</form>
-		<div class="col-sm-4">
+		<div class="form-center">
 			<form action="/signin/facebook" method="post">
 				<input type="hidden" name="scope" value="email, public_profile" />
 				<input type="submit" value="Sign Up With Facebook" />
 			</form>
 		</div>
+	</div>
 </body>
 <script>
 	$('#password, #confirm_password').on('keyup', function() {
@@ -80,8 +67,6 @@
 		} else
 			$('#message').html('Not Matching').css('color', 'red');
 	});
-</script>
- <script>
 </script>
 <hr>
 <a href="javascript:history.back()">Go back</a>

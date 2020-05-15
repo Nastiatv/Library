@@ -6,44 +6,44 @@
 <link href="../css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    <a href="../">Home</a>  |  <a href="addbook">Add Book</a>
-
-	<h1>Our Books:</h1>
-	<table class="table">
-		<caption></caption>
-		<thead>
-			<tr>
-				<th scope="col">Id</th>
-				<th scope="col">Isbn</th>
-				<th scope="col">QuantityAvailable</th>
-				<th scope="col">Rating</th>
-				<th scope="col">Department</th>
-				<th scope="col">Name</th>
-				<th scope="col">Author</th>
-				<th scope="col">Cover</th>
-				<th scope="col">Description</th>
-				<th scope="col">#</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr>
-			<tr th:each="book : ${bookList}">
-				<td th:text="${book.id}"></td>
-				<td th:text="${book.isbn}"></td>
-				<td th:text="${book.quantityAvailable}"></td>
-				<td th:text="${#numbers.formatDecimal(book.rating,1,2)}"></td>
-				<td><span th:each="department : ${book.departments}"> <span
-						th:text="${department.name}"> </span>
-				</span></td>
-				<td th:text="${book.bookDetailsDto.name}"></td>
-				<td th:text="${book.bookDetailsDto.author}"></td>
-				<td><img th:src="@{${book.bookDetailsDto.picture}}"
-					class="img-thumbnail" alt="Cover" /></td>
-				<td th:text="${book.bookDetailsDto.description}"></td>
-				<td><a th:href="@{${book.id}}">See more</a> <br>
-			</tr>
-		</tbody>
-	</table>
+	<div class="form-wrapper">
+		<a href="../">Home</a> | <a href="addbook">Add Book</a>
+		<hr>
+		<h1 class="form-center">Our Books:</h1>
+		<table class="table">
+			<caption></caption>
+			<thead>
+				<tr>
+					<th scope="col">Id</th>
+					<th scope="col">Isbn</th>
+					<th scope="col">QuantityAvailable</th>
+					<th scope="col">Rating</th>
+					<th scope="col">Department</th>
+					<th scope="col">Name</th>
+					<th scope="col">Author</th>
+					<th scope="col">Cover</th>
+					<th scope="col">#</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+				<tr th:each="book : ${bookList}">
+					<td th:text="${book.id}"></td>
+					<td th:text="${book.isbn}"></td>
+					<td th:text="${book.quantityAvailable}"></td>
+					<td th:text="${#numbers.formatDecimal(book.rating,1,2)}"></td>
+					<td><span th:each="department : ${book.departments}"> <span
+							th:text="${department.name}"> </span>
+					</span></td>
+					<td th:text="${book.bookDetailsDto.name}"></td>
+					<td th:text="${book.bookDetailsDto.author}"></td>
+					<td><img th:src="@{${book.bookDetailsDto.picture}}"
+						class="img-thumbnail" alt="Cover" /></td>
+					<td><a th:href="@{${book.id}}">See more</a> <br>
+				</tr>
+			</tbody>
+		</table>
+	</div>
 </body>
 <hr>
 <a href="javascript:history.back()">Go back</a>

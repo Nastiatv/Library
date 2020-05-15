@@ -1,5 +1,6 @@
 package by.runa.lib.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.social.connect.ConnectionFactoryLocator;
@@ -11,35 +12,40 @@ import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
-public class MvcConfig implements WebMvcConfigurer{
+public class MvcConfig implements WebMvcConfigurer {
 
-	@Override
-	public void addViewControllers(ViewControllerRegistry registry) {
-		registry.addViewController("/home").setViewName("home");
-		registry.addViewController("/").setViewName("home");
-		registry.addViewController("/admin").setViewName("admin");
-		registry.addViewController("/login").setViewName("login");
-		registry.addViewController("/403").setViewName("403");
-		registry.addViewController("/bye").setViewName("bye");
-	}
+    @Value("${app.id}")
+    private String appId;
 
-	@Bean
-	public ConnectionFactoryLocator connectionFactoryLocator() {
-		ConnectionFactoryRegistry connectionFactoryRegistry = new ConnectionFactoryRegistry();
-		connectionFactoryRegistry.addConnectionFactory(facebookConnectionFactory());
-		return connectionFactoryRegistry;
-	}
+    @Value("${app.secret}")
+    private String appSecret;
 
-	@Bean
-	public FacebookConnectionFactory facebookConnectionFactory() {
-		FacebookConnectionFactory facebookConnectionFactory = new FacebookConnectionFactory("264566624941155",
-				"7945e6d869dde73d4d48b1f0884d9878");
-		facebookConnectionFactory.setScope("email, public_profile");
-		return facebookConnectionFactory;
-	}
+    @Override
+    public void addViewControllers(ViewControllerRegistry registry) {
+        registry.addViewController("/home").setViewName("general/home");
+        registry.addViewController("/").setViewName("general/home");
+        registry.addViewController("/admin").setViewName("general/admin");
+        registry.addViewController("/login").setViewName("general/login");
+        registry.addViewController("/403").setViewName("errors/403");
+        registry.addViewController("/bye").setViewName("general/bye");
+    }
 
-	@Bean
-	public UsersConnectionRepository usersConnectionRepository(ConnectionFactoryLocator connectionFactoryLocator) {
-		return new InMemoryUsersConnectionRepository(connectionFactoryLocator());
-	}
+    @Bean
+    public ConnectionFactoryLocator connectionFactoryLocator() {
+        ConnectionFactoryRegistry connectionFactoryRegistry = new ConnectionFactoryRegistry();
+        connectionFactoryRegistry.addConnectionFactory(facebookConnectionFactory());
+        return connectionFactoryRegistry;
+    }
+
+    @Bean
+    public FacebookConnectionFactory facebookConnectionFactory() {
+        FacebookConnectionFactory facebookConnectionFactory = new FacebookConnectionFactory("appId", "appSecret");
+        facebookConnectionFactory.setScope("email, public_profile");
+        return facebookConnectionFactory;
+    }
+
+    @Bean
+    public UsersConnectionRepository usersConnectionRepository(ConnectionFactoryLocator connectionFactoryLocator) {
+        return new InMemoryUsersConnectionRepository(connectionFactoryLocator());
+    }
 }

@@ -18,7 +18,7 @@ import java.util.List;
 @RequestMapping("/departments/")
 public class DepartmentController {
 
-    private static final String ERRORS = "errors";
+    private static final String ERRORS = "errors/errors";
     private static final String MESSAGE = "message";
     private static final String DEPARTMENT = "department";
 
@@ -86,7 +86,7 @@ public class DepartmentController {
         try {
             DepartmentDto departmentUpdated = departmentService.updateDepartment(id, departmentDto);
             modelAndView.addObject(DEPARTMENT, departmentUpdated);
-            modelAndView.setViewName("changesSaved");
+            modelAndView.setViewName("general/changesSaved");
         } catch (EntityNotFoundException e) {
             modelAndView.setViewName(ERRORS);
             modelAndView.addObject(MESSAGE, e.getMessage());

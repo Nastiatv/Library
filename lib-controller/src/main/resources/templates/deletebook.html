@@ -6,45 +6,41 @@
 <link href="../../css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-	<a href="../../../">Home</a>
-	<h1>Are you sure you want to delete this book?</h1>
-	<br />
-	<img th:src="@{${book.bookDetailsDto.picture}}" height="200" alt="Cover" />
-	<div class="col-sm-4">
-		<div class="form-group">
-			Name:
+	<div class="form-wrapper">
+		<a href="../../../">Home</a>
+		<hr>
+		<h1 class="form-center">Are you sure you want to delete this
+			book?</h1>
+		<hr>
+		<div class="form-center">
+			<img th:src="@{${book.bookDetailsDto.picture}}" height="200"
+				alt="Cover" />
+		</div>
+		<div class="form-center">
+			<p class="font-weight-bold">Name:</p>
 			<p th:text="${book.bookDetailsDto.name}"></p>
 		</div>
-	</div>
-
-	<div class="col-sm-4">
-		<div class="form-group">
-			Author:
+		<div class="form-center">
+			<p class="font-weight-bold">Author:</p>
 			<p th:text="${book.bookDetailsDto.author}"></p>
 		</div>
-	</div>
-
-	<form th:action="@{${book.id}}" th:object="${departmentdto}"
-		method="POST" enctype="multipart/form-data">
-
-		<div class="col-sm-4">
-			<div class="form-group">
-				<label for="department">Department</label>
-			 <select id="department" th:object="${departmentdto}" th:field="*{name}">
-			 	<option th:each="department : ${book.departments}"
+		<form th:action="@{${book.id}}" th:object="${departmentdto}"
+			method="POST" enctype="multipart/form-data">
+			<div class="form-center">
+				<label for="department" class="font-weight-bold">Department</label>
+				<select id="department" th:object="${departmentdto}"
+					th:field="*{name}">
+					<option th:each="department : ${book.departments}"
 						th:value="${department.name}" th:text="${department.name}"
 						value="${book.departmentName}"></option>
 				</select> <br />
 			</div>
-		</div>
-
-
-		<div class="col-sm-4">
-			<input type="submit" value="Delete Book" />
-		</div>
-	</form>
+			<div class="form-center">
+				<input type="submit" value="Delete Book" />
+			</div>
+		</form>
+	</div>
 </body>
-
 <hr>
 <a href="javascript:history.back()">Go back</a>
 </html>

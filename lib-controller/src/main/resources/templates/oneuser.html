@@ -6,42 +6,38 @@
 <link href="../css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-	<h1 th:text="'Hello, ' + ${user.username}"></h1>
-	<br />
-	<h3>My personal info:</h3>
-	<table border="1">
-		<caption></caption>
-		<tr>
-			<th scope="col">Id</th>
-			<th scope="col">Name</th>
-			<th scope="col">Photo</th>
-			<th scope="col">Email</th>
-			<th scope="col">Department</th>
-			<th scope="col"></th>
-		</tr>
-		<tr>
-			<td th:text="${user.id}" id="userid"></td>
-			<td th:text="${user.username}"></td>
-			<td><img
-				th:src="@{'http://localhost:8080/img/' + ${user.username} + '.png'}"
-				height="200" alt="Avatar" /></td>
-			<td th:text="${user.email}"></td>
-			<td th:text="${user.departmentName}"></td>
-			<td><a th:href="@{'edit/' + ${user.id}}">Edit</a></td>
-		</tr>
-	</table>
-	<div class="col-sm-4">
-		<div class="form-group">
+	<div class="form-wrapper">
+		<h1 th:text="'Hello, ' + ${user.username}"></h1>
+		<hr>
+		<h3 class="form-center">My personal info:</h3>
+		<table border="1">
+			<caption></caption>
+			<tr>
+				<th scope="col">Id</th>
+				<th scope="col">Name</th>
+				<th scope="col">Photo</th>
+				<th scope="col">Email</th>
+				<th scope="col">Department</th>
+				<th scope="col"></th>
+			</tr>
+			<tr>
+				<td th:text="${user.id}" id="userid"></td>
+				<td th:text="${user.username}"></td>
+				<td><img
+					th:src="@{'http://localhost:8080/img/' + ${user.username} + '.png'}"
+					height="200" alt="Avatar" /></td>
+				<td th:text="${user.email}"></td>
+				<td th:text="${user.departmentName}"></td>
+				<td><a th:href="@{'edit/' + ${user.id}}">Edit</a></td>
+			</tr>
+		</table>
+		<div class="form-center">
 			<a href="../../">Home</a>
 		</div>
-	</div>
-	<div class="col-sm-4">
-		<div class="form-group">
+		<div class="form-center">
 			<a href="../orders/my">My orders</a>
 		</div>
-	</div>
-	<div class="col-sm-4">
-		<div class="form-group">
+		<div class="form-center">
 			<a href="../feedbacks/my">My feedbacks</a>
 		</div>
 	</div>

@@ -20,7 +20,7 @@ import java.util.List;
 @RequestMapping("/feedbacks/")
 public class FeedbackController {
 
-    private static final String ERRORS = "errors";
+    private static final String ERRORS = "errors/errors";
     private static final String MESSAGE = "message";
     private static final String FEEDBACK = "feedback";
 
@@ -80,7 +80,7 @@ public class FeedbackController {
     public ModelAndView addFeedbackSubmit(@PathVariable Long id, FeedbackDto feedbackDto) {
         ModelAndView modelAndView = new ModelAndView();
         FeedbackDto newfeedback = feedbackService.createFeedback(feedbackDto, id);
-        modelAndView.setViewName("changesSaved");
+        modelAndView.setViewName("general/changesSaved");
         return modelAndView.addObject(FEEDBACK, newfeedback);
     }
 
@@ -105,7 +105,7 @@ public class FeedbackController {
         try {
             FeedbackDto feedbackUpdated = feedbackService.updateFeedback(id, feedbackDto);
             modelAndView.addObject(FEEDBACK, feedbackUpdated);
-            modelAndView.setViewName("changesSaved");
+            modelAndView.setViewName("general/changesSaved");
         } catch (EntityNotFoundException e) {
             modelAndView.setViewName(ERRORS);
             modelAndView.addObject(MESSAGE, e.getMessage());

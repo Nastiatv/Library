@@ -7,37 +7,29 @@
 <link href="../css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-	<div class="col-sm-4">
-		<div class="form-group">
+	<div class="form-wrapper">
+		<div class="form-center">
 			<a href="login">Sign In</a>
 		</div>
-	</div>
-	<div class="col-sm-4">
-		<div class="form-group">
+		<div class="form-center">
 			<a href="users/adduser">Sign Up</a>
 		</div>
-	</div>
-	<hr>
-	<div class="col-sm-4">
-		<div class="form-group">
+		<hr>
+		<div class="form-center">
 			<a href="books/">All books</a>
 		</div>
-	</div>
-	<div sec:authorize="isAuthenticated()" class="col-sm-4">
-		<div class="form-group">
+		<div sec:authorize="isAuthenticated()" class="form-center">
 			<a href="users/{id}">My profile</a>
 		</div>
-	</div>
-	<div sec:authorize="hasRole('ADMIN')" class="col-sm-4">
-		<div class="form-group">
+		<div sec:authorize="hasRole('ADMIN')" class="form-center">
 			<a href="admin">Admin page</a>
 		</div>
-	</div>
-	<hr>
-	<div sec:authorize="isAuthenticated()" class="col-sm-4">
-		<form th:action="@{/logout}" method="post">
-			<input type="submit" value="Sign Out" />
-		</form>
+		<hr>
+		<div sec:authorize="isAuthenticated()" class="form-center">
+			<form th:action="@{/logout}" method="post">
+				<input type="submit" value="Sign Out" />
+			</form>
+		</div>
 	</div>
 </body>
 </html>

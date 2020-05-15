@@ -6,41 +6,41 @@
 <link href="../../css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-	<h1>Thank you for returning the book.</h1>
-	<h3>Order details:</h3>
-	<br />
-	<table class="table">
-		<caption></caption>
-		<thead>
-			<tr>
-				<th scope="col">Id</th>
-				<th scope="col">Order date</th>
-				<th scope="col">Due date</th>
-				<th scope="col">Name</th>
-				<th scope="col">Author</th>
-				<th scope="col">User Name</th>
-				<th scope="col">User Email</th>
-				<th scope="col">is Prolonged</th>
-				<th scope="col">is Finished</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr>
-				<td th:text="${order.id}"></td>
-				<td th:text="${order.orderDate}"></td>
-				<td th:text="${order.dueDate}"></td>
-				<td th:text="${order.bookDto.bookDetailsDto.name}"></td>
-				<td th:text="${order.bookDto.bookDetailsDto.author}"></td>
-				<td th:text="${order.userDto.username}"></td>
-				<td th:text="${order.userDto.email}"></td>
-				<td th:text="${order.isProlonged}"></td>
-				<td th:text="${order.isFinished}"></td>
-			</tr>
-		</tbody>
-	</table>
-	<hr>
-	<a th:href="@{'../../../feedbacks/addfeedback/' + ${order.id}}">Write
-		feedback</a>
-
+	<div class="form-wrapper">
+		<h1 class="form-center">Thank you for returning the book.</h1>
+		<h3>Order details:</h3>
+		<table class="table">
+			<caption></caption>
+			<thead>
+				<tr>
+					<th scope="col">Id</th>
+					<th scope="col">Order date</th>
+					<th scope="col">Due date</th>
+					<th scope="col">Name</th>
+					<th scope="col">Author</th>
+					<th scope="col">User Name</th>
+					<th scope="col">is Prolonged</th>
+					<th scope="col">is Finished</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td th:text="${order.id}"></td>
+					<td th:text="${order.orderDate}"></td>
+					<td th:text="${order.dueDate}"></td>
+					<td th:text="${order.bookDto.bookDetailsDto.name}"></td>
+					<td th:text="${order.bookDto.bookDetailsDto.author}"></td>
+					<td th:text="${order.userDto.username}"></td>
+					<td th:text="${order.isProlonged}"></td>
+					<td th:text="${order.isFinished}"></td>
+				</tr>
+			</tbody>
+		</table>
+		<hr>
+		<div class="form-center">
+			<a th:href="@{'../../../feedbacks/addfeedback/' + ${order.id}}">Write
+				feedback</a>
+		</div>
+	</div>
 </body>
 </html>
