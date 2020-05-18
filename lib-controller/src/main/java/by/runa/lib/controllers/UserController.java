@@ -12,6 +12,7 @@ import by.runa.lib.utils.ImgFileUploader;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -56,6 +57,22 @@ public class UserController {
         return modelAndView;
     }
 
+    @GetMapping("{id}")
+    public ModelAndView getMyUsers(@PathVariable Long id) {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("oneuser");
+        try {
+            UserDto user = userService.getUserById(id);
+            modelAndView.addObject(USER, user);
+            List<OrderDto> listorders = orderService.getAllOrdersByUserId(user.getId());
+            modelAndView.addObject("ListOrders", listorders);
+        } catch (EntityNotFoundException e) {
+            modelAndView.setViewName(ERRORS);
+            modelAndView.addObject(MESSAGE, e.getMessage());
+        }
+        return modelAndView;
+    }
+
     @GetMapping(value = "adduser")
     public ModelAndView addUser() {
         ModelAndView modelAndView = new ModelAndView();
@@ -73,7 +90,7 @@ public class UserController {
         userService.createUser(userDto, departmentDto);
         try {
             imgFileUploader.createOrUpdate(userDto, file);
-            modelAndView.setViewName("login");
+            modelAndView.setViewName("general/login");
         } catch (IOException e) {
             modelAndView.setViewName(ERRORS);
             modelAndView.addObject(MESSAGE, e.getMessage());
@@ -81,11 +98,11 @@ public class UserController {
         return modelAndView;
     }
 
-    @GetMapping("{id}")
+    @GetMapping("my/{id}")
     public ModelAndView getUser(Principal principal) {
         final String currentUser = principal.getName();
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("oneuser");
+        modelAndView.setViewName("myprofile");
         try {
             principalId = userService.getUserByName(currentUser).getId();
             UserDto user = userService.getUserById(principalId);

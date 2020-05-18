@@ -10,11 +10,26 @@
 		<h1 class="form-center">Add Department:</h1>
 		<hr>
 		<form th:action="@{${id}}" th:object="${departmentdto}" method="POST">
-			Name: <input type="text" th:field="*{name}" /> <br /> <input
-				type="submit" value="Create" /> <input type="reset" value="Reset">
+			<div class="form-center">
+				<label for="name"> Name <input type="text" id="name"
+					name="name" th:field="*{name}" class="form-control input-sm"
+					required />
+				</label>
+			</div>
+			<br />
+			<div class="form-center">
+				<div style="display: inline-block">
+					<input type="submit" value="Add"> <input type="reset"
+						value="Reset">
+				</div>
+			</div>
 		</form>
 	</div>
+	<hr>
 </body>
-<hr>
-<a href="javascript:history.back()">Go back</a>
+<footer class="footer">
+	<a href="javascript:history.back()">Go back </a>
+	<div>&#169; 2020 Runa</div>
+	<div>Feedback? Get in touch: litvinenoknastia@gmail.com</div>
+</footer>
 </html>

@@ -38,9 +38,15 @@
 		</table>
 		<hr>
 		<div class="form-center">
-			<a th:href="@{'../../../feedbacks/addfeedback/' + ${order.id}}">Write
+			<a th:href="@{'../../../feedbacks/addfeedback/' + ${order.id}}" class="btn btn-light">Write
 				feedback</a>
 		</div>
 	</div>
+<hr>
 </body>
+<footer class="footer">
+    <a href="javascript:history.back()">Go back </a>
+    <div>&#169; 2020 Runa</div>
+    <div>Feedback? Get in touch: litvinenoknastia@gmail.com</div>
+</footer>
 </html>

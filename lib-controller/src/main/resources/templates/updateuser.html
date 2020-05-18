@@ -50,11 +50,13 @@
 					name="confirm_password" type="password" id="confpassword"
 					class="form-control input-sm" /> <span id='message'></span>
 			</div>
+			<br>
 			<div class="form-center">
 				<input type="submit" value="Update Profile" />
 			</div>
 		</form>
 	</div>
+	<hr>
 </body>
 <script>
 	$('#password, #confpassword').on('keyup', function() {
@@ -64,7 +66,10 @@
 			$('#message').html('Not Matching').css('color', 'red');
 	});
 </script>
-<hr>
-<a href="javascript:history.back()">Go back</a>
+</body>
+<footer class="footer">
+    <a href="javascript:history.back()">Go back </a>
+    <div>&#169; 2020 Runa</div>
+    <div>Feedback? Get in touch: litvinenoknastia@gmail.com</div>
+</footer>
 </html>
-

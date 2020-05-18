@@ -48,9 +48,12 @@
 					class="form-control input-sm" required /></label> <span id='message'></span>
 			</div>
 			<div class="form-center">
-				<input type="submit" value="Create" /> <input type="reset"
-					value="Reset">
+				<div style="display: inline-block">
+					<input type="submit" value="Create" /> <input type="reset"
+						value="Reset">
+				</div>
 			</div>
+			<br>
 		</form>
 		<div class="form-center">
 			<form action="/signin/facebook" method="post">
@@ -59,6 +62,7 @@
 			</form>
 		</div>
 	</div>
+	<hr>
 </body>
 <script>
 	$('#password, #confirm_password').on('keyup', function() {
@@ -68,6 +72,10 @@
 			$('#message').html('Not Matching').css('color', 'red');
 	});
 </script>
-<hr>
-<a href="javascript:history.back()">Go back</a>
+</body>
+<footer class="footer">
+    <a href="javascript:history.back()">Go back </a>
+    <div>&#169; 2020 Runa</div>
+    <div>Feedback? Get in touch: litvinenoknastia@gmail.com</div>
+</footer>
 </html>

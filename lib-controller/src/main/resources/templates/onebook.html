@@ -5,82 +5,91 @@
 <title>Library - Book page</title>
 <link href="../css/styles.css" rel="stylesheet" />
 <link href="../css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
 	<div class="form-wrapper">
-		<div class="form-wrapper">
-			<a href="http://localhost:8080">Home</a> | <a
-				href="http://localhost:8080/books/">All books</a> | <a
-				href="http://localhost:8080/books/addbook">Add book</a><hr>
-			<h1 class="form-center">Book details:</h1>
-			<table>
-				<caption></caption>
-				<thead>
-					<tr>
-						<th scope="col"></th>
-					</tr>
-				<tbody>
-					<tr>
-						<td rowspan="7"><img
-							th:src="@{${book.bookDetailsDto.picture}}" height="400"
-							alt="Cover" /></td>
-						<td class="font-weight-bold">Book ISBN</td>
-						<td th:text="${book.isbn}"></td>
-					</tr>
-					<tr>
-						<td class="font-weight-bold">Book Available</td>
-						<td th:text="${book.quantityAvailable}"></td>
-					</tr>
-					<tr>
-						<td class="font-weight-bold">Rating</td>
-						<td th:text="${#numbers.formatDecimal(book.rating,1,2)}"></td>
-					</tr>
-					<tr>
-						<td class="font-weight-bold">Department</td>
-						<td><span th:each="department : ${book.departments}">
-								<span th:text="${department.name}"> </span>
-						</span></td>
-					</tr>
-					<tr>
-						<td class="font-weight-bold">Name</td>
-						<td th:text="${book.bookDetailsDto.name}"></td>
-					</tr>
+		<a href="../../">Home</a> | <a href="../">All books</a> | <a
+			href="../books/addbook">Add book</a>
+		<hr>
+		<h1 class="form-center">Book details:</h1>
+		<table>
+			<caption></caption>
+			<thead>
+				<tr>
+					<th scope="col"></th>
+				</tr>
+			<tbody>
+				<tr>
+					<td rowspan="7"><img
+						th:src="@{${book.bookDetailsDto.picture}}" height="400"
+						alt="Cover" /></td>
+					<td class="font-weight-bold">Book ISBN</td>
+					<td th:text="${book.isbn}"></td>
+				</tr>
+				<tr>
+					<td class="font-weight-bold">Book Available</td>
+					<td th:text="${book.quantityAvailable}"></td>
+				</tr>
+				<tr>
+					<td class="font-weight-bold">Rating</td>
+					<td th:text="${#numbers.formatDecimal(book.rating,1,2)}"></td>
+				</tr>
+				<tr>
+					<td class="font-weight-bold">Department</td>
+					<td><span th:each="department : ${book.departments}"> <span
+							th:text="${department.name}"> </span>
+					</span></td>
+				</tr>
+				<tr>
+					<td class="font-weight-bold">Name</td>
+					<td th:text="${book.bookDetailsDto.name}"></td>
+				</tr>
 
-					<tr>
-						<td class="font-weight-bold">Author</td>
-						<td th:text="${book.bookDetailsDto.author}"></td>
-					</tr>
-					<tr>
-						<td class="font-weight-bold">Description</td>
-						<td th:text="${book.bookDetailsDto.description}"></td>
-					</tr>
-					<tr>
-						<td><a sec:authorize="isAuthenticated()"
-							th:href="@{'edit/' + ${book.id}}" class="btn btn-light">Edit</a>
-							<a sec:authorize="hasRole('ADMIN')"
-							th:href="@{'delete/' + ${book.id}}" class="btn btn-light">Delete</a>
-						<td></td>
-						<td><a sec:authorize="isAuthenticated()"
+				<tr>
+					<td class="font-weight-bold">Author</td>
+					<td th:text="${book.bookDetailsDto.author}"></td>
+				</tr>
+				<tr>
+					<td class="font-weight-bold">Description</td>
+					<td th:text="${book.bookDetailsDto.description}"></td>
+				</tr>
+				<tr>
+					<td><a sec:authorize="isAuthenticated()"
+						th:href="@{'edit/' + ${book.id}}" class="btn btn-light">Edit</a> <a
+						sec:authorize="hasRole('ADMIN')"
+						th:href="@{'delete/' + ${book.id}}" class="btn btn-light">Delete</a>
+					<td></td>
+
+					<td><span th:if="${book.quantityAvailable >= 1}"><a
+							sec:authorize="isAuthenticated()"
 							th:href="@{'../orders/addorder/' + ${book.id}}"
-							class="btn btn-light">Make order</a> <br></td>
-				</tbody>
-			</table>
-			<hr>
-			<h3>Feedbacks:</h3>
-			<div class="container" th:each="feedback : ${listFeedbacks}">
-				<img
-					th:src="@{'http://localhost:8080/img/' + ${feedback.userName} + '.png'}"
-					alt="Avatar" style="width: 90px">
-				<p>
-					<span th:text="${feedback.userName}"></span> <span
-						th:text="${feedback.rating}"></span>
-				</p>
+							class="btn btn-light">Make order</a></span> <span
+						th:unless="${book.quantityAvailable >= 1}">Sorry, this book
+							has already been taken) come in a week</span></td>
+			</tbody>
+		</table>
+		<hr>
+		<h3>Feedbacks:</h3>
+		<div class="container" th:each="feedback : ${listFeedbacks}">
+			<img
+				th:src="@{'http://localhost:8080/img/' + ${feedback.userName} + '.png'}"
+				alt="Avatar" style="width: 90px">
+			<p>
+				<span th:text="${feedback.userName}"></span> &#160; <span
+					class="fa fa-star checked"></span> <span
+					th:text="${feedback.rating}"></span>
+			</p>
 
-				<p th:text="${feedback.comment}"></p>
-			</div>
+			<p th:text="${feedback.comment}"></p>
 		</div>
 	</div>
+	<hr>
 </body>
-<hr>
-<a href="javascript:history.back()">Go back</a>
+<footer class="footer">
+	<a href="javascript:history.back()">Go back </a>
+	<div>&#169; 2020 Runa</div>
+	<div>Feedback? Get in touch: litvinenoknastia@gmail.com</div>
+</footer>
 </html>

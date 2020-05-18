@@ -7,7 +7,8 @@
 </head>
 <body>
 	<div class="form-wrapper">
-		<a href="../../">Home</a><hr>
+		<a href="../../">Home</a>
+		<hr>
 		<h3 class="form-center">Order details:</h3>
 		<table class="table">
 			<caption></caption>
@@ -33,7 +34,8 @@
 					<td th:text="${order.bookDto.bookDetailsDto.author}"></td>
 					<td th:text="${order.userDto.username}"></td>
 					<td th:text="${order.isProlonged}"></td>
-					<td th:text="${order.isFinished}"></td>
+					<td><span th:if="${order.isFinished == true}">&#10060</span> <span
+						th:unless="${order.isFinished == true}">open</span></td>
 					<td><a th:href="@{'return/' + ${order.id}}">Return book</a> <br>
 						<a th:href="@{'prolong/' + ${order.id}}">Prolong reading</a> <br>
 					</td>
@@ -41,6 +43,11 @@
 			</tbody>
 		</table>
 	</div>
+	<hr>
 </body>
-<hr>
+<footer class="footer">
+	<a href="javascript:history.back()">Go back </a>
+	<div>&#169; 2020 Runa</div>
+	<div>Feedback? Get in touch: litvinenoknastia@gmail.com</div>
+</footer>
 </html>

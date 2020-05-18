@@ -1,9 +1,0 @@
-by\runa\lib\config\DatasourceConfig.class
-by\runa\lib\dao\UserDao.class
-by\runa\lib\dao\OrderDao.class
-by\runa\lib\dao\RoleDao.class
-by\runa\lib\dao\AGenericDao.class
-by\runa\lib\dao\BookDetailsDao.class
-by\runa\lib\dao\FeedbackDao.class
-by\runa\lib\dao\DepartmentDao.class
-by\runa\lib\dao\BookDao.class

@@ -38,7 +38,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.antMatchers("/admin/**", "/departments/**").hasRole("ADMIN")
 				.antMatchers("/orders/**", "/feedbacks/**").hasAnyRole("ADMIN","USER")
 
-				.and().formLogin().loginPage("/login").defaultSuccessUrl("/users/{id}", true).permitAll()
+				.and().formLogin().loginPage("/login").defaultSuccessUrl("/users/my/{id}", true).permitAll()
 				.and().logout().invalidateHttpSession(true).clearAuthentication(true)
 				.logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/bye").permitAll()
 				.and().exceptionHandling().accessDeniedHandler(accessDeniedHandler);

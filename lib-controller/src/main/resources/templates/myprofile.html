@@ -3,14 +3,14 @@
     xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
 <title>Library - User page</title>
-<link href="../css/styles.css" rel="stylesheet" />
-<link href="../css/bootstrap.min.css" rel="stylesheet">
+<link href="../../css/styles.css" rel="stylesheet" />
+<link href="../../css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 	<div class="form-wrapper">
 		<a href="../../">Home</a> | 
-		<a href="../orders/my">My orders</a> | 
-		<a href="../feedbacks/my">My feedbacks</a>
+		<a href="../../orders/my">My orders</a> | 
+		<a href="../../feedbacks/my">My feedbacks</a>
 		<hr>
 		<h1 class="form-center" th:text="'Hello, ' + ${user.username}"></h1>
 		<hr>
@@ -44,7 +44,7 @@
 				</tr>
 				<tr>
 					<td><a sec:authorize="isAuthenticated()"
-						th:href="@{'edit/' + ${user.id}}" class="btn btn-light">Edit </a>
+						th:href="@{'../edit/' + ${user.id}}" class="btn btn-light">Edit </a>
 					</td>
 			</tbody>
 		</table>

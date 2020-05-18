@@ -35,11 +35,17 @@
 					<td th:text="${order.userDto.username}"></td>
 					<td th:text="${order.isProlonged}"></td>
 					<td th:text="${order.isFinished}"></td>
-					<td><a th:href="@{'../return/' + ${order.id}}">Return book</a>
+					<td><a class="btn btn-light" th:href="@{'../return/' + ${order.id}}">Return book</a>
 						<br></td>
 				</tr>
 			</tbody>
 		</table>
 	</div>
+<hr>
 </body>
+<footer class="footer">
+    <a href="javascript:history.back()">Go back </a>
+    <div>&#169; 2020 Runa</div>
+    <div>Feedback? Get in touch: litvinenoknastia@gmail.com</div>
+</footer>
 </html>

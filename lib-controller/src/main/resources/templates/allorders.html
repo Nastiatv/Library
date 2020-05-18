@@ -7,7 +7,8 @@
 </head>
 <body>
 	<div class="form-wrapper">
-		<a href="../">Home</a><hr>
+		<a href="../">Home</a>
+		<hr>
 		<h1 class="form-center">Our Orders:</h1>
 		<table class="table">
 			<caption></caption>
@@ -27,7 +28,8 @@
 				<tr th:each="order : ${orderList}">
 					<td th:text="${order.orderDate}"></td>
 					<td th:text="${order.dueDate}"></td>
-					<td th:text="${order.isFinished}"></td>
+					<td><span th:if="${order.isFinished == true}">&#10060</span> <span
+						th:unless="${order.isFinished == true}">open</span></td>
 					<td th:text="${order.isProlonged}"></td>
 					<td th:text="${order.bookDto.isbn}"></td>
 					<td th:text="${order.userDto.username}"></td>
@@ -36,6 +38,11 @@
 			</tbody>
 		</table>
 	</div>
+	<hr>
 </body>
-<a href="javascript:history.back()">Go back</a>
+<footer class="footer">
+	<a href="javascript:history.back()">Go back </a>
+	<div>&#169; 2020 Runa</div>
+	<div>Feedback? Get in touch: litvinenoknastia@gmail.com</div>
+</footer>
 </html>

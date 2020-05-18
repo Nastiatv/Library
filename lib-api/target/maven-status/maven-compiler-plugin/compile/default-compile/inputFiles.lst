@@ -7,9 +7,7 @@ D:\coursesIT\practice\Library\lib-api\src\main\java\by\runa\lib\api\dto\Feedback
 D:\coursesIT\practice\Library\lib-api\src\main\java\by\runa\lib\api\dao\IAGenericDao.java
 D:\coursesIT\practice\Library\lib-api\src\main\java\by\runa\lib\api\utils\IEmailSender.java
 D:\coursesIT\practice\Library\lib-api\src\main\java\by\runa\lib\api\dao\IDepartmentDao.java
-D:\coursesIT\practice\Library\lib-api\src\main\java\by\runa\lib\api\exceptions\NoOrderWithThisIdException.java
 D:\coursesIT\practice\Library\lib-api\src\main\java\by\runa\lib\api\dto\UserDto.java
-D:\coursesIT\practice\Library\lib-api\src\main\java\by\runa\lib\api\exceptions\NoFeedbackWithThisIdException.java
 D:\coursesIT\practice\Library\lib-api\src\main\java\by\runa\lib\api\service\IDepartmentService.java
 D:\coursesIT\practice\Library\lib-api\src\main\java\by\runa\lib\api\dto\ADto.java
 D:\coursesIT\practice\Library\lib-api\src\main\java\by\runa\lib\api\dto\DepartmentDto.java
@@ -19,7 +17,6 @@ D:\coursesIT\practice\Library\lib-api\src\main\java\by\runa\lib\api\service\IRol
 D:\coursesIT\practice\Library\lib-api\src\main\java\by\runa\lib\api\dao\IOrderDao.java
 D:\coursesIT\practice\Library\lib-api\src\main\java\by\runa\lib\api\dao\IRoleDao.java
 D:\coursesIT\practice\Library\lib-api\src\main\java\by\runa\lib\api\dao\IUserDao.java
-D:\coursesIT\practice\Library\lib-api\src\main\java\by\runa\lib\api\exceptions\NoDepartmentWithThisIdException.java
 D:\coursesIT\practice\Library\lib-api\src\main\java\by\runa\lib\api\service\IFeedbackService.java
 D:\coursesIT\practice\Library\lib-api\src\main\java\by\runa\lib\api\exceptions\NoSuchBookException.java
 D:\coursesIT\practice\Library\lib-api\src\main\java\by\runa\lib\api\service\IOrderService.java
@@ -29,7 +26,5 @@ D:\coursesIT\practice\Library\lib-api\src\main\java\by\runa\lib\api\exceptions\N
 D:\coursesIT\practice\Library\lib-api\src\main\java\by\runa\lib\api\dao\IFeedbackDao.java
 D:\coursesIT\practice\Library\lib-api\src\main\java\by\runa\lib\api\exceptions\IsAlreadyProlongedException.java
 D:\coursesIT\practice\Library\lib-api\src\main\java\by\runa\lib\api\dto\OrderDto.java
-D:\coursesIT\practice\Library\lib-api\src\main\java\by\runa\lib\api\exceptions\NoBookWithThisIdException.java
 D:\coursesIT\practice\Library\lib-api\src\main\java\by\runa\lib\api\dao\IBookDetailsDao.java
 D:\coursesIT\practice\Library\lib-api\src\main\java\by\runa\lib\api\dto\BookDto.java
-D:\coursesIT\practice\Library\lib-api\src\main\java\by\runa\lib\api\exceptions\NoUserWithThisIdException.java

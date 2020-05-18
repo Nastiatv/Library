@@ -17,21 +17,26 @@
 				</label>
 			</div>
 			<div class="form-center">
-				<label for="isbn"> Department <select
+				<label for="isbn"> Department </label><select
 					th:object="${departmentdto}" th:field="*{name}">
-						<option th:each="department : ${departmentsList}"
-							th:value="${department.name}" th:text="${department.name}"></option>
+					<option th:each="department : ${departmentsList}"
+						th:value="${department.name}" th:text="${department.name}"></option>
 				</select>
-				</label>
 			</div>
-			<div align="center">
-				<input type="submit" value="Add"> <input type="reset"
-					value="Reset">
+			<br />
+			<div class="form-center">
+				<div style="display: inline-block">
+					<input type="submit" value="Add"> <input type="reset"
+						value="Reset">
+				</div>
 			</div>
 		</form>
 	</div>
+	<hr>
 </body>
-<hr>
-<a href="javascript:history.back()">Go back</a>
+<footer class="footer">
+	<a href="javascript:history.back()">Go back </a>
+	<div>&#169; 2020 Runa</div>
+	<div>Feedback? Get in touch: litvinenoknastia@gmail.com</div>
+</footer>
 </html>
-

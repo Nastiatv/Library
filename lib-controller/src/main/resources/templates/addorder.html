@@ -11,13 +11,15 @@
 		<br />
 		<div class="form-center">
 			<form th:action="@{${id}}" th:object="${dto}" method="POST">
-				<input type="submit" value="Confirm" />
+				<input type="submit" class="btn btn-light" value="Confirm" />
 			</form>
 		</div>
 	</div>
-</body>
 <hr>
-<a href="javascript:history.back()">Go back</a>
+</body>
+<footer class="footer">
+    <a href="javascript:history.back()">Go back </a>
+    <div>&#169; 2020 Runa</div>
+    <div>Feedback? Get in touch: litvinenoknastia@gmail.com</div>
+</footer>
 </html>
-
-
