@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://thymeleaf.org" lang="en"
-    xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
 <title>Library - User page</title>
 <link href="../css/styles.css" rel="stylesheet" />
@@ -8,9 +8,10 @@
 </head>
 <body>
 	<div class="form-wrapper">
-		<a href="../../">Home</a> | 
-		<a href="../orders/my">My orders</a> | 
-		<a href="../feedbacks/my">My feedbacks</a>
+		<header class="m-md-3">
+			<a href="../../">Home</a> | <a href="../orders/my">My orders</a> | <a
+				href="../feedbacks/my">My feedbacks</a>
+		</header>
 		<hr>
 		<h1 class="form-center" th:text="'Hello, ' + ${user.username}"></h1>
 		<hr>
@@ -49,11 +50,11 @@
 			</tbody>
 		</table>
 	</div>
-<hr>
+	<hr>
 </body>
 <footer class="footer">
-    <a href="javascript:history.back()">Go back </a>
-    <div>&#169; 2020 Runa</div>
-    <div>Feedback? Get in touch: litvinenoknastia@gmail.com</div>
+	<a href="javascript:history.back()">Go back </a>
+	<div>&#169; 2020 Runa</div>
+	<div>Feedback? Get in touch: litvinenoknastia@gmail.com</div>
 </footer>
 </html>

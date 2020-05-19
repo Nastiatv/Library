@@ -7,6 +7,10 @@
 </head>
 <body>
 	<div class="form-wrapper">
+		<header class="m-md-3">
+			<a href="../../">Home</a>
+		</header>
+		<hr>
 		<h1 class="form-center">Thank you for returning the book.</h1>
 		<h3>Order details:</h3>
 		<table class="table">
@@ -38,15 +42,15 @@
 		</table>
 		<hr>
 		<div class="form-center">
-			<a th:href="@{'../../../feedbacks/addfeedback/' + ${order.id}}" class="btn btn-light">Write
-				feedback</a>
+			<a th:href="@{'../../../feedbacks/addfeedback/' + ${order.id}}"
+				class="btn btn-light">Write feedback</a>
 		</div>
 	</div>
-<hr>
+	<hr>
 </body>
 <footer class="footer">
-    <a href="javascript:history.back()">Go back </a>
-    <div>&#169; 2020 Runa</div>
-    <div>Feedback? Get in touch: litvinenoknastia@gmail.com</div>
+	<a href="javascript:history.back()">Go back </a>
+	<div>&#169; 2020 Runa</div>
+	<div>Feedback? Get in touch: litvinenoknastia@gmail.com</div>
 </footer>
 </html>

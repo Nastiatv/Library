@@ -7,7 +7,10 @@
 </head>
 <body>
 	<div class="form-wrapper">
-		<a href="../../">Home</a><hr>
+		<header class="m-md-3">
+			<a href="../../">Home</a>
+		</header>
+		<hr>
 		<h1 class="form-center">We extended reading for another 10 days</h1>
 		<h3>Order details:</h3>
 		<table class="table">
@@ -35,17 +38,17 @@
 					<td th:text="${order.userDto.username}"></td>
 					<td th:text="${order.isProlonged}"></td>
 					<td th:text="${order.isFinished}"></td>
-					<td><a class="btn btn-light" th:href="@{'../return/' + ${order.id}}">Return book</a>
-						<br></td>
+					<td><a class="btn btn-light"
+						th:href="@{'../return/' + ${order.id}}">Return book</a> <br></td>
 				</tr>
 			</tbody>
 		</table>
 	</div>
-<hr>
+	<hr>
 </body>
 <footer class="footer">
-    <a href="javascript:history.back()">Go back </a>
-    <div>&#169; 2020 Runa</div>
-    <div>Feedback? Get in touch: litvinenoknastia@gmail.com</div>
+	<a href="javascript:history.back()">Go back </a>
+	<div>&#169; 2020 Runa</div>
+	<div>Feedback? Get in touch: litvinenoknastia@gmail.com</div>
 </footer>
 </html>

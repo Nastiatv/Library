@@ -10,8 +10,10 @@
 </head>
 <body>
 	<div class="form-wrapper">
-		<a href="../../">Home</a> | <a href="../">All books</a> | <a
-			href="../books/addbook">Add book</a>
+		<header class="m-md-3">
+			<a href="../../">Home</a> | <a href="../">All books</a> | <a
+				href="../books/addbook">Add book</a>
+		</header>
 		<hr>
 		<h1 class="form-center">Book details:</h1>
 		<table>
@@ -62,7 +64,7 @@
 						th:href="@{'delete/' + ${book.id}}" class="btn btn-light">Delete</a>
 					<td></td>
 
-					<td><span th:if="${book.quantityAvailable >= 1}"><a
+					<td><span th:if="${book.quantityAvailable >= 1}"> <a
 							sec:authorize="isAuthenticated()"
 							th:href="@{'../orders/addorder/' + ${book.id}}"
 							class="btn btn-light">Make order</a></span> <span
