@@ -1,12 +1,14 @@
 package by.runa.lib.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import by.runa.lib.api.dto.BookDto;
 import by.runa.lib.api.dto.DepartmentDto;
+import by.runa.lib.api.exceptions.EntityNotFoundException;
 import by.runa.lib.dao.BookDao;
 import by.runa.lib.dao.DepartmentDao;
 import by.runa.lib.entities.Book;
@@ -18,7 +20,10 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -67,24 +72,24 @@ public class BookServiceTest {
         assertThat(listBook.size() == dtoList.size());
     }
 
-//    @Test
-//    public void createBookTest() {
-//        Book book = createBook(TEST_ISBN);
-//        when(bookDao.get(1L)).thenReturn(book);
-//        DepartmentDto departmentDto = new DepartmentDto();
-//        bookService.createBook(bookMapper.toDto(book), departmentDto);
-//        verify(webScraper, times(1)).getBookDetailsFromWeb(TEST_ISBN);
-//        assertThat(bookDao.get(1L).getIsbn() == TEST_ISBN);
-//    }
-//
-//    @Test
-//    public void getBookByIdTest() throws EntityNotFoundException {
-//        Book book = createBook(TEST_ISBN);
-//        when(bookDao.get(1L)).thenReturn(book);
-//        bookService.getBookById(1L);
-//        verify(bookMapper, times(1)).toDto(any(Book.class));
-//        assertThat(bookDao.get(1L).getIsbn() == book.getIsbn()).isTrue();
-//    }
+    @Test
+    public void createBookTest() {
+        Book book = createBook(TEST_ISBN);
+        when(bookDao.get(1L)).thenReturn(book);
+        DepartmentDto departmentDto = new DepartmentDto();
+        bookService.createBook(toDto(book), departmentDto);
+        verify(webScraper, times(1)).getBookDetailsFromWeb(TEST_ISBN);
+        assertThat(bookDao.get(1L).getIsbn() == TEST_ISBN);
+    }
+
+    @Test
+    public void getBookByIdTest() throws EntityNotFoundException {
+        Book book = createBook(TEST_ISBN);
+        when(bookDao.get(1L)).thenReturn(book);
+        BookDto newbook = bookService.getBookById(1L);
+        verify(bookMapper, times(1)).toDto(any(Book.class));
+        assertThat(newbook.getIsbn() == book.getIsbn()).isTrue();
+    }
 
     @Test
     public void deleteBookByIdTest() {
@@ -93,21 +98,21 @@ public class BookServiceTest {
         DepartmentDto depDto = new DepartmentDto();
         bookService.deleteBookById(1L, depDto);
         verify(bookDao, times(1)).delete(book);
-        assertThat(bookDao.get(1L) == null);
+        assertThat(bookDao.get(1L)).isNull();
     }
 
-//    @Test
-//    public void updateBook() throws EntityNotFoundException {
-//        Book book = createBook(TEST_ISBN);
-//        when(bookDao.get(1L)).thenReturn(book);
-//        String isbnToUpdate = TEST_ISBN + "new";
-//        book.setIsbn(isbnToUpdate);
-//        MultipartFile fichier = new MockMultipartFile("fileThatDoesNotExists.txt", "fileThatDoesNotExists.txt",
-//                "text/plain", "This is a dummy file content".getBytes(StandardCharsets.UTF_8));
-//        bookService.updateBook(bookMapper.toDto(book), fichier);
-//        verify(bookDao, times(1)).update(book);
-//        assertThat((bookDao.get(1L)).getIsbn() == isbnToUpdate);
-//    }
+    @Test
+    public void updateBook() throws EntityNotFoundException {
+        Book book = createBook(TEST_ISBN);
+        when(bookDao.get(1L)).thenReturn(book);
+        String isbnToUpdate = TEST_ISBN + "new";
+        book.setIsbn(isbnToUpdate);
+        MultipartFile fichier = new MockMultipartFile("fileThatDoesNotExists.txt", "fileThatDoesNotExists.txt",
+                "text/plain", "This is a dummy file content".getBytes(StandardCharsets.UTF_8));
+        bookService.updateBook(bookMapper.toDto(book), fichier);
+        verify(bookDao, times(1)).update(book);
+        assertThat((bookDao.get(1L)).getIsbn() == isbnToUpdate);
+    }
 
     private Book createBook(String name) {
         Book book = new Book();
@@ -115,5 +120,14 @@ public class BookServiceTest {
         book.setIsbn(TEST_ISBN);
         book.setQuantityInLibrary(1);
         return book;
+    }
+
+    private BookDto toDto(Book book) {
+        BookDto dto = new BookDto();
+        dto.setId(book.getId());
+        dto.setIsbn(book.getIsbn());
+        dto.setQuantityInLibrary(book.getQuantityInLibrary());
+        return dto;
+
     }
 }

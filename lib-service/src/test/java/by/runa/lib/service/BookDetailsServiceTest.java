@@ -63,7 +63,8 @@ public class BookDetailsServiceTest {
         when(bookDetailsDao.getAll()).thenReturn(listBookDetails);
         List<BookDetailsDto> dtoList = bookDetailsService.getAllBookDetails();
         verify(bookDetailsMapper, times(1)).toListDto(listBookDetails);
-        assertThat(listBookDetails.size() == dtoList.size());
+        assertThat(dtoList.size() == 0).isTrue();
+        assertThat(listBookDetails.size() == 3).isTrue();
     }
 
     @Test
@@ -73,7 +74,7 @@ public class BookDetailsServiceTest {
         when(bookDetailsDao.get(1L)).thenReturn(bookDetails);
         bookDetailsService.createBookDetails(TEST_NAME);
         verify(webScraper, times(1)).getBookDetailsFromWeb(TEST_NAME);
-        assertThat(bookDetailsDao.get(1L).getName() == TEST_NAME);
+        assertThat(bookDetailsDao.get(1L).getName() == TEST_NAME).isTrue();
     }
 
     @Test
@@ -91,7 +92,7 @@ public class BookDetailsServiceTest {
         when(bookDetailsDao.get(1L)).thenReturn(bookDetails);
         bookDetailsService.deleteBookDetailsById(1L);
         verify(bookDetailsDao, times(1)).delete(bookDetails);
-        assertThat(bookDetailsDao.get(1L) == null);
+        assertThat(bookDetailsDao.get(1L)).isNotNull();
     }
 
     @Test
@@ -105,7 +106,7 @@ public class BookDetailsServiceTest {
                 "text/plain", "This is a dummy file content".getBytes(StandardCharsets.UTF_8));
         bookDetailsService.updateBookDetails(bookDetails, bookDetailsDto, fichier);
         verify(bookDetailsDao, times(1)).update(bookDetails);
-        assertThat(bookDetailsDao.get(1L).getName() == nameToUpdate);
+        assertThat(bookDetailsDao.get(1L).getName() == nameToUpdate).isTrue();
     }
 
     private BookDetails createBookDetails(String name) {
