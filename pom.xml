@@ -28,7 +28,7 @@
 		<version.org.projectlombok>1.18.12</version.org.projectlombok>
 		<version.org.thymeleaf.extras>3.0.4.RELEASE</version.org.thymeleaf.extras>
 		<version.org.modelmapper>2.3.2</version.org.modelmapper>
-		<version.org.junit.jupiter>5.6.0</version.org.junit.jupiter>
+		<version.junit-jupiter-engine>5.3.2</version.junit-jupiter-engine>
 		<version.com.h2database>1.4.200</version.com.h2database>
 		<version.org.assertj>3.14.0</version.org.assertj>
 		<version.org.mockito>3.3.3</version.org.mockito>
@@ -121,12 +121,6 @@
 				<scope>test</scope>
 			</dependency>
 			<dependency>
-				<groupId>org.junit.jupiter</groupId>
-				<artifactId>junit-jupiter-engine</artifactId>
-				<version>${version.org.junit.jupiter}</version>
-				<scope>test</scope>
-			</dependency>
-			<dependency>
 				<groupId>org.assertj</groupId>
 				<artifactId>assertj-core</artifactId>
 				<version>${version.org.assertj}</version>
@@ -153,6 +147,12 @@
 				<groupId>com.fasterxml.jackson.core</groupId>
 				<artifactId>jackson-databind</artifactId>
 				<version>${version.com.fasterxml.jackson.core}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.junit.jupiter</groupId>
+				<artifactId>junit-jupiter-engine</artifactId>
+				<version>${version.junit-jupiter-engine}</version>
+				<scope>test</scope>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>

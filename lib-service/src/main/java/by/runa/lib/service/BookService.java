@@ -94,7 +94,7 @@ public class BookService implements IBookService {
         if (book.getQuantityInLibrary() == 1) {
             getBookDao().delete(book);
         } else {
-            removeOneBook(id, departmentDto, book);
+            removeOneBook(departmentDto, book);
         }
     }
 
@@ -113,11 +113,11 @@ public class BookService implements IBookService {
         }
     }
 
-    private void removeOneBook(Long id, DepartmentDto departmentDto, Book book) {
+    private void removeOneBook(DepartmentDto departmentDto, Book book) {
         book.setQuantityInLibrary(book.getQuantityInLibrary() - 1)
                 .setQuantityAvailable(book.getQuantityAvailable() - 1);
         removeOneDepartmentFromList(departmentDto, book);
-        getBookDao().update(getBookDao().get(id));
+        getBookDao().update(getBookDao().get(book.getId()));
     }
 
     private void removeOneDepartmentFromList(DepartmentDto departmentDto, Book book) {
