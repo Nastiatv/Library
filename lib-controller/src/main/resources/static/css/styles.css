@@ -24,15 +24,6 @@ table th, table td {
 	align-content: center;
 }
 
-.form-header-left {
-    display: flex;
- }
-
-.form-header-right {
-	display: flex;
-	flex-direction: row-reverse;
-}
-
 .form-center-horizontally {
     display: flex;
     justify-content: space-around;
