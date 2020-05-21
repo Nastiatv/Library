@@ -142,7 +142,7 @@ public class BookService implements IBookService {
         return departmentDao.getByName(departmentDto.getName());
     }
 
-    private BookDetails createBookDetails(BookDto dto) {
+    BookDetails createBookDetails(BookDto dto) {
         return bookDetailsMapper.toEntity(bookDetailsService.createBookDetails(dto.getIsbn()));
     }
 

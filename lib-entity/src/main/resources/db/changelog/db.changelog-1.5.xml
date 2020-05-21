@@ -19,6 +19,9 @@
 			<column name="username" type="varchar(255)">
 				<constraints nullable="false" />
 			</column>
+			<column name="department_id" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
 		</createTable>
 	</changeSet>
 </databaseChangeLog> 

@@ -39,6 +39,9 @@ public class BookServiceTest {
     BookDao bookDao;
 
     @Mock
+    BookDetailsService bookDetailsService;
+
+    @Mock
     DepartmentDao departmentDao;
 
     @Mock
@@ -75,12 +78,10 @@ public class BookServiceTest {
     @Test
     public void createBookTest() {
         Book book = createBook(TEST_ISBN);
-        when(bookDao.get(1L)).thenReturn(book);
         DepartmentDto departmentDto = new DepartmentDto();
         bookService.createBook(toDto(book), departmentDto);
         verify(webScraper, times(1)).getBookDetailsFromWeb(TEST_ISBN);
-        assertThat(bookDao.get(1L).getIsbn() == TEST_ISBN);
-    }
+        }
 
     @Test
     public void getBookByIdTest() throws EntityNotFoundException {
@@ -109,7 +110,7 @@ public class BookServiceTest {
         book.setIsbn(isbnToUpdate);
         MultipartFile fichier = new MockMultipartFile("fileThatDoesNotExists.txt", "fileThatDoesNotExists.txt",
                 "text/plain", "This is a dummy file content".getBytes(StandardCharsets.UTF_8));
-        bookService.updateBook(bookMapper.toDto(book), fichier);
+        bookService.updateBook(toDto(book), fichier);
         verify(bookDao, times(1)).update(book);
         assertThat((bookDao.get(1L)).getIsbn() == isbnToUpdate);
     }
