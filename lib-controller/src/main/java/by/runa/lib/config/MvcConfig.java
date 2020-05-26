@@ -28,6 +28,8 @@ public class MvcConfig implements WebMvcConfigurer {
         registry.addViewController("/login").setViewName("general/login");
         registry.addViewController("/403").setViewName("errors/403");
         registry.addViewController("/bye").setViewName("general/bye");
+        registry.addViewController("/mailToAdmin").setViewName("general/mailToAdmin");
+        registry.addViewController("/forgotPassword").setViewName("general/forgotPassword");
     }
 
     @Bean
@@ -39,7 +41,7 @@ public class MvcConfig implements WebMvcConfigurer {
 
     @Bean
     public FacebookConnectionFactory facebookConnectionFactory() {
-        FacebookConnectionFactory facebookConnectionFactory = new FacebookConnectionFactory("appId", "appSecret");
+        FacebookConnectionFactory facebookConnectionFactory = new FacebookConnectionFactory(appId, appSecret);
         facebookConnectionFactory.setScope("email, public_profile");
         return facebookConnectionFactory;
     }

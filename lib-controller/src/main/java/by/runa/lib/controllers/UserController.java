@@ -2,9 +2,9 @@ package by.runa.lib.controllers;
 
 import by.runa.lib.api.dao.IRoleDao;
 import by.runa.lib.api.dto.DepartmentDto;
-import by.runa.lib.api.dto.OrderDto;
 import by.runa.lib.api.dto.UserDto;
 import by.runa.lib.api.exceptions.EntityNotFoundException;
+import by.runa.lib.api.exceptions.UserIsAlreadyExistsException;
 import by.runa.lib.api.service.IDepartmentService;
 import by.runa.lib.api.service.IOrderService;
 import by.runa.lib.api.service.IUserService;
@@ -22,7 +22,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
 import java.security.Principal;
-import java.util.List;
 
 @RestController
 @RequestMapping("/users/")
@@ -51,24 +50,20 @@ public class UserController {
     @GetMapping
     public ModelAndView getAllUsers() {
         ModelAndView modelAndView = new ModelAndView();
-        List<UserDto> users = userService.getAllUsers();
         modelAndView.setViewName("allusers");
-        modelAndView.addObject("userList", users);
+        modelAndView.addObject("userList", userService.getAllUsers());
         return modelAndView;
     }
 
     @GetMapping("{id}")
     public ModelAndView getMyUsers(@PathVariable Long id) {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("oneuser");
         try {
-            UserDto user = userService.getUserById(id);
-            modelAndView.addObject(USER, user);
-            List<OrderDto> listorders = orderService.getAllOrdersByUserId(user.getId());
-            modelAndView.addObject("ListOrders", listorders);
+            modelAndView.addObject(USER, userService.getUserById(id));
+            modelAndView.addObject("ListOrders", orderService.getAllOrdersByUserId(id));
+            modelAndView.setViewName("oneuser");
         } catch (EntityNotFoundException e) {
-            modelAndView.setViewName(ERRORS);
-            modelAndView.addObject(MESSAGE, e.getMessage());
+            returnViewNameWithError(modelAndView, e);
         }
         return modelAndView;
     }
@@ -76,8 +71,7 @@ public class UserController {
     @GetMapping(value = "adduser")
     public ModelAndView addUser() {
         ModelAndView modelAndView = new ModelAndView();
-        List<DepartmentDto> departments = departmentService.getAllDepartments();
-        modelAndView.addObject("departmentsList", departments);
+        modelAndView.addObject("departmentsList", departmentService.getAllDepartments());
         modelAndView.setViewName("adduser");
         modelAndView.addObject("departmentdto", new DepartmentDto());
         return modelAndView.addObject("dto", new UserDto());
@@ -87,11 +81,11 @@ public class UserController {
     public ModelAndView addUserSubmit(UserDto userDto, DepartmentDto departmentDto,
             @RequestParam(value = "file", required = false) MultipartFile file) {
         ModelAndView modelAndView = new ModelAndView();
-        userService.createUser(userDto, departmentDto);
         try {
-            imgFileUploader.createOrUpdate(userDto, file);
+            userService.createUser(userDto, departmentDto);
+            imgFileUploader.createOrUpdateUserAvatar(userDto, file);
             modelAndView.setViewName("general/login");
-        } catch (IOException e) {
+        } catch (IOException | UserIsAlreadyExistsException e) {
             modelAndView.setViewName(ERRORS);
             modelAndView.addObject(MESSAGE, e.getMessage());
         }
@@ -102,16 +96,14 @@ public class UserController {
     public ModelAndView getUser(Principal principal) {
         final String currentUser = principal.getName();
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("myprofile");
         try {
-            principalId = userService.getUserByName(currentUser).getId();
-            UserDto user = userService.getUserById(principalId);
-            modelAndView.addObject(USER, user);
-            List<OrderDto> listorders = orderService.getAllOrdersByUserId(principalId);
-            modelAndView.addObject("ListOrders", listorders);
+            UserDto userDto = userService.getUserByName(currentUser);
+            modelAndView.addObject(USER, userDto);
+            principalId = userDto.getId();
+            modelAndView.addObject("ListOrders", orderService.getAllOrdersByUserId(principalId));
+            modelAndView.setViewName("myprofile");
         } catch (EntityNotFoundException e) {
-            modelAndView.setViewName(ERRORS);
-            modelAndView.addObject(MESSAGE, e.getMessage());
+            returnViewNameWithError(modelAndView, e);
         }
         return modelAndView;
     }
@@ -121,17 +113,13 @@ public class UserController {
         final String currentUser = principal.getName();
         ModelAndView modelAndView = new ModelAndView();
         try {
-            principalId = userService.getUserByName(currentUser).getId();
-            UserDto user = userService.getUserById(principalId);
-            List<DepartmentDto> departments = departmentService.getAllDepartments();
-            modelAndView.addObject("departmentsList", departments);
-            modelAndView.setViewName("updateuser");
-            modelAndView.addObject(USER, user);
+            modelAndView.addObject("departmentsList", departmentService.getAllDepartments());
+            modelAndView.addObject(USER, userService.getUserByName(currentUser));
             modelAndView.addObject("departmentdto", new DepartmentDto());
             modelAndView.addObject("dto", new UserDto());
+            modelAndView.setViewName("updateuser");
         } catch (EntityNotFoundException e) {
-            modelAndView.setViewName(ERRORS);
-            modelAndView.addObject(MESSAGE, e.getMessage());
+            returnViewNameWithError(modelAndView, e);
         }
         return modelAndView;
     }
@@ -141,14 +129,18 @@ public class UserController {
             @RequestParam(value = "file", required = false) MultipartFile file) {
         ModelAndView modelAndView = new ModelAndView();
         try {
-            UserDto userUpdated = userService.updateUser(principalId, userDto, departmentDto);
-            imgFileUploader.createOrUpdate(userDto, file);
-            modelAndView.addObject(USER, userUpdated);
+            imgFileUploader.createOrUpdateUserAvatar(userDto, file);
+            modelAndView.addObject(USER, userService.updateUser(principalId, userDto, departmentDto));
             modelAndView.setViewName("general/changesSaved");
         } catch (IOException | EntityNotFoundException e) {
             modelAndView.setViewName(ERRORS);
             modelAndView.addObject(MESSAGE, e.getMessage());
         }
         return modelAndView;
+    }
+
+    private void returnViewNameWithError(ModelAndView modelAndView, EntityNotFoundException e) {
+        modelAndView.setViewName(ERRORS);
+        modelAndView.addObject(MESSAGE, e.getMessage());
     }
 }

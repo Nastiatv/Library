@@ -13,7 +13,7 @@
 			sec:authorize="isAuthenticated()" href="/logout">Sign Out</a> <a
 			sec:authorize="hasRole('ADMIN')" href="admin"> | Admin page</a>
 	</header>
-	<div class="banner m-md-3 text-center">
+	<div class="banner m-md-3 ">
 		<div class="banner-text">
 			<h1 class="text-light">Our library</h1>
 			<p>Click here and see what we have for you</p>
@@ -21,7 +21,7 @@
 		</div>
 	</div>
 	<div sec:authorize="isAuthenticated()"
-		class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light">
+		class="overflow-hidden m-md-3 text-center bg-light">
 		<div class="col-md-5 p-lg-5 mx-auto my-5">
 			<h1>My profile</h1>
 			<a class="btn btn-outline-secondary" href="users/my/{id}">See

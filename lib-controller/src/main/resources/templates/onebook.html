@@ -11,7 +11,7 @@
 <body>
 	<div class="form-wrapper">
 		<header class="m-md-3">
-			<a href="../../">Home</a> | <a href="../">All books</a> | <a
+			<a href="../../">Home</a> | <a href="../books/">All books</a> | <a
 				href="../books/addbook">Add book</a>
 		</header>
 		<hr>
@@ -24,7 +24,7 @@
 				</tr>
 			<tbody>
 				<tr>
-					<td rowspan="7"><img
+					<td rowspan="6"><img
 						th:src="@{${book.bookDetailsDto.picture}}" height="400"
 						alt="Cover" /></td>
 					<td class="font-weight-bold">Book ISBN</td>
@@ -54,8 +54,8 @@
 					<td th:text="${book.bookDetailsDto.author}"></td>
 				</tr>
 				<tr>
-					<td class="font-weight-bold">Description</td>
-					<td th:text="${book.bookDetailsDto.description}"></td>
+					<td align="justify" colspan="3"><span class="font-weight-bold">Description:
+					</span> <span th:text="''+${book.bookDetailsDto.description}"></span></td>
 				</tr>
 				<tr>
 					<td><a sec:authorize="isAuthenticated()"

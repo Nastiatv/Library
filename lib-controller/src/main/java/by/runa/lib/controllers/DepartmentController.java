@@ -12,8 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("/departments/")
 public class DepartmentController {
@@ -28,9 +26,8 @@ public class DepartmentController {
     @GetMapping
     public ModelAndView getAllDepartments() {
         ModelAndView modelAndView = new ModelAndView();
-        List<DepartmentDto> departments = departmentService.getAllDepartments();
         modelAndView.setViewName("alldepartments");
-        modelAndView.addObject("departmentList", departments);
+        modelAndView.addObject("departmentList", departmentService.getAllDepartments());
         return modelAndView;
     }
 
@@ -38,9 +35,8 @@ public class DepartmentController {
     public ModelAndView getDepartmentById(@PathVariable Long id) {
         ModelAndView modelAndView = new ModelAndView();
         try {
-            DepartmentDto department = departmentService.getDepartmentById(id);
             modelAndView.setViewName("onedepartment");
-            modelAndView.addObject(DEPARTMENT, department);
+            modelAndView.addObject(DEPARTMENT, departmentService.getDepartmentById(id));
         } catch (EntityNotFoundException e) {
             modelAndView.setViewName(ERRORS);
             modelAndView.addObject(MESSAGE, e.getMessage());
@@ -51,8 +47,7 @@ public class DepartmentController {
     @GetMapping(value = "adddepartment")
     public ModelAndView addDepartment() {
         ModelAndView modelAndView = new ModelAndView();
-        List<DepartmentDto> departments = departmentService.getAllDepartments();
-        modelAndView.addObject("departmentsList", departments);
+        modelAndView.addObject("departmentsList", departmentService.getAllDepartments());
         modelAndView.setViewName("adddepartment");
         return modelAndView.addObject("departmentdto", new DepartmentDto());
     }
@@ -60,18 +55,16 @@ public class DepartmentController {
     @PostMapping(value = "adddepartment")
     public ModelAndView addDepartmentSubmit(DepartmentDto departmentDto) {
         ModelAndView modelAndView = new ModelAndView();
-        DepartmentDto newdepartment = departmentService.createDepartment(departmentDto);
         modelAndView.setViewName("onedepartment");
-        return modelAndView.addObject(DEPARTMENT, newdepartment);
+        return modelAndView.addObject(DEPARTMENT, departmentService.createDepartment(departmentDto));
     }
 
     @GetMapping("edit/{id}")
     public ModelAndView getDepartmentEditForm(@PathVariable Long id) {
         ModelAndView modelAndView = new ModelAndView();
         try {
-            DepartmentDto departmentDto = departmentService.getDepartmentById(id);
             modelAndView.setViewName("updatedepartment");
-            modelAndView.addObject(DEPARTMENT, departmentDto);
+            modelAndView.addObject(DEPARTMENT, departmentService.getDepartmentById(id));
             modelAndView.addObject("dto", new DepartmentDto());
         } catch (EntityNotFoundException e) {
             modelAndView.setViewName(ERRORS);
@@ -84,8 +77,7 @@ public class DepartmentController {
     public ModelAndView saveDepartmentChanges(@PathVariable Long id, DepartmentDto departmentDto) {
         ModelAndView modelAndView = new ModelAndView();
         try {
-            DepartmentDto departmentUpdated = departmentService.updateDepartment(id, departmentDto);
-            modelAndView.addObject(DEPARTMENT, departmentUpdated);
+            modelAndView.addObject(DEPARTMENT, departmentService.updateDepartment(id, departmentDto));
             modelAndView.setViewName("general/changesSaved");
         } catch (EntityNotFoundException e) {
             modelAndView.setViewName(ERRORS);
@@ -98,8 +90,7 @@ public class DepartmentController {
     public ModelAndView deleteDepartment(@PathVariable Long id) {
         ModelAndView modelAndView = new ModelAndView();
         try {
-            DepartmentDto departmentDto = departmentService.getDepartmentById(id);
-            modelAndView.addObject(DEPARTMENT, departmentDto);
+            modelAndView.addObject(DEPARTMENT, departmentService.getDepartmentById(id));
             modelAndView.setViewName("deletedepartment");
         } catch (EntityNotFoundException e) {
             modelAndView.setViewName(ERRORS);
@@ -111,6 +102,8 @@ public class DepartmentController {
     @PostMapping("delete/{id}")
     public ModelAndView deletedepartmentSubmit(@PathVariable Long id) {
         departmentService.deleteDepartmentById(id);
-        return getAllDepartments();
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("general/changesSaved");
+        return modelAndView;
     }
 }

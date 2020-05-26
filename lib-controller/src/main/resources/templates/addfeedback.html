@@ -6,7 +6,7 @@
 <link href="../../css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-	<div class="form-wrapper">
+	<div class="form-wrapper" style="padding: 50px 0">
 		<h1 class="form-center">Write feedback:</h1>
 		<hr>
 		<form th:action="@{${id}}" th:object="${feedbackdto}" method="POST"
@@ -28,7 +28,7 @@
 			<div class="form-center">
 				<label for="comment"> Comment</label> <input type="text"
 					id="comment" name="comment" th:field="*{comment}"
-					class="form-control input-sm" value="${feedback.comment}" required />
+					width="700" height="300" class="form-control input-sm" value="${feedback.comment}" required />
 			</div>
 			<br>
 			<div class="form-center">

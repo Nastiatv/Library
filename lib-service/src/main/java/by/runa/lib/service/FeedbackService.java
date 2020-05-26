@@ -7,10 +7,12 @@ import by.runa.lib.api.dao.IOrderDao;
 import by.runa.lib.api.dto.FeedbackDto;
 import by.runa.lib.api.exceptions.EntityNotFoundException;
 import by.runa.lib.api.service.IFeedbackService;
+import by.runa.lib.entities.Book;
 import by.runa.lib.entities.Feedback;
 import by.runa.lib.entities.Order;
 import by.runa.lib.utils.mappers.AMapper;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -49,7 +51,9 @@ public class FeedbackService implements IFeedbackService {
     @Override
     public FeedbackDto createFeedback(FeedbackDto feedbackDto, Long orderId) {
         Order order = orderDao.get(orderId);
-        Feedback feedback = writeFeedback(feedbackDto, order);
+        Feedback feedback = new Feedback().setBook(order.getBook()).setUser(order.getUser())
+                .setRating(feedbackDto.getRating()).setUserName(order.getUser().getUsername())
+                .setComment(feedbackDto.getComment());
         getFeedbackDao().create(feedback);
         countAvgRatingForBook(order.getBook().getId());
         return feedbackMapper.toDto(feedback);
@@ -98,19 +102,12 @@ public class FeedbackService implements IFeedbackService {
     }
 
     private void countAvgRatingForBook(Long bookId) {
-        int num = 0;
-        double sum = 0;
-        for (Feedback feedback : bookDao.get(bookId).getFeedbacks()) {
-            sum += feedback.getRating();
-            num++;
+        Book book = bookDao.get(bookId);
+        List<Feedback> feedbacks = book.getFeedbacks();
+        double num = feedbacks.size();
+        int sum = feedbacks.stream().mapToInt(Feedback::getRating).sum();
+        if (!CollectionUtils.isEmpty(feedbacks)) {
+            book.setRating(sum / num);
         }
-        if (num != 0) {
-            bookDao.get(bookId).setRating(sum / num);
-        }
-    }
-
-    private Feedback writeFeedback(FeedbackDto feedbackDto, Order order) {
-        return new Feedback().setBook(order.getBook()).setUser(order.getUser()).setRating(feedbackDto.getRating())
-                .setUserName(order.getUser().getUsername()).setComment(feedbackDto.getComment());
     }
 }

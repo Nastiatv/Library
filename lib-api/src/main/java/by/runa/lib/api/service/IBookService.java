@@ -19,4 +19,6 @@ public interface IBookService {
     BookDto updateBook(BookDto bookDto, MultipartFile file) throws EntityNotFoundException;
 
     void deleteBookById(Long id, DepartmentDto departmentDto);
+
+    BookDto getBookByIsbn(String isbn) throws EntityNotFoundException;
 }

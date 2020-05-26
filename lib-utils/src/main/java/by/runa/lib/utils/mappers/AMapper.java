@@ -8,9 +8,9 @@ import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public abstract class AMapper<E extends AEntity, D extends ADto> implements IMapper<E, D> {
 
@@ -47,11 +47,7 @@ public abstract class AMapper<E extends AEntity, D extends ADto> implements IMap
 
     @Override
     public List<D> toListDto(List<E> entities) {
-        List<D> listDto = new ArrayList<>();
-        for (E entity : entities) {
-            listDto.add(toDto(entity));
-        }
-        return listDto;
+        return entities.stream().map(this::toDto).collect(Collectors.toList());
     }
 
     public Converter<D, E> toEntityConverter() {

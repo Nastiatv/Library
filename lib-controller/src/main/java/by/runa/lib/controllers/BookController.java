@@ -3,7 +3,6 @@ package by.runa.lib.controllers;
 import by.runa.lib.api.dto.BookDetailsDto;
 import by.runa.lib.api.dto.BookDto;
 import by.runa.lib.api.dto.DepartmentDto;
-import by.runa.lib.api.dto.FeedbackDto;
 import by.runa.lib.api.exceptions.EntityNotFoundException;
 import by.runa.lib.api.service.IBookService;
 import by.runa.lib.api.service.IDepartmentService;
@@ -21,7 +20,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
-import java.util.List;
 
 @RestController
 @RequestMapping("/books/")
@@ -30,6 +28,7 @@ public class BookController {
     private static final String ERRORS = "errors/errors";
     private static final String MESSAGE = "message";
     private static final String BOOK = "book";
+    private static final String ONEBOOK = "oneBook";
 
     @Autowired
     IBookService bookService;
@@ -46,9 +45,8 @@ public class BookController {
     @GetMapping
     public ModelAndView getAllBooks() {
         ModelAndView modelAndView = new ModelAndView();
-        List<BookDto> books = bookService.getAllBooks();
         modelAndView.setViewName("allbooks");
-        modelAndView.addObject("bookList", books);
+        modelAndView.addObject("bookList", bookService.getAllBooks());
         return modelAndView;
     }
 
@@ -56,11 +54,22 @@ public class BookController {
     public ModelAndView getBookById(@PathVariable Long id) {
         ModelAndView modelAndView = new ModelAndView();
         try {
-            BookDto book = bookService.getBookById(id);
-            List<FeedbackDto> listFeedbacks = feedbackService.getAllFeedbacksByBookId(id);
-            modelAndView.setViewName("onebook");
-            modelAndView.addObject(BOOK, book);
-            modelAndView.addObject("listFeedbacks", listFeedbacks);
+            modelAndView.addObject(BOOK, bookService.getBookById(id));
+            modelAndView.addObject("listFeedbacks", feedbackService.getAllFeedbacksByBookId(id));
+            modelAndView.setViewName(ONEBOOK);
+        } catch (EntityNotFoundException e) {
+            modelAndView.setViewName(ERRORS);
+            modelAndView.addObject(MESSAGE, e.getMessage());
+        }
+        return modelAndView;
+    }
+
+    @GetMapping("/search")
+    public ModelAndView search(@RequestParam String isbn) {
+        ModelAndView modelAndView = new ModelAndView("search");
+        try {
+            modelAndView.addObject(BOOK, bookService.getBookByIsbn(isbn));
+            modelAndView.setViewName(ONEBOOK);
         } catch (EntityNotFoundException e) {
             modelAndView.setViewName(ERRORS);
             modelAndView.addObject(MESSAGE, e.getMessage());
@@ -71,28 +80,25 @@ public class BookController {
     @GetMapping(value = "addbook")
     public ModelAndView addBook() {
         ModelAndView modelAndView = new ModelAndView();
-        List<DepartmentDto> departments = departmentService.getAllDepartments();
-        modelAndView.addObject("departmentsList", departments);
-        modelAndView.setViewName("addbook");
+        modelAndView.addObject("departmentsList", departmentService.getAllDepartments());
         modelAndView.addObject("departmentdto", new DepartmentDto());
+        modelAndView.setViewName("addbook");
         return modelAndView.addObject("bookdto", new BookDto());
     }
 
     @PostMapping(value = "addbook")
     public ModelAndView addBookSubmit(BookDto bookDto, DepartmentDto departmentDto) {
         ModelAndView modelAndView = new ModelAndView();
-        BookDto newbook = bookService.createBook(bookDto, departmentDto);
-        modelAndView.setViewName("onebook");
-        return modelAndView.addObject("book", newbook);
+        modelAndView.setViewName(ONEBOOK);
+        return modelAndView.addObject("book", bookService.createBook(bookDto, departmentDto));
     }
 
     @GetMapping("edit/{id}")
     public ModelAndView getBookEditForm(@PathVariable Long id) {
         ModelAndView modelAndView = new ModelAndView();
         try {
-            BookDto bookDto = bookService.getBookById(id);
             modelAndView.setViewName("updatebook");
-            modelAndView.addObject(BOOK, bookDto);
+            modelAndView.addObject(BOOK, bookService.getBookById(id));
             modelAndView.addObject("detailsdto", new BookDetailsDto());
             modelAndView.addObject("dto", new BookDto());
         } catch (EntityNotFoundException e) {
@@ -107,9 +113,8 @@ public class BookController {
             @RequestParam(value = "file", required = false) MultipartFile file) {
         ModelAndView modelAndView = new ModelAndView();
         try {
-            BookDto bookUpdated = bookService.updateBook(bookDto, file);
-            imgFileUploader.createOrUpdate(bookDto, file);
-            modelAndView.addObject("book", bookUpdated);
+            imgFileUploader.createOrUpdateBookCover(bookDto, file);
+            modelAndView.addObject("book", bookService.updateBook(bookDto, file));
             modelAndView.setViewName("general/changesSaved");
         } catch (IOException | EntityNotFoundException e) {
             modelAndView.setViewName(ERRORS);
@@ -122,8 +127,7 @@ public class BookController {
     public ModelAndView deleteBook(@PathVariable Long id) {
         ModelAndView modelAndView = new ModelAndView();
         try {
-            BookDto bookDto = bookService.getBookById(id);
-            modelAndView.addObject("book", bookDto);
+            modelAndView.addObject("book", bookService.getBookById(id));
             modelAndView.setViewName("deletebook");
             modelAndView.addObject("departmentdto", new DepartmentDto());
             modelAndView.addObject("bookDto", new BookDto());

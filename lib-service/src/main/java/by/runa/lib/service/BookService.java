@@ -30,8 +30,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-@Service
 @Slf4j
+@Service
 @Transactional
 public class BookService implements IBookService {
 
@@ -65,16 +65,18 @@ public class BookService implements IBookService {
     @Override
     public BookDto createBook(BookDto dto, DepartmentDto departmentDto) {
         cleanIsbn(dto);
+        Book existingBook = getBookbyIsbnFromDao(dto);
         Department dep = getDepartmentByName(departmentDto);
-        if (getBookbyIsbn(dto) != null) {
-            incrementQuantity(dto);
-            getBookbyIsbn(dto).getDepartments().add(dep);
-            return bookMapper.toDto(getBookbyIsbn(dto));
+        if (existingBook != null) {
+            incrementQuantity(existingBook).getDepartments().add(dep);
+            return bookMapper.toDto(existingBook);
         } else {
-            Book book = writeBook(dto, dep);
+            Book book = new Book().setQuantityInLibrary(1).setQuantityAvailable(1).setIsbn(dto.getIsbn())
+                    .setRating(null).setDepartments(Collections.singletonList(dep))
+                    .setBookDetails(createBookDetails(dto));
             bookMapper.toDto(getBookDao().create(book));
             try {
-                emailSender.sendEmailsFromAdminAboutNewBook(book);
+                emailSender.sendEmailsFromAdminAboutNewBook(book, dep);
             } catch (MessagingException e) {
                 log.info("Mail not sent!");
             }
@@ -121,17 +123,7 @@ public class BookService implements IBookService {
     }
 
     private void removeOneDepartmentFromList(DepartmentDto departmentDto, Book book) {
-        for (Department depart : book.getDepartments()) {
-            if (depart.getName().equals(departmentDto.getName())) {
-                book.getDepartments().remove(depart);
-                break;
-            }
-        }
-    }
-
-    private Book writeBook(BookDto dto, Department department) {
-        return new Book().setQuantityInLibrary(1).setQuantityAvailable(1).setIsbn(dto.getIsbn()).setRating(null)
-                .setDepartments(Collections.singletonList(department)).setBookDetails(createBookDetails(dto));
+        book.getDepartments().removeIf(department -> department.getName().equals(departmentDto.getName()));
     }
 
     private void cleanIsbn(BookDto dto) {
@@ -146,12 +138,18 @@ public class BookService implements IBookService {
         return bookDetailsMapper.toEntity(bookDetailsService.createBookDetails(dto.getIsbn()));
     }
 
-    private void incrementQuantity(BookDto dto) {
-        getBookbyIsbn(dto).setQuantityAvailable(getBookbyIsbn(dto).getQuantityAvailable() + 1);
-        getBookbyIsbn(dto).setQuantityInLibrary(getBookbyIsbn(dto).getQuantityInLibrary() + 1);
+    private Book incrementQuantity(Book existingBook) {
+        existingBook.setQuantityAvailable(existingBook.getQuantityAvailable() + 1);
+        return existingBook.setQuantityInLibrary(existingBook.getQuantityInLibrary() + 1);
     }
 
-    private Book getBookbyIsbn(BookDto dto) {
+    private Book getBookbyIsbnFromDao(BookDto dto) {
         return bookDao.getByIsbn(dto.getIsbn());
+    }
+
+    @Override
+    public BookDto getBookByIsbn(String isbn) throws EntityNotFoundException {
+        return Optional.ofNullable(bookMapper.toDto(bookDao.getByIsbn(isbn)))
+                .orElseThrow(() -> new EntityNotFoundException("Book"));
     }
 }

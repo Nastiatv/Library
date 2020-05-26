@@ -4,9 +4,12 @@
 <title>Library - Please login</title>
 <link href="../css/styles.css" rel="stylesheet" />
 <link href="../css/bootstrap.min.css" rel="stylesheet">
+<link
+	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"
+	rel="stylesheet">
 </head>
 <body>
-	<div class="form-wrapper">
+	<div class="form-wrapper" style="padding: 50px 0">
 		<h1 class="form-center">Please login:</h1>
 		<hr>
 		<div>
@@ -14,36 +17,49 @@
 			<div th:if="${param.logout}">You have been logged out.</div>
 			<form th:action="@{../login}" method="post">
 				<div class="form-center">
-					<label for="username">User Name<input type="text"
-						name="username" id="username" class="form-control input-sm"
-						required />
-					</label>
+					<label for="username" class="sr-only">User Name</label> <input
+						type="text" name="username" id="username" class="form-control"
+						placeholder="User Name" required />
+
 				</div>
+				<br />
 				<div class="form-center">
-					<label for="password">Password <input type="password"
-						name="password" id="password" class="form-control input-sm"
-						required /></label>
+					<label for="password" class="sr-only">Password</label> <input
+						type="password" name="password" id="password" class="form-control"
+						placeholder="Password" required />
 				</div>
+				<button type="submit" class="login-button login-button-login">
+					<i class="fa fa-chevron-right"></i>
+				</button>
 				<div class="form-center">
 					<label for="remember_me">Keep me logged in <input
 						type="checkbox" id="remember_me" name="_remember_me"
 						th:checked="true" /></label>
 				</div>
 				<div class="form-center">
-					<input type="submit" value="Sign In" />
+					<p>
+						forgot your password? <a href="/forgotPassword">click here</a>
+					</p>
+					<p>
+						new user? <a href="users/adduser">create new account</a>
+					</p>
 				</div>
 			</form>
-			<hr>
 			<div class="form-center">
-				<a href="users/adduser">Sign Up</a>
+				<form action="/signin/facebook" method="post">
+					<input type="hidden" name="scope" value="email, public_profile" />
+					<input type="image"
+						th:src="@{'http://localhost:8080/img/facebookIcon.png'}"
+						height="70" alt="Sign In With Facebook">
+				</form>
 			</div>
 		</div>
 	</div>
 	<hr>
 </body>
 <footer class="footer">
-    <a href="javascript:history.back()">Go back </a>
-    <div>&#169; 2020 Runa</div>
-    <div>Feedback? Get in touch: litvinenoknastia@gmail.com</div>
+	<a href="javascript:history.back()">Go back </a>
+	<div>&#169; 2020 Runa</div>
+	<div>Feedback? Get in touch: litvinenoknastia@gmail.com</div>
 </footer>
 </html>

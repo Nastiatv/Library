@@ -25,10 +25,10 @@ table th, table td {
 }
 
 .form-center-horizontally {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    align-content: center;
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	align-content: center;
 }
 
 .footer {
@@ -44,6 +44,44 @@ table th, table td {
 	width: 100%;
 }
 
+.login-button {
+	background: #ffffff;
+	color: #999999;
+	width: 50px;
+	height: 50px;
+	margin-top: -25px;
+	border: 5px solid #efefef;
+	border-radius: 50%;
+}
+
+.login-button:hover {
+	color: #555555;
+	transform: rotate(450deg);
+}
+
+.login-button.clicked {
+	color: #555555;
+}
+
+.login-button.clicked:hover {
+	transform: none;
+}
+
+.login-button.clicked.success {
+	color: #2ecc71;
+}
+
+.login-button.clicked.error {
+	color: #e74c3c;
+}
+
+.login-button-forgot {
+	margin-left: 500px;
+}
+
+.login-button-login {
+	margin-left: 760px;
+}
 /*FOR RATING STAR:*/
 .rating-area {
     overflow: hidden;
@@ -88,7 +126,7 @@ table th, table td {
 
 /*FOR exit RATING STAR:*/
 .checked {
-  color: gold;
+	color: gold;
 }
 
 /*FOR FEEDBACKS:*/
@@ -117,7 +155,7 @@ table th, table td {
 /* Increase the font-size of a span element */
 .container span {
 	font-size: 20px;
-	}
+}
 
 /* Add media queries for responsiveness. This will center both the text and the image inside the container */
 @media ( max-width : 500px) {
@@ -133,27 +171,27 @@ table th, table td {
 
 /*for banner*/
 body, html {
-    height: 100%;
+	height: 100%;
 }
 
 /* The image */
 .banner {
-   background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("../img/banner.jpg");
-    height: 50%;
-
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  position: relative;
+	background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+		url("../img/banner.jpg");
+	height: 90%;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	position: relative;
 }
 
 /* Place text in the middle of the image */
 .banner-text {
-  text-align: center;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color: white;
+	text-align: center;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	color: white;
 }
 }

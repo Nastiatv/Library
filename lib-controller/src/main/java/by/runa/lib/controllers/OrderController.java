@@ -1,6 +1,5 @@
 package by.runa.lib.controllers;
 
-import by.runa.lib.api.dto.OrderDto;
 import by.runa.lib.api.exceptions.EntityNotFoundException;
 import by.runa.lib.api.exceptions.IsAlreadyClosedException;
 import by.runa.lib.api.exceptions.IsAlreadyProlongedException;
@@ -17,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.security.Principal;
-import java.util.List;
 
 @RestController
 @RequestMapping("/orders/")
@@ -36,9 +34,8 @@ public class OrderController {
     @GetMapping
     public ModelAndView getAllOrders() {
         ModelAndView modelAndView = new ModelAndView();
-        List<OrderDto> orders = orderService.getAllOrders();
         modelAndView.setViewName("allorders");
-        modelAndView.addObject("orderList", orders);
+        modelAndView.addObject("orderList", orderService.getAllOrders());
         return modelAndView;
     }
 
@@ -48,9 +45,8 @@ public class OrderController {
         final String currentUser = principal.getName();
         try {
             long principalId = userService.getUserByName(currentUser).getId();
-            List<OrderDto> orders = orderService.getAllOrdersByUserId(principalId);
             modelAndView.setViewName("allorders");
-            modelAndView.addObject("orderList", orders);
+            modelAndView.addObject("orderList", orderService.getAllOrdersByUserId(principalId));
         } catch (EntityNotFoundException e) {
             modelAndView.setViewName(ERRORS);
             modelAndView.addObject(MESSAGE, e.getMessage());
@@ -59,18 +55,17 @@ public class OrderController {
     }
 
     @GetMapping("{id}")
-	public ModelAndView getOrderById(@PathVariable Long id) {
-		ModelAndView modelAndView = new ModelAndView();
-		try {
-			OrderDto order = orderService.getOrderById(id);
-			modelAndView.setViewName("oneorder");
-			modelAndView.addObject(ORDER, order);
-		} catch (EntityNotFoundException e) {
-			modelAndView.setViewName(ERRORS);
-			modelAndView.addObject(MESSAGE, e.getMessage());
-		}
-		return modelAndView;
-	}
+    public ModelAndView getOrderById(@PathVariable Long id) {
+        ModelAndView modelAndView = new ModelAndView();
+        try {
+            modelAndView.setViewName("oneorder");
+            modelAndView.addObject(ORDER, orderService.getOrderById(id));
+        } catch (EntityNotFoundException e) {
+            modelAndView.setViewName(ERRORS);
+            modelAndView.addObject(MESSAGE, e.getMessage());
+        }
+        return modelAndView;
+    }
 
     @GetMapping(value = "addorder/{id}")
     public ModelAndView addOrder(@PathVariable Long id) {
@@ -84,9 +79,8 @@ public class OrderController {
         final String userName = principal.getName();
         ModelAndView modelAndView = new ModelAndView();
         try {
-            OrderDto neworder = orderService.createOrder(id, userName);
             modelAndView.setViewName("thanksfororder");
-            modelAndView.addObject(ORDER, neworder);
+            modelAndView.addObject(ORDER, orderService.createOrder(id, userName));
         } catch (NoBooksAvailableException e) {
             modelAndView.setViewName(ERRORS);
             modelAndView.addObject(MESSAGE, e.getMessage());
@@ -98,9 +92,8 @@ public class OrderController {
     public ModelAndView editProlongInOrder(@PathVariable Long id) {
         ModelAndView modelAndView = new ModelAndView();
         try {
-            OrderDto orderDto = orderService.prolongOrder(id);
             modelAndView.setViewName("orderProlong");
-            modelAndView.addObject(ORDER, orderDto);
+            modelAndView.addObject(ORDER, orderService.prolongOrder(id));
         } catch (IsAlreadyProlongedException | IsAlreadyClosedException | EntityNotFoundException e) {
             modelAndView.setViewName(ERRORS);
             modelAndView.addObject(MESSAGE, e.getMessage());
@@ -112,9 +105,8 @@ public class OrderController {
     public ModelAndView closeOrder(@PathVariable Long id) {
         ModelAndView modelAndView = new ModelAndView();
         try {
-            OrderDto orderDto = orderService.closeOrder(id);
             modelAndView.setViewName("orderClose");
-            modelAndView.addObject(ORDER, orderDto);
+            modelAndView.addObject(ORDER, orderService.closeOrder(id));
         } catch (IsAlreadyClosedException | EntityNotFoundException e) {
             modelAndView.setViewName(ERRORS);
             modelAndView.addObject(MESSAGE, e.getMessage());

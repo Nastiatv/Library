@@ -25,14 +25,14 @@
 			</div>
 			<div class="form-center">
 				<label for="email"> Email <input type="email" id="email"
-					name="email" th:field="*{email}" class="form-control input-sm"
+					name="email" th:field="*{email}" class="form-control"
 					value="${user.email}" required />
 				</label>
 			</div>
 			<div class="form-center">
 				<label for="username">Name</label> <input type="text" id="username"
 					name="username" th:field="*{username}"
-					class="form-control input-sm" value="${user.username}" required />
+					class="form-control" value="${user.username}" required />
 			</div>
 			<div class="form-center">
 				<label for="department">Department</label> <select id="department"
@@ -45,12 +45,12 @@
 			<div class="form-center">
 				<label for="password">Password</label> <input name="password"
 					type="password" id="password" th:field="*{password}"
-					class="form-control input-sm" />
+					class="form-control"  />
 			</div>
 			<div class="form-center">
 				<label for="confpassword">Confirm Password</label> <input
 					name="confirm_password" type="password" id="confpassword"
-					class="form-control input-sm" /> <span id='message'></span>
+					class="form-control" /> <span id='message'></span>
 			</div>
 			<br>
 			<div class="form-center">

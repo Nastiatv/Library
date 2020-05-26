@@ -21,48 +21,41 @@ import by.runa.lib.dao.BookDetailsDao;
 @Component
 public class ImgFileUploader {
 
-	@Autowired
-	BookDao bookDao;
-	@Autowired
-	BookDetailsDao bookDetailsDao;
+    @Autowired
+    BookDao bookDao;
+    @Autowired
+    BookDetailsDao bookDetailsDao;
 
-	private static final String IMAGE_EXTENSION = ".png";
+    private static final String IMAGE_EXTENSION = ".png";
 
-	private static final String FOLDER_PATH = "classpath:static/img/";
+    private static final String FOLDER_PATH = "classpath:static/img/";
 
-	public void createOrUpdate(UserDto dto, MultipartFile file) throws IOException {
-		if (file != null && !file.isEmpty()) {
-			String username = dto.getUsername();
-			String filePath = new StringBuilder(FOLDER_PATH).append(username).append(IMAGE_EXTENSION).toString();
-			File userImage;
-			try {
-				userImage = ResourceUtils.getFile(filePath);
-			} catch (FileNotFoundException e) {
-				URL fileUrl = ResourceUtils.getURL(FOLDER_PATH);
-				userImage = new File(
-						new StringBuilder(fileUrl.getPath()).append(username).append(IMAGE_EXTENSION).toString());
-			}
-			Path path = Paths.get(userImage.getPath());
-			byte[] bytes = file.getBytes();
-			Files.write(path, bytes);
-		}
-	}
+    public void createOrUpdateUserAvatar(UserDto dto, MultipartFile file) throws IOException {
+        if (file != null && !file.isEmpty()) {
+            String username = dto.getUsername();
+            createOrUpdate(file, username);
+        }
+    }
 
-	public void createOrUpdate(BookDto dto, MultipartFile file) throws IOException {
-		if (file != null && !file.isEmpty()) {
-			Long bookId = dto.getId();
-			String filePath = new StringBuilder(FOLDER_PATH).append(bookId).append(IMAGE_EXTENSION).toString();
-			File bookImage;
-			try {
-				bookImage = ResourceUtils.getFile(filePath);
-			} catch (FileNotFoundException e) {
-				URL fileUrl = ResourceUtils.getURL(FOLDER_PATH);
-				bookImage = new File(
-						new StringBuilder(fileUrl.getPath()).append(bookId).append(IMAGE_EXTENSION).toString());
-			}
-			Path path = Paths.get(bookImage.getPath());
-			byte[] bytes = file.getBytes();
-			Files.write(path, bytes);
-		}
-	}
+    public void createOrUpdateBookCover(BookDto dto, MultipartFile file) throws IOException {
+        if (file != null && !file.isEmpty()) {
+            String bookIsbn = dto.getIsbn();
+            createOrUpdate(file, bookIsbn);
+        }
+    }
+
+    private void createOrUpdate(MultipartFile file, String futureImgName) throws IOException {
+        String filePath = new StringBuilder(FOLDER_PATH).append(futureImgName).append(IMAGE_EXTENSION).toString();
+        File bookImage;
+        try {
+            bookImage = ResourceUtils.getFile(filePath);
+        } catch (FileNotFoundException e) {
+            URL fileUrl = ResourceUtils.getURL(FOLDER_PATH);
+            bookImage = new File(
+                    new StringBuilder(fileUrl.getPath()).append(futureImgName).append(IMAGE_EXTENSION).toString());
+        }
+        Path path = Paths.get(bookImage.getPath());
+        byte[] bytes = file.getBytes();
+        Files.write(path, bytes);
+    }
 }

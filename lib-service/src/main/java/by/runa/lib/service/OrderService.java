@@ -71,11 +71,11 @@ public class OrderService implements IOrderService {
         Book book = getBookDao().get(bookId);
         if (book.getQuantityAvailable() != 0) {
             book.setQuantityAvailable(book.getQuantityAvailable() - 1);
-            writeOrder(userName, order, book);
+            order.setBook(book).setUser(userDao.getByName(userName)).setOrderDate(LocalDate.now())
+                    .setDueDate(order.getOrderDate().plusDays(10)).setProlonged(false).setFinished(false);
         } else {
             throw new NoBooksAvailableException();
         }
-
         return orderMapper.toDto(getOrderDao().create(order));
     }
 
@@ -160,10 +160,4 @@ public class OrderService implements IOrderService {
         existingOrder.setProlonged(true);
         existingOrder.setDueDate(LocalDate.now().plusDays(10));
     }
-
-    private void writeOrder(String userName, Order order, Book book) {
-        order.setBook(book).setUser(userDao.getByName(userName)).setOrderDate(LocalDate.now())
-                .setDueDate(order.getOrderDate().plusDays(10)).setProlonged(false).setFinished(false);
-    }
-
 }

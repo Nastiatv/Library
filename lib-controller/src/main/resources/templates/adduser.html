@@ -8,7 +8,7 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 </head>
 <body>
-	<div class="form-wrapper">
+	<div class="form-wrapper" style="padding: 50px 0">
 		<h1 class="form-center">Sign up:</h1>
 		<hr>
 		<form th:action="@{${id}}" th:object="${dto}" method="POST"
@@ -58,7 +58,9 @@
 		<div class="form-center">
 			<form action="/signin/facebook" method="post">
 				<input type="hidden" name="scope" value="email, public_profile" />
-				<input class="facebook" type="submit" value="Sign Up With Facebook" />
+				<input type="image"
+					th:src="@{'http://localhost:8080/img/facebookIcon.png'}"
+					height="70" alt="Sign Up With Facebook">
 			</form>
 		</div>
 	</div>
@@ -74,8 +76,8 @@
 </script>
 </body>
 <footer class="footer">
-    <a href="javascript:history.back()">Go back </a>
-    <div>&#169; 2020 Runa</div>
-    <div>Feedback? Get in touch: litvinenoknastia@gmail.com</div>
+	<a href="javascript:history.back()">Go back </a>
+	<div>&#169; 2020 Runa</div>
+	<div>Feedback? Get in touch: litvinenoknastia@gmail.com</div>
 </footer>
 </html>

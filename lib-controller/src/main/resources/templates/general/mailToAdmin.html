@@ -1,25 +1,30 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://thymeleaf.org" lang="en">
 <head>
-<title>Library - Add department</title>
+<title>Library - Mail To Admin</title>
 <link href="../../css/styles.css" rel="stylesheet" />
 <link href="../../css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 	<div class="form-wrapper" style="padding: 50px 0">
-		<h1 class="form-center">Add Department:</h1>
+		<h1 class="form-center">Write feedback:</h1>
 		<hr>
-		<form th:action="@{${id}}" th:object="${departmentdto}" method="POST">
+		<form action="thankU" method="get">
 			<div class="form-center">
-				<label for="name"> Name <input type="text" id="name"
-					name="name" th:field="*{name}" class="form-control input-sm"
-					required />
+				<label for="email"> Your email: <input type="email"
+					id="email" name="email" class="form-control inputdefault" required />
+				</label>
+			</div>
+			<br />
+			<div class="form-center">
+				<label for="message"> Feedback: <input type="text"
+					id="message" name="message" class="form-control inputlg" required />
 				</label>
 			</div>
 			<br />
 			<div class="form-center">
 				<div style="display: inline-block">
-					<input type="submit" value="Add"> <input type="reset"
+					<input type="submit" value="Send"> <input type="reset"
 						value="Reset">
 				</div>
 			</div>
