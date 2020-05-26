@@ -153,7 +153,8 @@ public class UserService implements IUserService {
     public void sendEmailWithNewPassword(String email) throws EntityNotFoundException {
         String newPassword = generateCommonLangPassword();
         UserDto userDto = getUserByEmail(email);
-        DepartmentDto depDto = new DepartmentDto().setName(userDto.getDepartmentName());
+        userDto.setPassword(newPassword);
+        DepartmentDto depDto = new DepartmentDto().setName("");
         updateUser(userDto.getId(), userDto, depDto);
         try {
             emailSender.sendEmailToUserWithNewPassword(newPassword, email);
