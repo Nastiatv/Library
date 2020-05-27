@@ -10,9 +10,9 @@
 <body>
 	<div class="form-wrapper">
 		<a href="../../../">Home</a>
-		<hr>
+		<hr />
 		<h1 class="form-center">Personal Info :</h1>
-		<hr>
+		<hr />
 		<img th:src="@{'../../img/' + ${user.username} + '.png'}"
 			class="form-center" alt="Avatar" />
 		<form th:action="@{${user.id}}" th:object="${user}" method="POST"
@@ -64,7 +64,7 @@
 			$('#message').html('Not Matching').css('color', 'red');
 	});
 </script>
-<hr>
+<hr />
 <a href="javascript:history.back()">Go back</a>
 </html>
 

@@ -14,7 +14,7 @@
 		<div class="form-center">
 			<a href="users/adduser">Sign Up</a>
 		</div>
-		<hr>
+		<hr />
 		<div class="form-center">
 			<a href="books/">All books</a>
 		</div>
@@ -24,7 +24,7 @@
 		<div sec:authorize="hasRole('ADMIN')" class="form-center">
 			<a href="admin">Admin page</a>
 		</div>
-		<hr>
+		<hr />
 		<div sec:authorize="isAuthenticated()" class="form-center">
 			<form th:action="@{/logout}" method="post">
 				<input type="submit" value="Sign Out" />

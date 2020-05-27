@@ -7,7 +7,7 @@
 </head>
 <body>
 	<div class="form-wrapper">
-		<a href="../../">Home</a><hr>
+		<a href="../../">Home</a><hr />
 		<h1 class="form-center">Thanks for your order. You can take the book, just remember
 			to return it after 10 days)</h1>
 		<h3 >Order details:</h3>
@@ -37,12 +37,12 @@
 					<td th:text="${order.isProlonged}"></td>
 					<td th:text="${order.isFinished}"></td>
 					<td><a th:href="@{'../return/' + ${order.id}}">Return book</a>
-						<br> <a th:href="@{'../prolong/' + ${order.id}}">Prolong
-							reading</a> <br></td>
+						<br /> <a th:href="@{'../prolong/' + ${order.id}}">Prolong
+							reading</a> <br /></td>
 				</tr>
 			</tbody>
 		</table>
 	</div>
 </body>
-<hr>
+<hr />
 </html>

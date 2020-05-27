@@ -8,7 +8,7 @@
 <body>
 	<div class="form-wrapper">
 		<h1 class="form-center">Write feedback:</h1>
-		<hr>
+		<hr />
 		<form th:action="@{${id}}" th:object="${feedbackdto}" method="POST"
 			enctype="multipart/form-data">
 			<div class="form-center">
@@ -30,7 +30,7 @@
 					id="comment" name="comment" th:field="*{comment}"
 					class="form-control input-sm" value="${feedback.comment}" required />
 			</div>
-			<br>
+			<br />
 			<div class="form-center">
 				<div style="display: inline-block">
 					<input type="submit" value="Add feedback" /> <input type="reset"
@@ -41,7 +41,7 @@
 	</div>
 
 </body>
-<hr>
+<hr />
 <a href="javascript:history.back()">Go back</a>
 </html>
 

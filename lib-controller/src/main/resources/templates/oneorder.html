@@ -10,7 +10,7 @@
 		<header class="m-md-3">
 			<a href="../../">Home</a>
 		</header>
-		<hr>
+		<hr />
 		<h3 class="form-center">Order details:</h3>
 		<table class="table">
 			<caption></caption>
@@ -35,17 +35,17 @@
 					<td th:text="${order.bookDto.bookDetailsDto.name}"></td>
 					<td th:text="${order.bookDto.bookDetailsDto.author}"></td>
 					<td th:text="${order.userDto.username}"></td>
-					<td th:text="${order.isProlonged}"></td>
-					<td><span th:if="${order.isFinished == true}">&#10060</span> <span
-						th:unless="${order.isFinished == true}">open</span></td>
-					<td><a th:href="@{'return/' + ${order.id}}">Return book</a> <br>
-						<a th:href="@{'prolong/' + ${order.id}}">Prolong reading</a> <br>
-					</td>
+					<td><span th:if="${order.isProlonged == false}"><a
+							th:href="@{'prolong/' + ${order.id}}">Prolong reading</a></span> <span
+						th:unless="${order.isProlonged == false}">is already prolonged</span></td>
+					<td><span th:if="${order.isFinished == true}">&#9989;</span> <span
+                        th:unless="${order.isFinished == true}">&#10060;</span></td>
+					<td><a th:href="@{'return/' + ${order.id}}">Return book</a></td>
 				</tr>
 			</tbody>
 		</table>
 	</div>
-	<hr>
+	<hr />
 </body>
 <footer class="footer">
 	<a href="javascript:history.back()">Go back </a>

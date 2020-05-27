@@ -8,13 +8,13 @@
 <body>
 	<div class="form-wrapper">
 		<h1 class="form-center">Add Department:</h1>
-		<hr>
+		<hr />
 		<form th:action="@{${id}}" th:object="${departmentdto}" method="POST">
 			Name: <input type="text" th:field="*{name}" /> <br /> <input
 				type="submit" value="Create" /> <input type="reset" value="Reset">
 		</form>
 	</div>
 </body>
-<hr>
+<hr />
 <a href="javascript:history.back()">Go back</a>
 </html>

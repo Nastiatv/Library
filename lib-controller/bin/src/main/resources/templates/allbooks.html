@@ -8,7 +8,7 @@
 <body>
 	<div class="form-wrapper">
 		<a href="../">Home</a> | <a href="addbook">Add Book</a>
-		<hr>
+		<hr />
 		<h1 class="form-center">Our Books:</h1>
 		<table class="table">
 			<caption></caption>
@@ -39,12 +39,12 @@
 					<td th:text="${book.bookDetailsDto.author}"></td>
 					<td><img th:src="@{${book.bookDetailsDto.picture}}"
 						class="img-thumbnail" alt="Cover" /></td>
-					<td><a th:href="@{${book.id}}">See more</a> <br>
+					<td><a th:href="@{${book.id}}">See more</a> <br />
 				</tr>
 			</tbody>
 		</table>
 	</div>
 </body>
-<hr>
+<hr />
 <a href="javascript:history.back()">Go back</a>
 </html>

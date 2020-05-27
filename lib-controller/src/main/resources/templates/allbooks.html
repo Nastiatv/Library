@@ -18,7 +18,7 @@
 					placeholder="Search book by ISBN" />
 			</div>
 		</form>
-		<hr>
+		<hr />
 		<h1 class="form-center">Our Books:</h1>
 
 		<table class="table">
@@ -44,14 +44,14 @@
 					<td th:text="${book.bookDetailsDto.author}"></td>
 					<td th:text="${#numbers.formatDecimal(book.rating,1,2)}"></td>
 					<td><span th:each="department : ${book.departments}"> <span
-							th:text="${department.name}"> </span><br>
+							th:text="${department.name}"> </span><br />
 					</span></td>
-					<td><a th:href="@{${book.id}}">See more</a> <br>
+					<td><a th:href="@{${book.id}}">See more</a><br />
 				</tr>
 			</tbody>
 		</table>
 	</div>
-	<hr>
+	<hr />
 </body>
 <script
 	src="https://cdn.jsdelivr.net/gh/ashnamuh/rm-facebook-passport-redirect-hash@v1.0.0/lib.js"></script>

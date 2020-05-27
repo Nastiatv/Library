@@ -14,7 +14,7 @@
 			<a href="../../">Home</a> | <a href="../books/">All books</a> | <a
 				href="../books/addbook">Add book</a>
 		</header>
-		<hr>
+		<hr />
 		<h1 class="form-center">Book details:</h1>
 		<table>
 			<caption></caption>
@@ -54,8 +54,9 @@
 					<td th:text="${book.bookDetailsDto.author}"></td>
 				</tr>
 				<tr>
-					<td align="justify" colspan="3"><span class="font-weight-bold">Description:
-					</span> <span th:text="''+${book.bookDetailsDto.description}"></span></td>
+					<td style="text-align: justify" colspan="3"><span
+						class="font-weight-bold">Description: </span> <span
+						th:text="''+${book.bookDetailsDto.description}"></span></td>
 				</tr>
 				<tr>
 					<td><a sec:authorize="isAuthenticated()"
@@ -72,7 +73,7 @@
 							has already been taken) come in a week</span></td>
 			</tbody>
 		</table>
-		<hr>
+		<hr />
 		<h3>Feedbacks:</h3>
 		<div class="container" th:each="feedback : ${listFeedbacks}">
 			<img
@@ -87,7 +88,7 @@
 			<p th:text="${feedback.comment}"></p>
 		</div>
 	</div>
-	<hr>
+	<hr />
 </body>
 <footer class="footer">
 	<a href="javascript:history.back()">Go back </a>

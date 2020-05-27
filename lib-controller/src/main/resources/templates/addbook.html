@@ -8,7 +8,7 @@
 <body>
 	<div class="form-wrapper" style="padding: 50px 0">
 		<h1 class="form-center">Add book to library:</h1>
-		<hr>
+		<hr />
 		<form th:action="@{${id}}" th:object="${bookdto}" method="POST">
 			<div class="form-center">
 				<label for="isbn"> ISBN <input type="text" id="isbn"
@@ -16,11 +16,14 @@
 					required />
 				</label>
 			</div>
-			<div class="form-center">
+			<div class="form-center .col-6">
 				<label for="isbn"> Department </label><select
-					th:object="${departmentdto}" th:field="*{name}">
+					class="custom-select my-1" th:object="${departmentdto}"
+					th:field="*{name}" required>
+					<option hidden="" selected value=""></option>
 					<option th:each="department : ${departmentsList}"
-						th:value="${department.name}" th:text="${department.name}"></option>
+						th:value="${department.name}" th:text="${department.name}"
+						th:if="${department.name} != 'default'"></option>
 				</select>
 			</div>
 			<br />
@@ -32,7 +35,7 @@
 			</div>
 		</form>
 	</div>
-	<hr>
+	<hr />
 </body>
 <footer class="footer">
 	<a href="javascript:history.back()">Go back </a>

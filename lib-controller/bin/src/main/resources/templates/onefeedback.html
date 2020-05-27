@@ -8,7 +8,7 @@
 </head>
 <body>
 	<div class="form-wrapper">
-		<a href="../../">Home</a><hr>
+		<a href="../../">Home</a><hr />
 		<h1 class="form-center">Thanks for your feedback</h1>
 		<table class="table">
 			<caption></caption>
@@ -29,13 +29,13 @@
 					<td th:text="${feedback.rating}"></td>
 					<td th:text="${feedback.userName}"></td>
 					<td th:text="${feedback.comment}"></td>
-					<td><a th:href="@{'edit/' + ${feedback.id}}">Edit</a> <br>
+					<td><a th:href="@{'edit/' + ${feedback.id}}">Edit</a> <br />
 						<a sec:authorize="hasRole('ADMIN')"
-						th:href="@{'delete/' + ${feedback.id}}">Delete</a> <br></td>
+						th:href="@{'delete/' + ${feedback.id}}">Delete</a> <br /></td>
 				</tr>
 			</tbody>
 		</table>
 	</div>
 </body>
-<hr>
+<hr />
 </html>

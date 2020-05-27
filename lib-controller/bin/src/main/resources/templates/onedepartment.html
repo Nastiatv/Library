@@ -8,7 +8,7 @@
 <body>
 	<div class="form-wrapper">
 		<a href="../../">Home</a> | <a href="../">All departments</a> | <a
-			href="../adddepartment">Add department</a> <hr>
+			href="../adddepartment">Add department</a> <hr />
 		<h1 class="form-center">Department details:</h1>
 		<table class="table">
 			<caption></caption>
@@ -23,13 +23,13 @@
 				<tr>
 					<td th:text="${department.id}" id="departmentid"></td>
 					<td th:text="${department.name}"></td>
-					<td><a th:href="@{'edit/' + ${department.id}}">Edit</a> <br>
-						<a th:href="@{'delete/' + ${department.id}}">Delete</a> <br></td>
+					<td><a th:href="@{'edit/' + ${department.id}}">Edit</a> <br />
+						<a th:href="@{'delete/' + ${department.id}}">Delete</a> <br /></td>
 				</tr>
 			</tbody>
 		</table>
 	</div>
 </body>
-<hr>
+<hr />
 <a href="javascript:history.back()">Go back</a>
 </html>

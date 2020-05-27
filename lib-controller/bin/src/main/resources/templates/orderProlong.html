@@ -7,7 +7,7 @@
 </head>
 <body>
 	<div class="form-wrapper">
-		<a href="../../">Home</a><hr>
+		<a href="../../">Home</a><hr />
 		<h1 class="form-center">We extended reading for another 10 days</h1>
 		<h3>Order details:</h3>
 		<table class="table">
@@ -36,7 +36,7 @@
 					<td th:text="${order.isProlonged}"></td>
 					<td th:text="${order.isFinished}"></td>
 					<td><a th:href="@{'../return/' + ${order.id}}">Return book</a>
-						<br></td>
+						<br /></td>
 				</tr>
 			</tbody>
 		</table>

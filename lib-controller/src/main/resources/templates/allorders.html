@@ -10,7 +10,7 @@
 		<header class="m-md-3">
 			<a href="../">Home</a>
 		</header>
-		<hr>
+		<hr />
 		<h1 class="form-center">Our Orders:</h1>
 		<table class="table">
 			<caption></caption>
@@ -18,8 +18,7 @@
 				<tr>
 					<th scope="col">orderDate</th>
 					<th scope="col">dueDate</th>
-					<th scope="col">isFinished</th>
-					<th scope="col">isProlonged</th>
+					<th scope="col">is finished</th>
 					<th scope="col">book</th>
 					<th scope="col">user</th>
 					<th scope="col">#</th>
@@ -30,17 +29,16 @@
 				<tr th:each="order : ${orderList}">
 					<td th:text="${order.orderDate}"></td>
 					<td th:text="${order.dueDate}"></td>
-					<td><span th:if="${order.isFinished == true}">&#10060</span> <span
-						th:unless="${order.isFinished == true}">open</span></td>
-					<td th:text="${order.isProlonged}"></td>
+					<td><span th:if="${order.isFinished == true}">&#9989;</span> <span
+                        th:unless="${order.isFinished == true}">&#10060;</span></td>
 					<td th:text="${order.bookDto.isbn}"></td>
 					<td th:text="${order.userDto.username}"></td>
-					<td><a th:href="@{${order.id}}">See more</a> <br>
+					<td><a th:href="@{${order.id}}">See more</a> <br />
 				</tr>
 			</tbody>
 		</table>
 	</div>
-	<hr>
+	<hr />
 </body>
 <footer class="footer">
 	<a href="javascript:history.back()">Go back </a>

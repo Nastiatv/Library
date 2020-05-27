@@ -11,7 +11,7 @@
 		<div class="form-wrapper">
 			<a href="http://localhost:8080">Home</a> | <a
 				href="http://localhost:8080/books/">All books</a> | <a
-				href="http://localhost:8080/books/addbook">Add book</a><hr>
+				href="http://localhost:8080/books/addbook">Add book</a><hr />
 			<h1 class="form-center">Book details:</h1>
 			<table>
 				<caption></caption>
@@ -62,10 +62,10 @@
 						<td></td>
 						<td><a sec:authorize="isAuthenticated()"
 							th:href="@{'../orders/addorder/' + ${book.id}}"
-							class="btn btn-light">Make order</a> <br></td>
+							class="btn btn-light">Make order</a> <br /></td>
 				</tbody>
 			</table>
-			<hr>
+			<hr />
 			<h3>Feedbacks:</h3>
 			<div class="container" th:each="feedback : ${listFeedbacks}">
 				<img
@@ -81,6 +81,6 @@
 		</div>
 	</div>
 </body>
-<hr>
+<hr />
 <a href="javascript:history.back()">Go back</a>
 </html>

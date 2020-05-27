@@ -10,7 +10,7 @@
 <body>
 	<div class="form-wrapper">
 		<h1 class="form-center">Sign up:</h1>
-		<hr>
+		<hr />
 		<form th:action="@{${id}}" th:object="${dto}" method="POST"
 			enctype="multipart/form-data">
 			<div class="form-center">
@@ -68,6 +68,6 @@
 			$('#message').html('Not Matching').css('color', 'red');
 	});
 </script>
-<hr>
+<hr />
 <a href="javascript:history.back()">Go back</a>
 </html>

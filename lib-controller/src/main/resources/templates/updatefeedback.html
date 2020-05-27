@@ -13,7 +13,7 @@
 			<a href="../../../">Home</a>
 		</header>
 		<h1 class="form-center">Feedback:</h1>
-		<hr>
+		<hr />
 		<form th:action="@{${feedback.id}}" th:object="${feedback}"
 			method="POST" enctype="multipart/form-data">
 			<div class="form-center">
@@ -35,13 +35,13 @@
 					id="comment" name="comment" th:field="*{comment}"
 					class="form-control input-sm" value="${feedback.comment}" required />
 			</div>
-			<br>
+			<br />
 			<div class="form-center">
 				<input type="submit" value="Update Feedback" />
 			</div>
 		</form>
 	</div>
-	<hr>
+	<hr />
 </body>
 <footer class="footer">
 	<a href="javascript:history.back()">Go back </a>

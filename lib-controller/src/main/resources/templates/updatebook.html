@@ -10,7 +10,7 @@
 		<header class="m-md-3">
 			<a href="../../../">Home</a>
 		</header>
-		<hr>
+		<hr />
 		<h1 class="form-center">Book Info :</h1>
 		<br />
 		<div class="form-center">
@@ -41,16 +41,21 @@
 					value="${book.bookDetailsDto.description}" required />
 			</div>
 			<div class="form-center">
-				<label for="imageUploader" class="font-weight-bold">Cover</label> <input
-					type="file" id="imageUploader" name="file" />
+				<div class="form-center custom-file">
+					<label class="custom-file-label font-weight-bold"
+						for="imageUploader">Choose cover</label> <input type="file"
+						class="custom-file-input" id="imageUploader" name="file" /> <small
+						id="passwordHelpBlock" class="form-text text-muted">
+						Please choose file under 1MB. </small>
+				</div>
 			</div>
-			<br>
+			<br />
 			<div class="form-center">
 				<input type="submit" value="Update Book" />
 			</div>
 		</form>
 	</div>
-	<hr>
+	<hr />
 </body>
 <footer class="footer">
 	<a href="javascript:history.back()">Go back </a>
