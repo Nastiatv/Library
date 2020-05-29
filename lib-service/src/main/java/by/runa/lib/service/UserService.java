@@ -5,6 +5,7 @@ import by.runa.lib.api.dao.IDepartmentDao;
 import by.runa.lib.api.dao.IRoleDao;
 import by.runa.lib.api.dao.IUserDao;
 import by.runa.lib.api.dto.DepartmentDto;
+import by.runa.lib.api.dto.RoleDto;
 import by.runa.lib.api.dto.UserDto;
 import by.runa.lib.api.exceptions.EntityNotFoundException;
 import by.runa.lib.api.exceptions.UserIsAlreadyExistsException;
@@ -109,8 +110,8 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public void deleteUserById(Long id) {
-        getUserDao().delete(getUserDao().get(id));
+    public void deleteUserById(Long id) throws EntityNotFoundException {
+        getUserDao().delete(id);
     }
 
     @Override
@@ -129,14 +130,6 @@ public class UserService implements IUserService {
         return userMapper.toDto(existingUser);
     }
 
-    private Boolean checkIfUserWithThisNameAlreadyExists(UserDto userDto) {
-        return (userDao.getByName(userDto.getUsername()) != null);
-    }
-
-    private Department getDepartmentByName(DepartmentDto departmentDto) {
-        return departmentDao.getByName(departmentDto.getName());
-    }
-
     @Override
     public Boolean checkIfUserWithThisEmailAlreadyExists(String email) {
         return (userDao.getByEmail(email) != null);
@@ -150,6 +143,12 @@ public class UserService implements IUserService {
         }
     }
 
+    @Override
+    public UserDto setRoles(Long id, RoleDto roleDto) {
+        return userMapper
+                .toDto(userDao.get(id).setRoles(Collections.singletonList(roleDao.getByName(roleDto.getName()))));
+    }
+
     public void sendEmailWithNewPassword(String email) throws EntityNotFoundException {
         String newPassword = generateCommonLangPassword();
         UserDto userDto = getUserByEmail(email);
@@ -157,10 +156,18 @@ public class UserService implements IUserService {
         DepartmentDto depDto = new DepartmentDto().setName("");
         updateUser(userDto.getId(), userDto, depDto);
         try {
-            emailSender.sendEmailToUserWithNewPassword(newPassword, email);
+            emailSender.sendEmailToUserWithNewPassword(newPassword, userDto);
         } catch (MessagingException e) {
             log.info("Mail not sent!");
         }
+    }
+
+    private Boolean checkIfUserWithThisNameAlreadyExists(UserDto userDto) {
+        return (userDao.getByName(userDto.getUsername()) != null);
+    }
+
+    private Department getDepartmentByName(DepartmentDto departmentDto) {
+        return departmentDao.getByName(departmentDto.getName());
     }
 
     private String generateCommonLangPassword() {

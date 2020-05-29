@@ -11,7 +11,7 @@ public interface IDepartmentService {
 
     DepartmentDto getDepartmentById(Long id) throws EntityNotFoundException;
 
-    void deleteDepartmentById(Long id);
+    void deleteDepartmentById(Long id) throws EntityNotFoundException;
 
     DepartmentDto updateDepartment(Long id, DepartmentDto dto) throws EntityNotFoundException;
 

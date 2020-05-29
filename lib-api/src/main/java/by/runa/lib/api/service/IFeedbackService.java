@@ -11,7 +11,7 @@ public interface IFeedbackService {
 
 	FeedbackDto getFeedbackById(Long id) throws EntityNotFoundException;
 
-	void deleteFeedbackById(Long id);
+    void deleteFeedbackById(Long id) throws EntityNotFoundException;
 
 	FeedbackDto updateFeedback(Long id, FeedbackDto dto) throws EntityNotFoundException;
 

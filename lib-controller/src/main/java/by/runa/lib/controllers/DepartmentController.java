@@ -38,8 +38,7 @@ public class DepartmentController {
             modelAndView.setViewName("onedepartment");
             modelAndView.addObject(DEPARTMENT, departmentService.getDepartmentById(id));
         } catch (EntityNotFoundException e) {
-            modelAndView.setViewName(ERRORS);
-            modelAndView.addObject(MESSAGE, e.getMessage());
+            returnViewNameWithError(modelAndView, e);
         }
         return modelAndView;
     }
@@ -67,8 +66,7 @@ public class DepartmentController {
             modelAndView.addObject(DEPARTMENT, departmentService.getDepartmentById(id));
             modelAndView.addObject("dto", new DepartmentDto());
         } catch (EntityNotFoundException e) {
-            modelAndView.setViewName(ERRORS);
-            modelAndView.addObject(MESSAGE, e.getMessage());
+            returnViewNameWithError(modelAndView, e);
         }
         return modelAndView;
     }
@@ -80,8 +78,7 @@ public class DepartmentController {
             modelAndView.addObject(DEPARTMENT, departmentService.updateDepartment(id, departmentDto));
             modelAndView.setViewName("general/changesSaved");
         } catch (EntityNotFoundException e) {
-            modelAndView.setViewName(ERRORS);
-            modelAndView.addObject(MESSAGE, e.getMessage());
+            returnViewNameWithError(modelAndView, e);
         }
         return modelAndView;
     }
@@ -93,17 +90,25 @@ public class DepartmentController {
             modelAndView.addObject(DEPARTMENT, departmentService.getDepartmentById(id));
             modelAndView.setViewName("deletedepartment");
         } catch (EntityNotFoundException e) {
-            modelAndView.setViewName(ERRORS);
-            modelAndView.addObject(MESSAGE, e.getMessage());
+            returnViewNameWithError(modelAndView, e);
         }
         return modelAndView;
     }
 
     @PostMapping("delete/{id}")
-    public ModelAndView deletedepartmentSubmit(@PathVariable Long id) {
-        departmentService.deleteDepartmentById(id);
+    public ModelAndView deletebookSubmit(@PathVariable Long id) {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("general/changesSaved");
+        try {
+            departmentService.deleteDepartmentById(id);
+            modelAndView.setViewName("general/changesSaved");
+        } catch (EntityNotFoundException e) {
+            returnViewNameWithError(modelAndView, e);
+        }
         return modelAndView;
+    }
+
+    private void returnViewNameWithError(ModelAndView modelAndView, EntityNotFoundException e) {
+        modelAndView.setViewName(ERRORS);
+        modelAndView.addObject(MESSAGE, e.getMessage());
     }
 }

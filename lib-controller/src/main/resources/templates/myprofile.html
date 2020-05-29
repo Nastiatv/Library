@@ -7,7 +7,7 @@
 <link href="../../css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-	<div class="form-wrapper" >
+	<div class="form-wrapper">
 		<header class="m-md-3">
 			<a href="../../">Home</a> | <a href="../../orders/my">My orders</a> |
 			<a href="../../feedbacks/my">My feedbacks</a>
@@ -45,16 +45,21 @@
 				</tr>
 				<tr>
 					<td><a sec:authorize="isAuthenticated()"
-						th:href="@{'../edit/' + ${user.id}}" class="btn btn-light">Edit
+						th:href="@{'../myedit/' + ${user.id}}" class="btn btn-light">Edit
 					</a></td>
 			</tbody>
 		</table>
 	</div>
 	<hr />
 </body>
-<footer class="footer">
-	<a href="javascript:history.back()">Go back </a>
-	<div>&#169; 2020 Runa</div>
-	<div>Feedback? Get in touch: litvinenoknastia@gmail.com</div>
-</footer>
+<script>
+	$.get('http://localhost:8080/img/' + ${user.username} + '.png').done(function() {
+		// Do something now you know the image exists.
+
+	}).fail(function() {   
+		// Image doesn't exist - do something else.
+
+	})
+</script>
+<div th:insert="general/home :: footer"></div>
 </html>

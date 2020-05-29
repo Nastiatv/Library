@@ -26,7 +26,7 @@
 				<label class="custom-file-label" for="imageUploader">Choose
 					photo</label> <input type="file" class="custom-file-input"
 					id="imageUploader" name="file" /> <small id="passwordHelpBlock"
-					class="form-text text-muted"> Please choose file under 1MB.
+					class="form-text text-muted"> Please choose file under 10MB.
 				</small>
 			</div>
 			<div class="form-center">
@@ -42,11 +42,10 @@
 			<div class="form-center">
 				<label for="department">Department</label> <select
 					class="custom-select my-1" id="department"
-					th:object="${departmentdto}" th:field="*{name}" required>
+					th:object="${departmentdto}" th:field="*{name}" >
 					<option hidden="" selected value=""></option>
 					<option th:each="department : ${departmentsList}"
 						th:value="${department.name}" th:text="${department.name}"
-						value="${user.departmentName}"
 						th:if="${department.name} != 'default'"></option>
 				</select>
 			</div>
@@ -77,9 +76,5 @@
 	});
 </script>
 </body>
-<footer class="footer">
-	<a href="javascript:history.back()">Go back </a>
-	<div>&#169; 2020 Runa</div>
-	<div>Feedback? Get in touch: litvinenoknastia@gmail.com</div>
-</footer>
+<div th:insert="general/home :: footer"></div>
 </html>

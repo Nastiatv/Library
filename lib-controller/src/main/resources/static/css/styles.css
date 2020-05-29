@@ -11,6 +11,12 @@ table th, table td {
 	padding: 5px;
 }
 
+.grow:hover { transform: scale(1.7); }
+
+.shadow-img{
+	box-shadow: 10px 5px 5px grey;
+}
+
 .form-wrapper {
 	margin: 0 auto;
 	width: 810px;
@@ -60,18 +66,9 @@ table th, table td {
 	transform: rotate(450deg);
 }
 
-.login-button.clicked {
-	color: #555555;
-}
-
-.login-button.clicked:hover {
-	transform: none;
-}
-
 .login-button-forgot {
 	margin-left: 500px;
 }
-
 
 /*FOR RATING STAR:*/
 .rating-area {
@@ -160,7 +157,7 @@ table th, table td {
 	}
 }
 
-/*for banner*/
+/*for banner size*/
 body, html {
 	height: 100%;
 }

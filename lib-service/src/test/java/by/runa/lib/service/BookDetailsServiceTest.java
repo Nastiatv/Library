@@ -91,7 +91,7 @@ public class BookDetailsServiceTest {
         BookDetails bookDetails = createBookDetails(TEST_NAME);
         when(bookDetailsDao.get(1L)).thenReturn(bookDetails);
         bookDetailsService.deleteBookDetailsById(1L);
-        verify(bookDetailsDao, times(1)).delete(bookDetails);
+        verify(bookDetailsDao, times(1)).delete(bookDetails.getId());
         assertThat(bookDetailsDao.get(1L)).isNotNull();
     }
 

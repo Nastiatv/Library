@@ -25,7 +25,7 @@
 			<tbody>
 				<tr>
 					<td rowspan="6"><img
-						th:src="@{${book.bookDetailsDto.picture}}" height="400"
+						th:src="@{${book.bookDetailsDto.picture}}" class="shadow-img" height="400"
 						alt="Cover" /></td>
 					<td class="font-weight-bold">Book ISBN</td>
 					<td th:text="${book.isbn}"></td>
@@ -90,9 +90,5 @@
 	</div>
 	<hr />
 </body>
-<footer class="footer">
-	<a href="javascript:history.back()">Go back </a>
-	<div>&#169; 2020 Runa</div>
-	<div>Feedback? Get in touch: litvinenoknastia@gmail.com</div>
-</footer>
+<div th:insert="general/home :: footer"></div>
 </html>

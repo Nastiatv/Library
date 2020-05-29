@@ -119,10 +119,14 @@ public class FeedbackController {
     }
 
     @PostMapping("delete/{id}")
-    public ModelAndView deletefeedbackSubmit(FeedbackDto feedbackDto) {
-        feedbackService.deleteFeedbackById(feedbackDto.getId());
+    public ModelAndView deletebookSubmit(FeedbackDto feedbackDto) {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName(CHANGESSAVED);
+        try {
+            feedbackService.deleteFeedbackById(feedbackDto.getId());
+            modelAndView.setViewName(CHANGESSAVED);
+        } catch (EntityNotFoundException e) {
+            returnViewNameWithError(modelAndView, e);
+        }
         return modelAndView;
     }
 

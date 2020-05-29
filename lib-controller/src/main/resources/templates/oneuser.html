@@ -13,8 +13,6 @@
 				href="../feedbacks/my">My feedbacks</a>
 		</header>
 		<hr />
-		<h1 class="form-center" th:text="'Hello, ' + ${user.username}"></h1>
-		<hr />
 		<h3 class="form-center">My personal info:</h3>
 		<table>
 			<caption></caption>
@@ -46,15 +44,13 @@
 				<tr>
 					<td><a sec:authorize="isAuthenticated()"
 						th:href="@{'edit/' + ${user.id}}" class="btn btn-light">Edit </a>
+						<a sec:authorize="hasRole('ADMIN')"
+                        th:href="@{'setrole/' + ${user.id}}" class="btn btn-light">Set Role</a>
 					</td>
 			</tbody>
 		</table>
 	</div>
 	<hr />
 </body>
-<footer class="footer">
-	<a href="javascript:history.back()">Go back </a>
-	<div>&#169; 2020 Runa</div>
-	<div>Feedback? Get in touch: litvinenoknastia@gmail.com</div>
-</footer>
+<div th:insert="general/home :: footer"></div>
 </html>

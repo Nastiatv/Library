@@ -4,4 +4,5 @@ import by.runa.lib.entities.Role;
 
 public interface IRoleDao extends IAGenericDao<Role> {
 
+    Role getByName(String name);
 }

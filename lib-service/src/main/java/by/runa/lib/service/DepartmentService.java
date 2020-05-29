@@ -49,15 +49,15 @@ public class DepartmentService implements IDepartmentService {
     }
 
     @Override
-    public void deleteDepartmentById(Long id) {
-        getDepartmentDao().delete(getDepartmentDao().get(id));
+    public void deleteDepartmentById(Long id) throws EntityNotFoundException {
+        getDepartmentDao().delete(id);
     }
 
     @Override
     public DepartmentDto updateDepartment(Long id, DepartmentDto departmentDto) throws EntityNotFoundException {
         Department existingDepartment = Optional.ofNullable(getDepartmentDao().get(id))
                 .orElseThrow(() -> new EntityNotFoundException(DEPARTMENT));
-        existingDepartment.setName(departmentDto.getName());
+        Optional.ofNullable(departmentDto.getName()).ifPresent(existingDepartment::setName);
         getDepartmentDao().update(existingDepartment);
         return departmentMapper.toDto(existingDepartment);
 

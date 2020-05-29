@@ -1,6 +1,7 @@
 package by.runa.lib.utils.mailsender;
 
 import by.runa.lib.api.dao.IUserDao;
+import by.runa.lib.api.dto.UserDto;
 import by.runa.lib.api.utils.IEmailSender;
 import by.runa.lib.entities.Book;
 import by.runa.lib.entities.Department;
@@ -74,11 +75,11 @@ public class EmailSender implements IEmailSender {
     }
 
     @Async
-    public void sendEmailToUserWithNewPassword(String password, String email) throws MessagingException {
+    public void sendEmailToUserWithNewPassword(String password, UserDto user) throws MessagingException {
         MimeMessage message = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message);
-        String text = prepareActivateRequestEmail(password, "mailtemplates/newPassword.vm");
-        configureMimeMessageHelper(helper, ADMIN_EMAIL_ADDRESS, email, text, "Library - new password");
+        String text = prepareActivateRequestEmail(password, user, "mailtemplates/newPassword.vm");
+        configureMimeMessageHelper(helper, ADMIN_EMAIL_ADDRESS, user.getEmail(), text, "Library - new password");
         mailSender.send(message);
     }
 
@@ -89,16 +90,17 @@ public class EmailSender implements IEmailSender {
         return stringWriter.toString();
     }
 
-    private String prepareActivateRequestEmail(String password, String mailtemplates) {
-        VelocityContext context = createVelocityContextWithBasicParameters(password);
+    private String prepareActivateRequestEmail(String password, UserDto user, String mailtemplates) {
+        VelocityContext context = createVelocityContextWithBasicParameters(user, password);
         StringWriter stringWriter = new StringWriter();
         velocityEngine.mergeTemplate(mailtemplates, "UTF-8", context, stringWriter);
         return stringWriter.toString();
     }
 
-    private VelocityContext createVelocityContextWithBasicParameters(String password) {
+    private VelocityContext createVelocityContextWithBasicParameters(UserDto user, String password) {
         VelocityContext context = new VelocityContext();
         context.put("password", password);
+        context.put("Name", user.getUsername());
         return context;
     }
 

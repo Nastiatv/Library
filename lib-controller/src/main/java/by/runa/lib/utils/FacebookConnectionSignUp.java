@@ -30,7 +30,6 @@ public class FacebookConnectionSignUp implements ConnectionSignUp {
             UserDto userDto = new UserDto();
             DepartmentDto depDto = new DepartmentDto();
             depDto.setName("default");
-//            userDto.setId(Long.parseLong(userProfile.getId(), 10));
             userDto.setUsername(userProfile.getFirstName() + StringUtils.SPACE + userProfile.getLastName());
             userDto.setPassword(userProfile.getId());
             userDto.setEmail(userProfile.getEmail());

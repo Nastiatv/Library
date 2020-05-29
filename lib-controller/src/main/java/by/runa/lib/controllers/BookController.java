@@ -58,8 +58,7 @@ public class BookController {
             modelAndView.addObject("listFeedbacks", feedbackService.getAllFeedbacksByBookId(id));
             modelAndView.setViewName(ONEBOOK);
         } catch (EntityNotFoundException e) {
-            modelAndView.setViewName(ERRORS);
-            modelAndView.addObject(MESSAGE, e.getMessage());
+            returnViewNameWithError(modelAndView, e);
         }
         return modelAndView;
     }
@@ -71,8 +70,7 @@ public class BookController {
             modelAndView.addObject(BOOK, bookService.getBookByIsbn(isbn));
             modelAndView.setViewName(ONEBOOK);
         } catch (EntityNotFoundException e) {
-            modelAndView.setViewName(ERRORS);
-            modelAndView.addObject(MESSAGE, e.getMessage());
+            returnViewNameWithError(modelAndView, e);
         }
         return modelAndView;
     }
@@ -102,8 +100,7 @@ public class BookController {
             modelAndView.addObject("detailsdto", new BookDetailsDto());
             modelAndView.addObject("dto", new BookDto());
         } catch (EntityNotFoundException e) {
-            modelAndView.setViewName(ERRORS);
-            modelAndView.addObject(MESSAGE, e.getMessage());
+            returnViewNameWithError(modelAndView, e);
         }
         return modelAndView;
     }
@@ -132,8 +129,7 @@ public class BookController {
             modelAndView.addObject("departmentdto", new DepartmentDto());
             modelAndView.addObject("bookDto", new BookDto());
         } catch (EntityNotFoundException e) {
-            modelAndView.setViewName(ERRORS);
-            modelAndView.addObject(MESSAGE, e.getMessage());
+            returnViewNameWithError(modelAndView, e);
         }
         return modelAndView;
     }
@@ -141,8 +137,17 @@ public class BookController {
     @PostMapping("delete/{id}")
     public ModelAndView deletebookSubmit(BookDto bookDto, DepartmentDto departmentDto) {
         ModelAndView modelAndView = new ModelAndView();
-        bookService.deleteBookById(bookDto.getId(), departmentDto);
-        modelAndView.setViewName("general/changesSaved");
+        try {
+            bookService.deleteBookById(bookDto.getId(), departmentDto);
+            modelAndView.setViewName("general/changesSaved");
+        } catch (EntityNotFoundException e) {
+            returnViewNameWithError(modelAndView, e);
+        }
         return modelAndView;
+    }
+
+    private void returnViewNameWithError(ModelAndView modelAndView, EntityNotFoundException e) {
+        modelAndView.setViewName(ERRORS);
+        modelAndView.addObject(MESSAGE, e.getMessage());
     }
 }

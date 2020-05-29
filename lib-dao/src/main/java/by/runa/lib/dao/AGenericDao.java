@@ -47,8 +47,8 @@ public abstract class AGenericDao<T extends AEntity> implements IAGenericDao<T> 
     }
 
     @Override
-    public void delete(T entity) {
-        entityManager.remove(entity);
+    public void delete(Long id) {
+        entityManager.remove(get(id));
     }
 
     @Override

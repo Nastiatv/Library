@@ -67,7 +67,7 @@ public class FeedbackService implements IFeedbackService {
 
     @Override
     public void deleteFeedbackById(Long id) {
-        getFeedbackDao().delete(getFeedbackDao().get(id));
+        getFeedbackDao().delete(id);
         countAvgRatingForBook(getBookId(id));
     }
 
@@ -75,7 +75,7 @@ public class FeedbackService implements IFeedbackService {
     public FeedbackDto updateFeedback(Long id, FeedbackDto feedbackDto) throws EntityNotFoundException {
         Feedback existingFeedback = Optional.ofNullable(getFeedbackDao().get(id))
                 .orElseThrow(() -> new EntityNotFoundException(FEEDBACK));
-        changeFeedback(feedbackDto, existingFeedback);
+        existingFeedback.setRating(feedbackDto.getRating()).setComment(feedbackDto.getComment());
         getFeedbackDao().update(existingFeedback);
         countAvgRatingForBook(getBookId(id));
         return feedbackMapper.toDto(existingFeedback);
@@ -91,10 +91,6 @@ public class FeedbackService implements IFeedbackService {
     public List<FeedbackDto> getAllFeedbacksByUserId(Long id) throws EntityNotFoundException {
         return Optional.ofNullable(feedbackMapper.toListDto(feedbackDao.getAllFeedbacksByUserId(id)))
                 .orElseThrow(() -> new EntityNotFoundException(FEEDBACK));
-    }
-
-    private void changeFeedback(FeedbackDto feedbackDto, Feedback existingFeedback) {
-        existingFeedback.setRating(feedbackDto.getRating()).setComment(feedbackDto.getComment());
     }
 
     private Long getBookId(Long id) {

@@ -38,7 +38,7 @@
 				<tr>
 				<tr th:each="book : ${bookList}">
 					<td><img th:src="@{${book.bookDetailsDto.picture}}"
-						class="img-thumbnail" alt="Cover" /></td>
+						class="img-thumbnail grow" alt="Cover" /></td>
 					<td th:text="${book.isbn}"></td>
 					<td th:text="${book.bookDetailsDto.name}"></td>
 					<td th:text="${book.bookDetailsDto.author}"></td>
@@ -55,11 +55,5 @@
 </body>
 <script
 	src="https://cdn.jsdelivr.net/gh/ashnamuh/rm-facebook-passport-redirect-hash@v1.0.0/lib.js"></script>
-<footer class="footer">
-	<a href="javascript:history.back()">Go back </a>
-	<div>&#169; 2020 Runa</div>
-	<div>
-		Feedback? <a href="../mailToAdmin">Get in touch</a>
-	</div>
-</footer>
+<div th:insert="general/home :: footer"></div>
 </html>

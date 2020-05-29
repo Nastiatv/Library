@@ -26,7 +26,6 @@
 					class="form-control input-sm" value="${book.bookDetailsDto.name}"
 					required />
 			</div>
-
 			<div class="form-center">
 				<label for="author" class="font-weight-bold">Author</label> <input
 					type="text" id="author" name="author"
@@ -39,14 +38,14 @@
 					th:field="*{bookDetailsDto.description}"
 					class="form-control input-sm"
 					value="${book.bookDetailsDto.description}" required />
-			</div>
+			</div> <br />
 			<div class="form-center">
 				<div class="form-center custom-file">
 					<label class="custom-file-label font-weight-bold"
 						for="imageUploader">Choose cover</label> <input type="file"
 						class="custom-file-input" id="imageUploader" name="file" /> <small
 						id="passwordHelpBlock" class="form-text text-muted">
-						Please choose file under 1MB. </small>
+						Please choose file under 10MB. </small>
 				</div>
 			</div>
 			<br />
@@ -57,9 +56,5 @@
 	</div>
 	<hr />
 </body>
-<footer class="footer">
-	<a href="javascript:history.back()">Go back </a>
-	<div>2020 Runa</div>
-	<div>Feedback? Get in touch: litvinenoknastia@gmail.com</div>
-</footer>
+<div th:insert="general/home :: footer"></div>
 </html>

@@ -93,7 +93,7 @@ public class OrderService implements IOrderService {
 
     @Override
     public void deleteOrderById(Long id) {
-        getOrderDao().delete(getOrderDao().get(id));
+        getOrderDao().delete(id);
     }
 
     @Override
@@ -107,8 +107,7 @@ public class OrderService implements IOrderService {
             if (existingOrder.isProlonged()) {
                 throw new IsAlreadyProlongedException();
             } else {
-                changeOrder(existingOrder);
-                getOrderDao().update(existingOrder);
+                getOrderDao().update(existingOrder.setProlonged(true).setDueDate(LocalDate.now().plusDays(10)));
             }
         }
         return orderMapper.toDto(existingOrder);
@@ -121,8 +120,7 @@ public class OrderService implements IOrderService {
         if (existingOrder.isFinished()) {
             throw new IsAlreadyClosedException();
         } else {
-            existingOrder.setFinished(true);
-            incrementQuantity(existingOrder);
+            incrementQuantity(existingOrder.setFinished(true));
             getOrderDao().update(existingOrder);
         }
         return orderMapper.toDto(existingOrder);
@@ -149,15 +147,13 @@ public class OrderService implements IOrderService {
     }
 
     private void incrementQuantity(Order existingOrder) {
-        getBookById(existingOrder).setQuantityAvailable(getBookById(existingOrder).getQuantityAvailable() + 1);
+        Book book = getBookById(existingOrder);
+        book.setQuantityAvailable(book.getQuantityAvailable() + 1)
+                .setQuantityInLibrary(book.getQuantityInLibrary() + 1);
+
     }
 
     private Book getBookById(Order existingOrder) {
         return getBookDao().get(existingOrder.getBook().getId());
-    }
-
-    private void changeOrder(Order existingOrder) {
-        existingOrder.setProlonged(true);
-        existingOrder.setDueDate(LocalDate.now().plusDays(10));
     }
 }
