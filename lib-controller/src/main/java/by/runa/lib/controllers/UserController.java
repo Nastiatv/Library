@@ -131,7 +131,7 @@ public class UserController {
         final String currentUser = principal.getName();
         ModelAndView modelAndView = new ModelAndView();
         try {
-            UserDto userDto = userService.getUserByName(currentUser);
+            UserDto userDto = userService.getUserByEmail(currentUser);
             modelAndView.addObject(USER, userDto);
             principalId = userDto.getId();
             modelAndView.addObject("ListOrders", orderService.getAllOrdersByUserId(principalId));

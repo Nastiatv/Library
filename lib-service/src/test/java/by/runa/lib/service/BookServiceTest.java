@@ -80,7 +80,7 @@ public class BookServiceTest {
         when(bookDao.getAll()).thenReturn(listBook);
         List<BookDto> dtoList = bookService.getAllBooks();
         verify(bookMapper, times(1)).toListDto(listBook);
-        assertThat(listBook.size() == dtoList.size()).isTrue();
+        assertThat(listBook.size() == dtoList.size());
     }
 
     @Test
@@ -94,9 +94,9 @@ public class BookServiceTest {
     }
 
     @Test
-    public void deleteBookByIdTest() throws EntityNotFoundException {
+    public void deleteBookByIdTest() throws EntityNotFoundException{
         Book book = createBook(TEST_ISBN);
-        when(bookDao.get(1L)).thenReturn(book);
+        when(bookService.getBookById(1L)).thenReturn(toDto(book));
         DepartmentDto depDto = new DepartmentDto();
         bookService.deleteBookById(1L, depDto);
         verify(bookDao, times(1)).delete(book.getId());

@@ -70,8 +70,7 @@ public class UserService implements IUserService {
 
     @Override
     public UserDto createUser(UserDto userDto, DepartmentDto departmentDto) throws UserIsAlreadyExistsException {
-        if (Boolean.TRUE.equals(checkIfUserWithThisNameAlreadyExists(userDto))
-                && Boolean.TRUE.equals(checkIfUserWithThisEmailAlreadyExists(userDto.getEmail()))) {
+        if (Boolean.TRUE.equals(checkIfUserWithThisEmailAlreadyExists(userDto.getEmail()))) {
             throw new UserIsAlreadyExistsException();
         } else {
             User user = new User().setEmail(userDto.getEmail()).setUsername(userDto.getUsername())
@@ -160,10 +159,6 @@ public class UserService implements IUserService {
         } catch (MessagingException e) {
             log.info("Mail not sent!");
         }
-    }
-
-    private Boolean checkIfUserWithThisNameAlreadyExists(UserDto userDto) {
-        return (userDao.getByName(userDto.getUsername()) != null);
     }
 
     private Department getDepartmentByName(DepartmentDto departmentDto) {

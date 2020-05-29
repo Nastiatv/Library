@@ -5,7 +5,6 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
@@ -21,7 +20,7 @@ import lombok.experimental.Accessors;
 @Entity
 @Data
 @EqualsAndHashCode(callSuper = true)
-@Accessors(fluent = false, chain=true)
+@Accessors(fluent = false, chain = true)
 @Table(name = "book")
 public class Book extends AEntity {
 
@@ -41,13 +40,13 @@ public class Book extends AEntity {
     @JoinTable(name = "department_book", joinColumns = @JoinColumn(name = "book_id"), inverseJoinColumns = @JoinColumn(name = "department_id"))
     private List<Department> departments;
 
-    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
     private List<Feedback> feedbacks;
 
-    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
     private List<Order> orders;
 
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+    @OneToOne(cascade = CascadeType.MERGE)
     @PrimaryKeyJoinColumn
     private BookDetails bookDetails;
 

@@ -38,7 +38,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/orders/**", "/feedbacks/**").hasAnyRole("ADMIN", "USER")
                 .antMatchers("/admin/**", "/departments/**").hasRole("ADMIN")
 
-                .and().formLogin().loginPage("/login").defaultSuccessUrl("/users/my/{id}", true).permitAll().and()
+                .and().formLogin().loginPage("/login").usernameParameter("email").defaultSuccessUrl("/users/my/{id}", true).permitAll().and()
                 .logout().invalidateHttpSession(true).clearAuthentication(true)
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/bye").permitAll().and()
                 .exceptionHandling().accessDeniedHandler(accessDeniedHandler);
@@ -47,9 +47,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder builder) throws Exception {
         builder.jdbcAuthentication().dataSource(dataSource).authoritiesByUsernameQuery(
-                "SELECT user.username as username, role.name as role FROM user INNER JOIN user_role ON "
-                        + "user.id = user_role.user_id INNER JOIN role ON user_role.role_id = role.id WHERE user.username = ?")
-                .usersByUsernameQuery("select username, password, 1 as enabled from user where user.username=?")
+                "SELECT user.email as email, role.name as role FROM user INNER JOIN user_role ON "
+                        + "user.id = user_role.user_id INNER JOIN role ON user_role.role_id = role.id WHERE user.email = ?")
+                .usersByUsernameQuery("select email, password, 1 as enabled from user where user.email=?")
                 .passwordEncoder(new BCryptPasswordEncoder());
     }
 

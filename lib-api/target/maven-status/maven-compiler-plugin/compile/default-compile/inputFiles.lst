@@ -26,5 +26,6 @@ D:\coursesIT\practice\Library\lib-api\src\main\java\by\runa\lib\api\exceptions\N
 D:\coursesIT\practice\Library\lib-api\src\main\java\by\runa\lib\api\dao\IFeedbackDao.java
 D:\coursesIT\practice\Library\lib-api\src\main\java\by\runa\lib\api\exceptions\IsAlreadyProlongedException.java
 D:\coursesIT\practice\Library\lib-api\src\main\java\by\runa\lib\api\dto\OrderDto.java
+D:\coursesIT\practice\Library\lib-api\src\main\java\by\runa\lib\api\exceptions\UserIsAlreadyExistsException.java
 D:\coursesIT\practice\Library\lib-api\src\main\java\by\runa\lib\api\dao\IBookDetailsDao.java
 D:\coursesIT\practice\Library\lib-api\src\main\java\by\runa\lib\api\dto\BookDto.java
