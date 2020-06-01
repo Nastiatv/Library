@@ -4,7 +4,7 @@
 <title>Library - Book page</title>
 <link href="../../css/styles.css" rel="stylesheet" />
 <link href="../../css/bootstrap.min.css" rel="stylesheet">
-</head>
+</head> </head> <div class="header" th:insert="general/home :: header"></div>
 <body>
 	<div class="form-wrapper">
 		<header class="m-md-3">
@@ -41,7 +41,7 @@
 			</div> <br />
 			<div class="form-center">
 				<div class="form-center custom-file">
-					<label class="custom-file-label font-weight-bold"
+					<label class="custom-file-label"
 						for="imageUploader">Choose cover</label> <input type="file"
 						class="custom-file-input" id="imageUploader" name="file" /> <small
 						id="passwordHelpBlock" class="form-text text-muted">
@@ -50,7 +50,7 @@
 			</div>
 			<br />
 			<div class="form-center">
-				<input type="submit" value="Update Book" />
+				<input class="btn btn-light" type="submit" value="Update Book" />
 			</div>
 		</form>
 	</div>

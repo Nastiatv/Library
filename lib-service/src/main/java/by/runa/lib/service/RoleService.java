@@ -48,7 +48,7 @@ public class RoleService implements IRoleService {
 
     @Override
     public void deleteRoleById(Long id) {
-        getRoleDao().delete(id);
+        getRoleDao().delete(getRoleDao().get(id));
     }
 
     @Override

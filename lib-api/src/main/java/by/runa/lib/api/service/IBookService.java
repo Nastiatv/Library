@@ -21,4 +21,6 @@ public interface IBookService {
     void deleteBookById(Long id, DepartmentDto departmentDto) throws EntityNotFoundException;
 
     BookDto getBookByIsbn(String isbn) throws EntityNotFoundException;
+
+    List<BookDto> getBooksByDepartmentId(Long id) throws EntityNotFoundException;
 }

@@ -91,10 +91,16 @@ public class BookService implements IBookService {
     }
 
     @Override
+    public List<BookDto> getBooksByDepartmentId(Long id) throws EntityNotFoundException{
+        return Optional.ofNullable(bookMapper.toListDto(bookDao.getBooksByDepartmentId(id)))
+                .orElseThrow(() -> new EntityNotFoundException("Book"));
+    }
+    
+    @Override
     public void deleteBookById(Long id, DepartmentDto departmentDto) throws EntityNotFoundException {
         BookDto bookDto = getBookById(id);
         if (bookDto.getQuantityInLibrary() == 1) {
-            getBookDao().delete(id);
+            getBookDao().delete(getBookDao().get(id));
         } else {
             removeOneBook(departmentDto, bookDto);
         }

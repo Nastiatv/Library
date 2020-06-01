@@ -83,18 +83,6 @@ public class DepartmentController {
         return modelAndView;
     }
 
-    @GetMapping("delete/{id}")
-    public ModelAndView deleteDepartment(@PathVariable Long id) {
-        ModelAndView modelAndView = new ModelAndView();
-        try {
-            modelAndView.addObject(DEPARTMENT, departmentService.getDepartmentById(id));
-            modelAndView.setViewName("deletedepartment");
-        } catch (EntityNotFoundException e) {
-            returnViewNameWithError(modelAndView, e);
-        }
-        return modelAndView;
-    }
-
     @PostMapping("delete/{id}")
     public ModelAndView deletebookSubmit(@PathVariable Long id) {
         ModelAndView modelAndView = new ModelAndView();

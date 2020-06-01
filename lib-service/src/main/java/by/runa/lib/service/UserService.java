@@ -110,7 +110,7 @@ public class UserService implements IUserService {
 
     @Override
     public void deleteUserById(Long id) throws EntityNotFoundException {
-        getUserDao().delete(id);
+        getUserDao().delete(getUserDao().get(id));
     }
 
     @Override

@@ -2,11 +2,13 @@
 <html xmlns:th="http://thymeleaf.org" lang="en">
 <head>
 <title>Library - Books page</title>
-<link href="../css/styles.css" rel="stylesheet" />
-<link href="../css/bootstrap.min.css" rel="stylesheet">
+<link href="../../css/styles.css" rel="stylesheet" />
+<link href="../../css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
+</head>
+<div class="header" th:insert="general/home :: header"></div>
 <body>
 	<div class="form-wrapper">
 		<header class="m-md-3">
@@ -19,8 +21,12 @@
 			</div>
 		</form>
 		<hr />
+		<a class="btn btn-outline-secondary"  style="margin-left: 10px"
+			th:each="department : ${allDepartments}"
+			th:value="${department.id}" th:text="${department.name}"
+			th:if="${department.name} != 'default'"
+			th:href="@{'../../books/byDepartment/' + ${department.id}}"></a>
 		<h1 class="form-center">Our Books:</h1>
-
 		<table class="table">
 			<caption></caption>
 			<thead>
@@ -46,7 +52,7 @@
 					<td><span th:each="department : ${book.departments}"> <span
 							th:text="${department.name}"> </span><br />
 					</span></td>
-					<td><a th:href="@{${book.id}}">See more</a><br />
+					<td><a th:href="@{'../../books/' + ${book.id}}">See more</a><br />
 				</tr>
 			</tbody>
 		</table>

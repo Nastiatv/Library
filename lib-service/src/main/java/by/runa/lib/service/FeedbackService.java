@@ -67,8 +67,9 @@ public class FeedbackService implements IFeedbackService {
 
     @Override
     public void deleteFeedbackById(Long id) {
-        getFeedbackDao().delete(id);
-        countAvgRatingForBook(getBookId(id));
+        Long bookId = getBookByFeedbackId(id);
+        getFeedbackDao().delete(getFeedbackDao().get(bookId));
+        countAvgRatingForBook(bookId);
     }
 
     @Override
@@ -77,7 +78,7 @@ public class FeedbackService implements IFeedbackService {
                 .orElseThrow(() -> new EntityNotFoundException(FEEDBACK));
         existingFeedback.setRating(feedbackDto.getRating()).setComment(feedbackDto.getComment());
         getFeedbackDao().update(existingFeedback);
-        countAvgRatingForBook(getBookId(id));
+        countAvgRatingForBook(getBookByFeedbackId(id));
         return feedbackMapper.toDto(existingFeedback);
     }
 
@@ -93,7 +94,7 @@ public class FeedbackService implements IFeedbackService {
                 .orElseThrow(() -> new EntityNotFoundException(FEEDBACK));
     }
 
-    private Long getBookId(Long id) {
+    private Long getBookByFeedbackId(Long id) {
         return getFeedbackDao().get(id).getBook().getId();
     }
 

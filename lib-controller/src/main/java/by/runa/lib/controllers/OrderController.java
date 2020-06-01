@@ -44,7 +44,7 @@ public class OrderController {
         ModelAndView modelAndView = new ModelAndView();
         final String currentUser = principal.getName();
         try {
-            long principalId = userService.getUserByName(currentUser).getId();
+            long principalId = userService.getUserByEmail(currentUser).getId();
             modelAndView.setViewName("allorders");
             modelAndView.addObject("orderList", orderService.getAllOrdersByUserId(principalId));
         } catch (EntityNotFoundException e) {

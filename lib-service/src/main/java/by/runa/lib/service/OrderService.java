@@ -71,7 +71,7 @@ public class OrderService implements IOrderService {
         Book book = getBookDao().get(bookId);
         if (book.getQuantityAvailable() != 0) {
             book.setQuantityAvailable(book.getQuantityAvailable() - 1);
-            order.setBook(book).setUser(userDao.getByName(userName)).setOrderDate(LocalDate.now())
+            order.setBook(book).setUser(userDao.getByEmail(userName)).setOrderDate(LocalDate.now())
                     .setDueDate(order.getOrderDate().plusDays(10)).setProlonged(false).setFinished(false);
         } else {
             throw new NoBooksAvailableException();
@@ -93,7 +93,7 @@ public class OrderService implements IOrderService {
 
     @Override
     public void deleteOrderById(Long id) {
-        getOrderDao().delete(id);
+        getOrderDao().delete(getOrderDao().get(id));
     }
 
     @Override
@@ -148,9 +148,7 @@ public class OrderService implements IOrderService {
 
     private void incrementQuantity(Order existingOrder) {
         Book book = getBookById(existingOrder);
-        book.setQuantityAvailable(book.getQuantityAvailable() + 1)
-                .setQuantityInLibrary(book.getQuantityInLibrary() + 1);
-
+        book.setQuantityAvailable(book.getQuantityAvailable() + 1);
     }
 
     private Book getBookById(Order existingOrder) {

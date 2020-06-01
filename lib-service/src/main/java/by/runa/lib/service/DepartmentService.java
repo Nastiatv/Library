@@ -49,8 +49,14 @@ public class DepartmentService implements IDepartmentService {
     }
 
     @Override
+    public DepartmentDto getDepartmentByName(String name) throws EntityNotFoundException {
+        return Optional.ofNullable(departmentMapper.toDto(departmentDao.getByName(name)))
+                .orElseThrow(() -> new EntityNotFoundException(DEPARTMENT));
+    }
+
+    @Override
     public void deleteDepartmentById(Long id) throws EntityNotFoundException {
-        getDepartmentDao().delete(id);
+        getDepartmentDao().delete(getDepartmentDao().get(id));
     }
 
     @Override

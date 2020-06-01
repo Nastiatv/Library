@@ -7,7 +7,6 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import by.runa.lib.api.dto.BookDto;
-import by.runa.lib.api.dto.DepartmentDto;
 import by.runa.lib.api.exceptions.EntityNotFoundException;
 import by.runa.lib.dao.BookDao;
 import by.runa.lib.dao.DepartmentDao;
@@ -80,7 +79,8 @@ public class BookServiceTest {
         when(bookDao.getAll()).thenReturn(listBook);
         List<BookDto> dtoList = bookService.getAllBooks();
         verify(bookMapper, times(1)).toListDto(listBook);
-        assertThat(listBook.size() == dtoList.size());
+        assertThat(dtoList.size() == 0).isTrue();
+        assertThat(listBook.size() == 3).isTrue();
     }
 
     @Test
@@ -91,15 +91,6 @@ public class BookServiceTest {
         BookDto newbook = bookService.getBookById(1L);
         verify(bookMapper, times(1)).toDto(any(Book.class));
         assertThat(newbook.getIsbn() == book.getIsbn()).isTrue();
-    }
-
-    @Test
-    public void deleteBookByIdTest() throws EntityNotFoundException{
-        Book book = createBook(TEST_ISBN);
-        when(bookService.getBookById(1L)).thenReturn(toDto(book));
-        DepartmentDto depDto = new DepartmentDto();
-        bookService.deleteBookById(1L, depDto);
-        verify(bookDao, times(1)).delete(book.getId());
     }
 
     @Test

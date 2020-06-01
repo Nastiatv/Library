@@ -148,7 +148,7 @@ public class UserController {
         ModelAndView modelAndView = new ModelAndView();
         try {
             modelAndView.addObject(DEPARTMENTS_LIST, departmentService.getAllDepartments());
-            modelAndView.addObject(USER, userService.getUserByName(currentUser));
+            modelAndView.addObject(USER, userService.getUserByEmail(currentUser));
             modelAndView.addObject(DEPARTMENTDTO, new DepartmentDto());
             modelAndView.addObject("dto", new UserDto());
             modelAndView.setViewName("updateuser");

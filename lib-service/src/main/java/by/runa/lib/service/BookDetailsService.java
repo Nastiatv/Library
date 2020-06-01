@@ -51,7 +51,7 @@ public class BookDetailsService implements IBookDetailsService {
 
     @Override
     public void deleteBookDetailsById(Long id) {
-        getBookDetailsDao().delete(id);
+        getBookDetailsDao().delete(getBookDetailsDao().get(id));
     }
 
     @Override

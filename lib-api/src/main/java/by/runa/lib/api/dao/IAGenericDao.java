@@ -16,6 +16,6 @@ public interface IAGenericDao<T extends AEntity> {
 
     List<T> getAll();
 
-    void delete(Long id);
+    void delete(T entity);
 
 }

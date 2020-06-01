@@ -57,7 +57,7 @@ public class FeedbackController {
         ModelAndView modelAndView = new ModelAndView();
         final String currentUser = principal.getName();
         try {
-            long principalId = userService.getUserByName(currentUser).getId();
+            long principalId = userService.getUserByEmail(currentUser).getId();
             modelAndView.setViewName("allfeedbacks");
             modelAndView.addObject("feedbackList", feedbackService.getAllFeedbacksByUserId(principalId));
         } catch (EntityNotFoundException e) {
@@ -105,24 +105,11 @@ public class FeedbackController {
         return modelAndView;
     }
 
-    @GetMapping("delete/{id}")
-    public ModelAndView deleteFeedback(@PathVariable Long id) {
-        ModelAndView modelAndView = new ModelAndView();
-        try {
-            modelAndView.addObject(FEEDBACK, feedbackService.getFeedbackById(id));
-            modelAndView.setViewName("deletefeedback");
-            modelAndView.addObject("feedbackDto", new FeedbackDto());
-        } catch (EntityNotFoundException e) {
-            returnViewNameWithError(modelAndView, e);
-        }
-        return modelAndView;
-    }
-
     @PostMapping("delete/{id}")
-    public ModelAndView deletebookSubmit(FeedbackDto feedbackDto) {
+    public ModelAndView deletebookSubmit(@PathVariable Long id) {
         ModelAndView modelAndView = new ModelAndView();
         try {
-            feedbackService.deleteFeedbackById(feedbackDto.getId());
+            feedbackService.deleteFeedbackById(id);
             modelAndView.setViewName(CHANGESSAVED);
         } catch (EntityNotFoundException e) {
             returnViewNameWithError(modelAndView, e);

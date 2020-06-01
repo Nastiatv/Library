@@ -3,9 +3,6 @@ package by.runa.lib.dao;
 import by.runa.lib.api.dao.IAGenericDao;
 import by.runa.lib.entities.AEntity;
 
-import java.util.Collections;
-import java.util.List;
-
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
@@ -13,6 +10,9 @@ import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+
+import java.util.Collections;
+import java.util.List;
 
 public abstract class AGenericDao<T extends AEntity> implements IAGenericDao<T> {
 
@@ -47,8 +47,8 @@ public abstract class AGenericDao<T extends AEntity> implements IAGenericDao<T> 
     }
 
     @Override
-    public void delete(Long id) {
-        entityManager.remove(get(id));
+    public void delete(T entity) {
+        entityManager.remove(entity);
     }
 
     @Override
