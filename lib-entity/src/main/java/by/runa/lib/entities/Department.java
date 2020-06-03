@@ -3,7 +3,6 @@ package by.runa.lib.entities;
 import java.util.List;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
@@ -24,10 +23,10 @@ public class Department extends AEntity {
     @Column(name = "name")
     private String name;
 
-    @ManyToMany(mappedBy = "departments", cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "departments")
     private Set<Book> books;
 
-    @OneToMany(mappedBy = "department", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "department")
     private List<User> users;
 
 }

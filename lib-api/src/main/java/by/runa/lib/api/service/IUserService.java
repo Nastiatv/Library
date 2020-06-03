@@ -20,7 +20,7 @@ public interface IUserService {
 
     UserDto getUserByEmail(String email) throws EntityNotFoundException;
 
-    UserDto createUser(UserDto userDto, DepartmentDto departmentDto) throws UserIsAlreadyExistsException;
+    UserDto createUser(UserDto userDto, DepartmentDto departmentDto) throws UserIsAlreadyExistsException, EntityNotFoundException;
 
     UserDto getUserByName(String name) throws EntityNotFoundException;
 
@@ -34,6 +34,6 @@ public interface IUserService {
 
     void sendEmailWithNewPassword(String email) throws EntityNotFoundException;
 
-    UserDto setRoles(Long id, RoleDto roleDto);
+    UserDto setRoles(Long id, RoleDto roleDto) throws EntityNotFoundException;
 
 }

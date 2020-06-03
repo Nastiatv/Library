@@ -89,7 +89,7 @@ public class UserController {
             userService.createUser(userDto, departmentDto);
             imgFileUploader.createOrUpdateUserAvatar(userDto, file);
             modelAndView.setViewName("general/login");
-        } catch (IOException | UserIsAlreadyExistsException e) {
+        } catch (IOException | EntityNotFoundException | UserIsAlreadyExistsException e) {
             modelAndView.setViewName(ERRORS);
             modelAndView.addObject(MESSAGE, e.getMessage());
         }
@@ -184,7 +184,11 @@ public class UserController {
     @PostMapping("setrole/{id}")
     public ModelAndView saveRolesChanges(@PathVariable Long id, RoleDto roleDto) {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject(USER, userService.setRoles(id, roleDto));
+        try {
+            modelAndView.addObject(USER, userService.setRoles(id, roleDto));
+        } catch (EntityNotFoundException e) {
+            returnViewNameWithError(modelAndView, e);
+        }
         modelAndView.setViewName(GENERAL_CHANGES_SAVED);
         return modelAndView;
     }

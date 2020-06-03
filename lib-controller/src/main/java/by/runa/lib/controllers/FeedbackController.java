@@ -77,7 +77,12 @@ public class FeedbackController {
     public ModelAndView addFeedbackSubmit(@PathVariable Long id, FeedbackDto feedbackDto) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("general/thankU");
-        return modelAndView.addObject(FEEDBACK, feedbackService.createFeedback(feedbackDto, id));
+        try {
+            modelAndView.addObject(FEEDBACK, feedbackService.createFeedback(feedbackDto, id));
+        } catch (EntityNotFoundException e) {
+            returnViewNameWithError(modelAndView, e);
+        }
+        return modelAndView;
     }
 
     @GetMapping("edit/{id}")

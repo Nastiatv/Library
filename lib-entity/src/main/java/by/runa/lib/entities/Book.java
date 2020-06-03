@@ -46,7 +46,7 @@ public class Book extends AEntity {
     @OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
     private List<Order> orders;
 
-    @OneToOne(cascade = CascadeType.MERGE)
+    @OneToOne(orphanRemoval = true)
     @PrimaryKeyJoinColumn
     private BookDetails bookDetails;
 

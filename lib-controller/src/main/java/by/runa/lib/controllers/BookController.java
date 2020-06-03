@@ -50,7 +50,7 @@ public class BookController {
         modelAndView.addObject("bookList", bookService.getAllBooks());
         return modelAndView;
     }
-    
+
     @GetMapping("/byDepartment/{id}")
     public ModelAndView getAllBooksByDepartment(@PathVariable Long id) {
         ModelAndView modelAndView = new ModelAndView();
@@ -102,7 +102,12 @@ public class BookController {
     public ModelAndView addBookSubmit(BookDto bookDto, DepartmentDto departmentDto) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName(ONEBOOK);
-        return modelAndView.addObject("book", bookService.createBook(bookDto, departmentDto));
+        try {
+            modelAndView.addObject("book", bookService.createBook(bookDto, departmentDto));
+        } catch (EntityNotFoundException e) {
+            returnViewNameWithError(modelAndView, e);
+        }
+        return modelAndView;
     }
 
     @GetMapping("edit/{id}")

@@ -16,4 +16,6 @@ public interface IRoleService {
 
 	RoleDto createRole(RoleDto roleDto);
 
+    RoleDto getRoleByName(String name);
+
 }

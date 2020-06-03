@@ -43,7 +43,12 @@ public class RoleService implements IRoleService {
 
     @Override
     public RoleDto getRoleById(Long id) {
-        return Optional.ofNullable(roleMapper.toDto(getRoleDao().get(id))).orElse(new RoleDto());
+        return roleMapper.toDto(getRoleDao().get(id));
+    }
+
+    @Override
+    public RoleDto getRoleByName(String name) {
+        return roleMapper.toDto(roleDao.getByName(name));
     }
 
     @Override

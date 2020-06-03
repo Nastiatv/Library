@@ -2,13 +2,13 @@ package by.runa.lib.service;
 
 import by.runa.lib.api.dao.IAGenericDao;
 import by.runa.lib.api.dao.IBookDao;
-import by.runa.lib.api.dao.IDepartmentDao;
 import by.runa.lib.api.dto.BookDetailsDto;
 import by.runa.lib.api.dto.BookDto;
 import by.runa.lib.api.dto.DepartmentDto;
 import by.runa.lib.api.exceptions.EntityNotFoundException;
 import by.runa.lib.api.service.IBookDetailsService;
 import by.runa.lib.api.service.IBookService;
+import by.runa.lib.api.service.IDepartmentService;
 import by.runa.lib.entities.Book;
 import by.runa.lib.entities.BookDetails;
 import by.runa.lib.entities.Department;
@@ -39,10 +39,13 @@ public class BookService implements IBookService {
     private IBookDao bookDao;
 
     @Autowired
-    private IDepartmentDao departmentDao;
+    private IDepartmentService departmentService;
 
     @Autowired
     private AMapper<Book, BookDto> bookMapper;
+
+    @Autowired
+    private AMapper<Department, DepartmentDto> departmentMapper;
 
     @Autowired
     private AMapper<BookDetails, BookDetailsDto> bookDetailsMapper;
@@ -63,7 +66,7 @@ public class BookService implements IBookService {
     }
 
     @Override
-    public BookDto createBook(BookDto dto, DepartmentDto departmentDto) {
+    public BookDto createBook(BookDto dto, DepartmentDto departmentDto) throws EntityNotFoundException {
         cleanIsbn(dto);
         Book existingBook = getBookbyIsbnFromDao(dto);
         Department existingdepartment = getDepartmentByName(departmentDto);
@@ -91,11 +94,11 @@ public class BookService implements IBookService {
     }
 
     @Override
-    public List<BookDto> getBooksByDepartmentId(Long id) throws EntityNotFoundException{
+    public List<BookDto> getBooksByDepartmentId(Long id) throws EntityNotFoundException {
         return Optional.ofNullable(bookMapper.toListDto(bookDao.getBooksByDepartmentId(id)))
                 .orElseThrow(() -> new EntityNotFoundException("Book"));
     }
-    
+
     @Override
     public void deleteBookById(Long id, DepartmentDto departmentDto) throws EntityNotFoundException {
         BookDto bookDto = getBookById(id);
@@ -120,7 +123,7 @@ public class BookService implements IBookService {
         return Optional.ofNullable(bookMapper.toDto(bookDao.getByIsbn(isbn)))
                 .orElseThrow(() -> new EntityNotFoundException("Book"));
     }
-    
+
     private void updateBookDetails(BookDto bookDto, MultipartFile file, Book existingBook) {
         if (bookDto.getBookDetailsDto() != null) {
             bookDetailsService.updateBookDetails(existingBook.getBookDetails(), bookDto.getBookDetailsDto(), file);
@@ -128,7 +131,7 @@ public class BookService implements IBookService {
     }
 
     private void removeOneBook(DepartmentDto departmentDto, BookDto bookDto) {
-        Book book=getBookDao().get(bookDto.getId());
+        Book book = getBookDao().get(bookDto.getId());
         book.setQuantityInLibrary(bookDto.getQuantityInLibrary() - 1)
                 .setQuantityAvailable(bookDto.getQuantityAvailable() - 1);
         removeOneDepartmentFromList(departmentDto, book);
@@ -143,8 +146,8 @@ public class BookService implements IBookService {
         dto.setIsbn(RegExUtils.replaceAll(dto.getIsbn(), "-", StringUtils.EMPTY).trim());
     }
 
-    private Department getDepartmentByName(DepartmentDto departmentDto) {
-        return departmentDao.getByName(departmentDto.getName());
+    private Department getDepartmentByName(DepartmentDto departmentDto) throws EntityNotFoundException {
+        return departmentMapper.toEntity(departmentService.getDepartmentByName(departmentDto.getName()));
     }
 
     BookDetails createBookDetails(BookDto dto) {

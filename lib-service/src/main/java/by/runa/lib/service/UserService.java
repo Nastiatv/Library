@@ -2,13 +2,13 @@ package by.runa.lib.service;
 
 import by.runa.lib.api.dao.IAGenericDao;
 import by.runa.lib.api.dao.IDepartmentDao;
-import by.runa.lib.api.dao.IRoleDao;
 import by.runa.lib.api.dao.IUserDao;
 import by.runa.lib.api.dto.DepartmentDto;
 import by.runa.lib.api.dto.RoleDto;
 import by.runa.lib.api.dto.UserDto;
 import by.runa.lib.api.exceptions.EntityNotFoundException;
 import by.runa.lib.api.exceptions.UserIsAlreadyExistsException;
+import by.runa.lib.api.service.IRoleService;
 import by.runa.lib.api.service.IUserService;
 import by.runa.lib.entities.Department;
 import by.runa.lib.entities.Role;
@@ -47,7 +47,10 @@ public class UserService implements IUserService {
     private IUserDao userDao;
 
     @Autowired
-    private IRoleDao roleDao;
+    private IRoleService roleService;
+
+    @Autowired
+    private AMapper<Role, RoleDto> roleMapper;
 
     @Autowired
     private IDepartmentDao departmentDao;
@@ -59,24 +62,21 @@ public class UserService implements IUserService {
         return userDao;
     }
 
-    public IAGenericDao<Role> getRoleDao() {
-        return roleDao;
-    }
-
     @Override
     public List<UserDto> getAllUsers() {
         return userMapper.toListDto(getUserDao().getAll());
     }
 
     @Override
-    public UserDto createUser(UserDto userDto, DepartmentDto departmentDto) throws UserIsAlreadyExistsException {
+    public UserDto createUser(UserDto userDto, DepartmentDto departmentDto)
+            throws UserIsAlreadyExistsException, EntityNotFoundException {
         if (Boolean.TRUE.equals(checkIfUserWithThisEmailAlreadyExists(userDto.getEmail()))) {
             throw new UserIsAlreadyExistsException();
         } else {
             User user = new User().setEmail(userDto.getEmail()).setUsername(userDto.getUsername())
                     .setDepartment(getDepartmentByName(departmentDto))
                     .setPassword(passwordEncoder.encode(userDto.getPassword()))
-                    .setRoles(Collections.singletonList(getRoleDao().get(2L)));
+                    .setRoles(Collections.singletonList(roleMapper.toEntity(roleService.getRoleById(2L))));
             return userMapper.toDto(getUserDao().create(user));
         }
     }
@@ -86,7 +86,7 @@ public class UserService implements IUserService {
         User user = new User().setEmail(userDto.getEmail()).setUsername(userDto.getUsername())
                 .setDepartment(getDepartmentByName(departmentDto))
                 .setPassword(passwordEncoder.encode(userDto.getPassword()))
-                .setRoles(Collections.singletonList(getRoleDao().get(2L)));
+                .setRoles(Collections.singletonList(roleMapper.toEntity(roleService.getRoleById(2L))));
         return userMapper.toDto(getUserDao().create(user));
     }
 
@@ -143,9 +143,9 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public UserDto setRoles(Long id, RoleDto roleDto) {
-        return userMapper
-                .toDto(userDao.get(id).setRoles(Collections.singletonList(roleDao.getByName(roleDto.getName()))));
+    public UserDto setRoles(Long id, RoleDto roleDto) throws EntityNotFoundException {
+        return userMapper.toDto(userDao.get(id).setRoles(
+                Collections.singletonList(roleMapper.toEntity(roleService.getRoleByName(roleDto.getName())))));
     }
 
     public void sendEmailWithNewPassword(String email) throws EntityNotFoundException {

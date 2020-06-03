@@ -15,7 +15,7 @@ public interface IFeedbackService {
 
 	FeedbackDto updateFeedback(Long id, FeedbackDto dto) throws EntityNotFoundException;
 
-	FeedbackDto createFeedback(FeedbackDto feedbackDto, Long id);
+	FeedbackDto createFeedback(FeedbackDto feedbackDto, Long id) throws EntityNotFoundException;
 
 	List<FeedbackDto> getAllFeedbacksByBookId(Long bookId) throws EntityNotFoundException;
 

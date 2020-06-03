@@ -29,8 +29,7 @@ public class FeedbackDao extends AGenericDao<Feedback> implements IFeedbackDao {
         CriteriaQuery<Feedback> criteria = cBuilder.createQuery(Feedback.class);
         Root<Feedback> linkRoot = criteria.from(Feedback.class);
         Join<Feedback, Book> bookJoin = linkRoot.join(Feedback_.book);
-        criteria.select(linkRoot);
-        criteria.where(cBuilder.equal(bookJoin.get(AEntity_.id), id));
+        criteria.select(linkRoot).where(cBuilder.equal(bookJoin.get(AEntity_.id), id));
         TypedQuery<Feedback> query = entityManager.createQuery(criteria);
         return query.getResultList();
     }
@@ -40,8 +39,7 @@ public class FeedbackDao extends AGenericDao<Feedback> implements IFeedbackDao {
         CriteriaQuery<Feedback> criteria = cBuilder.createQuery(Feedback.class);
         Root<Feedback> linkRoot = criteria.from(Feedback.class);
         Join<Feedback, User> userJoin = linkRoot.join(Feedback_.user);
-        criteria.select(linkRoot);
-        criteria.where(cBuilder.equal(userJoin.get(AEntity_.id), id));
+        criteria.select(linkRoot).where(cBuilder.equal(userJoin.get(AEntity_.id), id));
         TypedQuery<Feedback> query = entityManager.createQuery(criteria);
         return query.getResultList();
     }

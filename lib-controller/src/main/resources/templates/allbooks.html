@@ -12,16 +12,17 @@
 <body>
 	<div class="form-wrapper">
 		<header class="m-md-3">
-			<a href="../">Home</a> | <a href="../books/addbook">Add Book</a>
+			<a href="../../">Home</a> | <a href="../../books/addbook">Add Book</a>
 		</header>
-		<form class="nav-search" action="search" method="get">
+		<form class="nav-search" action="../../books/search" method="get">
 			<div class="active-cyan-3 active-cyan-4 mb-4">
 				<input class="form-control" type="text" name="isbn"
 					placeholder="Search book by ISBN" />
 			</div>
 		</form>
 		<hr />
-		<a class="btn btn-outline-secondary"  style="margin-left: 10px"
+		<a class="btn btn-outline-secondary" href="../../books/">All</a>
+		<a class="btn btn-outline-secondary"  style="margin-left: 5px"
 			th:each="department : ${allDepartments}"
 			th:value="${department.id}" th:text="${department.name}"
 			th:if="${department.name} != 'default'"

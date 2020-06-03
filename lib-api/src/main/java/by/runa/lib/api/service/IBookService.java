@@ -14,7 +14,7 @@ public interface IBookService {
 
     BookDto getBookById(Long id) throws EntityNotFoundException;
 
-    BookDto createBook(BookDto bookDto, DepartmentDto departmentDto);
+    BookDto createBook(BookDto bookDto, DepartmentDto departmentDto) throws EntityNotFoundException;
 
     BookDto updateBook(BookDto bookDto, MultipartFile file) throws EntityNotFoundException;
 

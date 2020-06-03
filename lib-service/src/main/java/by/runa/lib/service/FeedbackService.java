@@ -49,7 +49,7 @@ public class FeedbackService implements IFeedbackService {
     }
 
     @Override
-    public FeedbackDto createFeedback(FeedbackDto feedbackDto, Long orderId) {
+    public FeedbackDto createFeedback(FeedbackDto feedbackDto, Long orderId) throws EntityNotFoundException {
         Order order = orderDao.get(orderId);
         Feedback feedback = new Feedback().setBook(order.getBook()).setUser(order.getUser())
                 .setRating(feedbackDto.getRating()).setUserName(order.getUser().getUsername())
@@ -66,9 +66,9 @@ public class FeedbackService implements IFeedbackService {
     }
 
     @Override
-    public void deleteFeedbackById(Long id) {
+    public void deleteFeedbackById(Long id) throws EntityNotFoundException {
         Long bookId = getBookByFeedbackId(id);
-        getFeedbackDao().delete(getFeedbackDao().get(bookId));
+        getFeedbackDao().delete(getFeedbackDao().get(id));
         countAvgRatingForBook(bookId);
     }
 
