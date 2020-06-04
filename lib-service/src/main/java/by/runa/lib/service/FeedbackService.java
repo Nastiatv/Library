@@ -1,12 +1,14 @@
 package by.runa.lib.service;
 
 import by.runa.lib.api.dao.IAGenericDao;
-import by.runa.lib.api.dao.IBookDao;
 import by.runa.lib.api.dao.IFeedbackDao;
-import by.runa.lib.api.dao.IOrderDao;
+import by.runa.lib.api.dto.BookDto;
 import by.runa.lib.api.dto.FeedbackDto;
+import by.runa.lib.api.dto.OrderDto;
 import by.runa.lib.api.exceptions.EntityNotFoundException;
+import by.runa.lib.api.service.IBookService;
 import by.runa.lib.api.service.IFeedbackService;
+import by.runa.lib.api.service.IOrderService;
 import by.runa.lib.entities.Book;
 import by.runa.lib.entities.Feedback;
 import by.runa.lib.entities.Order;
@@ -31,10 +33,16 @@ public class FeedbackService implements IFeedbackService {
     private IFeedbackDao feedbackDao;
 
     @Autowired
-    private IOrderDao orderDao;
+    private IOrderService orderService;
 
     @Autowired
-    private IBookDao bookDao;
+    private AMapper<Order, OrderDto> orderMapper;
+
+    @Autowired
+    private IBookService bookService;
+
+    @Autowired
+    private AMapper<Book, BookDto> bookMapper;
 
     @Autowired
     private AMapper<Feedback, FeedbackDto> feedbackMapper;
@@ -50,12 +58,12 @@ public class FeedbackService implements IFeedbackService {
 
     @Override
     public FeedbackDto createFeedback(FeedbackDto feedbackDto, Long orderId) throws EntityNotFoundException {
-        Order order = orderDao.get(orderId);
+        Order order = orderMapper.toEntity(orderService.getOrderById(orderId));
         Feedback feedback = new Feedback().setBook(order.getBook()).setUser(order.getUser())
                 .setRating(feedbackDto.getRating()).setUserName(order.getUser().getUsername())
                 .setComment(feedbackDto.getComment());
         getFeedbackDao().create(feedback);
-        countAvgRatingForBook(order.getBook().getId());
+        countAndSetAvgRatingForBook(order.getBook().getId());
         return feedbackMapper.toDto(feedback);
     }
 
@@ -66,20 +74,20 @@ public class FeedbackService implements IFeedbackService {
     }
 
     @Override
-    public void deleteFeedbackById(Long id) throws EntityNotFoundException {
-        Long bookId = getBookByFeedbackId(id);
-        getFeedbackDao().delete(getFeedbackDao().get(id));
-        countAvgRatingForBook(bookId);
-    }
-
-    @Override
     public FeedbackDto updateFeedback(Long id, FeedbackDto feedbackDto) throws EntityNotFoundException {
         Feedback existingFeedback = Optional.ofNullable(getFeedbackDao().get(id))
                 .orElseThrow(() -> new EntityNotFoundException(FEEDBACK));
         existingFeedback.setRating(feedbackDto.getRating()).setComment(feedbackDto.getComment());
         getFeedbackDao().update(existingFeedback);
-        countAvgRatingForBook(getBookByFeedbackId(id));
+        countAndSetAvgRatingForBook(getBookIdByFeedbackId(id));
         return feedbackMapper.toDto(existingFeedback);
+    }
+
+    @Override
+    public void deleteFeedbackById(Long id) throws EntityNotFoundException {
+        Long bookId = getBookIdByFeedbackId(id);
+        getFeedbackDao().delete(getFeedbackDao().get(id));
+        countAndSetAvgRatingForBook(bookId);
     }
 
     @Override
@@ -94,15 +102,15 @@ public class FeedbackService implements IFeedbackService {
                 .orElseThrow(() -> new EntityNotFoundException(FEEDBACK));
     }
 
-    private Long getBookByFeedbackId(Long id) {
+    private Long getBookIdByFeedbackId(Long id) {
         return getFeedbackDao().get(id).getBook().getId();
     }
 
-    private void countAvgRatingForBook(Long bookId) {
-        Book book = bookDao.get(bookId);
+    private void countAndSetAvgRatingForBook(Long bookId) throws EntityNotFoundException {
+        Book book = bookMapper.toEntity(bookService.getBookById(bookId));
         List<Feedback> feedbacks = book.getFeedbacks();
         double num = feedbacks.size();
-        int sum = feedbacks.stream().mapToInt(Feedback::getRating).sum();
+        int sum = book.getFeedbacks().stream().mapToInt(Feedback::getRating).sum();
         if (!CollectionUtils.isEmpty(feedbacks)) {
             book.setRating(sum / num);
         }

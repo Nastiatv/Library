@@ -1,13 +1,13 @@
 package by.runa.lib.service;
 
 import by.runa.lib.api.dao.IAGenericDao;
-import by.runa.lib.api.dao.IDepartmentDao;
 import by.runa.lib.api.dao.IUserDao;
 import by.runa.lib.api.dto.DepartmentDto;
 import by.runa.lib.api.dto.RoleDto;
 import by.runa.lib.api.dto.UserDto;
 import by.runa.lib.api.exceptions.EntityNotFoundException;
 import by.runa.lib.api.exceptions.UserIsAlreadyExistsException;
+import by.runa.lib.api.service.IDepartmentService;
 import by.runa.lib.api.service.IRoleService;
 import by.runa.lib.api.service.IUserService;
 import by.runa.lib.entities.Department;
@@ -38,13 +38,13 @@ import java.util.stream.Collectors;
 public class UserService implements IUserService {
 
     @Autowired
+    private IUserDao userDao; 
+    
+    @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Autowired
     private AMapper<User, UserDto> userMapper;
-
-    @Autowired
-    private IUserDao userDao;
 
     @Autowired
     private IRoleService roleService;
@@ -53,7 +53,10 @@ public class UserService implements IUserService {
     private AMapper<Role, RoleDto> roleMapper;
 
     @Autowired
-    private IDepartmentDao departmentDao;
+    private IDepartmentService departmentService;
+
+    @Autowired
+    private AMapper<Department, DepartmentDto> departmentMapper;
 
     @Autowired
     private EmailSender emailSender;
@@ -148,6 +151,7 @@ public class UserService implements IUserService {
                 Collections.singletonList(roleMapper.toEntity(roleService.getRoleByName(roleDto.getName())))));
     }
 
+    @Override
     public void sendEmailWithNewPassword(String email) throws EntityNotFoundException {
         String newPassword = generateCommonLangPassword();
         UserDto userDto = getUserByEmail(email);
@@ -161,8 +165,8 @@ public class UserService implements IUserService {
         }
     }
 
-    private Department getDepartmentByName(DepartmentDto departmentDto) {
-        return departmentDao.getByName(departmentDto.getName());
+    private Department getDepartmentByName(DepartmentDto departmentDto)  {
+        return departmentMapper.toEntity(departmentService.getDepartmentByName(departmentDto.getName()));
     }
 
     private String generateCommonLangPassword() {

@@ -17,6 +17,6 @@ public interface IDepartmentService {
 
     DepartmentDto createDepartment(DepartmentDto departmentDto);
 
-    DepartmentDto getDepartmentByName(String name) throws EntityNotFoundException;
+    DepartmentDto getDepartmentByName(String name);
 
 }

@@ -16,7 +16,7 @@ public interface IOrderService {
 
     void deleteOrderById(Long id);
 
-    OrderDto createOrder(Long bookId, String userName) throws NoBooksAvailableException;
+    OrderDto createOrder(Long bookId, String userName) throws NoBooksAvailableException, EntityNotFoundException;
 
     OrderDto closeOrder(Long id) throws IsAlreadyClosedException, EntityNotFoundException;
 

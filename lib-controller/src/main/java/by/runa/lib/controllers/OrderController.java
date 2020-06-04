@@ -81,7 +81,7 @@ public class OrderController {
         try {
             modelAndView.setViewName("thanksfororder");
             modelAndView.addObject(ORDER, orderService.createOrder(id, userName));
-        } catch (NoBooksAvailableException e) {
+        } catch (NoBooksAvailableException | EntityNotFoundException e) {
             modelAndView.setViewName(ERRORS);
             modelAndView.addObject(MESSAGE, e.getMessage());
         }

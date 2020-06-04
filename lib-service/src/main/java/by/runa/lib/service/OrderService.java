@@ -1,18 +1,21 @@
 package by.runa.lib.service;
 
 import by.runa.lib.api.dao.IAGenericDao;
-import by.runa.lib.api.dao.IBookDao;
 import by.runa.lib.api.dao.IOrderDao;
-import by.runa.lib.api.dao.IUserDao;
+import by.runa.lib.api.dto.BookDto;
 import by.runa.lib.api.dto.OrderDto;
+import by.runa.lib.api.dto.UserDto;
 import by.runa.lib.api.exceptions.EntityNotFoundException;
 import by.runa.lib.api.exceptions.IsAlreadyClosedException;
 import by.runa.lib.api.exceptions.IsAlreadyProlongedException;
 import by.runa.lib.api.exceptions.NoBooksAvailableException;
+import by.runa.lib.api.service.IBookService;
 import by.runa.lib.api.service.IOrderService;
+import by.runa.lib.api.service.IUserService;
 import by.runa.lib.api.utils.IEmailSender;
 import by.runa.lib.entities.Book;
 import by.runa.lib.entities.Order;
+import by.runa.lib.entities.User;
 import by.runa.lib.utils.mappers.AMapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,10 +44,16 @@ public class OrderService implements IOrderService {
     private IOrderDao orderDao;
 
     @Autowired
-    private IBookDao bookDao;
+    private IBookService bookService;
 
     @Autowired
-    private IUserDao userDao;
+    private AMapper<Book, BookDto> bookMapper;
+
+    @Autowired
+    private IUserService userService;
+
+    @Autowired
+    private AMapper<User, UserDto> userMapper;
 
     @Autowired
     private IEmailSender emailSender;
@@ -56,23 +65,20 @@ public class OrderService implements IOrderService {
         return orderDao;
     }
 
-    public IAGenericDao<Book> getBookDao() {
-        return bookDao;
-    }
-
     @Override
     public List<OrderDto> getAllOrders() {
         return orderMapper.toListDto(getOrderDao().getAll());
     }
 
     @Override
-    public OrderDto createOrder(Long bookId, String userName) throws NoBooksAvailableException {
+    public OrderDto createOrder(Long bookId, String userName) throws NoBooksAvailableException, EntityNotFoundException {
         Order order = new Order();
-        Book book = getBookDao().get(bookId);
+        Book book = bookMapper.toEntity(bookService.getBookById(bookId));
         if (book.getQuantityAvailable() != 0) {
             book.setQuantityAvailable(book.getQuantityAvailable() - 1);
-            order.setBook(book).setUser(userDao.getByEmail(userName)).setOrderDate(LocalDate.now())
-                    .setDueDate(order.getOrderDate().plusDays(10)).setProlonged(false).setFinished(false);
+            order.setBook(book).setUser(userMapper.toEntity(userService.getUserByEmail(userName)))
+                    .setOrderDate(LocalDate.now()).setDueDate(order.getOrderDate().plusDays(10)).setProlonged(false)
+                    .setFinished(false);
         } else {
             throw new NoBooksAvailableException();
         }
@@ -146,12 +152,12 @@ public class OrderService implements IOrderService {
         }
     }
 
-    private void incrementQuantity(Order existingOrder) {
-        Book book = getBookById(existingOrder);
+    private void incrementQuantity(Order existingOrder) throws EntityNotFoundException {
+        Book book = getBookByOrder(existingOrder);
         book.setQuantityAvailable(book.getQuantityAvailable() + 1);
     }
 
-    private Book getBookById(Order existingOrder) {
-        return getBookDao().get(existingOrder.getBook().getId());
+    private Book getBookByOrder(Order existingOrder) throws EntityNotFoundException {
+        return bookMapper.toEntity(bookService.getBookById(existingOrder.getBook().getId()));
     }
 }

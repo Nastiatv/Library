@@ -77,13 +77,8 @@ public class BookService implements IBookService {
             Book book = new Book().setQuantityInLibrary(1).setQuantityAvailable(1).setIsbn(dto.getIsbn())
                     .setRating(null).setDepartments(Collections.singletonList(existingdepartment))
                     .setBookDetails(createBookDetails(dto));
-            bookMapper.toDto(getBookDao().create(book));
-            try {
-                emailSender.sendEmailsFromAdminAboutNewBook(book, existingdepartment);
-            } catch (MessagingException e) {
-                log.info("Mail not sent!");
-            }
-            return bookMapper.toDto(book);
+            sendEmailAboutNewBookInLibrary(existingdepartment, book);
+            return bookMapper.toDto(getBookDao().create(book));
         }
     }
 
@@ -146,11 +141,11 @@ public class BookService implements IBookService {
         dto.setIsbn(RegExUtils.replaceAll(dto.getIsbn(), "-", StringUtils.EMPTY).trim());
     }
 
-    private Department getDepartmentByName(DepartmentDto departmentDto) throws EntityNotFoundException {
+    private Department getDepartmentByName(DepartmentDto departmentDto){
         return departmentMapper.toEntity(departmentService.getDepartmentByName(departmentDto.getName()));
     }
 
-    BookDetails createBookDetails(BookDto dto) {
+    private BookDetails createBookDetails(BookDto dto) {
         return bookDetailsMapper.toEntity(bookDetailsService.createBookDetails(dto.getIsbn()));
     }
 
@@ -162,4 +157,13 @@ public class BookService implements IBookService {
     private Book getBookbyIsbnFromDao(BookDto dto) {
         return bookDao.getByIsbn(dto.getIsbn());
     }
+
+    private void sendEmailAboutNewBookInLibrary(Department existingdepartment, Book book) {
+        try {
+            emailSender.sendEmailsFromAdminAboutNewBook(book, existingdepartment);
+        } catch (MessagingException e) {
+            log.info("Mail not sent!");
+        }
+    }
+
 }
