@@ -2,19 +2,16 @@ package by.runa.lib.service;
 
 import by.runa.lib.api.dao.IAGenericDao;
 import by.runa.lib.api.dao.IFeedbackDao;
-import by.runa.lib.api.dto.BookDto;
 import by.runa.lib.api.dto.FeedbackDto;
 import by.runa.lib.api.dto.OrderDto;
 import by.runa.lib.api.exceptions.EntityNotFoundException;
 import by.runa.lib.api.service.IBookService;
 import by.runa.lib.api.service.IFeedbackService;
 import by.runa.lib.api.service.IOrderService;
-import by.runa.lib.entities.Book;
 import by.runa.lib.entities.Feedback;
 import by.runa.lib.entities.Order;
 import by.runa.lib.utils.mappers.AMapper;
 
-import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -42,9 +39,6 @@ public class FeedbackService implements IFeedbackService {
     private IBookService bookService;
 
     @Autowired
-    private AMapper<Book, BookDto> bookMapper;
-
-    @Autowired
     private AMapper<Feedback, FeedbackDto> feedbackMapper;
 
     public IAGenericDao<Feedback> getFeedbackDao() {
@@ -61,9 +55,9 @@ public class FeedbackService implements IFeedbackService {
         Order order = orderMapper.toEntity(orderService.getOrderById(orderId));
         Feedback feedback = new Feedback().setBook(order.getBook()).setUser(order.getUser())
                 .setRating(feedbackDto.getRating()).setUserName(order.getUser().getUsername())
-                .setComment(feedbackDto.getComment());
+                .setBookName(order.getBook().getBookDetails().getName()).setComment(feedbackDto.getComment());
         getFeedbackDao().create(feedback);
-        countAndSetAvgRatingForBook(order.getBook().getId());
+        bookService.countAndSetAvgRatingForBook(order.getBook().getId());
         return feedbackMapper.toDto(feedback);
     }
 
@@ -79,7 +73,7 @@ public class FeedbackService implements IFeedbackService {
                 .orElseThrow(() -> new EntityNotFoundException(FEEDBACK));
         existingFeedback.setRating(feedbackDto.getRating()).setComment(feedbackDto.getComment());
         getFeedbackDao().update(existingFeedback);
-        countAndSetAvgRatingForBook(getBookIdByFeedbackId(id));
+        bookService.countAndSetAvgRatingForBook(getBookIdByFeedbackId(id));
         return feedbackMapper.toDto(existingFeedback);
     }
 
@@ -87,7 +81,7 @@ public class FeedbackService implements IFeedbackService {
     public void deleteFeedbackById(Long id) throws EntityNotFoundException {
         Long bookId = getBookIdByFeedbackId(id);
         getFeedbackDao().delete(getFeedbackDao().get(id));
-        countAndSetAvgRatingForBook(bookId);
+        bookService.countAndSetAvgRatingForBook(bookId);
     }
 
     @Override
@@ -104,15 +98,5 @@ public class FeedbackService implements IFeedbackService {
 
     private Long getBookIdByFeedbackId(Long id) {
         return getFeedbackDao().get(id).getBook().getId();
-    }
-
-    private void countAndSetAvgRatingForBook(Long bookId) throws EntityNotFoundException {
-        Book book = bookMapper.toEntity(bookService.getBookById(bookId));
-        List<Feedback> feedbacks = book.getFeedbacks();
-        double num = feedbacks.size();
-        int sum = book.getFeedbacks().stream().mapToInt(Feedback::getRating).sum();
-        if (!CollectionUtils.isEmpty(feedbacks)) {
-            book.setRating(sum / num);
-        }
     }
 }

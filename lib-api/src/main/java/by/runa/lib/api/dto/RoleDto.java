@@ -8,5 +8,4 @@ import lombok.EqualsAndHashCode;
 public class RoleDto extends ADto {
 
     private String name;
-
 }

@@ -5,7 +5,8 @@
 <title>Library - User page</title>
 <link href="../css/styles.css" rel="stylesheet" />
 <link href="../css/bootstrap.min.css" rel="stylesheet">
-</head> </head> <div class="header" th:insert="general/home :: header"></div>
+</head>
+<div class="header" th:insert="general/home :: header"></div>
 <body>
 	<div class="form-wrapper">
 		<header class="m-md-3">
@@ -22,14 +23,13 @@
 				</tr>
 			<tbody>
 				<tr>
-					<td rowspan="4"><img
-						th:src="@{'http://localhost:8080/img/' + ${user.username} + '.png'}"
-						height="300" alt="Avatar" /></td>
+					<td rowspan="3"><span th:if="${user.img == null}"> <img
+                            th:src="http://localhost:8080/img/avatarDefault.png" height="300"
+                            alt="Avatar" />
+                    </span> <span th:unless="${user.img == null}"><img
+                            th:src="@{'data:image/png;base64,' + ${user.img}}" height="300"
+                            alt="Avatar" /></span></td>
 
-					<td class="font-weight-bold">Id</td>
-					<td th:text="${user.id}"></td>
-				</tr>
-				<tr>
 					<td class="font-weight-bold">Name</td>
 					<td th:text="${user.username}"></td>
 				</tr>
@@ -45,8 +45,8 @@
 					<td><a sec:authorize="isAuthenticated()"
 						th:href="@{'edit/' + ${user.id}}" class="btn btn-light">Edit </a>
 						<a sec:authorize="hasRole('ADMIN')"
-                        th:href="@{'setrole/' + ${user.id}}" class="btn btn-light">Set Role</a>
-					</td>
+						th:href="@{'setrole/' + ${user.id}}" class="btn btn-light">Set
+							Role</a></td>
 			</tbody>
 		</table>
 	</div>

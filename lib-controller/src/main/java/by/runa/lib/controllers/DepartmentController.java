@@ -1,10 +1,12 @@
 package by.runa.lib.controllers;
 
 import by.runa.lib.api.dto.DepartmentDto;
+import by.runa.lib.api.exceptions.DepartmentIsNotEmptyException;
 import by.runa.lib.api.exceptions.EntityNotFoundException;
 import by.runa.lib.api.service.IDepartmentService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+@Secured("ROLE_ADMIN")
 @RestController
 @RequestMapping("/departments/")
 public class DepartmentController {
@@ -89,8 +92,9 @@ public class DepartmentController {
         try {
             departmentService.deleteDepartmentById(id);
             modelAndView.setViewName("general/changesSaved");
-        } catch (EntityNotFoundException e) {
-            returnViewNameWithError(modelAndView, e);
+        } catch (EntityNotFoundException | DepartmentIsNotEmptyException e) {
+            modelAndView.setViewName(ERRORS);
+            modelAndView.addObject(MESSAGE, e.getMessage());
         }
         return modelAndView;
     }

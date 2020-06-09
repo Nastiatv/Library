@@ -20,8 +20,10 @@
 				<constraints nullable="false" />
 			</column>
 			<column name="department_id" type="varchar(255)">
-                <constraints nullable="false" />
-            </column>
+				<constraints nullable="false" />
+			</column>
+			<column name="img" type="longtext">
+			</column>
 		</createTable>
 	</changeSet>
 </databaseChangeLog> 

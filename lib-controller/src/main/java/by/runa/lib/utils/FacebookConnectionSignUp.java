@@ -25,7 +25,7 @@ public class FacebookConnectionSignUp implements ConnectionSignUp {
         String[] arr = { "id", "email", "first_name", "last_name" };
         User userProfile = facebook.fetchObject("me", User.class, arr);
         if (Boolean.TRUE.equals(userService.checkIfUserWithThisEmailAlreadyExists(userProfile.getEmail()))) {
-            return userProfile.getFirstName() + StringUtils.SPACE + userProfile.getLastName();
+            return userProfile.getEmail();
         } else {
             UserDto userDto = new UserDto();
             DepartmentDto depDto = new DepartmentDto();
@@ -34,7 +34,7 @@ public class FacebookConnectionSignUp implements ConnectionSignUp {
             userDto.setPassword(userProfile.getId());
             userDto.setEmail(userProfile.getEmail());
             userService.createUserFromSocialNetworks(userDto, depDto);
-            return userDto.getEmail();
+            return userProfile.getEmail();
         }
     }
 }

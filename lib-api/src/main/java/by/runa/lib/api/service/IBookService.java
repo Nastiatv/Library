@@ -23,4 +23,6 @@ public interface IBookService {
     BookDto getBookByIsbn(String isbn) throws EntityNotFoundException;
 
     List<BookDto> getBooksByDepartmentId(Long id) throws EntityNotFoundException;
+
+    void countAndSetAvgRatingForBook(Long bookId);
 }

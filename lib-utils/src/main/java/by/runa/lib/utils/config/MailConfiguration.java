@@ -62,7 +62,6 @@ public class MailConfiguration {
 		javaMailProperties.put("mail.smtp.auth", mailSmtpAuthProperty);
 		javaMailProperties.put("mail.transport.protocol", mailTransportProtocolProperty);
 		javaMailProperties.put("mail.debug", mailDebugProperty);
-
 		mailSender.setJavaMailProperties(javaMailProperties);
 		return mailSender;
 	}

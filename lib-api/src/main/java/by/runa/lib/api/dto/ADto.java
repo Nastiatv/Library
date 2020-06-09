@@ -13,5 +13,4 @@ public abstract class ADto {
     @Getter
     @Setter
     protected Long id;
-
 }

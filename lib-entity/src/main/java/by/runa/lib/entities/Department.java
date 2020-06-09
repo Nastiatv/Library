@@ -29,4 +29,4 @@ public class Department extends AEntity {
     @OneToMany(mappedBy = "department")
     private List<User> users;
 
-}
+    }

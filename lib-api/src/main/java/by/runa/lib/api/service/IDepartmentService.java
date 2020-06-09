@@ -3,6 +3,7 @@ package by.runa.lib.api.service;
 import java.util.List;
 
 import by.runa.lib.api.dto.DepartmentDto;
+import by.runa.lib.api.exceptions.DepartmentIsNotEmptyException;
 import by.runa.lib.api.exceptions.EntityNotFoundException;
 
 public interface IDepartmentService {
@@ -11,7 +12,7 @@ public interface IDepartmentService {
 
     DepartmentDto getDepartmentById(Long id) throws EntityNotFoundException;
 
-    void deleteDepartmentById(Long id) throws EntityNotFoundException;
+    void deleteDepartmentById(Long id) throws EntityNotFoundException, DepartmentIsNotEmptyException;
 
     DepartmentDto updateDepartment(Long id, DepartmentDto dto) throws EntityNotFoundException;
 

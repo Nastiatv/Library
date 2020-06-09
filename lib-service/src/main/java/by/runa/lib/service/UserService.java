@@ -38,8 +38,8 @@ import java.util.stream.Collectors;
 public class UserService implements IUserService {
 
     @Autowired
-    private IUserDao userDao; 
-    
+    private IUserDao userDao;
+
     @Autowired
     private PasswordEncoder passwordEncoder;
 
@@ -132,6 +132,14 @@ public class UserService implements IUserService {
         return userMapper.toDto(existingUser);
     }
 
+    public UserDto setOrUpdateUserAvatar(Long id, String encoded) throws EntityNotFoundException {
+        User existingUser = Optional.ofNullable(getUserDao().get(id))
+                .orElseThrow(() -> new EntityNotFoundException("User"));
+        existingUser.setImg(encoded);
+        getUserDao().update(existingUser);
+        return userMapper.toDto(existingUser);
+    }
+
     @Override
     public Boolean checkIfUserWithThisEmailAlreadyExists(String email) {
         return (userDao.getByEmail(email) != null);
@@ -165,7 +173,7 @@ public class UserService implements IUserService {
         }
     }
 
-    private Department getDepartmentByName(DepartmentDto departmentDto)  {
+    private Department getDepartmentByName(DepartmentDto departmentDto) {
         return departmentMapper.toEntity(departmentService.getDepartmentByName(departmentDto.getName()));
     }
 

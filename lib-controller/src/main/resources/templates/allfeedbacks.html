@@ -4,7 +4,8 @@
 <title>Library - Feedbacks page</title>
 <link href="../css/styles.css" rel="stylesheet" />
 <link href="../css/bootstrap.min.css" rel="stylesheet">
-</head> </head> <div class="header" th:insert="general/home :: header"></div>
+</head>
+<div class="header" th:insert="general/home :: header"></div>
 <body>
 	<div class="form-wrapper">
 		<header class="m-md-3">
@@ -16,10 +17,9 @@
 			<caption></caption>
 			<thead>
 				<tr>
-					<th scope="col">Id</th>
-					<th scope="col">Book Id</th>
+					<th scope="col">book name</th>
 					<th scope="col">rating</th>
-					<th scope="col">userName</th>
+					<th scope="col">user name</th>
 					<th scope="col">comment</th>
 					<th scope="col">#</th>
 				</tr>
@@ -27,8 +27,7 @@
 			<tbody>
 				<tr>
 				<tr th:each="feedback : ${feedbackList}">
-					<td th:text="${feedback.id}"></td>
-					<td th:text="${feedback.bookId}"></td>
+					<td th:text="${feedback.bookName}"></td>
 					<td th:text="${feedback.rating}"></td>
 					<td th:text="${feedback.userName}"></td>
 					<td th:text="${feedback.comment}"></td>

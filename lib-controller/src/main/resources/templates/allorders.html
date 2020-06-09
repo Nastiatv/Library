@@ -4,7 +4,8 @@
 <title>Library - Orders page</title>
 <link href="../css/styles.css" rel="stylesheet" />
 <link href="../css/bootstrap.min.css" rel="stylesheet">
-</head> </head> <div class="header" th:insert="general/home :: header"></div>
+</head>
+<div class="header" th:insert="general/home :: header"></div>
 <body>
 	<div class="form-wrapper">
 		<header class="m-md-3">
@@ -16,8 +17,8 @@
 			<caption></caption>
 			<thead>
 				<tr>
-					<th scope="col">orderDate</th>
-					<th scope="col">dueDate</th>
+					<th scope="col">order date</th>
+					<th scope="col">due date</th>
 					<th scope="col">is finished</th>
 					<th scope="col">book</th>
 					<th scope="col">user</th>
@@ -30,7 +31,7 @@
 					<td th:text="${order.orderDate}"></td>
 					<td th:text="${order.dueDate}"></td>
 					<td><span th:if="${order.isFinished == true}">&#9989;</span> <span
-                        th:unless="${order.isFinished == true}">&#10060;</span></td>
+						th:unless="${order.isFinished == true}">&#10060;</span></td>
 					<td th:text="${order.bookDto.isbn}"></td>
 					<td th:text="${order.userDto.username}"></td>
 					<td><a th:href="@{${order.id}}">See more</a> <br />

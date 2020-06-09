@@ -3,7 +3,9 @@ package by.runa.lib.service;
 import by.runa.lib.api.dao.IAGenericDao;
 import by.runa.lib.api.dao.IDepartmentDao;
 import by.runa.lib.api.dto.DepartmentDto;
+import by.runa.lib.api.exceptions.DepartmentIsNotEmptyException;
 import by.runa.lib.api.exceptions.EntityNotFoundException;
+import by.runa.lib.api.service.IBookService;
 import by.runa.lib.api.service.IDepartmentService;
 import by.runa.lib.entities.Department;
 import by.runa.lib.utils.mappers.AMapper;
@@ -24,6 +26,9 @@ public class DepartmentService implements IDepartmentService {
 
     @Autowired
     private IDepartmentDao departmentDao;
+
+    @Autowired
+    private IBookService bookService;
 
     @Autowired
     private AMapper<Department, DepartmentDto> departmentMapper;
@@ -54,8 +59,12 @@ public class DepartmentService implements IDepartmentService {
     }
 
     @Override
-    public void deleteDepartmentById(Long id) throws EntityNotFoundException {
-        getDepartmentDao().delete(getDepartmentDao().get(id));
+    public void deleteDepartmentById(Long id) throws EntityNotFoundException, DepartmentIsNotEmptyException {
+        if (bookService.getBooksByDepartmentId(id) != null) {
+            throw new DepartmentIsNotEmptyException();
+        } else {
+            getDepartmentDao().delete(getDepartmentDao().get(id));
+        }
     }
 
     @Override

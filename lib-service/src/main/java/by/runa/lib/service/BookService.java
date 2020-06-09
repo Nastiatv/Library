@@ -12,9 +12,11 @@ import by.runa.lib.api.service.IDepartmentService;
 import by.runa.lib.entities.Book;
 import by.runa.lib.entities.BookDetails;
 import by.runa.lib.entities.Department;
+import by.runa.lib.entities.Feedback;
 import by.runa.lib.utils.mailsender.EmailSender;
 import by.runa.lib.utils.mappers.AMapper;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.RegExUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -119,6 +121,20 @@ public class BookService implements IBookService {
                 .orElseThrow(() -> new EntityNotFoundException("Book"));
     }
 
+    public void countAndSetAvgRatingForBook(Long bookId) {
+        Book book = bookDao.get(bookId);
+        if (book.getFeedbacks() == null) {
+            book.setRating(null);
+        } else {
+            List<Feedback> feedbacks = book.getFeedbacks();
+            double num = feedbacks.size();
+            int sum = feedbacks.stream().mapToInt(Feedback::getRating).sum();
+            if (!CollectionUtils.isEmpty(feedbacks)) {
+                book.setRating(sum / num);
+            }
+        }
+    }
+
     private void updateBookDetails(BookDto bookDto, MultipartFile file, Book existingBook) {
         if (bookDto.getBookDetailsDto() != null) {
             bookDetailsService.updateBookDetails(existingBook.getBookDetails(), bookDto.getBookDetailsDto(), file);
@@ -134,14 +150,17 @@ public class BookService implements IBookService {
     }
 
     private void removeOneDepartmentFromList(DepartmentDto departmentDto, Book book) {
-        book.getDepartments().removeIf(department -> department.getName().equals(departmentDto.getName()));
+        Department dep = book.getDepartments().stream()
+                .filter(department -> department.getName().equals(departmentDto.getName())).findFirst().get();
+        book.getDepartments().remove(dep);
+
     }
 
     private void cleanIsbn(BookDto dto) {
         dto.setIsbn(RegExUtils.replaceAll(dto.getIsbn(), "-", StringUtils.EMPTY).trim());
     }
 
-    private Department getDepartmentByName(DepartmentDto departmentDto){
+    private Department getDepartmentByName(DepartmentDto departmentDto) {
         return departmentMapper.toEntity(departmentService.getDepartmentByName(departmentDto.getName()));
     }
 

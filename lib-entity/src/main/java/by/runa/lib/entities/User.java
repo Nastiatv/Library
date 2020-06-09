@@ -32,6 +32,9 @@ public class User extends AEntity {
     @Column(name = "username")
     private String username;
 
+    @Column(name = "img")
+    private String img;
+
     @ManyToOne
     @JoinColumn(name = "department_id", referencedColumnName = "id")
     private Department department;

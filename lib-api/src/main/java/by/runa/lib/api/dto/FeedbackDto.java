@@ -8,11 +8,9 @@ import lombok.EqualsAndHashCode;
 public class FeedbackDto extends ADto {
 
     private Long bookId;
-    private Long userId;
-
+    private String bookName;
+    private UserDto userDto;
     private int rating;
-
     private String userName;
     private String comment;
-
 }

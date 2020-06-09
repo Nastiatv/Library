@@ -10,6 +10,7 @@ import javax.persistence.metamodel.StaticMetamodel;
 public abstract class User_ extends by.runa.lib.entities.AEntity_ {
 
 	public static volatile SingularAttribute<User, String> password;
+	public static volatile SingularAttribute<User, String> img;
 	public static volatile ListAttribute<User, Role> roles;
 	public static volatile ListAttribute<User, Feedback> feedbacks;
 	public static volatile ListAttribute<User, Order> orders;
@@ -18,6 +19,7 @@ public abstract class User_ extends by.runa.lib.entities.AEntity_ {
 	public static volatile SingularAttribute<User, String> username;
 
 	public static final String PASSWORD = "password";
+	public static final String IMG = "img";
 	public static final String ROLES = "roles";
 	public static final String FEEDBACKS = "feedbacks";
 	public static final String ORDERS = "orders";

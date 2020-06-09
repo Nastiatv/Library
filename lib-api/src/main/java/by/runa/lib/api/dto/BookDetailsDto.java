@@ -11,5 +11,4 @@ public class BookDetailsDto extends ADto {
     private String author;
     private String description;
     private String picture;
-
 }

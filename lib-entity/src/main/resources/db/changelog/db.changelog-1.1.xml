@@ -22,6 +22,9 @@
 			<column name="user_name" type="varchar(255)">
 				<constraints nullable="false" />
 			</column>
+			<column name="book_name" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
 			<column name="comment" type="text">
 			</column>
 		</createTable>

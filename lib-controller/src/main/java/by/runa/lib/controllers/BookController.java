@@ -10,6 +10,7 @@ import by.runa.lib.api.service.IFeedbackService;
 import by.runa.lib.utils.ImgFileUploader;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -89,6 +90,7 @@ public class BookController {
         return modelAndView;
     }
 
+    @Secured({ "ROLE_ADMIN", "ROLE_USER" })
     @GetMapping(value = "addbook")
     public ModelAndView addBook() {
         ModelAndView modelAndView = new ModelAndView();
@@ -98,6 +100,7 @@ public class BookController {
         return modelAndView.addObject("bookdto", new BookDto());
     }
 
+    @Secured({ "ROLE_ADMIN", "ROLE_USER" })
     @PostMapping(value = "addbook")
     public ModelAndView addBookSubmit(BookDto bookDto, DepartmentDto departmentDto) {
         ModelAndView modelAndView = new ModelAndView();
@@ -110,6 +113,7 @@ public class BookController {
         return modelAndView;
     }
 
+    @Secured({ "ROLE_ADMIN", "ROLE_USER" })
     @GetMapping("edit/{id}")
     public ModelAndView getBookEditForm(@PathVariable Long id) {
         ModelAndView modelAndView = new ModelAndView();
@@ -124,6 +128,7 @@ public class BookController {
         return modelAndView;
     }
 
+    @Secured({ "ROLE_ADMIN", "ROLE_USER" })
     @PostMapping("edit/{id}")
     public ModelAndView saveBookChanges(BookDto bookDto,
             @RequestParam(value = "file", required = false) MultipartFile file) {
@@ -135,31 +140,6 @@ public class BookController {
         } catch (IOException | EntityNotFoundException e) {
             modelAndView.setViewName(ERRORS);
             modelAndView.addObject(MESSAGE, e.getMessage());
-        }
-        return modelAndView;
-    }
-
-    @GetMapping("delete/{id}")
-    public ModelAndView deleteBook(@PathVariable Long id) {
-        ModelAndView modelAndView = new ModelAndView();
-        try {
-            modelAndView.addObject("book", bookService.getBookById(id));
-            modelAndView.setViewName("deletebook");
-            modelAndView.addObject("departmentdto", new DepartmentDto());
-        } catch (EntityNotFoundException e) {
-            returnViewNameWithError(modelAndView, e);
-        }
-        return modelAndView;
-    }
-
-    @PostMapping("delete/{id}")
-    public ModelAndView deletebookSubmit(@PathVariable Long id, DepartmentDto departmentDto) {
-        ModelAndView modelAndView = new ModelAndView();
-        try {
-            bookService.deleteBookById(id, departmentDto);
-            modelAndView.setViewName("general/changesSaved");
-        } catch (EntityNotFoundException e) {
-            returnViewNameWithError(modelAndView, e);
         }
         return modelAndView;
     }

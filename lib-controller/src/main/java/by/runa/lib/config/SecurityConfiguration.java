@@ -1,11 +1,15 @@
 package by.runa.lib.config;
 
+import by.runa.lib.utils.FacebookConnectionSignUp;
+import by.runa.lib.utils.FacebookSignInAdapter;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -16,12 +20,10 @@ import org.springframework.social.connect.UsersConnectionRepository;
 import org.springframework.social.connect.mem.InMemoryUsersConnectionRepository;
 import org.springframework.social.connect.web.ProviderSignInController;
 
-import by.runa.lib.utils.FacebookConnectionSignUp;
-import by.runa.lib.utils.FacebookSignInAdapter;
-
 @Configuration
 @Import(value = { ServiceConfig.class })
 @EnableScheduling
+@EnableGlobalMethodSecurity(securedEnabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Autowired
@@ -36,10 +38,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.csrf().disable().authorizeRequests()
                 .antMatchers("/", "/books/**", "/login", "/logout", "/users/adduser", "/css/**", "/img/**").permitAll()
                 .antMatchers("/orders/**", "/feedbacks/**").hasAnyRole("ADMIN", "USER")
-                .antMatchers("/admin/**", "/departments/**").hasRole("ADMIN")
-
-                .and().formLogin().loginPage("/login").usernameParameter("email").defaultSuccessUrl("/users/my/{id}", true).permitAll().and()
-                .logout().invalidateHttpSession(true).clearAuthentication(true)
+                .antMatchers("/admin/**", "/departments/**").hasRole("ADMIN").and().formLogin().loginPage("/login")
+                .usernameParameter("email").defaultSuccessUrl("/users/my/{id}", true).permitAll().and().logout()
+                .invalidateHttpSession(true).clearAuthentication(true)
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/bye").permitAll().and()
                 .exceptionHandling().accessDeniedHandler(accessDeniedHandler);
     }
@@ -62,4 +63,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         providerSignInController.setPostSignInUrl("/books/");
         return providerSignInController;
     }
+    
+//       @Bean
+//    public AuthenticationManager authenticationManagerBean() throws Exception {
+//        return super.authenticationManagerBean();
+//    }
 }

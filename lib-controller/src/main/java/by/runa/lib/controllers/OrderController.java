@@ -8,6 +8,7 @@ import by.runa.lib.api.service.IOrderService;
 import by.runa.lib.api.service.IUserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,6 +20,7 @@ import java.security.Principal;
 
 @RestController
 @RequestMapping("/orders/")
+@Secured({ "ROLE_ADMIN", "ROLE_USER" })
 public class OrderController {
 
     private static final String ERRORS = "errors/errors";
@@ -30,14 +32,6 @@ public class OrderController {
 
     @Autowired
     IUserService userService;
-
-    @GetMapping
-    public ModelAndView getAllOrders() {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("allorders");
-        modelAndView.addObject("orderList", orderService.getAllOrders());
-        return modelAndView;
-    }
 
     @GetMapping("my")
     public ModelAndView getMyOrders(Principal principal) {
@@ -89,7 +83,7 @@ public class OrderController {
     }
 
     @GetMapping("prolong/{id}")
-    public ModelAndView editProlongInOrder(@PathVariable Long id) {
+    public ModelAndView prolongOrder(@PathVariable Long id) {
         ModelAndView modelAndView = new ModelAndView();
         try {
             modelAndView.setViewName("orderProlong");

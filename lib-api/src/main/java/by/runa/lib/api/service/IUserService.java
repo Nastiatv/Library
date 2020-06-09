@@ -36,4 +36,6 @@ public interface IUserService {
 
     UserDto setRoles(Long id, RoleDto roleDto) throws EntityNotFoundException;
 
+    UserDto setOrUpdateUserAvatar(Long id, String base64Encoded) throws EntityNotFoundException;
+
 }

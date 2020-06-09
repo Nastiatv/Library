@@ -7,12 +7,12 @@
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
-</head>
 <div class="header" th:insert="general/home :: header"></div>
 <body>
 	<div class="form-wrapper">
 		<header class="m-md-3">
-			<a href="../../">Home</a> | <a href="../../books/addbook">Add Book</a>
+			<a href="../../">Home</a> | <a href="../../books/addbook">Add
+				Book</a>
 		</header>
 		<form class="nav-search" action="../../books/search" method="get">
 			<div class="active-cyan-3 active-cyan-4 mb-4">
@@ -21,11 +21,10 @@
 			</div>
 		</form>
 		<hr />
-		<a class="btn btn-outline-secondary" href="../../books/">All</a>
-		<a class="btn btn-outline-secondary"  style="margin-left: 5px"
-			th:each="department : ${allDepartments}"
-			th:value="${department.id}" th:text="${department.name}"
-			th:if="${department.name} != 'default'"
+		<a class="btn btn-outline-secondary" href="../../books/">All</a> <a
+			class="btn btn-outline-secondary" style="margin-left: 5px"
+			th:each="department : ${allDepartments}" th:value="${department.id}"
+			th:text="${department.name}" th:if="${department.name} != 'default'"
 			th:href="@{'../../books/byDepartment/' + ${department.id}}"></a>
 		<h1 class="form-center">Our Books:</h1>
 		<table class="table">

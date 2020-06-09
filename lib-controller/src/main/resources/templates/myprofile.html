@@ -2,10 +2,11 @@
 <html xmlns:th="http://thymeleaf.org" lang="en"
 	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
-<title>Library - User page</title>
+<title>Library - My profile</title>
 <link href="../../css/styles.css" rel="stylesheet" />
 <link href="../../css/bootstrap.min.css" rel="stylesheet">
-</head> </head> <div class="header" th:insert="general/home :: header"></div>
+</head>
+<div class="header" th:insert="general/home :: header"></div>
 <body>
 	<div class="form-wrapper">
 		<header class="m-md-3">
@@ -24,14 +25,11 @@
 				</tr>
 			<tbody>
 				<tr>
-					<td rowspan="4"><img
-						th:src="@{'http://localhost:8080/img/' + ${user.username} + '.png'}"
-						height="300" alt="Avatar" /></td>
-
-					<td class="font-weight-bold">Id</td>
-					<td th:text="${user.id}"></td>
-				</tr>
-				<tr>
+					<td rowspan="3"><img th:if="${user.img}"
+                        th:src="@{'data:image/png;base64,' + ${user.img}}" height="300"
+                        alt="Avatar" /> <img th:unless="${user.img}"
+                        src="http://localhost:8080/img/avatarDefault.png" height="300"
+                        alt="Avatar" /></td>
 					<td class="font-weight-bold">Name</td>
 					<td th:text="${user.username}"></td>
 				</tr>

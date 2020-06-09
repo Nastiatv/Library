@@ -29,3 +29,4 @@ D:\coursesIT\practice\Library\lib-api\src\main\java\by\runa\lib\api\dto\OrderDto
 D:\coursesIT\practice\Library\lib-api\src\main\java\by\runa\lib\api\exceptions\UserIsAlreadyExistsException.java
 D:\coursesIT\practice\Library\lib-api\src\main\java\by\runa\lib\api\dao\IBookDetailsDao.java
 D:\coursesIT\practice\Library\lib-api\src\main\java\by\runa\lib\api\dto\BookDto.java
+D:\coursesIT\practice\Library\lib-api\src\main\java\by\runa\lib\api\exceptions\DepartmentIsNotEmptyException.java

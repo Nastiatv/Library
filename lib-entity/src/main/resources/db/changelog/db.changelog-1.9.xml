@@ -33,5 +33,9 @@
 			constraintName="fk_department2department_book"
 			referencedTableName="department" referencedColumnNames="id"
 			baseColumnNames="department_id" baseTableName="department_book" />
+		<addForeignKeyConstraint
+			constraintName="fk_book2department_book"
+			referencedTableName="book" referencedColumnNames="id"
+			baseColumnNames="book_id" baseTableName="department_book" />
 	</changeSet>
 </databaseChangeLog> 

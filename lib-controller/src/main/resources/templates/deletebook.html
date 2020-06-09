@@ -4,7 +4,8 @@
 <title>Library - Book page</title>
 <link href="../../css/styles.css" rel="stylesheet" />
 <link href="../../css/bootstrap.min.css" rel="stylesheet">
-</head> </head> <div class="header" th:insert="general/home :: header"></div>
+</head>
+<div class="header" th:insert="general/home :: header"></div>
 <body>
 	<div class="form-wrapper" style="padding: 50px 0">
 		<header class="m-md-3">
@@ -27,11 +28,11 @@
 			<p th:text="${book.bookDetailsDto.author}"></p>
 		</div>
 		<form th:action="@{${book.id}}" th:object="${departmentdto}"
-			method="POST" >
+			method="POST">
 			<div class="form-center">
 				<label for="department" class="font-weight-bold">Department</label>
-				<select id="department" th:object="${departmentdto}" class="custom-select my-1 mr-sm-2"
-					th:field="*{name}" required>
+				<select id="department" th:object="${departmentdto}"
+					class="custom-select my-1 mr-sm-2" th:field="*{name}" required>
 					<option hidden="" selected value=""></option>
 					<option th:each="department : ${book.departments}"
 						th:value="${department.name}" th:text="${department.name}"

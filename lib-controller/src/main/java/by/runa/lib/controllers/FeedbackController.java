@@ -6,6 +6,7 @@ import by.runa.lib.api.service.IFeedbackService;
 import by.runa.lib.api.service.IUserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,10 +15,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.security.Principal;
-import java.util.List;
 
 @RestController
 @RequestMapping("/feedbacks/")
+@Secured({ "ROLE_ADMIN", "ROLE_USER" })
 public class FeedbackController {
 
     private static final String ERRORS = "errors/errors";
@@ -30,15 +31,6 @@ public class FeedbackController {
 
     @Autowired
     IUserService userService;
-
-    @GetMapping
-    public ModelAndView getAllFeedbacks() {
-        ModelAndView modelAndView = new ModelAndView();
-        List<FeedbackDto> feedbacks = feedbackService.getAllFeedbacks();
-        modelAndView.setViewName("allfeedbacks");
-        modelAndView.addObject("feedbackList", feedbacks);
-        return modelAndView;
-    }
 
     @GetMapping("{id}")
     public ModelAndView getFeedbackById(@PathVariable Long id) {
@@ -66,14 +58,14 @@ public class FeedbackController {
         return modelAndView;
     }
 
-    @GetMapping(value = "addfeedback/{id}")
+    @GetMapping("addfeedback/{id}")
     public ModelAndView addFeedback(@PathVariable Long id) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("addfeedback");
         return modelAndView.addObject("feedbackdto", new FeedbackDto());
     }
 
-    @PostMapping(value = "addfeedback/{id}")
+    @PostMapping("addfeedback/{id}")
     public ModelAndView addFeedbackSubmit(@PathVariable Long id, FeedbackDto feedbackDto) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("general/thankU");
@@ -103,18 +95,6 @@ public class FeedbackController {
         ModelAndView modelAndView = new ModelAndView();
         try {
             modelAndView.addObject(FEEDBACK, feedbackService.updateFeedback(id, feedbackDto));
-            modelAndView.setViewName(CHANGESSAVED);
-        } catch (EntityNotFoundException e) {
-            returnViewNameWithError(modelAndView, e);
-        }
-        return modelAndView;
-    }
-
-    @PostMapping("delete/{id}")
-    public ModelAndView deletebookSubmit(@PathVariable Long id) {
-        ModelAndView modelAndView = new ModelAndView();
-        try {
-            feedbackService.deleteFeedbackById(id);
             modelAndView.setViewName(CHANGESSAVED);
         } catch (EntityNotFoundException e) {
             returnViewNameWithError(modelAndView, e);

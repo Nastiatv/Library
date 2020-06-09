@@ -4,7 +4,8 @@
 <title>Library - Order page</title>
 <link href="../../css/styles.css" rel="stylesheet" />
 <link href="../../css/bootstrap.min.css" rel="stylesheet">
-</head> </head> <div class="header" th:insert="general/home :: header"></div>
+</head>
+<div class="header" th:insert="general/home :: header"></div>
 <body>
 	<div class="form-wrapper">
 		<header class="m-md-3">
@@ -38,11 +39,13 @@
 					<td th:text="${order.bookDto.bookDetailsDto.author}"></td>
 					<td th:text="${order.userDto.username}"></td>
 					<td><span th:if="${order.isProlonged == false}"><a
-                            th:href="@{'../prolong/' + ${order.id}}">Prolong reading</a></span> <span
-                        th:unless="${order.isProlonged == false}">is already prolonged</span></td>
-                   <td><span th:if="${order.isFinished == true}">&#9989;</span> <span
-                        th:unless="${order.isFinished == true}">&#10060;</span></td>
-                    <td><a th:href="@{'../return/' + ${order.id}}">Return book</a> <br /></td>
+							th:href="@{'../prolong/' + ${order.id}}">Prolong reading</a></span> <span
+						th:unless="${order.isProlonged == false}">is already
+							prolonged</span></td>
+					<td><span th:if="${order.isFinished == true}">&#9989;</span> <span
+						th:unless="${order.isFinished == true}">&#10060;</span></td>
+					<td><a th:href="@{'../return/' + ${order.id}}">Return book</a>
+						<br /></td>
 				</tr>
 			</tbody>
 		</table>

@@ -16,5 +16,4 @@ public class BookDto extends ADto {
     private double rating;
     private List<Department> departments;
     private BookDetailsDto bookDetailsDto;
-
 }
