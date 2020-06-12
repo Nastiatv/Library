@@ -18,15 +18,14 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class CustomAccessDeniedHandler implements AccessDeniedHandler {
 
-	@Override
-	public void handle(HttpServletRequest request, HttpServletResponse response,
-			AccessDeniedException accessDeniedException) throws IOException, ServletException {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		if (authentication != null) {
-			log.info(String.format("User '%s' attempted to access the protected URL: %s", authentication.getName(),
-					request.getRequestURI()));
-		}
-
-		response.sendRedirect(request.getContextPath() + "/403");
-	}
+    @Override
+    public void handle(HttpServletRequest request, HttpServletResponse response,
+            AccessDeniedException accessDeniedException) throws IOException, ServletException {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null) {
+            log.info(String.format("User '%s' attempted to access the protected URL: %s", authentication.getName(),
+                    request.getRequestURI()));
+        }
+        response.sendRedirect(request.getContextPath() + "/403");
+    }
 }

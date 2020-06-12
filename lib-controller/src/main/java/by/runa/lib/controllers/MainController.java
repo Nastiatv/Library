@@ -9,6 +9,11 @@ import by.runa.lib.api.service.IUserService;
 import by.runa.lib.utils.ImgFileUploader;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,6 +25,9 @@ import java.io.IOException;
 
 @RestController
 public class MainController {
+
+    @Autowired
+    AuthenticationManager authenticationManager;
 
     @Autowired
     IUserService userService;
@@ -45,7 +53,8 @@ public class MainController {
         ModelAndView modelAndView = new ModelAndView();
         try {
             imgFileUploader.createOrUpdateUserAvatar(userService.createUser(userDto, departmentDto), file);
-            modelAndView.setViewName("general/login");
+            modelAndView.setViewName("general/home");
+            setAuth(userDto.getEmail(), userDto.getPassword());
         } catch (IOException | EntityNotFoundException | UserIsAlreadyExistsException e) {
             modelAndView.setViewName("errors/errors");
             modelAndView.addObject("message", e.getMessage());
@@ -74,4 +83,10 @@ public class MainController {
         return modelAndView;
     }
 
+    private void setAuth(String email, String password) {
+        UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(email, password);
+        Authentication auth = authenticationManager.authenticate(authentication);
+        SecurityContext context = SecurityContextHolder.getContext();
+        context.setAuthentication(auth);
+    }
 }

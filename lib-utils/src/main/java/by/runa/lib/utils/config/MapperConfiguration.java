@@ -16,5 +16,4 @@ public class MapperConfiguration {
                 .setSkipNullEnabled(true).setFieldAccessLevel(AccessLevel.PRIVATE);
         return mapper;
     }
-
 }

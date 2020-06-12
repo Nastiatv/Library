@@ -65,5 +65,4 @@ public class FeedbackMapper extends AMapper<Feedback, FeedbackDto> {
         destination.setUser(userDao.get(source.getUserDto().getId()));
         destination.setBook(bookDao.get(source.getBookId()));
     }
-
 }

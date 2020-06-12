@@ -6,6 +6,7 @@ import by.runa.lib.api.dto.BookDetailsDto;
 import by.runa.lib.api.dto.BookDto;
 import by.runa.lib.api.dto.DepartmentDto;
 import by.runa.lib.api.exceptions.EntityNotFoundException;
+import by.runa.lib.api.exceptions.NoSuchBookException;
 import by.runa.lib.api.service.IBookDetailsService;
 import by.runa.lib.api.service.IBookService;
 import by.runa.lib.api.service.IDepartmentService;
@@ -68,7 +69,8 @@ public class BookService implements IBookService {
     }
 
     @Override
-    public BookDto createBook(BookDto dto, DepartmentDto departmentDto) throws EntityNotFoundException {
+    public BookDto createBook(BookDto dto, DepartmentDto departmentDto)
+            throws EntityNotFoundException, NoSuchBookException {
         cleanIsbn(dto);
         Book existingBook = getBookbyIsbnFromDao(dto);
         Department existingdepartment = getDepartmentByName(departmentDto);
@@ -137,7 +139,7 @@ public class BookService implements IBookService {
 
     private void updateBookDetails(BookDto bookDto, MultipartFile file, Book existingBook) {
         if (bookDto.getBookDetailsDto() != null) {
-            bookDetailsService.updateBookDetails(existingBook.getBookDetails(), bookDto.getBookDetailsDto(), file);
+            bookDetailsService.updateBookDetails(existingBook, bookDto.getBookDetailsDto(), file);
         }
     }
 
@@ -164,7 +166,7 @@ public class BookService implements IBookService {
         return departmentMapper.toEntity(departmentService.getDepartmentByName(departmentDto.getName()));
     }
 
-    private BookDetails createBookDetails(BookDto dto) {
+    private BookDetails createBookDetails(BookDto dto) throws NoSuchBookException {
         return bookDetailsMapper.toEntity(bookDetailsService.createBookDetails(dto.getIsbn()));
     }
 
@@ -184,5 +186,4 @@ public class BookService implements IBookService {
             log.info("Mail not sent!");
         }
     }
-
 }

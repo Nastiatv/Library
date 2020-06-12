@@ -11,5 +11,4 @@ public class DepartmentMapper extends AMapper<Department, DepartmentDto> {
     public DepartmentMapper() {
         super(Department.class, DepartmentDto.class);
     }
-
 }

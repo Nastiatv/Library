@@ -62,6 +62,5 @@ public class RoleService implements IRoleService {
         Optional.ofNullable(roleDto.getName()).ifPresent(existingRole::setName);
         getRoleDao().update(existingRole);
         return roleMapper.toDto(existingRole);
-
     }
 }

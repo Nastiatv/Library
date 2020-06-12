@@ -7,6 +7,7 @@ import java.util.List;
 import by.runa.lib.api.dto.BookDto;
 import by.runa.lib.api.dto.DepartmentDto;
 import by.runa.lib.api.exceptions.EntityNotFoundException;
+import by.runa.lib.api.exceptions.NoSuchBookException;
 
 public interface IBookService {
 
@@ -14,7 +15,7 @@ public interface IBookService {
 
     BookDto getBookById(Long id) throws EntityNotFoundException;
 
-    BookDto createBook(BookDto bookDto, DepartmentDto departmentDto) throws EntityNotFoundException;
+    BookDto createBook(BookDto bookDto, DepartmentDto departmentDto) throws EntityNotFoundException, NoSuchBookException;
 
     BookDto updateBook(BookDto bookDto, MultipartFile file) throws EntityNotFoundException;
 

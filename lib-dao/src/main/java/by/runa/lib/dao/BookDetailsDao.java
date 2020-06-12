@@ -11,5 +11,4 @@ public class BookDetailsDao extends AGenericDao<BookDetails> implements IBookDet
     public BookDetailsDao() {
         super(BookDetails.class);
     }
-
 }

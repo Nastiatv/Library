@@ -10,8 +10,7 @@
 <body>
 	<div class="form-wrapper">
 		<header class="m-md-3">
-			<a href="../../">Home</a> | <a href="../orders/my">My orders</a> | <a
-				href="../feedbacks/my">My feedbacks</a>
+			<a href="../../">Home</a>
 		</header>
 		<hr />
 		<h3 class="form-center">My personal info:</h3>
@@ -24,7 +23,7 @@
 			<tbody>
 				<tr>
 					<td rowspan="3"><span th:if="${user.img == null}"> <img
-                            th:src="http://localhost:8080/img/avatarDefault.png" height="300"
+                            src="http://localhost:8080/img/avatarDefault.png" height="300"
                             alt="Avatar" />
                     </span> <span th:unless="${user.img == null}"><img
                             th:src="@{'data:image/png;base64,' + ${user.img}}" height="300"

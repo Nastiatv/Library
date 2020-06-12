@@ -11,11 +11,10 @@ import org.springframework.web.context.request.NativeWebRequest;
 
 public class FacebookSignInAdapter implements SignInAdapter {
 
-	@Override
-	public String signIn(String userId, Connection<?> connection, NativeWebRequest request) {
-		SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(
-		        userId, null, Arrays.asList(new SimpleGrantedAuthority("ROLE_USER"))));
-		return null;
-	}
-
+    @Override
+    public String signIn(String userId, Connection<?> connection, NativeWebRequest request) {
+        SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(userId, null,
+                Arrays.asList(new SimpleGrantedAuthority("ROLE_USER"))));
+        return null;
+    }
 }

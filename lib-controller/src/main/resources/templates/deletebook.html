@@ -16,7 +16,10 @@
 			book?</h1>
 		<hr />
 		<div class="form-center">
-			<img th:src="@{${book.bookDetailsDto.picture}}" height="200"
+			<img th:if="${book.bookDetailsDto.picture}"
+				th:src="@{${book.bookDetailsDto.picture}}" height="200" alt="Cover" />
+			<img th:unless="${book.bookDetailsDto.picture}"
+				src="http://localhost:8080/img/coverDefault.jpg" height="200"
 				alt="Cover" />
 		</div>
 		<div class="form-center">

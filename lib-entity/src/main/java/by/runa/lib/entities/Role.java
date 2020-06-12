@@ -21,5 +21,4 @@ public class Role extends AEntity {
 
     @ManyToMany(mappedBy = "roles")
     private List<User> users;
-
 }

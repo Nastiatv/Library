@@ -24,5 +24,4 @@ public interface IOrderService {
             throws EntityNotFoundException, IsAlreadyClosedException, IsAlreadyProlongedException;
 
     List<OrderDto> getAllOrdersByUserId(Long id) throws EntityNotFoundException;
-
 }

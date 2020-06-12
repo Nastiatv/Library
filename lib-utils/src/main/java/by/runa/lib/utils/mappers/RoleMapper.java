@@ -11,5 +11,4 @@ public class RoleMapper extends AMapper<Role, RoleDto> {
     public RoleMapper() {
         super(Role.class, RoleDto.class);
     }
-
 }

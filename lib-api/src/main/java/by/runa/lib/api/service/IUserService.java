@@ -20,7 +20,8 @@ public interface IUserService {
 
     UserDto getUserByEmail(String email) throws EntityNotFoundException;
 
-    UserDto createUser(UserDto userDto, DepartmentDto departmentDto) throws UserIsAlreadyExistsException, EntityNotFoundException;
+    UserDto createUser(UserDto userDto, DepartmentDto departmentDto)
+            throws UserIsAlreadyExistsException, EntityNotFoundException;
 
     UserDto getUserByName(String name) throws EntityNotFoundException;
 

@@ -7,14 +7,13 @@ import by.runa.lib.entities.AEntity;
 
 public interface IMapper<E extends AEntity, D extends ADto> {
 
-	E toEntity(D dto);
+    E toEntity(D dto);
 
-	E toLiteEntity(D dto);
+    E toLiteEntity(D dto);
 
-	D toDto(E entity);
+    D toDto(E entity);
 
-	D toLiteDto(E entity);
+    D toLiteDto(E entity);
 
-	List<D> toListDto(List<E> entities);
-
+    List<D> toListDto(List<E> entities);
 }

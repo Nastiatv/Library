@@ -8,9 +8,9 @@ import by.runa.lib.entities.Order;
 
 public interface IEmailSender {
 
-	void sendEmailsFromAdminAboutNewBook(Book book, Department department) throws MessagingException;
+    void sendEmailsFromAdminAboutNewBook(Book book, Department department) throws MessagingException;
 
-	void sendEmailsFromAdminAboutDebts(Order order) throws MessagingException;
+    void sendEmailsFromAdminAboutDebts(Order order) throws MessagingException;
 
-	void sendEmailsFromAdminDueDateTomorrow(Order order) throws MessagingException;
+    void sendEmailsFromAdminDueDateTomorrow(Order order) throws MessagingException;
 }

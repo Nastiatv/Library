@@ -22,7 +22,7 @@ public class Feedback extends AEntity {
 
     @Column(name = "user_name")
     private String userName;
-    
+
     @Column(name = "book_name")
     private String bookName;
 

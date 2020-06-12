@@ -11,5 +11,4 @@ public class BookDetailsMapper extends AMapper<BookDetails, BookDetailsDto> {
     public BookDetailsMapper() {
         super(BookDetails.class, BookDetailsDto.class);
     }
-
 }

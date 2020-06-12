@@ -38,5 +38,4 @@ public class Order extends AEntity {
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
-
 }

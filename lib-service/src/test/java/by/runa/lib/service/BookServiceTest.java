@@ -31,8 +31,6 @@ import java.util.List;
 @RunWith(MockitoJUnitRunner.class)
 public class BookServiceTest {
 
-    private static final String TEST_ISBN = "1234567891234";
-
     @InjectMocks
     BookService bookService;
 
@@ -67,26 +65,18 @@ public class BookServiceTest {
     @Test
     public void getAllBookTest() {
         List<Book> listBook = new ArrayList<>();
-        Book book = new Book();
-        book.setIsbn(TEST_ISBN);
-        Book book2 = new Book();
-        book.setIsbn("name2");
-        Book book3 = new Book();
-        book.setIsbn("name3");
-        listBook.add(book);
-        listBook.add(book2);
-        listBook.add(book3);
+        listBook.add(createBook("name"));
+        listBook.add(createBook("name2"));
+        listBook.add(createBook("name3"));
         when(bookDao.getAll()).thenReturn(listBook);
-        List<BookDto> dtoList = bookService.getAllBooks();
+        bookService.getAllBooks();
         verify(bookMapper, times(1)).toListDto(listBook);
-        assertThat(dtoList.size() == 0).isTrue();
-        assertThat(listBook.size() == 3).isTrue();
     }
 
     @Test
     public void getBookByIdTest() throws EntityNotFoundException {
-        Book book = createBook(TEST_ISBN);
-        when(bookDao.get(1L)).thenReturn(book);
+        Book book = createBook("name");
+        when(bookDao.get(any(Long.class))).thenReturn(book);
         when(bookMapper.toDto(book)).thenReturn(toDto(book));
         BookDto newbook = bookService.getBookById(1L);
         verify(bookMapper, times(1)).toDto(any(Book.class));
@@ -95,12 +85,11 @@ public class BookServiceTest {
 
     @Test
     public void updateBook() throws EntityNotFoundException {
-        Book book = createBook(TEST_ISBN);
-        when(bookDao.get(1L)).thenReturn(book);
-        String isbnToUpdate = TEST_ISBN + "new";
-        book.setIsbn(isbnToUpdate);
+        Book book = createBook("new");
+        when(bookDao.get(any(Long.class))).thenReturn(book);
         MultipartFile fichier = new MockMultipartFile("fileThatDoesNotExists.txt", "fileThatDoesNotExists.txt",
                 "text/plain", "This is a dummy file content".getBytes(StandardCharsets.UTF_8));
+        book.setIsbn("name");
         bookService.updateBook(toDto(book), fichier);
         verify(bookDao, times(1)).update(book);
     }
@@ -108,7 +97,7 @@ public class BookServiceTest {
     private Book createBook(String name) {
         Book book = new Book();
         book.setId(1L);
-        book.setIsbn(TEST_ISBN);
+        book.setIsbn(name);
         book.setQuantityInLibrary(1);
         return book;
     }

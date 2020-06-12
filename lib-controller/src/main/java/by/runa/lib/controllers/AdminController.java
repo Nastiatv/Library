@@ -76,7 +76,7 @@ public class AdminController {
         ModelAndView modelAndView = new ModelAndView();
         try {
             bookService.deleteBookById(id, departmentDto);
-            modelAndView.setViewName("general/changesSaved");
+            modelAndView.setViewName(CHANGES_SAVED);
         } catch (EntityNotFoundException e) {
             returnViewNameWithError(modelAndView, e);
         }
@@ -161,7 +161,7 @@ public class AdminController {
         modelAndView.addObject("orderList", orderService.getAllOrders());
         return modelAndView;
     }
-    
+
     @GetMapping("/feedbacks/")
     public ModelAndView getAllFeedbacks() {
         ModelAndView modelAndView = new ModelAndView();
@@ -170,7 +170,7 @@ public class AdminController {
         modelAndView.addObject("feedbackList", feedbacks);
         return modelAndView;
     }
-    
+
     @PostMapping("/feedbacks/delete/{id}")
     public ModelAndView deletebookSubmit(@PathVariable Long id) {
         ModelAndView modelAndView = new ModelAndView();
@@ -182,7 +182,7 @@ public class AdminController {
         }
         return modelAndView;
     }
-    
+
     private void returnViewNameWithError(ModelAndView modelAndView, EntityNotFoundException e) {
         modelAndView.setViewName(ERRORS);
         modelAndView.addObject(MESSAGE, e.getMessage());

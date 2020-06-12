@@ -27,9 +27,12 @@
 				</tr>
 			<tbody>
 				<tr>
-					<td rowspan="6"><img
+					<td rowspan="6"><img th:if="${book.bookDetailsDto.picture}"
 						th:src="@{${book.bookDetailsDto.picture}}" class="shadow-img"
-						height="400" alt="Cover" /></td>
+						height="400" alt="Cover" /> <img
+						th:unless="${book.bookDetailsDto.picture}"
+						src="http://localhost:8080/img/coverDefault.jpg"
+						class="shadow-img" height="400" alt="Cover" /></td>
 					<td class="font-weight-bold">Book ISBN</td>
 					<td th:text="${book.isbn}"></td>
 				</tr>

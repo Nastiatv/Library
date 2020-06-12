@@ -4,6 +4,7 @@ import by.runa.lib.api.dto.BookDetailsDto;
 import by.runa.lib.api.dto.BookDto;
 import by.runa.lib.api.dto.DepartmentDto;
 import by.runa.lib.api.exceptions.EntityNotFoundException;
+import by.runa.lib.api.exceptions.NoSuchBookException;
 import by.runa.lib.api.service.IBookService;
 import by.runa.lib.api.service.IDepartmentService;
 import by.runa.lib.api.service.IFeedbackService;
@@ -107,8 +108,9 @@ public class BookController {
         modelAndView.setViewName(ONEBOOK);
         try {
             modelAndView.addObject("book", bookService.createBook(bookDto, departmentDto));
-        } catch (EntityNotFoundException e) {
-            returnViewNameWithError(modelAndView, e);
+        } catch (EntityNotFoundException | NoSuchBookException e) {
+            modelAndView.setViewName(ERRORS);
+            modelAndView.addObject(MESSAGE, e.getMessage());
         }
         return modelAndView;
     }

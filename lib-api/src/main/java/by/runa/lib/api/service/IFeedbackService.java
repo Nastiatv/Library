@@ -7,18 +7,17 @@ import by.runa.lib.api.exceptions.EntityNotFoundException;
 
 public interface IFeedbackService {
 
-	List<FeedbackDto> getAllFeedbacks();
+    List<FeedbackDto> getAllFeedbacks();
 
-	FeedbackDto getFeedbackById(Long id) throws EntityNotFoundException;
+    FeedbackDto getFeedbackById(Long id) throws EntityNotFoundException;
 
     void deleteFeedbackById(Long id) throws EntityNotFoundException;
 
-	FeedbackDto updateFeedback(Long id, FeedbackDto dto) throws EntityNotFoundException;
+    FeedbackDto updateFeedback(Long id, FeedbackDto dto) throws EntityNotFoundException;
 
-	FeedbackDto createFeedback(FeedbackDto feedbackDto, Long id) throws EntityNotFoundException;
+    FeedbackDto createFeedback(FeedbackDto feedbackDto, Long id) throws EntityNotFoundException;
 
-	List<FeedbackDto> getAllFeedbacksByBookId(Long bookId) throws EntityNotFoundException;
+    List<FeedbackDto> getAllFeedbacksByBookId(Long bookId) throws EntityNotFoundException;
 
-	List<FeedbackDto> getAllFeedbacksByUserId(Long principalId) throws EntityNotFoundException ;
-
+    List<FeedbackDto> getAllFeedbacksByUserId(Long principalId) throws EntityNotFoundException;
 }

@@ -28,7 +28,6 @@ import java.security.Principal;
 public class UserController {
 
     private Long principalId;
-    private static final String GENERAL_CHANGES_SAVED = "general/changesSaved";
     private static final String ERRORS = "errors/errors";
     private static final String MESSAGE = "message";
     private static final String USER = "user";
@@ -87,7 +86,7 @@ public class UserController {
         try {
             imgFileUploader.createOrUpdateUserAvatar(userDto, file);
             modelAndView.addObject(USER, userService.updateUser(principalId, userDto, departmentDto));
-            modelAndView.setViewName(GENERAL_CHANGES_SAVED);
+            modelAndView.setViewName("general/changesSaved");
         } catch (IOException | EntityNotFoundException e) {
             modelAndView.setViewName(ERRORS);
             modelAndView.addObject(MESSAGE, e.getMessage());

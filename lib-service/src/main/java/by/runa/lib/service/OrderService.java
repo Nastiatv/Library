@@ -71,7 +71,8 @@ public class OrderService implements IOrderService {
     }
 
     @Override
-    public OrderDto createOrder(Long bookId, String userName) throws NoBooksAvailableException, EntityNotFoundException {
+    public OrderDto createOrder(Long bookId, String userName)
+            throws NoBooksAvailableException, EntityNotFoundException {
         Order order = new Order();
         Book book = bookMapper.toEntity(bookService.getBookById(bookId));
         if (book.getQuantityAvailable() != 0) {

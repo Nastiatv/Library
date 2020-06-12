@@ -1,6 +1,7 @@
 package by.runa.lib.web;
 
 import by.runa.lib.api.dao.IBookDetailsDao;
+import by.runa.lib.api.exceptions.NoSuchBookException;
 import by.runa.lib.entities.BookDetails;
 
 import com.gargoylesoftware.htmlunit.FailingHttpStatusCodeException;
@@ -12,9 +13,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.io.IOException;
-
 import lombok.extern.slf4j.Slf4j;
+
+import java.io.IOException;
 
 @Component
 @Slf4j
@@ -29,16 +30,14 @@ public class WebScraper {
 
     private static final String IMAGE_URL = "https://pictures.abebooks.com/isbn/%s-us-300.jpg";
 
-    public BookDetails getBookDetailsFromWeb(String isbn) {
+    public BookDetails getBookDetailsFromWeb(String isbn) throws NoSuchBookException {
         BookDetails bookDetails = new BookDetails();
         try {
             String url = String.format(SEARCH_URL, isbn);
             HtmlPage bookPage = webclient.getPage(url);
-
             HtmlElement name = (HtmlElement) bookPage.getByXPath("//span[@id='describe-isbn-title']").get(0);
             HtmlElement author = (HtmlElement) bookPage.getByXPath("//span[@itemprop='author']").get(0);
             HtmlElement description = null;
-
             if (!bookPage.getByXPath("//div[@id='bookSummary']").isEmpty()) {
                 description = (HtmlElement) bookPage.getByXPath("//div[@id='bookSummary']").get(0);
                 bookDetails.setDescription(description.getTextContent());
@@ -50,6 +49,8 @@ public class WebScraper {
             bookDetails.setAuthor(author.getTextContent());
             bookDetailsDao.create(bookDetails);
             return bookDetails;
+        } catch (IndexOutOfBoundsException e) {
+            throw new NoSuchBookException();
         } catch (FailingHttpStatusCodeException | IOException e) {
             log.info("Bad url response!", e);
             return bookDetails;

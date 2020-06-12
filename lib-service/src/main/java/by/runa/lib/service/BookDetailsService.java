@@ -3,7 +3,9 @@ package by.runa.lib.service;
 import by.runa.lib.api.dao.IAGenericDao;
 import by.runa.lib.api.dao.IBookDetailsDao;
 import by.runa.lib.api.dto.BookDetailsDto;
+import by.runa.lib.api.exceptions.NoSuchBookException;
 import by.runa.lib.api.service.IBookDetailsService;
+import by.runa.lib.entities.Book;
 import by.runa.lib.entities.BookDetails;
 import by.runa.lib.utils.mappers.AMapper;
 import by.runa.lib.web.WebScraper;
@@ -40,7 +42,7 @@ public class BookDetailsService implements IBookDetailsService {
     }
 
     @Override
-    public BookDetailsDto createBookDetails(String isbn) {
+    public BookDetailsDto createBookDetails(String isbn) throws NoSuchBookException {
         return bookDetailsMapper.toDto(webScraper.getBookDetailsFromWeb(isbn));
     }
 
@@ -55,15 +57,15 @@ public class BookDetailsService implements IBookDetailsService {
     }
 
     @Override
-    public void updateBookDetails(BookDetails existingBookDetails, BookDetailsDto newbookDetailsDto,
+    public void updateBookDetails(Book existingBook, BookDetailsDto newbookDetailsDto,
             MultipartFile file) {
+        BookDetails existingBookDetails=existingBook.getBookDetails();
         Optional.ofNullable(newbookDetailsDto.getAuthor()).ifPresent(existingBookDetails::setAuthor);
         Optional.ofNullable(newbookDetailsDto.getDescription()).ifPresent(existingBookDetails::setDescription);
         Optional.ofNullable(newbookDetailsDto.getName()).ifPresent(existingBookDetails::setName);
         if (file.getSize() != 0) {
-            existingBookDetails.setPicture("http://localhost:8080/img/" + existingBookDetails.getId() + ".png");
+            existingBookDetails.setPicture("http://localhost:8080/img/" + existingBook.getIsbn() + ".png");
         }
         getBookDetailsDao().update(existingBookDetails);
-
     }
 }

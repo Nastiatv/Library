@@ -74,6 +74,5 @@ public class DepartmentService implements IDepartmentService {
         Optional.ofNullable(departmentDto.getName()).ifPresent(existingDepartment::setName);
         getDepartmentDao().update(existingDepartment);
         return departmentMapper.toDto(existingDepartment);
-
     }
 }

@@ -9,5 +9,4 @@ public interface IFeedbackDao extends IAGenericDao<Feedback> {
     List<Feedback> getAllFeedbacksByBookId(Long id);
 
     List<Feedback> getAllFeedbacksByUserId(Long id);
-
 }

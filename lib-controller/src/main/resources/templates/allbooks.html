@@ -43,7 +43,11 @@
 			<tbody>
 				<tr>
 				<tr th:each="book : ${bookList}">
-					<td><img th:src="@{${book.bookDetailsDto.picture}}"
+					<td><img th:if="${book.bookDetailsDto.picture}"
+						th:src="@{${book.bookDetailsDto.picture}}"
+						class="img-thumbnail grow" alt="Cover" /> <img
+						th:unless="${book.bookDetailsDto.picture}"
+						src="http://localhost:8080/img/coverDefault.jpg"
 						class="img-thumbnail grow" alt="Cover" /></td>
 					<td th:text="${book.isbn}"></td>
 					<td th:text="${book.bookDetailsDto.name}"></td>

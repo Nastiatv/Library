@@ -22,7 +22,6 @@ public class UserMapper extends AMapper<User, UserDto> {
         super(User.class, UserDto.class);
         this.mapper = mapper;
         this.departmentDao = departmentDao;
-
     }
 
     @PostConstruct
@@ -51,5 +50,4 @@ public class UserMapper extends AMapper<User, UserDto> {
     void mapSpecificFields(UserDto source, User destination) {
         destination.setDepartment(departmentDao.getByName(source.getDepartmentName()));
     }
-
 }

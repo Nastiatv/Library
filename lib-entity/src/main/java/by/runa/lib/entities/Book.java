@@ -26,7 +26,7 @@ public class Book extends AEntity {
 
     @Column(name = "isbn")
     private String isbn;
-
+    
     @Column(name = "quantity_available")
     private int quantityAvailable = 0;
 
@@ -49,5 +49,4 @@ public class Book extends AEntity {
     @OneToOne(orphanRemoval = true)
     @PrimaryKeyJoinColumn
     private BookDetails bookDetails;
-
 }

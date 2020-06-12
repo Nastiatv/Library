@@ -24,5 +24,4 @@ public class BookDetails extends AEntity {
 
     @Column(name = "description")
     private String description;
-
 }

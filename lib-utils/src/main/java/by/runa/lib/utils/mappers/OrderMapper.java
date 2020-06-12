@@ -72,5 +72,4 @@ public class OrderMapper extends AMapper<Order, OrderDto> {
         destination.setUser(userDao.get(source.getUserDto().getId()));
         destination.setBook(bookDao.get(source.getBookDto().getId()));
     }
-
 }

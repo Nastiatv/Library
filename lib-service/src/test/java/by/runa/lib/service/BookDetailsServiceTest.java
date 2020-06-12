@@ -7,7 +7,9 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import by.runa.lib.api.dto.BookDetailsDto;
+import by.runa.lib.api.exceptions.NoSuchBookException;
 import by.runa.lib.dao.BookDetailsDao;
+import by.runa.lib.entities.Book;
 import by.runa.lib.entities.BookDetails;
 import by.runa.lib.utils.mappers.BookDetailsMapper;
 import by.runa.lib.web.WebScraper;
@@ -51,35 +53,29 @@ public class BookDetailsServiceTest {
     @Test
     public void getAllBookDetailsTest() {
         List<BookDetails> listBookDetails = new ArrayList<>();
-        BookDetails bookDetails = new BookDetails();
-        bookDetails.setName(TEST_NAME);
-        BookDetails bookDetails2 = new BookDetails();
-        bookDetails.setName("name2");
-        BookDetails bookDetails3 = new BookDetails();
-        bookDetails.setName("name3");
+        BookDetails bookDetails = createBookDetails(1L);
+        BookDetails bookDetails2 = createBookDetails(2L);
+        BookDetails bookDetails3 = createBookDetails(3L);
         listBookDetails.add(bookDetails);
         listBookDetails.add(bookDetails2);
         listBookDetails.add(bookDetails3);
         when(bookDetailsDao.getAll()).thenReturn(listBookDetails);
-        List<BookDetailsDto> dtoList = bookDetailsService.getAllBookDetails();
+        bookDetailsService.getAllBookDetails();
         verify(bookDetailsMapper, times(1)).toListDto(listBookDetails);
-        assertThat(dtoList.size() == 0).isTrue();
-        assertThat(listBookDetails.size() == 3).isTrue();
     }
 
     @Test
-    public void createBookDetailsTest() {
-        BookDetails bookDetails = createBookDetails(TEST_NAME);
+    public void createBookDetailsTest() throws NoSuchBookException {
+        BookDetails bookDetails = createBookDetails(1L);
         when(webScraper.getBookDetailsFromWeb(TEST_NAME)).thenReturn(bookDetails);
-        when(bookDetailsDao.get(1L)).thenReturn(bookDetails);
         bookDetailsService.createBookDetails(TEST_NAME);
         verify(webScraper, times(1)).getBookDetailsFromWeb(TEST_NAME);
-        assertThat(bookDetailsDao.get(1L).getName() == TEST_NAME).isTrue();
+        verify(bookDetailsMapper, times(1)).toDto(any(BookDetails.class));
     }
 
     @Test
     public void getBookDetailsByIdTest() {
-        BookDetails bookDetails = createBookDetails(TEST_NAME);
+        BookDetails bookDetails = createBookDetails(1L);
         when(bookDetailsDao.get(1L)).thenReturn(bookDetails);
         bookDetailsService.getBookDetailsById(1L);
         verify(bookDetailsMapper, times(1)).toDto(any(BookDetails.class));
@@ -88,31 +84,32 @@ public class BookDetailsServiceTest {
 
     @Test
     public void deleteBookDetailsByIdTest() {
-        BookDetails bookDetails = createBookDetails(TEST_NAME);
+        BookDetails bookDetails = createBookDetails(1L);
         when(bookDetailsDao.get(1L)).thenReturn(bookDetails);
         bookDetailsService.deleteBookDetailsById(1L);
         verify(bookDetailsDao, times(1)).delete(bookDetails);
-        assertThat(bookDetailsDao.get(1L)).isNotNull();
     }
 
     @Test
     public void updateBookDetails() {
-        BookDetails bookDetails = createBookDetails(TEST_NAME);
-        when(bookDetailsDao.get(1L)).thenReturn(bookDetails);
-        String nameToUpdate = TEST_NAME + "new";
-        BookDetailsDto bookDetailsDto = new BookDetailsDto();
-        bookDetailsDto.setName(nameToUpdate);
+        Book book = new Book();
+        book.setId(1L);
+        BookDetails bookDetails = createBookDetails(1L);
+        book.setBookDetails(bookDetails);
+        BookDetailsDto newbookDetailsDto = new BookDetailsDto();
+        newbookDetailsDto.setName(TEST_NAME + "new");
         MultipartFile fichier = new MockMultipartFile("fileThatDoesNotExists.txt", "fileThatDoesNotExists.txt",
                 "text/plain", "This is a dummy file content".getBytes(StandardCharsets.UTF_8));
-        bookDetailsService.updateBookDetails(bookDetails, bookDetailsDto, fichier);
+        bookDetailsService.updateBookDetails(book, newbookDetailsDto, fichier);
         verify(bookDetailsDao, times(1)).update(bookDetails);
-        assertThat(bookDetailsDao.get(1L).getName() == nameToUpdate).isTrue();
     }
 
-    private BookDetails createBookDetails(String name) {
+    private BookDetails createBookDetails(Long id) {
         BookDetails bookDetails = new BookDetails();
-        bookDetails.setId(1L);
-        bookDetails.setName(name);
+        bookDetails.setId(id);
+        bookDetails.setName("name");
+        bookDetails.setAuthor("author");
+        bookDetails.setDescription("description");
         return bookDetails;
     }
 }

@@ -19,18 +19,18 @@ import javax.persistence.criteria.Root;
 @Repository
 public class OrderDao extends AGenericDao<Order> implements IOrderDao {
 
-	public OrderDao() {
-		super(Order.class);
-	}
+    public OrderDao() {
+        super(Order.class);
+    }
 
-	public List<Order> getAllOrdersByUserId(Long userId) {
-		CriteriaBuilder cBuilder = entityManager.getCriteriaBuilder();
-		CriteriaQuery<Order> criteria = cBuilder.createQuery(Order.class);
-		Root<Order> linkRoot = criteria.from(Order.class);
-		Join<Order, User> userJoin = linkRoot.join(Order_.user);
-		criteria.select(linkRoot);
-		criteria.where(cBuilder.equal(userJoin.get(AEntity_.id), userId));
-		TypedQuery<Order> query = entityManager.createQuery(criteria);
-		return query.getResultList();
-	}
+    public List<Order> getAllOrdersByUserId(Long userId) {
+        CriteriaBuilder cBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Order> criteria = cBuilder.createQuery(Order.class);
+        Root<Order> linkRoot = criteria.from(Order.class);
+        Join<Order, User> userJoin = linkRoot.join(Order_.user);
+        criteria.select(linkRoot);
+        criteria.where(cBuilder.equal(userJoin.get(AEntity_.id), userId));
+        TypedQuery<Order> query = entityManager.createQuery(criteria);
+        return query.getResultList();
+    }
 }

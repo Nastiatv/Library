@@ -14,5 +14,4 @@ public abstract class AEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Long id;
-
 }

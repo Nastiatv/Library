@@ -7,10 +7,13 @@ by\runa\lib\entities\Book_.class
 by\runa\lib\entities\Feedback.class
 by\runa\lib\entities\Feedback_.class
 by\runa\lib\entities\User_.class
+META-INF\MANIFEST.MF
+META-INF\maven\by.runa\lib-entity\pom.xml
 by\runa\lib\entities\AEntity.class
 by\runa\lib\entities\BookDetails.class
 by\runa\lib\entities\BookDetails_.class
 by\runa\lib\entities\User.class
+META-INF\maven\by.runa\lib-entity\pom.properties
 by\runa\lib\entities\Role_.class
 by\runa\lib\entities\Order.class
 by\runa\lib\entities\Role.class

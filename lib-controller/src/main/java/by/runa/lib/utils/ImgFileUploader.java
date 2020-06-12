@@ -3,6 +3,7 @@ package by.runa.lib.utils;
 import by.runa.lib.api.dto.BookDto;
 import by.runa.lib.api.dto.UserDto;
 import by.runa.lib.api.exceptions.EntityNotFoundException;
+import by.runa.lib.api.service.IBookService;
 import by.runa.lib.api.service.IUserService;
 
 import org.apache.commons.net.util.Base64;
@@ -25,6 +26,9 @@ public class ImgFileUploader {
 
     @Autowired
     IUserService userService;
+    
+    @Autowired
+    IBookService bookService;
 
     private static final String IMAGE_EXTENSION = ".png";
 
@@ -36,9 +40,9 @@ public class ImgFileUploader {
         }
     }
 
-    public void createOrUpdateBookCover(BookDto dto, MultipartFile file) throws IOException {
+    public void createOrUpdateBookCover(BookDto dto, MultipartFile file) throws IOException, EntityNotFoundException {
         if (file != null && !file.isEmpty()) {
-            String bookIsbn = dto.getIsbn();
+            String bookIsbn = bookService.getBookById(dto.getId()).getIsbn();
             createOrUpdate(file, bookIsbn);
         }
     }
@@ -46,7 +50,7 @@ public class ImgFileUploader {
     private void setImgInDB(MultipartFile file, UserDto dto) throws IOException, EntityNotFoundException {
         String base64Encoded = new String(Base64.encodeBase64(file.getBytes()), StandardCharsets.UTF_8);
         userService.setOrUpdateUserAvatar(dto.getId(), base64Encoded);
-}
+    }
 
     private void createOrUpdate(MultipartFile file, String futureImgName) throws IOException {
         String filePath = new StringBuilder(FOLDER_PATH).append(futureImgName).append(IMAGE_EXTENSION).toString();

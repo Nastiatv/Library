@@ -164,7 +164,7 @@ public class UserService implements IUserService {
         String newPassword = generateCommonLangPassword();
         UserDto userDto = getUserByEmail(email);
         userDto.setPassword(newPassword);
-        DepartmentDto depDto = new DepartmentDto().setName("");
+        DepartmentDto depDto = new DepartmentDto();
         updateUser(userDto.getId(), userDto, depDto);
         try {
             emailSender.sendEmailToUserWithNewPassword(newPassword, userDto);
