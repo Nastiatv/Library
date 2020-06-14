@@ -9,12 +9,8 @@ import static org.mockito.Mockito.when;
 import by.runa.lib.api.dto.BookDto;
 import by.runa.lib.api.exceptions.EntityNotFoundException;
 import by.runa.lib.dao.BookDao;
-import by.runa.lib.dao.DepartmentDao;
 import by.runa.lib.entities.Book;
-import by.runa.lib.utils.mailsender.EmailSender;
-import by.runa.lib.utils.mappers.BookDetailsMapper;
 import by.runa.lib.utils.mappers.BookMapper;
-import by.runa.lib.web.WebScraper;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -38,27 +34,12 @@ public class BookServiceTest {
     BookDao bookDao;
 
     @Mock
-    BookDetailsService bookDetailsService;
-
-    @Mock
-    DepartmentDao departmentDao;
-
-    @Mock
-    WebScraper webScraper;
-
-    @Mock
     BookMapper bookMapper;
-
-    @Mock
-    EmailSender emailSender;
-
-    @Mock
-    BookDetailsMapper bookDetailsMapper;
 
     @Test
     public void injectedComponentsAreNotNull() {
         assertThat(bookDao).isNotNull();
-        assertThat(webScraper).isNotNull();
+        assertThat(bookService).isNotNull();
         assertThat(bookMapper).isNotNull();
     }
 

@@ -16,7 +16,7 @@ import java.util.concurrent.Executor;
 import lombok.extern.slf4j.Slf4j;
 
 @Configuration
-@EnableAsync/*(proxyTargetClass = true)*/
+@EnableAsync(proxyTargetClass = true)
 @Slf4j
 public class MailConfiguration {
 
