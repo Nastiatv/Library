@@ -19,7 +19,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<version.org.springframework.boot>2.2.5.RELEASE</version.org.springframework.boot>
-		<version.mysql>8.0.15</version.mysql>
+		<version.mysql>8.0.16</version.mysql>
 		<version.org.liquibase>3.8.5</version.org.liquibase>
 		<version.org.hibernate>5.4.12.Final</version.org.hibernate>
 		<version.net.sourceforge.htmlunit>2.38.0</version.net.sourceforge.htmlunit>
